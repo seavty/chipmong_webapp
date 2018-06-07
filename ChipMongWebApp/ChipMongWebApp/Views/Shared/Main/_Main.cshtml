@@ -1,0 +1,25 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- css -->
+    @Html.Partial("~/Views/Shared/Main/Css.cshtml")
+
+    <!-- js -->
+    @Html.Partial("~/Views/Shared/Main/JS.cshtml")
+
+    <title> ChipMong </title>
+</head>
+<body class="c-background-color">
+    @Html.Partial("~/Views/Shared/LoadingIndicator.cshtml")
+
+    @Html.Partial("~/Views/Shared/Main/Navbar.cshtml")
+    <div class="container-fluid">
+        <br />
+        @RenderBody()
+    </div>
+</body>
+</html>

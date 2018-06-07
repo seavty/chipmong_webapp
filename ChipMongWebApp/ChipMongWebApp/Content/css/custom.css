@@ -1,0 +1,154 @@
+﻿
+body {
+    /*font-family: 'Hind', sans-serif;*/
+    /*font-family: 'Merienda', cursive;*/
+    font-family: 'Hind', sans-serif;
+    font-size: 1em;
+}
+
+.merienda {
+    font-family: 'Merienda', cursive;
+}
+
+.col-form-label {
+    padding-bottom: 0px;
+    padding-top: 0px;
+}
+
+.myPadding {
+    padding-bottom: 13px;
+}
+
+.label-display {
+    font-weight: 600;
+}
+
+.label-display-bottom-line {
+    color: #666;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 0px
+}
+
+.menu-right {
+    float: right;
+}
+
+.doubleBold {
+    font-weight: 900;
+    font-family: 'Merienda', cursive;
+}
+
+.panel-header-text {
+    font-family: 'Merienda', cursive;
+}
+
+.clear-navbar-magin-bottoom {
+    margin-bottom: 10px;
+}
+
+.my-box-shadow {
+    box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* top content */
+.top-content-display-label {
+    font-style:italic;
+    color: #99979c;
+}
+
+.top-content-image{
+    width:80px;
+    height:80px;
+}
+
+
+/* overide metro ui cs */
+.input-control {
+    margin:0px;
+}
+
+
+
+/* override bootstrap */
+.table tbody td {
+    padding:.525rem .60rem;
+}
+
+
+/* error */
+.error {
+    border-color:red;
+}
+
+.file-error {
+    background-color: red;
+}
+
+
+/* image */
+.image-register {
+    width:100%;
+    height:400px;
+}
+
+
+div.polaroid {
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+
+/** form */
+
+.summary .form-control {
+    font-weight: 700;
+}
+
+.card-header {
+    font-weight: bold;
+}
+
+label {
+    margin-bottom: 0px;
+    font-weight: 500
+}
+
+/** end form **/
+
+.c-hr {
+    background-color: white;
+    /*border-top: 1px dashed #8c8b8b;*/
+}
+
+.c-header {
+    background-color: #e9ecef;
+    padding: 30px;
+}
+
+.c-footer {
+    background-color: #272727;
+    color: white;
+    padding: 10px;
+}
+
+.img-logo {
+    width: 300px;
+    height: 200px;
+    align-content:center;
+}
+
+
+
+/* Make the image fully responsive */
+.carousel-inner img {
+    width: 100%;
+    height: 100%;
+}
+
+.c-background-color {
+    background-color: #f3f9fe;
+}
+
+
+.table > tbody > tr > td {
+    vertical-align: middle;
+}

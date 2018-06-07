@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/Main/_Main.cshtml";
+}
+
+<div class="card" id="action">
+    <div class="card-body text-dark shadow-sm merienda">
+        <button type="button" class="btn btn-success" id="btnSave"> <i class="fas fa-save"></i>  Save  </button>
+        <button type="button" class="btn btn-danger" id="btnCancel"> <i class="fas fa-times"></i> Cancel  </button>
+    </div>
+</div>
+
+<br />
+
+@Html.Partial("~/Views/Customer/Form.cshtml")
+
+<script>
+
+    var url = "@Url.Content("~/customer")";
+    var createURL = url + "/create/";
+    var detailsURL = url + "/details/";
+    var form = "#customer";
+
+    $(document).ready(function () {
+        setupEvents();
+    });
+
+    //-> setupEvents
+    function setupEvents() {
+        $("#btnSave").click(function () { save(); });
+        $("#btnCancel").click(function () { cancel(); });
+    }
+
+    //-> save
+    function save() {
+        if (isValid()) {
+            ajaxHelper(createURL, $("#customer").serialize(), requestMethod.POST).then(function (done) {
+                window.location.href = detailsURL  + done.id;
+            });
+        }
+    }
+
+    //-> cancel
+    function cancel() {
+        alert();
+    }
+
+</script>

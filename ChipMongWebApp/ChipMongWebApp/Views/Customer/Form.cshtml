@@ -1,0 +1,76 @@
+﻿@model ChipMongWebApp.Models.DTO.Customer.CustomerViewDTO
+
+<form id="customer" name="customer">
+    @Html.HiddenFor( m => m.id)
+
+    <!-- Loan Request Card -->
+    <div class="card shadow-sm">
+        <div class="card-header merienda"> Customer </div>
+        <!-- card body -->
+        <div class="card-body">
+            <!--row 1-->
+            <div class="row">
+                <div class="col-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.code)
+                        @Html.TextBoxFor(m => m.code, new { @class = "form-control",  @readonly = "readonly" })
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.firstName)
+                        @Html.TextBoxFor(m => m.firstName, new { @class = "form-control required", placeholder = "First Name", @maxlength = "100" })
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.lastName)
+                        @Html.TextBoxFor(m => m.lastName, new { @class = "form-control required", placeholder = "Last Name", @maxlength = "100" })
+                    </div>
+                </div>
+            </div>
+            <!--end  row 1-->
+            <!--row 2-->
+            <div class="row">
+                <div class="col-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.phone1)
+                        @Html.TextBoxFor(m => m.phone1, new { @class = "form-control required", placeholder = "Phone1", @maxlength = "100" })
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.phone2)
+                        @Html.TextBoxFor(m => m.phone2, new { @class = "form-control", placeholder = "Phone2", @maxlength = "100" })
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.email)
+                        @Html.TextBoxFor(m => m.email, new { @class = "form-control", placeholder = "E-mail", @maxlength = "100" })
+                    </div>
+                </div>
+            </div>
+            <!--end  row 2-->
+            <!--row 3-->
+            <div class="row">
+                <div class="col-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.address)
+                        @Html.TextAreaFor(m => m.address, new { @class = "form-control", placeholder = "Address", @maxlength = "100" })
+                    </div>
+                </div>
+
+            </div>
+            <!--end  row 3-->
+
+        </div>
+        <!--endcard body -->
+    </div>
+    <!-- end  Account Card -->
+</form>
+
