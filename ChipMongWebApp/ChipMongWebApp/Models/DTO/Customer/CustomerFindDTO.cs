@@ -9,6 +9,7 @@ namespace ChipMongWebApp.Models.DTO.Customer
 {
     public class CustomerFindDTO
     {
+        //--> should make this class inherit from find dto
         public int currentPage { get; set; }
 
         [MaxLength(100)]

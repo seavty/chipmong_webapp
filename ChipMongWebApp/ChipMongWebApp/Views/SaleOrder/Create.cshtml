@@ -1,4 +1,7 @@
-﻿@{
+﻿
+@{
+    /**/
+
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/Main/_Main.cshtml";
 }
@@ -12,15 +15,16 @@
 
 <br />
 
-@Html.Partial("~/Views/Customer/Form.cshtml")
+@Html.Partial("~/Views/SaleOrder/Form.cshtml")
+
 
 <script>
 
-    var url = "@Url.Content("~/customer")";
+    var url = "@Url.Content("~/saleorder")";
     var createURL = url + "/create/";
     var detailsURL = url + "/details/";
     var findURL = url + "/find/";
-    var formName = "#customer";
+    var formName = "#saleorder";
 
     $(document).ready(function () {
         setupEvents();
@@ -47,3 +51,5 @@
     }
 
 </script>
+
+

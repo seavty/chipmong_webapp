@@ -44,6 +44,7 @@ namespace ChipMongWebApp.Handlers
         //-> Save
         public async Task<CustomerViewDTO> Edit(CustomerViewDTO viewDTO)
         {
+            //--> big mistake need to change no need to map DTO 2 two from view to edit -> just map it when post from form is ok
             var customer = await db.tblCustomers.FirstOrDefaultAsync(c => c.deleted == null && c.id == viewDTO.id);
             if (customer == null)
                 throw new HttpException((int)HttpStatusCode.NotFound, "NotFound");

@@ -25,8 +25,22 @@
           <Property Name="cust_Address" Type="nvarchar" MaxLength="100" />
           <Property Name="cust_Deleted" Type="int" />
         </EntityType>
+        <EntityType Name="tblSaleOrder">
+          <Key>
+            <PropertyRef Name="slor_SaleOrderID" />
+          </Key>
+          <Property Name="slor_SaleOrderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="slor_CreatedDate" Type="datetime" />
+          <Property Name="slor_CreatedBy" Type="int" />
+          <Property Name="slor_UpdatedDate" Type="datetime" />
+          <Property Name="slor_UpdatedBy" Type="int" />
+          <Property Name="slor_Code" Type="nvarchar" MaxLength="100" />
+          <Property Name="slor_Deleted" Type="int" />
+          <Property Name="slor_CustomerID" Type="int" />
+        </EntityType>
         <EntityContainer Name="ChipMongModelStoreContainer">
           <EntitySet Name="tblCustomer" EntityType="Self.tblCustomer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblSaleOrder" EntityType="Self.tblSaleOrder" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -54,7 +68,21 @@
         </EntityType>
         <EntityContainer Name="ChipMongEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="tblCustomers" EntityType="Self.tblCustomer" />
+          <EntitySet Name="tblSaleOrders" EntityType="ChipMongModel.tblSaleOrder" />
         </EntityContainer>
+        <EntityType Name="tblSaleOrder">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="createdDate" Type="DateTime" Precision="3" />
+          <Property Name="createdBy" Type="Int32" />
+          <Property Name="updatedDate" Type="DateTime" Precision="3" />
+          <Property Name="updatedBy" Type="Int32" />
+          <Property Name="code" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="deleted" Type="Int32" />
+          <Property Name="customerID" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -79,6 +107,20 @@
                 <ScalarProperty Name="token" ColumnName="cust_Token" />
                 <ScalarProperty Name="email" ColumnName="cust_Email" />
                 <ScalarProperty Name="address" ColumnName="cust_Address" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblSaleOrders">
+            <EntityTypeMapping TypeName="ChipMongModel.tblSaleOrder">
+              <MappingFragment StoreEntitySet="tblSaleOrder">
+                <ScalarProperty Name="customerID" ColumnName="slor_CustomerID" />
+                <ScalarProperty Name="deleted" ColumnName="slor_Deleted" />
+                <ScalarProperty Name="code" ColumnName="slor_Code" />
+                <ScalarProperty Name="updatedBy" ColumnName="slor_UpdatedBy" />
+                <ScalarProperty Name="updatedDate" ColumnName="slor_UpdatedDate" />
+                <ScalarProperty Name="createdBy" ColumnName="slor_CreatedBy" />
+                <ScalarProperty Name="createdDate" ColumnName="slor_CreatedDate" />
+                <ScalarProperty Name="id" ColumnName="slor_SaleOrderID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

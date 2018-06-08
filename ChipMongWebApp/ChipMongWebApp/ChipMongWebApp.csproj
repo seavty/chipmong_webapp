@@ -155,12 +155,14 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SaleOrderController.cs" />
     <Compile Include="Extension\DateTimeExtension.cs" />
     <Compile Include="Extension\DoubleExtension.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Handlers\CustomerHandler.cs" />
+    <Compile Include="Handlers\SaleOrderHandler.cs" />
     <Compile Include="Helpers\ConstantHelper.cs" />
     <Compile Include="Helpers\DoubleHelper.cs" />
     <Compile Include="Helpers\MappingHelper.cs" />
@@ -185,13 +187,22 @@
     <Compile Include="Models\DB\tblCustomer.cs">
       <DependentUpon>ChipMongModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DB\tblSaleOrder.cs">
+      <DependentUpon>ChipMongModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DTO\Customer\CustomerBaseDTO.cs" />
     <Compile Include="Models\DTO\Customer\CustomerEditDTO.cs" />
     <Compile Include="Models\DTO\Customer\CustomerFindDTO.cs" />
     <Compile Include="Models\DTO\Customer\CustomerNewDTO.cs" />
     <Compile Include="Models\DTO\Customer\CustomerViewDTO.cs" />
+    <Compile Include="Models\DTO\FindDTO.cs" />
     <Compile Include="Models\DTO\GetListDTO.cs" />
     <Compile Include="Models\DTO\MetaDataDTO.cs" />
+    <Compile Include="Models\DTO\SaleOrder\SaleOrderBaseDTO.cs" />
+    <Compile Include="Models\DTO\SaleOrder\SaleOrderEditDTO.cs" />
+    <Compile Include="Models\DTO\SaleOrder\SaleOrderFindDTO.cs" />
+    <Compile Include="Models\DTO\SaleOrder\SaleOrderNewDTO.cs" />
+    <Compile Include="Models\DTO\SaleOrder\SaleOrderViewDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -301,10 +312,12 @@
     <Content Include="Views\Customer\Find.cshtml" />
     <Content Include="Views\Customer\Paging.cshtml" />
     <Content Include="Views\Shared\Pagination.cshtml" />
+    <Content Include="Views\SaleOrder\Create.cshtml" />
+    <Content Include="Views\SaleOrder\Form.cshtml" />
+    <Content Include="Views\SaleOrder\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\CustomerHandler\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

@@ -26,7 +26,6 @@ namespace ChipMongWebApp.Models.DB
         }
     
         public virtual DbSet<tblCustomer> tblCustomers { get; set; }
-
-        public System.Data.Entity.DbSet<ChipMongWebApp.Models.DTO.Customer.CustomerViewDTO> CustomerViewDTOes { get; set; }
+        public virtual DbSet<tblSaleOrder> tblSaleOrders { get; set; }
     }
 }

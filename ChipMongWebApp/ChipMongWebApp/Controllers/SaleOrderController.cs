@@ -1,9 +1,8 @@
 ﻿using ChipMongWebApp.Handlers;
 using ChipMongWebApp.Helpers;
-using ChipMongWebApp.Models.DTO.Customer;
+using ChipMongWebApp.Models.DTO.SaleOrder;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -12,16 +11,16 @@ using System.Web.Mvc;
 
 namespace ChipMongWebApp.Controllers
 {
-    public class CustomerController : Controller
+    public class SaleOrderController : Controller
     {
-        private CustomerHandler handler = null;
+        private SaleOrderHandler handler = null;
 
-        public CustomerController()
+        public SaleOrderController()
         {
-            handler = new CustomerHandler();
+            handler = new SaleOrderHandler();
         }
 
-        // GET: Customer
+        // GET: SaleOrder
         public ActionResult Index()
         {
             return View();
@@ -35,14 +34,14 @@ namespace ChipMongWebApp.Controllers
 
         //-> Create
         [HttpPost]
-        public async Task<JsonResult> Create(CustomerNewDTO customer)
+        public async Task<JsonResult> Create(SaleOrderNewDTO newDTO)
         {
             try
             {
                 if (!ModelState.IsValid)
                     throw new HttpException((int)HttpStatusCode.BadRequest, ConstantHelper.KEY_IN_REQUIRED_FIELD);
                 Response.StatusCode = 200;
-                return Json(await handler.Create(customer), JsonRequestBehavior.AllowGet);
+                return Json(await handler.Create(newDTO), JsonRequestBehavior.AllowGet);
 
             }
             catch (HttpException)
@@ -67,14 +66,14 @@ namespace ChipMongWebApp.Controllers
 
         //-> Create
         [HttpPost]
-        public async Task<JsonResult> Edit(CustomerViewDTO customer)
+        public async Task<JsonResult> Edit(SaleOrderEditDTO editDTO)
         {
             try
             {
                 if (!ModelState.IsValid)
                     throw new HttpException((int)HttpStatusCode.BadRequest, ConstantHelper.KEY_IN_REQUIRED_FIELD);
                 Response.StatusCode = 200;
-                return Json(await handler.Edit(customer), JsonRequestBehavior.AllowGet);
+                return Json(await handler.Edit(editDTO), JsonRequestBehavior.AllowGet);
 
             }
             catch (HttpException)
@@ -85,7 +84,7 @@ namespace ChipMongWebApp.Controllers
 
         //-> Paging
         [HttpPost]
-        public async Task<ActionResult> Paging(CustomerFindDTO findDTO)
+        public async Task<ActionResult> Paging(SaleOrderFindDTO findDTO)
         {
             return PartialView(await handler.GetList(findDTO));
         }

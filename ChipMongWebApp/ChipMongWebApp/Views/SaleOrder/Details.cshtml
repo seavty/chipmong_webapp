@@ -1,0 +1,53 @@
+﻿@model ChipMongWebApp.Models.DTO.SaleOrder.SaleOrderViewDTO
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/Main/_Main.cshtml";
+}
+
+<div id="dvRecord">
+    <div class="card" id="action">
+        <div class="card-body text-dark shadow-sm merienda">
+            <button type="button" class="btn btn-dark" id="btnBack"> <i class="fas fa-long-arrow-alt-left"></i> Back </button>
+            <button type="button" class="btn btn-primary" id="btnEdit"> <i class="fas fa-pencil-alt"></i> Edit </button>
+        </div>
+    </div>
+
+    <br />
+
+    <fieldset disabled class="summary">
+        @Html.Partial("~/Views/SaleOrder/Form.cshtml", Model)
+    </fieldset>
+
+</div>
+
+<script>
+
+    var url = "@Url.Content("~/saleorder")";
+    var id = @Url.RequestContext.RouteData.Values["id"];
+    var editURL = url + "/edit/";
+    var div = "#dvRecord";
+
+    $(document).ready(function () {
+        setupEvents();
+    });
+
+    //-> setupEvents
+    function setupEvents() {
+        $("#btnBack").click(function () { back(); });
+        $("#btnEdit").click(function () { edit(); });
+    }
+
+    //-> back
+    function back() {
+        window.location.href = url + "/find";
+    }
+
+    //-> edit
+    function edit() {
+        ajaxHelper(editURL + id, null, requestMethod.GET).then(function (done) {
+            $(div).html(done);
+        });
+    }
+</script>
+
+

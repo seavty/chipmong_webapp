@@ -12,6 +12,7 @@
         <div class="card-body text-dark shadow-sm merienda">
             <button type="button" class="btn btn-primary" id="btnFind"> <i class="fas fa-search"></i> Find </button>
             <button type="button" class="btn btn-danger" id="btnCancel"> <i class="fas fa-times"></i> Clear  </button>
+            <button type="button" class="btn btn-success" id="btnNew"> <i class="fas fa-plus"></i> New  </button>
         </div>
     </div>
 
@@ -61,6 +62,7 @@
 <script>
 
     var url = "@Url.Content("~/customer")";
+    var newRecordURL = url + "/create/";
     var pagingURL = url + "/paging/";
     var form = "#findCustomer";
 
@@ -74,6 +76,7 @@
         paging(1);
         $("#btnFind").click(function () { find(); });
         $("#btnCancel").click(function () { cancel(); });
+        $("#btnNew").click(function () { newRecord(); });
     }
 
     
@@ -91,10 +94,15 @@
         paging(1);
     }
     
-
     //-> cancel
     function cancel() {
-        location.reload();
+        window.location.reload();
     }
+
+    //-> newRecord
+    function newRecord() {
+        window.location.href = newRecordURL;
+    }
+
 </script>
 
