@@ -22,3 +22,27 @@
     }
     return isOk;
 }
+
+
+//-- line item ---//
+function isValidLineItem() {
+    var isOk = true;
+    $(".line-item-required").each(function (i, v) {
+        $(this).removeClass("is-invalid");
+        if ($(this).val() == "") {
+            $(this).addClass("is-invalid");
+            isOk = false;
+        }
+    });
+
+    if (!isOk) {
+        $.toast({
+            heading: 'System',
+            text: 'Please key in all required field(s).',
+            showHideTransition: 'slide',
+            position: 'top-right',
+            icon: 'error'
+        });
+    }
+    return isOk;
+}

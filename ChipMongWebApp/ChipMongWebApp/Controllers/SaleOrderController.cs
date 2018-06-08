@@ -95,5 +95,10 @@ namespace ChipMongWebApp.Controllers
         {
             return View();
         }
+
+        public ActionResult TableRow()
+        {
+            return PartialView();
+        }
     }
 }

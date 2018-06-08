@@ -315,6 +315,7 @@
     <Content Include="Views\SaleOrder\Create.cshtml" />
     <Content Include="Views\SaleOrder\Form.cshtml" />
     <Content Include="Views\SaleOrder\Details.cshtml" />
+    <Content Include="Views\SaleOrder\TableRow.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

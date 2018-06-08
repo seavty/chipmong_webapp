@@ -17,6 +17,42 @@
 
 @Html.Partial("~/Views/SaleOrder/Form.cshtml")
 
+<br />
+
+
+<!-- Line Item  -->
+
+<div class="bg-white">
+    <table class="table table-bordered table-striped table-hover" id="tblLineItem">
+        <thead>
+            <tr class="text-center">
+                <th scope="col"> Item </th>
+                <th scope="col"> Quantity </th>
+                <th scope="col"> Price </th>
+                <th scope="col"> Total </th>
+                <th scope="col" style="width:40px;"> </th>
+            </tr>
+            <tr>
+                <td>
+                    <select class="form-control line-item-required" id="status" name="status">
+                        <option value=""> -- Please Select Item -- </option>
+                        <option value="1"> Item 1 </option>
+                        <option value="2"> Item 2 </option>
+                        <option value="3"> Item 3 </option>
+                        <option value="4"> Item 4 </option>
+                    </select>
+                </td>
+                <td>  <input class="form-control line-item-required" type="text" rowIndex="0" id="quantity0" name="quantity" placeholder="Quantity" onchange="rowChange($(this))" /> </td>
+                <td> <input class="form-control line-item-required" type="text" rowIndex="0" id="price0" name="price" placeholder="Price" onchange="rowChange($(this))" /> </td>
+                <td> <input class="form-control" type="text" rowIndex="0" id="total0" name="price" readonly /> </td>
+                <td>
+                    <button type="button" class="btn btn-success" onclick="saveLineItem($(this))"> <i class="fas fa-save"></i> save </button>
+                </td>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
 
 <script>
 
@@ -25,13 +61,33 @@
     var detailsURL = url + "/details/";
     var findURL = url + "/find/";
     var formName = "#saleorder";
+    var rowIndex = 0;
+    var tableRow = `<tr>
+                        <td>
+                            <select class="form-control line-item-required" id="status" name="status">
+                                <option value=""> -- Please Select Item -- </option>
+                                <option value="1"> Item 1 </option>
+                                <option value="2"> Item 2 </option>
+                                <option value="3"> Item 3 </option>
+                                <option value="4"> Item 4 </option>
+                            </select>
+                        </td>
+                        <td>  <input class="form-control line-item-required" type="text" rowIndex="0" id="quantity0" name="quantity" placeholder="Quantity" onchange="rowChange($(this))" /> </td>
+                        <td> <input class="form-control line-item-required" type="text" rowIndex="0" id="price0" name="price" placeholder="Price" /> </td>
+                        <td> <input class="form-control" type="text" readonly /> </td>
+                        <td>
+                            <button type="button" class="btn btn-success" onclick="saveLineItem($(this))"> <i class="fas fa-save"></i> save </button>
+                        </td>
+                    </tr>`;
 
     $(document).ready(function () {
+
         setupEvents();
     });
 
     //-> setupEvents
     function setupEvents() {
+        //$("#tblLineItem").append(tableRow);
         $("#btnSave").click(function () { save(); });
         $("#btnCancel").click(function () { cancel(); });
     }
@@ -48,6 +104,36 @@
     //-> cancel
     function cancel() {
         window.location.href = findURL;
+    }
+
+    function saveLineItem(prop) {
+        if (prop.attr('class') == "btn btn-success") {
+            //if (isValidLineItem()) {
+            prop.removeClass("btn-success")
+                .addClass("btn-danger")
+                .attr('rowIndex', rowIndex)
+                .html('<i class="fas fa-trash-alt"></i> ');
+
+            $("#quantity").attr('id', "quantity"+rowIndex)
+            rowIndex++;
+            $("#tblLineItem").append(tableRow);
+            
+
+            //}
+        }
+        else {
+            if (confirm("Do you to delete this line item?"))
+                prop.closest("tr").remove();
+        }
+    }
+
+    //-> rowChange
+    function rowChange(prop) {
+        var index = prop.attr("rowIndex");
+        var quantity = $("#quantity" + index).val();
+        var price = $("#price" + index).val();
+        var total = quantity * price;
+        $("#total" + id);
     }
 
 </script>
