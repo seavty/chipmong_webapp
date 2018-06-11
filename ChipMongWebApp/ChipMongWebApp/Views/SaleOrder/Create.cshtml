@@ -32,9 +32,9 @@
                 <th scope="col"> Total </th>
                 <th scope="col" style="width:40px;"> </th>
             </tr>
-            <tr>
+            <tr rowIndex="0">
                 <td>
-                    <select class="form-control line-item-required" id="status" name="status">
+                    <select class="form-control line-item-required" id="item0" name="item" rowIndex="0" onchange="itemChange($(this))">
                         <option value=""> -- Please Select Item -- </option>
                         <option value="1"> Item 1 </option>
                         <option value="2"> Item 2 </option>
@@ -42,11 +42,11 @@
                         <option value="4"> Item 4 </option>
                     </select>
                 </td>
-                <td>  <input class="form-control line-item-required" type="text" rowIndex="0" id="quantity0" name="quantity" placeholder="Quantity" onchange="rowChange($(this))" /> </td>
-                <td> <input class="form-control line-item-required" type="text" rowIndex="0" id="price0" name="price" placeholder="Price" onchange="rowChange($(this))" /> </td>
-                <td> <input class="form-control" type="text" rowIndex="0" id="total0" name="price" readonly /> </td>
+                <td> <input class="form-control line-item-required" type="text" id="quantity0" name="quantity" placeholder="Quantity" onchange="calculation($(this))" /> </td>
+                <td> <input class="form-control line-item-required" type="text" id="price0" name="price" placeholder="Price" onchange="calculation($(this))" /> </td>
+                <td> <input class="form-control" type="text" id="total0" name="total0" readonly /> </td>
                 <td>
-                    <button type="button" class="btn btn-success" onclick="saveLineItem($(this))"> <i class="fas fa-save"></i> save </button>
+                    <button type="button" class="btn btn-success" onclick="saveLineItem($(this))"> <i class="fas fa-save"></i></button>
                 </td>
             </tr>
         </thead>
@@ -62,23 +62,23 @@
     var findURL = url + "/find/";
     var formName = "#saleorder";
     var rowIndex = 0;
-    var tableRow = `<tr>
-                        <td>
-                            <select class="form-control line-item-required" id="status" name="status">
-                                <option value=""> -- Please Select Item -- </option>
-                                <option value="1"> Item 1 </option>
-                                <option value="2"> Item 2 </option>
-                                <option value="3"> Item 3 </option>
-                                <option value="4"> Item 4 </option>
-                            </select>
-                        </td>
-                        <td>  <input class="form-control line-item-required" type="text" rowIndex="0" id="quantity0" name="quantity" placeholder="Quantity" onchange="rowChange($(this))" /> </td>
-                        <td> <input class="form-control line-item-required" type="text" rowIndex="0" id="price0" name="price" placeholder="Price" /> </td>
-                        <td> <input class="form-control" type="text" readonly /> </td>
-                        <td>
-                            <button type="button" class="btn btn-success" onclick="saveLineItem($(this))"> <i class="fas fa-save"></i> save </button>
-                        </td>
-                    </tr>`;
+    var tableRow = `<tr rowIndex="0">
+                <td>
+                    <select class="form-control line-item-required" id="item0" name="item" rowIndex="0" onchange="itemChange($(this))">
+                        <option value=""> -- Please Select Item -- </option>
+                        <option value="1"> Item 1 </option>
+                        <option value="2"> Item 2 </option>
+                        <option value="3"> Item 3 </option>
+                        <option value="4"> Item 4 </option>
+                    </select>
+                </td>
+                <td> <input class="form-control line-item-required" type="text" id="quantity0" name="quantity" placeholder="Quantity" onchange="calculation($(this))" /> </td>
+                <td> <input class="form-control line-item-required" type="text" id="price0" name="price" placeholder="Price" onchange="calculation($(this))" /> </td>
+                <td> <input class="form-control" type="text" id="total0" name="total0" readonly /> </td>
+                <td>
+                    <button type="button" class="btn btn-success" onclick="saveLineItem($(this))"> <i class="fas fa-save"></i></button>
+                </td>
+            </tr>`;
 
     $(document).ready(function () {
 
@@ -108,18 +108,18 @@
 
     function saveLineItem(prop) {
         if (prop.attr('class') == "btn btn-success") {
-            //if (isValidLineItem()) {
-            prop.removeClass("btn-success")
-                .addClass("btn-danger")
-                .attr('rowIndex', rowIndex)
-                .html('<i class="fas fa-trash-alt"></i> ');
-
-            $("#quantity").attr('id', "quantity"+rowIndex)
-            rowIndex++;
-            $("#tblLineItem").append(tableRow);
-            
-
-            //}
+            if (isValidLineItem()) {
+                prop.removeClass("btn-success")
+                    .addClass("btn-danger")
+                    .attr('rowIndex', rowIndex)
+                    .html('<i class="fas fa-trash-alt"></i> ');
+                rowIndex++;
+                prop.closest("tr").attr("rowIndex", rowIndex)
+                $("#quantity0").attr('id', "quantity" + (rowIndex));
+                $("#price0").attr('id', "price" + (rowIndex));
+                $("#total0").attr('id', "total" + (rowIndex));
+                $("#tblLineItem").append(tableRow);
+            }
         }
         else {
             if (confirm("Do you to delete this line item?"))
@@ -127,13 +127,18 @@
         }
     }
 
-    //-> rowChange
-    function rowChange(prop) {
-        var index = prop.attr("rowIndex");
-        var quantity = $("#quantity" + index).val();
-        var price = $("#price" + index).val();
+    //-> calculation
+    function calculation(prop) {
+        var index = prop.closest("tr").attr("rowIndex")
+        var quantity = toFloat($("#quantity" + index).val());
+        var price = toFloat($("#price" + index).val());
         var total = quantity * price;
-        $("#total" + id);
+        $("#total" + index).val(totoFloatWithTwoPrecision(total));
+    }
+
+    //-> itemChange
+    function itemChange(prop) {
+        //alert();
     }
 
 </script>

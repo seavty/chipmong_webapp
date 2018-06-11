@@ -7,6 +7,12 @@ function toInt(number) {
 
 //-> toFloat
 function toFloat(number) {
+    return parseFloat(number) ? parseFloat(number) : 0.0;
+    
+}
+
+//-> toFloatWith
+function totoFloatWithTwoPrecision(number) {
     var num = parseFloat(number) ? parseFloat(number) : 0.0;
     return parseFloat(num).toFixed(precision);
 }
