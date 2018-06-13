@@ -1,22 +1,19 @@
 ﻿@model ChipMongWebApp.Models.DTO.SaleOrder.SaleOrderViewDTO
-@{
-    ViewBag.Title = "Details";
-    Layout = "~/Views/Shared/Main/_Main.cshtml";
-}
 
-<div id="dvRecord">
-    <div class="card" id="action">
-        <div class="card-body text-dark shadow-sm merienda">
-            <button type="button" class="btn btn-dark" id="btnBack"> <i class="fas fa-long-arrow-alt-left"></i> Back </button>
-            <button type="button" class="btn btn-primary" id="btnEdit"> <i class="fas fa-pencil-alt"></i> Edit </button>
-        </div>
+<div class="card" id="action">
+    <div class="card-body text-dark shadow-sm merienda">
+        <button type="button" class="btn btn-success" id="btnSave"> <i class="fas fa-save"></i> Save </button>
+        <button type="button" class="btn btn-danger" id="btnCancel"> <i class="fas fa-times"></i> Cancel </button>
     </div>
+</div>
 
-    <br />
+<br />
 
-    @Html.Partial("~/Views/SaleOrder/DetailsForm.cshtml", Model)
+@Html.Partial("~/Views/SaleOrder/EditForm.cshtml", Model)
 
-    <script>
+
+
+<script>
 
     var url = "@Url.Content("~/saleorder")";
     var id = @Url.RequestContext.RouteData.Values["id"];
@@ -44,10 +41,7 @@
             $(div).html(done);
         });
     }
-    </script>
-
-</div>
-
+</script>
 
 
 

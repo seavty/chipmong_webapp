@@ -2,6 +2,7 @@
 using ChipMongWebApp.Models.DB;
 using ChipMongWebApp.Models.DTO;
 using ChipMongWebApp.Models.DTO.SaleOrder;
+using ChipMongWebApp.Models.DTO.SaleOrderItem;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -27,18 +28,79 @@ namespace ChipMongWebApp.Handlers
             var record = await db.tblSaleOrders.FirstOrDefaultAsync(r => r.deleted == null && r.id == id);
             if (record == null)
                 throw new HttpException((int)HttpStatusCode.NotFound, "NotFound");
-            return MappingHelper.MapDBClassToDTO<tblSaleOrder, SaleOrderViewDTO>(record);
+
+            var saleOrderDTO = MappingHelper.MapDBClassToDTO<tblSaleOrder, SaleOrderViewDTO>(record);
+            saleOrderDTO.customer = await new CustomerHandler().SelectByID(int.Parse(record.customerID.ToString()));
+            saleOrderDTO.items = await GetLineItems(id);
+            return saleOrderDTO;
         }
+
+
+        private async Task<List<SaleOrderItemViewDTO>> GetLineItems(int masterID)
+        {
+            var items = new List<SaleOrderItemViewDTO>();
+
+            IQueryable<tblSaleOrderItem> records = from x in db.tblSaleOrderItems
+                                                   where x.deleted == null && x.SaloeOrderID == masterID
+                                                   orderby x.id ascending
+                                                   select x;
+            var listing = await records.ToListAsync();
+            foreach (var item in listing)
+            {
+                items.Add(MappingHelper.MapDBClassToDTO<tblSaleOrderItem, SaleOrderItemViewDTO>(item));
+            }
+            return items;
+        }
+
 
         //-> Create
         public async Task<SaleOrderViewDTO> Create(SaleOrderNewDTO newDTO)
         {
-            newDTO = StringHelper.TrimStringProperties(newDTO);
-            var record = (tblSaleOrder)MappingHelper.MapDTOToDBClass<SaleOrderNewDTO, tblSaleOrder>(newDTO, new tblSaleOrder());
-            record.createdDate = DateTime.Now;
-            db.tblSaleOrders.Add(record);
-            await db.SaveChangesAsync();
-            return await SelectByID(record.id);
+            using (var transaction = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    newDTO = StringHelper.TrimStringProperties(newDTO);
+                    var record = (tblSaleOrder)MappingHelper.MapDTOToDBClass<SaleOrderNewDTO, tblSaleOrder>(newDTO, new tblSaleOrder());
+                    record.createdDate = DateTime.Now;
+                    db.tblSaleOrders.Add(record);
+                    await db.SaveChangesAsync();
+                    var lineItems = await SaveLineItem(record.id, newDTO);
+                    record.total = lineItems.Sum(item => item.total);
+                    db.tblSaleOrders.Add(record);
+                    await db.SaveChangesAsync();
+
+                    transaction.Commit();
+                    return await SelectByID(record.id);
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw new Exception(ex.Message);
+                }
+            }
+        }
+
+        //-> save line item 
+        private async Task<List<tblSaleOrderItem>> SaveLineItem(int mastetID, SaleOrderNewDTO newDTO)
+        {
+            var list = new List<tblSaleOrderItem>();
+            if (newDTO.items != null)
+            {
+                foreach (var item in newDTO.items)
+                {
+                    var record = (tblSaleOrderItem)MappingHelper.MapDTOToDBClass<SaleOrderItemNewDTO, tblSaleOrderItem>(item, new tblSaleOrderItem());
+                    record.createdDate = DateTime.Now;
+
+                    record.total = record.quantity * record.price;
+                    record.SaloeOrderID = mastetID;
+                    db.tblSaleOrderItems.Add(record);
+                    await db.SaveChangesAsync();
+
+                    list.Add(record);
+                }
+            }
+            return list;
         }
 
         //-> Save
@@ -63,10 +125,10 @@ namespace ChipMongWebApp.Handlers
         {
             //--seem like search sql not dynamic -> should write one helper function or interface to do dynamic search
             IQueryable<tblSaleOrder> records = from r in db.tblSaleOrders
-                                                where r.deleted == null
-                                                && (string.IsNullOrEmpty(findDTO.code) ? 1 == 1 : r.code.Contains(findDTO.code))
-                                                orderby r.id ascending
-                                                select r;
+                                               where r.deleted == null
+                                               && (string.IsNullOrEmpty(findDTO.code) ? 1 == 1 : r.code.Contains(findDTO.code))
+                                               orderby r.id ascending
+                                               select r;
             return await Listing(findDTO.currentPage, records);
         }
 

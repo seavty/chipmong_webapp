@@ -18,6 +18,5 @@ namespace ChipMongWebApp.Models.DTO.SaleOrder
         [Required]
         [DisplayName("Customer (*):")]
         public int customerID { get; set; }
-
     }
 }

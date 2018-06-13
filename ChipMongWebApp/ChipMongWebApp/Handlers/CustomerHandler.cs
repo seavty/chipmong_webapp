@@ -2,6 +2,7 @@
 using ChipMongWebApp.Models.DB;
 using ChipMongWebApp.Models.DTO;
 using ChipMongWebApp.Models.DTO.Customer;
+using ChipMongWebApp.Models.DTO.SSA;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -9,6 +10,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Mvc;
 
 namespace ChipMongWebApp.Handlers
 {
@@ -58,9 +60,7 @@ namespace ChipMongWebApp.Handlers
             return await SelectByID(customer.id);
 
         }
-
-
-
+        
         //-> GetList
         public async Task<GetListDTO<CustomerViewDTO>> GetList(CustomerFindDTO findDTO)
         {
@@ -74,6 +74,37 @@ namespace ChipMongWebApp.Handlers
                                               select c;
             return await Listing(findDTO.currentPage, customers);
         }
+
+        internal Task<JsonResult> SSA(object findDTO)
+        {
+            throw new NotImplementedException();
+        }
+
+        //-> SSA
+        public async Task<GetSSADTO<CustomerSSADTO>> SSA(string search)
+        {
+            IQueryable<tblCustomer> customers = from c in db.tblCustomers
+                                                where c.deleted == null
+                                                && (string.IsNullOrEmpty(search) ? 1 == 1 : c.firstName.StartsWith(search))
+                                                orderby c.id ascending
+                                                select c;
+            var list = await Listing(1, customers);
+            
+            var customerList = new List<CustomerSSADTO>();
+            foreach (var item in list.items)
+            {
+                customerList.Add((CustomerSSADTO)MappingHelper.MapDTOToDTO<CustomerViewDTO, CustomerSSADTO>(item, new CustomerSSADTO()));
+
+            }
+            var ssa = new GetSSADTO<CustomerSSADTO>();
+            ssa.results = customerList;
+
+            return ssa;
+        }
+
+
+
+
 
         //*** private method ***/
         private async Task<GetListDTO<CustomerViewDTO>> Listing(int currentPage, IQueryable<tblCustomer> customers, string search = null)

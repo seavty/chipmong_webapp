@@ -1,4 +1,4 @@
-﻿
+﻿@model ChipMongWebApp.Models.DTO.SaleOrder.SaleOrderNewDTO
 @{
     /**/
 
@@ -15,56 +15,137 @@
 
 <br />
 
-@Html.Partial("~/Views/SaleOrder/Form.cshtml")
+@*@Html.Partial("~/Views/SaleOrder/Form.cshtml")*@
+@*@Html.Partial("~/Views/SaleOrder/CreateForm.cshtml")*@
 
-<br />
+<form id="newRecord" name="newRecord">
+    <div class="card shadow-sm">
+        <div class="card-header merienda"> SaleOrder </div>
+        <!-- card body -->
+        <div class="card-body">
+            <!--row 1-->
+            <div class="row">
+                <div class="col-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.code)
+                        @Html.TextBoxFor(m => m.code, new { @class = "form-control", @readonly = "readonly" })
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.customerID)
+                        @Html.DropDownListFor(m => m.customerID, new SelectList(Enumerable.Empty<SelectListItem>()), new { @class = "form-control required" })
+                    </div>
+                </div>
+
+            </div>
+            <!--end  row 1-->
+        </div>
+        <!--endcard body -->
+    </div>
+    <!-- end  Account Card -->
 
 
-<!-- Line Item  -->
+    <script>
+    var ssaURL = "@Url.Content("~/customer/ssa")";
+    var select2PlaceHolder = "Customer";
+    $(document).ready(function () {
 
-<div class="bg-white">
-    <table class="table table-bordered table-striped table-hover" id="tblLineItem">
-        <thead>
-            <tr class="text-center">
-                <th scope="col"> Item </th>
-                <th scope="col"> Quantity </th>
-                <th scope="col"> Price </th>
-                <th scope="col"> Total </th>
-                <th scope="col" style="width:40px;"> </th>
-            </tr>
-            <tr rowIndex="0">
-                <td>
-                    <select class="form-control line-item-required" id="item0" name="item" rowIndex="0" onchange="itemChange($(this))">
-                        <option value=""> -- Please Select Item -- </option>
-                        <option value="1"> Item 1 </option>
-                        <option value="2"> Item 2 </option>
-                        <option value="3"> Item 3 </option>
-                        <option value="4"> Item 4 </option>
-                    </select>
-                </td>
-                <td> <input class="form-control line-item-required" type="text" id="quantity0" name="quantity" placeholder="Quantity" onchange="calculation($(this))" /> </td>
-                <td> <input class="form-control line-item-required" type="text" id="price0" name="price" placeholder="Price" onchange="calculation($(this))" /> </td>
-                <td> <input class="form-control" type="text" id="total0" name="total0" readonly /> </td>
-                <td>
-                    <button type="button" class="btn btn-success" onclick="saveLineItem($(this))"> <i class="fas fa-save"></i></button>
-                </td>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-</div>
+        $("#customerID").select2({
+            ajax: {
+                url: ssaURL,
+                dataType: "json",
+                delay: 50,
+                data: function (params) {
+                    return {
+                        q: params.term, // search term
+                        page: params.page
+                    };
+                },
+            },
+            placeholder: select2PlaceHolder,
+            escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+            minimumInputLength: 1,
+            templateResult: templateResult,
+            templateSelection: templateSelection
+        });
 
-<script>
+    });
+
+    //-> templateResult
+    function templateResult(data) {
+        if (data.loading)
+            return data.text;
+
+        var markup = `<div class="row">
+                            <div class="col-4"> ${data.firstName}  </div>
+                            <div class="col-4"> ${data.lastName}  </div>
+                            <div class="col-4"> ${data.code}  </div>
+                        </div>`;
+        return markup;
+    }
+
+    //-> templateSelection
+    function templateSelection(data) {
+        if (data.id === "")
+            return 'Customer';
+        return data.firstName + " " + data.lastName;
+    }
+
+    </script>
+
+
+
+    <br />
+
+
+    <!-- Line Item  -->
+
+
+    <div class="bg-white">
+        <table class="table table-bordered table-striped table-hover" id="tblLineItem">
+            <thead>
+                <tr class="text-center">
+                    <th scope="col"> Item </th>
+                    <th scope="col"> Quantity </th>
+                    <th scope="col"> Price </th>
+                    <th scope="col"> Total </th>
+                    <th scope="col" style="width:40px;"> </th>
+                </tr>
+                <tr rowIndex="0">
+                    <td>
+                        <select class="form-control line-item-required" id="item0" name="items[][itemID]" rowIndex="0" onchange="itemChange($(this))">
+                            <option value=""> -- Please Select Item -- </option>
+                            <option value="1"> Item 1 </option>
+                            <option value="2"> Item 2 </option>
+                            <option value="3"> Item 3 </option>
+                            <option value="4"> Item 4 </option>
+                        </select>
+                    </td>
+                    <td> <input class="form-control line-item-required" type="text" id="quantity0" name="items[][quantity]" placeholder="Quantity" onchange="calculation($(this))" /> </td>
+                    <td> <input class="form-control line-item-required" type="text" id="price0" name="items[][price]" placeholder="Price" onchange="calculation($(this))" /> </td>
+                    <td> <input class="form-control" type="text" id="total0" name="total0" readonly /> </td>
+                    <td>
+                        <button type="button" class="btn btn-success" onclick="saveLineItem($(this))"> <i class="fas fa-save"></i></button>
+                    </td>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <script>
 
     var url = "@Url.Content("~/saleorder")";
     var createURL = url + "/create/";
     var detailsURL = url + "/details/";
     var findURL = url + "/find/";
-    var formName = "#saleorder";
+    var formName = "#newRecord";
     var rowIndex = 0;
     var tableRow = `<tr rowIndex="0">
                 <td>
-                    <select class="form-control line-item-required" id="item0" name="item" rowIndex="0" onchange="itemChange($(this))">
+                    <select class="form-control line-item-required" id="item0" name="items[][itemID]" rowIndex="0" onchange="itemChange($(this))">
                         <option value=""> -- Please Select Item -- </option>
                         <option value="1"> Item 1 </option>
                         <option value="2"> Item 2 </option>
@@ -72,8 +153,8 @@
                         <option value="4"> Item 4 </option>
                     </select>
                 </td>
-                <td> <input class="form-control line-item-required" type="text" id="quantity0" name="quantity" placeholder="Quantity" onchange="calculation($(this))" /> </td>
-                <td> <input class="form-control line-item-required" type="text" id="price0" name="price" placeholder="Price" onchange="calculation($(this))" /> </td>
+                <td> <input class="form-control line-item-required" type="text" id="quantity0" name="items[][quantity]" placeholder="Quantity" onchange="calculation($(this))" /> </td>
+                <td> <input class="form-control line-item-required" type="text" id="price0" name="items[][price]" placeholder="Price" onchange="calculation($(this))" /> </td>
                 <td> <input class="form-control" type="text" id="total0" name="total0" readonly /> </td>
                 <td>
                     <button type="button" class="btn btn-success" onclick="saveLineItem($(this))"> <i class="fas fa-save"></i></button>
@@ -94,8 +175,14 @@
 
     //-> save
     function save() {
+        if ($("#customerID").val() == null) {
+            $(".select2-selection").css("border-color", "red");
+            return;
+        }
+
         if (isValid()) {
-            ajaxHelper(createURL, $(formName).serialize(), requestMethod.POST).then(function (done) {
+            $('#tblLineItem tr:last').remove();
+            ajaxHelper(createURL, $('#newRecord').serializeObject(), requestMethod.POST).then(function (done) {
                 window.location.href = detailsURL  + done.id;
             });
         }
@@ -141,6 +228,8 @@
         //alert();
     }
 
-</script>
+    </script>
+</form>
+
 
 

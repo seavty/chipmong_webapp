@@ -190,19 +190,31 @@
     <Compile Include="Models\DB\tblSaleOrder.cs">
       <DependentUpon>ChipMongModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DB\tblSaleOrderItem.cs">
+      <DependentUpon>ChipMongModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DTO\Customer\CustomerBaseDTO.cs" />
     <Compile Include="Models\DTO\Customer\CustomerEditDTO.cs" />
     <Compile Include="Models\DTO\Customer\CustomerFindDTO.cs" />
     <Compile Include="Models\DTO\Customer\CustomerNewDTO.cs" />
+    <Compile Include="Models\DTO\Customer\CustomerSSADTO.cs" />
     <Compile Include="Models\DTO\Customer\CustomerViewDTO.cs" />
     <Compile Include="Models\DTO\FindDTO.cs" />
     <Compile Include="Models\DTO\GetListDTO.cs" />
     <Compile Include="Models\DTO\MetaDataDTO.cs" />
+    <Compile Include="Models\DTO\SaleOrderItem\SaleOrderItemBaseDTO.cs" />
+    <Compile Include="Models\DTO\SaleOrderItem\SaleOrderItemNewDTO.cs" />
+    <Compile Include="Models\DTO\SaleOrderItem\SaleOrderItemViewDTO.cs" />
     <Compile Include="Models\DTO\SaleOrder\SaleOrderBaseDTO.cs" />
     <Compile Include="Models\DTO\SaleOrder\SaleOrderEditDTO.cs" />
     <Compile Include="Models\DTO\SaleOrder\SaleOrderFindDTO.cs" />
+    <Compile Include="Models\DTO\SaleOrder\SaleOrderMasterDetail.cs" />
     <Compile Include="Models\DTO\SaleOrder\SaleOrderNewDTO.cs" />
+    <Compile Include="Models\DTO\SaleOrder\SaleOrderTestDTO.cs" />
     <Compile Include="Models\DTO\SaleOrder\SaleOrderViewDTO.cs" />
+    <Compile Include="Models\DTO\SSA\GetSSADTO.cs" />
+    <Compile Include="Models\DTO\SSA\SSAItem.cs" />
+    <Compile Include="Models\DTO\SSA\SSAList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -215,6 +227,7 @@
     <Content Include="Content\css\Hind.css" />
     <Content Include="Content\css\jquery.toast.css" />
     <Content Include="Content\css\Merienda.css" />
+    <Content Include="Content\css\select2.min.css" />
     <Content Include="Content\img\1.jpg" />
     <Content Include="Content\img\2.jpg" />
     <Content Include="Content\img\3.jpg" />
@@ -230,9 +243,12 @@
     <Content Include="Content\js\jquery-upload.js" />
     <Content Include="Content\js\jquery.fileupload.js" />
     <Content Include="Content\js\jquery.preloader.min.js" />
+    <Content Include="Content\js\jquery.serialize-object.min.js" />
     <Content Include="Content\js\jquery.toast.js" />
     <Content Include="Content\js\jquery_min.js" />
     <Content Include="Content\js\popper.min.js" />
+    <Content Include="Content\js\select2.full.js" />
+    <Content Include="Content\js\select2.min.js" />
     <Content Include="Content\js\waitingfor.js" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\webfonts\fa-brands-400.svg" />
@@ -316,6 +332,12 @@
     <Content Include="Views\SaleOrder\Form.cshtml" />
     <Content Include="Views\SaleOrder\Details.cshtml" />
     <Content Include="Views\SaleOrder\TableRow.cshtml" />
+    <Content Include="Views\SaleOrder\CreateForm.cshtml" />
+    <Content Include="Views\SaleOrder\DetailsForm.cshtml" />
+    <Content Include="Views\SaleOrder\Paging.cshtml" />
+    <Content Include="Views\SaleOrder\Find.cshtml" />
+    <Content Include="Views\SaleOrder\Edit.cshtml" />
+    <Content Include="Views\SaleOrder\EditForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

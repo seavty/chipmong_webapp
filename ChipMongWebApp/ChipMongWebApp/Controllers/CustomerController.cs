@@ -1,6 +1,7 @@
 ﻿using ChipMongWebApp.Handlers;
 using ChipMongWebApp.Helpers;
 using ChipMongWebApp.Models.DTO.Customer;
+using ChipMongWebApp.Models.DTO.SSA;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -95,6 +96,31 @@ namespace ChipMongWebApp.Controllers
         public ActionResult Find()
         {
             return View();
+        }
+
+        //-> SSA
+        [HttpGet]
+        public async Task<JsonResult> SSA()
+        {
+            /*
+            var result = new SSAList<CustomerSSADTO>();
+            var myList = new List<CustomerSSADTO>();
+            for (int i = 0; i < 20; i++)
+            {
+                var item = new CustomerSSADTO();
+                item.id = i;
+                item.name = "name " + i;
+                item.code = "code " + i;
+                myList.Add(item);
+            }
+            
+            result.results = myList;
+            return Json(result, JsonRequestBehavior.AllowGet);
+            */
+
+            //return await handler.SSA(null);
+
+            return  Json(await handler.SSA(Request.QueryString["q"]), JsonRequestBehavior.AllowGet);
         }
     }
 }

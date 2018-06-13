@@ -1,0 +1,117 @@
+﻿@using ChipMongWebApp.Extension
+@model ChipMongWebApp.Models.DTO.SaleOrder.SaleOrderViewDTO
+
+
+<fieldset disabled class="summary">
+    <form id="saleorder" name="saleorder">
+        @Html.HiddenFor(m => m.id)
+
+        <!-- SaleOrder Card -->
+        <div class="card shadow-sm">
+            <div class="card-header merienda"> SaleOrder </div>
+            <!-- card body -->
+            <div class="card-body">
+                <!--row 1-->
+                <div class="row">
+
+                    <div class="col-4">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.code)
+                            @Html.TextBoxFor(m => m.code, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="form-group">
+                            @Html.Label("Date")
+                            @Html.TextBoxFor(m => m.code, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.customerID)
+                            <select class="form-control" id="customerID">
+                                <option> @Model.customer.firstName @Model.customer.lastName </option>
+                            </select>
+                            @Html.HiddenFor(m => m.customerID)
+                        </div>
+                    </div>
+
+                </div>
+                <!--end  row 1-->
+
+                <!--row 2-->
+                <div class="row">
+
+                    <div class="col-4">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.total)
+                            @Html.TextBoxFor(m => m.total, new { @class = "form-control", Value = Model.total.ToTwoDecimalPoint() })
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.status)
+                            @Html.TextBoxFor(m => m.status, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.remarks)
+                            @Html.TextAreaFor(m => m.remarks, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                </div>
+                <!--end  row 2-->
+            </div>
+            <!--endcard body -->
+        </div>
+        <!-- end  SaleOrder Card -->
+    </form>
+</fieldset>
+
+<br />
+
+<div id="tableData" class="shadow-sm bg-white">
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr class="text-center">
+                <th scope="col">#</th>
+                <th scope="col"> Item </th>
+                <th scope="col"> Quantity </th>
+                <th scope="col"> Price </th>
+                <th scope="col"> Total </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int i = 1;
+                foreach (var item in Model.items)
+                {
+                    <tr>
+                        <th scope="row" class="text-center" style="width:65px"> @i </th>
+                        <td> @item.price </td>
+                        <td> @item.quantity </td>
+                        <td> @item.price </td>
+                        <td> @item.total </td>
+                    </tr>
+                    i++;
+
+                }
+           }
+            
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+
+
+

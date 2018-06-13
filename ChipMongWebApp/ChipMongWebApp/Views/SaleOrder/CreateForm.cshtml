@@ -1,9 +1,6 @@
-﻿@model ChipMongWebApp.Models.DTO.SaleOrder.SaleOrderViewDTO
+﻿@model ChipMongWebApp.Models.DTO.SaleOrder.SaleOrderNewDTO
 
-<form id="saleorder" name="saleorder">
-    @Html.HiddenFor(m => m.id)
-
-    <!-- Loan Request Card -->
+<form id="newRecord" name="newRecord">
     <div class="card shadow-sm">
         <div class="card-header merienda"> SaleOrder </div>
         <!-- card body -->
@@ -17,10 +14,11 @@
                     </div>
                 </div>
 
+
                 <div class="col-4">
                     <div class="form-group">
                         @Html.LabelFor(m => m.customerID)
-                        <select id="customerID" name="customerID"  class="form-control"></select>
+                        @Html.DropDownListFor(m => m.customerID, new SelectList(Enumerable.Empty<SelectListItem>()), new { @class = "form-control" })
                     </div>
                 </div>
 
@@ -32,20 +30,15 @@
     <!-- end  Account Card -->
 </form>
 
-
-
-
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
-
 <script>
-    var myURL = "@Url.Content("~/customer/ssa")";
+    var ssaURL = "@Url.Content("~/customer/ssa")";
+    var select2PlaceHolder = "Customer";
     $(document).ready(function () {
-        
+
         $("#customerID").select2({
             ajax: {
-                url: myURL,
-                dataType: 'json',
+                url: ssaURL,
+                dataType: "json",
                 delay: 50,
                 data: function (params) {
                     return {
@@ -54,13 +47,13 @@
                     };
                 },
             },
-            placeholder: 'Customer',
+            placeholder: select2PlaceHolder,
             escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
             minimumInputLength: 1,
             templateResult: templateResult,
             templateSelection: templateSelection
         });
-        
+
     });
 
     //-> templateResult
@@ -78,10 +71,9 @@
 
     //-> templateSelection
     function templateSelection(data) {
-        if (data.id === "") 
+        if (data.id === "")
             return 'Customer';
         return data.firstName + " " + data.lastName;
     }
 
 </script>
-

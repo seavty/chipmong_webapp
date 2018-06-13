@@ -1,0 +1,36 @@
+﻿@model ChipMongWebApp.Models.DTO.GetListDTO<ChipMongWebApp.Models.DTO.SaleOrder.SaleOrderViewDTO>
+
+<table class="table table-bordered table-striped table-hover">
+    <thead>
+        <tr class="text-center">
+            <th scope="col" width="65px">#</th>
+            <th scope="col"> Code </th>
+            <th scope="col"> Date </th>
+            <th scope="col"> Customer </th>
+            <th scope="col"> Total </th>
+            <th scope="col"> Status </th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ int i = 0;}
+        @foreach (var item in Model.items)
+        {
+
+        <tr>
+            <th scope="row" class="text-center"> @(Model.metaData.startRow + i) </th>
+            <td class="align-middle"> <a href=" @Url.Content("~/saleorder/details/")@item.id"> @item.code </a> </td>
+            <td> @item.code </td>
+            <td> @item.customer.firstName @item.customer.lastName </td>
+            <td> @item.total </td>
+            <td> @item.status </td>
+
+        </tr>
+            i++;
+
+        }
+
+        @Html.Partial("~/Views/Shared/Pagination.cshtml", Model.metaData)
+
+
+
+

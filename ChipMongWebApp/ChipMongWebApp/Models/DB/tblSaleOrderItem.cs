@@ -12,7 +12,7 @@ namespace ChipMongWebApp.Models.DB
     using System;
     using System.Collections.Generic;
     
-    public partial class tblSaleOrder
+    public partial class tblSaleOrderItem
     {
         public int id { get; set; }
         public Nullable<System.DateTime> createdDate { get; set; }
@@ -21,10 +21,10 @@ namespace ChipMongWebApp.Models.DB
         public Nullable<int> updatedBy { get; set; }
         public string code { get; set; }
         public Nullable<int> deleted { get; set; }
-        public Nullable<int> customerID { get; set; }
+        public Nullable<decimal> quantity { get; set; }
+        public Nullable<decimal> price { get; set; }
         public Nullable<decimal> total { get; set; }
-        public string status { get; set; }
-        public string remarks { get; set; }
-        public Nullable<System.DateTime> date { get; set; }
+        public Nullable<int> SaloeOrderID { get; set; }
+        public Nullable<int> ItemID { get; set; }
     }
 }

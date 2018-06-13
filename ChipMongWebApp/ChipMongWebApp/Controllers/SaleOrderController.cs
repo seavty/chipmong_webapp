@@ -42,13 +42,13 @@ namespace ChipMongWebApp.Controllers
                     throw new HttpException((int)HttpStatusCode.BadRequest, ConstantHelper.KEY_IN_REQUIRED_FIELD);
                 Response.StatusCode = 200;
                 return Json(await handler.Create(newDTO), JsonRequestBehavior.AllowGet);
-
             }
             catch (HttpException)
             {
                 return Json(ConstantHelper.ERROR, JsonRequestBehavior.AllowGet);
             }
         }
+
 
         //-> Details
         [HttpGet]
@@ -100,5 +100,7 @@ namespace ChipMongWebApp.Controllers
         {
             return PartialView();
         }
+
+        
     }
 }
