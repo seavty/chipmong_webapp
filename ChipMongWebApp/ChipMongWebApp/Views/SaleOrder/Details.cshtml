@@ -39,10 +39,13 @@
     }
 
     //-> edit
-    function edit() {
+        function edit() {
+            window.location.href = url + "/edit/" + id;
+        /*
         ajaxHelper(editURL + id, null, requestMethod.GET).then(function (done) {
             $(div).html(done);
         });
+        */
     }
     </script>
 

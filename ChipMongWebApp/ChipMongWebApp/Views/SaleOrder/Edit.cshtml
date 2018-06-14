@@ -66,7 +66,11 @@
                 <div class="col-4">
                     <div class="form-group">
                         @Html.LabelFor(m => m.status)
-                        @Html.TextBoxFor(m => m.status, new { @class = "form-control" })
+                        <select class="form-control" id="status" name="status">
+                            <option value="New"> New </option>
+                            <option value="InProgress"> In Progress </option>
+                            <option value="Completed"> Completed </option>
+                        </select>
                     </div>
                 </div>
 
@@ -119,7 +123,7 @@
                 </td>
                 <td> <input class="form-control line-item-required" type="text" id="@("quantity"+i)" name="items[][quantity]" placeholder="Quantity" value="@item.quantity.ToTwoDecimalPoint()" onchange="calculation($(this))" /> </td>
                 <td> <input class="form-control line-item-required" type="text" id="@("price"+i)" name="items[][price]" placeholder="Price" value="@item.price.ToTwoDecimalPoint()" onchange="calculation($(this))" /> </td>
-                <td> <input class="form-control total" type="text" id="@("total"+i)" name="total0" value="@item.total.ToTwoDecimalPoint()" readonly /> </td>
+                <td> <input class="form-control text-right total" type="text" id="@("total"+i)" name="total0" value="@item.total.ToTwoDecimalPoint()" readonly /> </td>
                 <td>
                     <button type="button" class="btn btn-danger" onclick="deleteLineItem($(this))"> <i class="fas fa-trash-alt"></i></button>
                 </td>
@@ -141,7 +145,7 @@ i++;
                     </td>
                     <td> <input class="form-control line-item-required" type="text" id="quantity0" name="items[][quantity]" placeholder="Quantity" onchange="calculation($(this))" /> </td>
                     <td> <input class="form-control line-item-required" type="text" id="price0" name="items[][price]" placeholder="Price" onchange="calculation($(this))" /> </td>
-                    <td> <input class="form-control total" type="text" id="total0" name="total0" readonly /> </td>
+                    <td> <input class="form-control text-right total" type="text" id="total0" name="total0" readonly /> </td>
                     <td>
                         <button type="button" class="btn btn-success" onclick="saveLineItem($(this))"> <i class="fas fa-save"></i></button>
                     </td>
@@ -158,6 +162,7 @@ i++;
     var endPoint = "@Url.Content("~/saleorder")";
     var select2PlaceHolder = "Customer";
     var rowIndex = @Model.items.Count();
+    var id = @Url.RequestContext.RouteData.Values["id"];
     var tableRow = `<tr rowIndex="0">
                 <td>
                     <select class="form-control line-item-required" id="item0" name="items[][itemID]" rowIndex="0" onchange="itemChange($(this))">
@@ -170,7 +175,7 @@ i++;
                 </td>
                 <td> <input class="form-control line-item-required" type="text" id="quantity0" name="items[][quantity]" placeholder="Quantity" onchange="calculation($(this))" /> </td>
                 <td> <input class="form-control line-item-required" type="text" id="price0" name="items[][price]" placeholder="Price" onchange="calculation($(this))" /> </td>
-                <td> <input class="form-control total" type="text" id="total0" name="total0" readonly /> </td>
+                <td> <input class="form-control text-right total" type="text" id="total0" name="total0" readonly /> </td>
                 <td>
                     <button type="button" class="btn btn-success" onclick="saveLineItem($(this))"> <i class="fas fa-save"></i></button>
                 </td>
@@ -178,7 +183,9 @@ i++;
     $(document).ready(function () {
         $("#btnSave").click(function () { save(); });
         $("#btnCancel").click(function () { cancel(); });
-        
+
+        $("#status").val("@Model.status");
+
         $('#customerID').select2({
             ajax: {
                 url: ssaURL,
@@ -205,10 +212,15 @@ i++;
         //--when submit form to server should include route edit / id && form hidden id 
         // then compare on server whether route id && hidden id the same or not , if not the same it mean something wrong
         $('#tblLineItem tr:last').remove();
-        ajaxHelper(endPoint + "/edit", $('#record').serializeObject(), requestMethod.POST).then(function (done) {
-            //$(div).html(done);
+        ajaxHelper(endPoint + "/edit", $('#record').serializeObject(), requestMethod.POST).then(function (data) {
+            window.location.href = endPoint + "/details/" + data.id;
         });
         
+    }
+
+    //--> cancel
+    function cancel() {
+        window.location.href = endPoint + "/details/" + id;
     }
 
     //-> templateResult
@@ -251,20 +263,18 @@ i++;
         var price = toFloat($("#price" + index).val());
         var total = quantity * price;
         $("#total" + index).val(toFloatWithTwoPrecision(total));
-        headerCalculation();
+        if (index > 0)
+            headerCalculation();
     }
 
     //-> headerCalculation
     function headerCalculation() {
-        
         var sum = 0;
         $(".total").each(function () {
             //var value = $(this).val();
             var value = toFloat($(this).val());
             sum += parseFloat(value);
         });
-
-        alert("sum" + sum);
         $("#total").val(toFloatWithTwoPrecision(sum));
     }
 

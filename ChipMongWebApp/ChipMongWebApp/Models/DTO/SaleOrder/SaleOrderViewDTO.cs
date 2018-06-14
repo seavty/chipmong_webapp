@@ -21,9 +21,6 @@ namespace ChipMongWebApp.Models.DTO.SaleOrder
         [DisplayName("Status:")]
         public string status { get; set; }
 
-        [DisplayName("Remarks:")]
-        public string remarks { get; set; }
-
         public CustomerViewDTO customer { get; set; }
 
         public List<SaleOrderItemViewDTO> items { get; set; }

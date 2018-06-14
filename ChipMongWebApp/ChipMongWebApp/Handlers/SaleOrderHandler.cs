@@ -67,7 +67,6 @@ namespace ChipMongWebApp.Handlers
                     await db.SaveChangesAsync();
                     var lineItems = await SaveLineItem(record.id, newDTO);
                     record.total = lineItems.Sum(item => item.total);
-                    db.tblSaleOrders.Add(record);
                     await db.SaveChangesAsync();
 
                     transaction.Commit();
@@ -106,7 +105,9 @@ namespace ChipMongWebApp.Handlers
         //-> Save
         public async Task<SaleOrderViewDTO> Edit(SaleOrderEditDTO editDTO)
         {
-            //--> big mistake need to change no need to map DTO 2 two from view to edit -> just map it when post from form is ok
+            /*
+            
+            //--> big mistake need to change no need to map DTO 2 time from view to edit -> just map it when post from form is ok
             var record = await db.tblSaleOrders.FirstOrDefaultAsync(r => r.deleted == null && r.id == editDTO.id);
             if (record == null)
                 throw new HttpException((int)HttpStatusCode.NotFound, "NotFound");
@@ -115,7 +116,72 @@ namespace ChipMongWebApp.Handlers
             record.updatedDate = DateTime.Now;
             await db.SaveChangesAsync();
             return await SelectByID(record.id);
+            */
+            //--> big mistake need to change no need to map DTO 2 time from view to edit -> just map it when post from form is ok
+            using (var transaction = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    editDTO = StringHelper.TrimStringProperties(editDTO);
+                    var record = await db.tblSaleOrders.FirstOrDefaultAsync(r => r.deleted == null && r.id == editDTO.id);
+                    if (record == null)
+                        throw new HttpException((int)HttpStatusCode.NotFound, "NotFound");
+                    record = (tblSaleOrder)MappingHelper.MapDTOToDBClass<SaleOrderEditDTO, tblSaleOrder>(editDTO, record);
+                    record.updatedDate = DateTime.Now;
+                    var lineItems = await EditLineItem(record.id, editDTO);
+                    record.total = lineItems.Sum(item => item.total);
+                    await db.SaveChangesAsync();
+                    transaction.Commit();
+                    return await SelectByID(record.id);
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw new Exception(ex.Message);
+                }
+            }
 
+        }
+
+
+        //-> EditLineItem
+        private async Task<List<tblSaleOrderItem>> EditLineItem(int mastetID, SaleOrderEditDTO editDTO)
+        {
+            var list = new List<tblSaleOrderItem>();
+            if (editDTO.items != null)
+            {
+                foreach (var item in editDTO.items)
+                {
+                    var record = (tblSaleOrderItem)MappingHelper.MapDTOToDBClass<SaleOrderItemEditDTO, tblSaleOrderItem>(item, new tblSaleOrderItem());
+
+                    if (item.id == null)
+                        record.createdDate = DateTime.Now;
+                    else
+                        record.updatedDate = DateTime.Now;
+
+                    record.total = record.quantity * record.price;
+                    record.SaloeOrderID = mastetID;
+                    if (item.id == null)
+                        db.tblSaleOrderItems.Add(record);
+                    await db.SaveChangesAsync();
+                    list.Add(record);
+                }
+            }
+            if (!string.IsNullOrEmpty(editDTO.deleteLineItemID))
+            {
+                var ids = editDTO.deleteLineItemID.Split(',');
+                foreach (var id in ids)
+                {
+                    var itemID = int.Parse(id);
+                    var item = await db.tblSaleOrderItems.FirstOrDefaultAsync(x => x.deleted == null && x.id == itemID);
+                    if (item != null)
+                    {
+                        item.deleted = 1;
+                        await db.SaveChangesAsync();
+                    }
+                }
+            }
+            return list;
         }
 
 

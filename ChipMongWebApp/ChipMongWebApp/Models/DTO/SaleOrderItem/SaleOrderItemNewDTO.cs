@@ -5,7 +5,7 @@ using System.Web;
 
 namespace ChipMongWebApp.Models.DTO.SaleOrderItem
 {
-    public class SaleOrderItemNewDTO
+    public class SaleOrderItemNewDTO : SaleOrderItemBaseDTO
     {
         public int itemID { get; set; }
         
