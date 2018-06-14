@@ -25,6 +25,21 @@
           <Property Name="cust_Address" Type="nvarchar" MaxLength="100" />
           <Property Name="cust_Deleted" Type="int" />
         </EntityType>
+        <EntityType Name="tblItem">
+          <Key>
+            <PropertyRef Name="item_ItemID" />
+          </Key>
+          <Property Name="item_ItemID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="item_CreatedDate" Type="datetime" />
+          <Property Name="item_CreatedBy" Type="int" />
+          <Property Name="item_UpdatedDate" Type="datetime" />
+          <Property Name="item_UpdatedBy" Type="int" />
+          <Property Name="item_Code" Type="nvarchar" MaxLength="100" />
+          <Property Name="item_Deleted" Type="int" />
+          <Property Name="item_Cost" Type="numeric" Precision="18" Scale="5" />
+          <Property Name="item_Price" Type="numeric" Precision="18" Scale="5" />
+          <Property Name="item_Name" Type="nvarchar" MaxLength="100" />
+        </EntityType>
         <EntityType Name="tblSaleOrder">
           <Key>
             <PropertyRef Name="slor_SaleOrderID" />
@@ -61,6 +76,7 @@
         </EntityType>
         <EntityContainer Name="ChipMongModelStoreContainer">
           <EntitySet Name="tblCustomer" EntityType="Self.tblCustomer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblItem" EntityType="Self.tblItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblSaleOrder" EntityType="Self.tblSaleOrder" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblSaleOrderItem" EntityType="Self.tblSaleOrderItem" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
@@ -92,6 +108,7 @@
           <EntitySet Name="tblCustomers" EntityType="Self.tblCustomer" />
           <EntitySet Name="tblSaleOrders" EntityType="ChipMongModel.tblSaleOrder" />
           <EntitySet Name="tblSaleOrderItems" EntityType="ChipMongModel.tblSaleOrderItem" />
+          <EntitySet Name="tblItems" EntityType="ChipMongModel.tblItem" />
         </EntityContainer>
         <EntityType Name="tblSaleOrder">
           <Key>
@@ -126,6 +143,21 @@
           <Property Name="total" Type="Decimal" Precision="18" Scale="5" />
           <Property Name="SaloeOrderID" Type="Int32" />
           <Property Name="ItemID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tblItem">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="createdDate" Type="DateTime" Precision="3" />
+          <Property Name="createdBy" Type="Int32" />
+          <Property Name="updatedDate" Type="DateTime" Precision="3" />
+          <Property Name="updatedBy" Type="Int32" />
+          <Property Name="code" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="deleted" Type="Int32" />
+          <Property Name="cost" Type="Decimal" Precision="18" Scale="5" />
+          <Property Name="price" Type="Decimal" Precision="18" Scale="5" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -187,6 +219,22 @@
                 <ScalarProperty Name="createdBy" ColumnName="sloi_CreatedBy" />
                 <ScalarProperty Name="createdDate" ColumnName="sloi_CreatedDate" />
                 <ScalarProperty Name="id" ColumnName="sloi_SaleOrderItemID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblItems">
+            <EntityTypeMapping TypeName="ChipMongModel.tblItem">
+              <MappingFragment StoreEntitySet="tblItem">
+                <ScalarProperty Name="name" ColumnName="item_Name" />
+                <ScalarProperty Name="price" ColumnName="item_Price" />
+                <ScalarProperty Name="cost" ColumnName="item_Cost" />
+                <ScalarProperty Name="deleted" ColumnName="item_Deleted" />
+                <ScalarProperty Name="code" ColumnName="item_Code" />
+                <ScalarProperty Name="updatedBy" ColumnName="item_UpdatedBy" />
+                <ScalarProperty Name="updatedDate" ColumnName="item_UpdatedDate" />
+                <ScalarProperty Name="createdBy" ColumnName="item_CreatedBy" />
+                <ScalarProperty Name="createdDate" ColumnName="item_CreatedDate" />
+                <ScalarProperty Name="id" ColumnName="item_ItemID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

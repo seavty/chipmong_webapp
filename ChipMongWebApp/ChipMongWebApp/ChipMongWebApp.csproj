@@ -155,6 +155,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\SaleOrderController.cs" />
     <Compile Include="Extension\DateTimeExtension.cs" />
     <Compile Include="Extension\DoubleExtension.cs" />
@@ -162,6 +163,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Handlers\CustomerHandler.cs" />
+    <Compile Include="Handlers\ItemHandler.cs" />
     <Compile Include="Handlers\SaleOrderHandler.cs" />
     <Compile Include="Helpers\ConstantHelper.cs" />
     <Compile Include="Helpers\DoubleHelper.cs" />
@@ -187,6 +189,9 @@
     <Compile Include="Models\DB\tblCustomer.cs">
       <DependentUpon>ChipMongModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DB\tblItem.cs">
+      <DependentUpon>ChipMongModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DB\tblSaleOrder.cs">
       <DependentUpon>ChipMongModel.tt</DependentUpon>
     </Compile>
@@ -201,6 +206,10 @@
     <Compile Include="Models\DTO\Customer\CustomerViewDTO.cs" />
     <Compile Include="Models\DTO\FindDTO.cs" />
     <Compile Include="Models\DTO\GetListDTO.cs" />
+    <Compile Include="Models\DTO\Item\ItemBaseDTO.cs" />
+    <Compile Include="Models\DTO\Item\ItemEditDTO.cs" />
+    <Compile Include="Models\DTO\Item\ItemNewDTO.cs" />
+    <Compile Include="Models\DTO\Item\ItemViewDTO.cs" />
     <Compile Include="Models\DTO\MetaDataDTO.cs" />
     <Compile Include="Models\DTO\SaleOrderItem\SaleOrderItemBaseDTO.cs" />
     <Compile Include="Models\DTO\SaleOrderItem\SaleOrderItemEditDTO.cs" />
@@ -339,6 +348,9 @@
     <Content Include="Views\SaleOrder\Find.cshtml" />
     <Content Include="Views\SaleOrder\Edit.cshtml" />
     <Content Include="Views\SaleOrder\EditForm.cshtml" />
+    <Content Include="Views\Item\Index.cshtml" />
+    <Content Include="Views\Item\Create.cshtml" />
+    <Content Include="Views\Item\View.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
