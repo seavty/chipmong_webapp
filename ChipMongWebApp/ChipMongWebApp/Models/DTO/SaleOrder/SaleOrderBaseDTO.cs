@@ -11,10 +11,6 @@ namespace ChipMongWebApp.Models.DTO.SaleOrder
     {
         public int? id { get; set; }
 
-        [MaxLength(100)]
-        [DisplayName("Code:")]
-        public string code { get; set; }
-
         [Required]
         [DisplayName("Customer (*):")]
         public int customerID { get; set; }

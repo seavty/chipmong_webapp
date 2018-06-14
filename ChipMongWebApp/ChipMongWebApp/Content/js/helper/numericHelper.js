@@ -12,7 +12,7 @@ function toFloat(number) {
 }
 
 //-> toFloatWith
-function totoFloatWithTwoPrecision(number) {
+function toFloatWithTwoPrecision(number) {
     var num = parseFloat(number) ? parseFloat(number) : 0.0;
     return parseFloat(num).toFixed(precision);
 }

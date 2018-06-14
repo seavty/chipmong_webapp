@@ -203,6 +203,7 @@
     <Compile Include="Models\DTO\GetListDTO.cs" />
     <Compile Include="Models\DTO\MetaDataDTO.cs" />
     <Compile Include="Models\DTO\SaleOrderItem\SaleOrderItemBaseDTO.cs" />
+    <Compile Include="Models\DTO\SaleOrderItem\SaleOrderItemEditDTO.cs" />
     <Compile Include="Models\DTO\SaleOrderItem\SaleOrderItemNewDTO.cs" />
     <Compile Include="Models\DTO\SaleOrderItem\SaleOrderItemViewDTO.cs" />
     <Compile Include="Models\DTO\SaleOrder\SaleOrderBaseDTO.cs" />

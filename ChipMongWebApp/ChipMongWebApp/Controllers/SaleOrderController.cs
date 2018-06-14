@@ -61,7 +61,7 @@ namespace ChipMongWebApp.Controllers
         [HttpGet]
         public async Task<ActionResult> Edit(int id)
         {
-            return PartialView(await handler.SelectByID(id));
+            return View(await handler.SelectByID(id));
         }
 
         //-> Create

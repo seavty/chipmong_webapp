@@ -5,6 +5,7 @@
 
 <form id="saleorder" name="saleorder">
     @Html.HiddenFor(m => m.id)
+    @Html.Hidden("deleteLineItemID", "0")
 
     <!-- SaleOrder Card -->
     <div class="card shadow-sm">
@@ -92,7 +93,7 @@
                 foreach (var item in Model.items)
                 {
             <tr rowIndex="@i">
-                @Html.HiddenFor(m => m.id)
+                <input type="hidden" name="@("lineItemID"+i)" id="@("lineItemID"+i)" value="@item.id" />
                 <td>
                     <select class="form-control line-item-required" id="item0" name="items[][itemID]" onchange="itemChange($(this))">
                         <option value=""> -- Please Select Item -- </option>
@@ -102,7 +103,7 @@
                         <option value="4"> Item 4 </option>
                     </select>
                 </td>
-                <td> <input class="form-control line-item-required" type="text" id="quantity0" name="items[][quantity]" placeholder="Quantity" value="@item.quantity.ToTwoDecimalPoint()" onchange="calculation($(this))"  /> </td>
+                <td> <input class="form-control line-item-required" type="text" id="quantity0" name="items[][quantity]" placeholder="Quantity" value="@item.quantity.ToTwoDecimalPoint()" onchange="calculation($(this))" /> </td>
                 <td> <input class="form-control line-item-required" type="text" id="price0" name="items[][price]" placeholder="Price" value="@item.price.ToTwoDecimalPoint()" onchange="calculation($(this))" /> </td>
                 <td> <input class="form-control" type="text" id="total0" name="total0" value="@item.total.ToTwoDecimalPoint()" readonly /> </td>
                 <td>
@@ -167,11 +168,17 @@
     //-> deleteLineItem
     function deleteLineItem(prop) {
         var rowIndex = prop.closest("tr").attr("rowIndex", rowIndex);
-        alert(rowIndex)
+        console.log(rowIndex);
+        //alert(rowIndex);
+        //var deleteLineItemID = $("#deleteLineItemID").val();
+
+        
+        //deleteLineItemID = deleteLineItemID + "," + $("#lineItemID" + rowIndex).val();
+        //$("#deleteLineItemID").val(deleteLineItemID);
+        
         if (confirm("Do you to delete this line item?"))
             prop.closest("tr").remove();
     }
-
 
 </script>
 

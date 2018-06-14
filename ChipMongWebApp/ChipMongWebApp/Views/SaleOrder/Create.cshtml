@@ -220,7 +220,7 @@
         var quantity = toFloat($("#quantity" + index).val());
         var price = toFloat($("#price" + index).val());
         var total = quantity * price;
-        $("#total" + index).val(totoFloatWithTwoPrecision(total));
+        $("#total" + index).val(toFloatWithTwoPrecision(total));
     }
 
     //-> itemChange
