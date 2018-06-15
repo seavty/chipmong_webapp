@@ -61,6 +61,8 @@ namespace ChipMongWebApp.Controllers
         [HttpGet]
         public async Task<ActionResult> Edit(int id)
         {
+            var tmp = await handler.SelectByID(id);
+
             return View(await handler.SelectByID(id));
         }
 

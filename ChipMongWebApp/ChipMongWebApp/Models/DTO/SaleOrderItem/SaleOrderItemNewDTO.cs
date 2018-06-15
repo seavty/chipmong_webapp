@@ -7,7 +7,7 @@ namespace ChipMongWebApp.Models.DTO.SaleOrderItem
 {
     public class SaleOrderItemNewDTO : SaleOrderItemBaseDTO
     {
-        public int itemID { get; set; }
+        //public int itemID { get; set; }
         
     }
 }

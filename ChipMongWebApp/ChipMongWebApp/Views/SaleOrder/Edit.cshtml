@@ -106,43 +106,49 @@
             </thead>
             <tbody>
                 @{
-        int i = 1;
-        foreach (var item in Model.items)
-        {
-            <tr rowIndex="@i">
-                <input type="hidden" name="@("lineItemID"+i)" id="@("lineItemID"+i)" value="@item.id" />
-                <input type="hidden" name="items[][id]" id="items[][id]" value="@item.id" />
-                <td>
-                    
-                    
-                    <select class="form-control line-item-required" id="item0" name="items[][itemID]" onchange="itemChange($(this))">
-                        <option value=""> -- Please Select Item -- </option>
-                        <option value="1"> Item 1 </option>
-                        <option value="2"> Item 2 </option>
-                        <option value="3"> Item 3 </option>
-                        <option value="4"> Item 4 </option>
-                    </select>
-                </td>
-                <td> <input class="form-control line-item-required" type="text" id="@("quantity"+i)" name="items[][quantity]" placeholder="Quantity" value="@item.quantity.ToTwoDecimalPoint()" onchange="calculation($(this))" /> </td>
-                <td> <input class="form-control line-item-required" type="text" id="@("price"+i)" name="items[][price]" placeholder="Price" value="@item.price.ToTwoDecimalPoint()" onchange="calculation($(this))" /> </td>
-                <td> <input class="form-control text-right total" type="text" id="@("total"+i)" name="total0" value="@item.total.ToTwoDecimalPoint()" readonly /> </td>
-                <td>
-                    <button type="button" class="btn btn-danger" onclick="deleteLineItem($(this))"> <i class="fas fa-trash-alt"></i></button>
-                </td>
-            </tr>
-i++;
+                    int i = 1;
+                    foreach (var item in Model.items)
+                    {
+                        <tr rowIndex="@i">
+                            <input type="hidden" name="@("lineItemID"+i)" id="@("lineItemID"+i)" value="@item.id" />
+                            <input type="hidden" name="items[][id]" id="items[][id]" value="@item.id" />
+                            <td>
 
-}
+
+                                <select class="form-control line-item-required" id="item0" name="items[][itemID]" onchange="itemChange($(this))">
+                                    @foreach (var itemSelection in Model.itemSelection)
+                                    {
+                                        if (itemSelection.id == item.item.id)
+                                        {
+                                            <option value="@itemSelection.id" selected> @item.item.name </option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@itemSelection.id"> @itemSelection.name </option>
+                                        }
+                                    }
+                                </select>
+                            </td>
+                            <td> <input class="form-control line-item-required" type="text" id="@("quantity"+i)" name="items[][quantity]" placeholder="Quantity" value="@item.quantity.ToTwoDecimalPoint()" onchange="calculation($(this))" /> </td>
+                            <td> <input class="form-control line-item-required" type="text" id="@("price"+i)" name="items[][price]" placeholder="Price" value="@item.price.ToTwoDecimalPoint()" onchange="calculation($(this))" /> </td>
+                            <td> <input class="form-control text-right total" type="text" id="@("total"+i)" name="total0" value="@item.total.ToTwoDecimalPoint()" readonly /> </td>
+                            <td>
+                                <button type="button" class="btn btn-danger" onclick="deleteLineItem($(this))"> <i class="fas fa-trash-alt"></i></button>
+                            </td>
+                        </tr>
+                        i++;
+
+                    }
                 }
 
                 <tr rowIndex="0">
                     <td>
                         <select class="form-control line-item-required" id="item0" name="items[][itemID]" rowIndex="0" onchange="itemChange($(this))">
-                            <option value=""> -- Please Select Item -- </option>
-                            <option value="1"> Item 1 </option>
-                            <option value="2"> Item 2 </option>
-                            <option value="3"> Item 3 </option>
-                            <option value="4"> Item 4 </option>
+                            <option value=""> -- Select Item -- </option>
+                            @foreach (var item in Model.itemSelection)
+    {
+                        <option value="@item.id"> @item.name </option>
+}
                         </select>
                     </td>
                     <td> <input class="form-control line-item-required" type="text" id="quantity0" name="items[][quantity]" placeholder="Quantity" onchange="calculation($(this))" /> </td>
@@ -206,18 +212,18 @@ i++;
             templateSelection: templateSelection
 
         });
-       
-        
+
+
     });
     //-> save
     function save() {
-        //--when submit form to server should include route edit / id && form hidden id 
+        //--when submit form to server should include route edit / id && form hidden id
         // then compare on server whether route id && hidden id the same or not , if not the same it mean something wrong
         $('#tblLineItem tr:last').remove();
         ajaxHelper(endPoint + "/edit", $('#record').serializeObject(), requestMethod.POST).then(function (data) {
             window.location.href = endPoint + "/details/" + data.id;
         });
-        
+
     }
 
     //--> cancel
@@ -282,7 +288,13 @@ i++;
 
     //-> itemChange
     function itemChange(prop) {
-        //alert();
+        var index = prop.closest("tr").attr("rowIndex")
+        var itemEndPoint = "@Url.Content("~/item")";
+        var itemID = prop.val();
+        ajaxHelper(itemEndPoint + "/record/" + itemID, null, requestMethod.GET).then(function (data) {
+            $("#price" + index).val(toFloatWithTwoPrecision(data.price));
+            calculation(prop);
+        });
     }
 
     //-> saveLineItem
@@ -310,7 +322,7 @@ i++;
         }
     }
 
-    
+
 </script>
 
 

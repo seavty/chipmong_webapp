@@ -7,5 +7,6 @@ namespace ChipMongWebApp.Models.DTO.SaleOrderItem
 {
     public class SaleOrderItemEditDTO : SaleOrderItemBaseDTO
     {
+       
     }
 }

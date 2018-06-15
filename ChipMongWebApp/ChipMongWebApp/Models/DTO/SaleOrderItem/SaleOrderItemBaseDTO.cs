@@ -8,6 +8,7 @@ namespace ChipMongWebApp.Models.DTO.SaleOrderItem
     public class SaleOrderItemBaseDTO
     {
         public int? id { get; set; }
+        public int itemID { get; set; }
         public double quantity { get; set; }
         public double price { get; set; }
     }

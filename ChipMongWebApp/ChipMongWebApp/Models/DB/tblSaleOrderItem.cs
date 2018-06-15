@@ -24,7 +24,7 @@ namespace ChipMongWebApp.Models.DB
         public Nullable<decimal> quantity { get; set; }
         public Nullable<decimal> price { get; set; }
         public Nullable<decimal> total { get; set; }
-        public Nullable<int> SaloeOrderID { get; set; }
-        public Nullable<int> ItemID { get; set; }
+        public Nullable<int> saleOrderID { get; set; }
+        public Nullable<int> itemID { get; set; }
     }
 }

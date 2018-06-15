@@ -33,6 +33,20 @@ namespace ChipMongWebApp.Handlers
             var saleOrderDTO = MappingHelper.MapDBClassToDTO<tblSaleOrder, SaleOrderViewDTO>(record);
             saleOrderDTO.customer = await new CustomerHandler().SelectByID(int.Parse(record.customerID.ToString()));
             saleOrderDTO.items = await GetLineItems(id);
+
+
+            IQueryable<tblItem> records = from x in db.tblItems
+                                          where x.deleted == null
+                                          orderby x.id ascending
+                                          select x;
+            var items = await records.ToListAsync();
+            var recordList = new List<ItemViewDTO>();
+            foreach (var item in items)
+            {
+                recordList.Add((ItemViewDTO)MappingHelper.MapDBClassToDTO<tblItem, ItemViewDTO>(item));
+
+            }
+            saleOrderDTO.itemSelection = recordList;
             return saleOrderDTO;
         }
 
@@ -42,14 +56,14 @@ namespace ChipMongWebApp.Handlers
             var items = new List<SaleOrderItemViewDTO>();
 
             IQueryable<tblSaleOrderItem> records = from x in db.tblSaleOrderItems
-                                                   where x.deleted == null && x.SaloeOrderID == masterID
+                                                   where x.deleted == null && x.saleOrderID == masterID
                                                    orderby x.id ascending
                                                    select x;
             var listing = await records.ToListAsync();
             foreach (var item in listing)
             {
                 var mappingDTO = MappingHelper.MapDBClassToDTO<tblSaleOrderItem, SaleOrderItemViewDTO>(item);
-                mappingDTO.item = await (new ItemHandler().SelectByID(int.Parse(item.ItemID.ToString())));
+                mappingDTO.item = await (new ItemHandler().SelectByID(int.Parse(item.itemID.ToString())));
                 //items.Add(MappingHelper.MapDBClassToDTO<tblSaleOrderItem, SaleOrderItemViewDTO>(item));
                 items.Add(mappingDTO);
             }
@@ -96,7 +110,7 @@ namespace ChipMongWebApp.Handlers
                     record.createdDate = DateTime.Now;
 
                     record.total = record.quantity * record.price;
-                    record.SaloeOrderID = mastetID;
+                    record.saleOrderID = mastetID;
                     db.tblSaleOrderItems.Add(record);
                     await db.SaveChangesAsync();
 
@@ -156,15 +170,23 @@ namespace ChipMongWebApp.Handlers
             {
                 foreach (var item in editDTO.items)
                 {
-                    var record = (tblSaleOrderItem)MappingHelper.MapDTOToDBClass<SaleOrderItemEditDTO, tblSaleOrderItem>(item, new tblSaleOrderItem());
+                    //var record = (tblSaleOrderItem)MappingHelper.MapDTOToDBClass<SaleOrderItemEditDTO, tblSaleOrderItem>(item, new tblSaleOrderItem());
+                    var record = new tblSaleOrderItem();
 
                     if (item.id == null)
+                    {
+                        record = (tblSaleOrderItem)MappingHelper.MapDTOToDBClass<SaleOrderItemEditDTO, tblSaleOrderItem>(item, new tblSaleOrderItem());
                         record.createdDate = DateTime.Now;
+                    }
                     else
+                    {
+                        record = await db.tblSaleOrderItems.FirstOrDefaultAsync(x => x.deleted == null && x.id == item.id);
+                        record = (tblSaleOrderItem)MappingHelper.MapDTOToDBClass<SaleOrderItemEditDTO, tblSaleOrderItem>(item, record);
                         record.updatedDate = DateTime.Now;
+                    }
 
                     record.total = record.quantity * record.price;
-                    record.SaloeOrderID = mastetID;
+                    record.saleOrderID = mastetID;
                     if (item.id == null)
                         db.tblSaleOrderItems.Add(record);
                     await db.SaveChangesAsync();

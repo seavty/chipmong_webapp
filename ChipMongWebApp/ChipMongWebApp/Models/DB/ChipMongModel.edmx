@@ -141,8 +141,8 @@
           <Property Name="quantity" Type="Decimal" Precision="18" Scale="5" />
           <Property Name="price" Type="Decimal" Precision="18" Scale="5" />
           <Property Name="total" Type="Decimal" Precision="18" Scale="5" />
-          <Property Name="SaloeOrderID" Type="Int32" />
-          <Property Name="ItemID" Type="Int32" />
+          <Property Name="saleOrderID" Type="Int32" />
+          <Property Name="itemID" Type="Int32" />
         </EntityType>
         <EntityType Name="tblItem">
           <Key>
@@ -207,8 +207,8 @@
           <EntitySetMapping Name="tblSaleOrderItems">
             <EntityTypeMapping TypeName="ChipMongModel.tblSaleOrderItem">
               <MappingFragment StoreEntitySet="tblSaleOrderItem">
-                <ScalarProperty Name="ItemID" ColumnName="sloi_ItemID" />
-                <ScalarProperty Name="SaloeOrderID" ColumnName="sloi_SaloeOrderID" />
+                <ScalarProperty Name="itemID" ColumnName="sloi_ItemID" />
+                <ScalarProperty Name="saleOrderID" ColumnName="sloi_SaloeOrderID" />
                 <ScalarProperty Name="total" ColumnName="sloi_Total" />
                 <ScalarProperty Name="price" ColumnName="sloi_Price" />
                 <ScalarProperty Name="quantity" ColumnName="sloi_Quantity" />
