@@ -1,4 +1,4 @@
-﻿@model ChipMongWebApp.Models.DTO.SaleOrder.SaleOrderFindDTO
+﻿@model ChipMongWebApp.Models.DTO.Item.ItemFindDTO
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/Main/_Main.cshtml";
@@ -18,7 +18,7 @@
     <br />
 
     <div class="card shadow-sm">
-        <div class="card-header merienda"> Find SaleOrder </div>
+        <div class="card-header merienda"> Find Item </div>
 
         <div class="card-body">
             <div class="row">
@@ -33,15 +33,8 @@
 
                 <div class="col">
                     <div class="form-group">
-                        @Html.LabelFor(m => m.code)
-                        @Html.TextBoxFor(m => m.code, new { @class = "form-control", placeholder = "Code", @maxlength = "100" })
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.code)
-                        @Html.TextBoxFor(m => m.code, new { @class = "form-control", placeholder = "Code", @maxlength = "100" })
+                        @Html.LabelFor(m => m.name)
+                        @Html.TextBoxFor(m => m.name, new { @class = "form-control", placeholder = "Name", @maxlength = "100" })
                     </div>
                 </div>
 
@@ -55,12 +48,13 @@
 
     <br />
 
+
 </form>
 
 <script>
 
-    var url = "@Url.Content("~/saleorder")";
-    
+    var url = "@Url.Content("~/item")";
+
     $(document).ready(function () {
         setupEvents();
     });
@@ -73,11 +67,12 @@
         $("#btnNew").click(function () { newRecord(); });
     }
 
+
     //-> getPage
     function paging(currentPage) {
         $("#currentPage").val(currentPage);
-        ajaxHelper(url + "/paging/", $("#record").serializeObject(), requestMethod.POST).then(function (data) {
-            $("#tableData").html(data);
+        ajaxHelper(url + "/paging/", $("#record").serializeObject(), requestMethod.POST).then(function (done) {
+            $("#tableData").html(done);
         });
     }
 

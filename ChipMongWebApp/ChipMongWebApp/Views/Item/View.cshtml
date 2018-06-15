@@ -61,14 +61,16 @@
 <script>
 
     var endPoint = "@Url.Content("~/item")";
+    var id = @Url.RequestContext.RouteData.Values["id"];
+
     $(document).ready(function () {
         setupEvents();
     });
 
     //-> setupEvents
     function setupEvents() {
-        $("#btnSave").click(function () { save(); });
-        $("#btnCancel").click(function () { cancel(); });
+        $("#btnBack").click(function () { back(); });
+        $("#btnEdit").click(function () { edit(); });
     }
 
     //-> save
@@ -80,7 +82,15 @@
         }
     }
 
+    //-> edit 
+    function edit() {
+        window.location.href = endPoint + "/edit/" + id;
+    }
 
+    //-> back
+    function back() {
+        window.location.href = endPoint + "/find/";
+    }
 
 </script>
 

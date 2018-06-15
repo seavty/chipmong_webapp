@@ -1,4 +1,4 @@
-﻿@model ChipMongWebApp.Models.DTO.SaleOrder.SaleOrderNewDTO
+﻿@model ChipMongWebApp.Models.DTO.SaleOrder.SaleOrderViewDTO
 @{
     /**/
 
@@ -15,20 +15,18 @@
 
 <br />
 
-@*@Html.Partial("~/Views/SaleOrder/Form.cshtml")*@
-@*@Html.Partial("~/Views/SaleOrder/CreateForm.cshtml")*@
-
-<form id="newRecord" name="newRecord">
+<form id="record" name="record">
     <div class="card shadow-sm">
         <div class="card-header merienda"> SaleOrder </div>
+
         <!-- card body -->
         <div class="card-body">
             <!--row 1-->
             <div class="row">
                 <div class="col-4">
                     <div class="form-group">
-                        @Html.Label("Code")
-                        <input type="text" class="form-control" readonly value="" placeholder="Code" />
+                        @Html.LabelFor(m => m.code)
+                        @Html.TextBoxFor(m => m.code, new { @class = "form-control", @readonly = "readonly", placeholder = "Code" })
                     </div>
                 </div>
 
@@ -52,9 +50,8 @@
             <div class="row">
                 <div class="col-4">
                     <div class="form-group">
-                        @Html.Label("Total")
-                        <input type="text" name="total" id="total" class="form-control" readonly value="" />
-
+                        @Html.LabelFor(m => m.total)
+                        @Html.TextBoxFor(m => m.total, new { @class = "form-control", @readonly = "readonly", placeholder = "Total", Value = "0.00" })
                     </div>
                 </div>
 
@@ -83,10 +80,163 @@
         </div>
         <!--endcard body -->
     </div>
-    <!-- end  Account Card -->
+    <!-- end card -->
+
+    <br />
 
 
-    <script>
+    <!-- Line Item  -->
+    <div class="bg-white">
+        <table class="table table-bordered table-striped table-hover" id="tblLineItem">
+            <thead>
+                <tr class="text-center">
+                    <th scope="col"> Item </th>
+                    <th scope="col"> Quantity </th>
+                    <th scope="col"> Price </th>
+                    <th scope="col"> Total </th>
+                    <th scope="col" style="width:40px;"> </th>
+                </tr>
+                <tr rowIndex="0">
+                    <td>
+                        <select class="form-control line-item-required" id="item0" name="items[][itemID]" rowIndex="0" onchange="itemChange($(this))">
+                            <option value=""> -- Select Item -- </option>
+                            @foreach (var item in Model.itemSelection)
+                            {
+                                <option value="@item.id"> @item.name </option>
+                            }
+                        </select>
+                    </td>
+                    <td> <input class="form-control line-item-required" type="text" id="quantity0" name="items[][quantity]" placeholder="Quantity" onchange="calculation($(this))" /> </td>
+                    <td> <input class="form-control line-item-required" type="text" id="price0" name="items[][price]" placeholder="Price" onchange="calculation($(this))" /> </td>
+                    <td> <input class="form-control total text-right" type="text" id="total0" name="total0" readonly /> </td>
+                    <td>
+                        <button type="button" class="btn btn-success" onclick="saveLineItem($(this))"> <i class="fas fa-save"></i></button>
+                    </td>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+</form>
+
+<script>
+
+    var url = "@Url.Content("~/saleorder")";
+    var createURL = url + "/create/";
+    var detailsURL = url + "/details/";
+    var findURL = url + "/find/";
+    var formName = "#newRecord";
+    var rowIndex = 0;
+    var tableRow = `<tr rowIndex="0">
+                <td>
+                        <select class="form-control line-item-required" id="item0" name="items[][itemID]" rowIndex="0" onchange="itemChange($(this))">
+                            <option value=""> -- Select Item -- </option>
+                            @foreach (var item in Model.itemSelection)
+                            {
+                                <option value="@item.id"> @item.name </option>
+                            }
+                        </select>
+                    </td>
+                <td> <input class="form-control line-item-required" type="text" id="quantity0" name="items[][quantity]" placeholder="Quantity" onchange="calculation($(this))" /> </td>
+                <td> <input class="form-control line-item-required" type="text" id="price0" name="items[][price]" placeholder="Price" onchange="calculation($(this))" /> </td>
+                <td> <input class="form-control total text-right" type="text" id="total0" name="total0" readonly /> </td>
+                <td>
+                    <button type="button" class="btn btn-success" onclick="saveLineItem($(this))"> <i class="fas fa-save"></i></button>
+                </td>
+            </tr>`;
+
+    $(document).ready(function () {
+
+        setupEvents();
+    });
+
+    //-> setupEvents
+    function setupEvents() {
+        //$("#tblLineItem").append(tableRow);
+        $("#btnSave").click(function () { save(); });
+        $("#btnCancel").click(function () { cancel(); });
+    }
+
+    //-> save
+    function save() {
+        if ($("#customerID").val() == null) {
+            $(".select2-selection").css("border-color", "red");
+            return;
+        }
+
+        if (isValid()) {
+            $('#tblLineItem tr:last').remove();
+            ajaxHelper(createURL, $('#record').serializeObject(), requestMethod.POST).then(function (done) {
+                window.location.href = detailsURL  + done.id;
+            });
+        }
+    }
+
+    //-> cancel
+    function cancel() {
+        window.location.href = findURL;
+    }
+
+    function saveLineItem(prop) {
+        if (prop.attr('class') == "btn btn-success") {
+            if (isValidLineItem()) {
+                prop.removeClass("btn-success")
+                    .addClass("btn-danger")
+                    .attr('rowIndex', rowIndex)
+                    .html('<i class="fas fa-trash-alt"></i> ');
+                rowIndex++;
+                prop.closest("tr").attr("rowIndex", rowIndex)
+                $("#quantity0").attr('id', "quantity" + (rowIndex));
+                $("#price0").attr('id', "price" + (rowIndex));
+                $("#total0").attr('id', "total" + (rowIndex));
+                $("#tblLineItem").append(tableRow);
+            }
+        }
+        else {
+            if (confirm("Do you to delete this line item?"))
+                prop.closest("tr").remove();
+        }
+        headerCalculation();
+    }
+
+    //-> calculation
+    function calculation(prop) {
+        var index = prop.closest("tr").attr("rowIndex")
+        var quantity = toFloat($("#quantity" + index).val());
+        var price = toFloat($("#price" + index).val());
+        var total = quantity * price;
+        $("#total" + index).val(toFloatWithTwoPrecision(total));
+        if (index > 0)
+            headerCalculation()
+    }
+
+    //-> itemChange
+    function itemChange(prop) {
+        var index = prop.closest("tr").attr("rowIndex")
+        var itemEndPoint = "@Url.Content("~/item")";
+        var itemID = prop.val();
+        ajaxHelper(itemEndPoint + "/record/" + itemID, null, requestMethod.GET).then(function (data) {
+            $("#price" + index).val(toFloatWithTwoPrecision(data.price));
+            calculation(prop);
+        });
+    }
+
+    //-> headerCalculation
+        function headerCalculation() {
+            var sum = 0;
+            $(".total").each(function () {
+                //var value = $(this).val();
+                var value = toFloat($(this).val());
+                sum += parseFloat(value);
+            });
+            $("#total").val(toFloatWithTwoPrecision(sum));
+        }
+
+</script>
+
+
+<script>
     var ssaURL = "@Url.Content("~/customer/ssa")";
     var select2PlaceHolder = "Customer";
     $(document).ready(function () {
@@ -132,159 +282,8 @@
         return data.firstName + " " + data.lastName;
     }
 
-    </script>
+</script>
 
-
-
-    <br />
-
-
-    <!-- Line Item  -->
-
-
-    <div class="bg-white">
-        <table class="table table-bordered table-striped table-hover" id="tblLineItem">
-            <thead>
-                <tr class="text-center">
-                    <th scope="col"> Item </th>
-                    <th scope="col"> Quantity </th>
-                    <th scope="col"> Price </th>
-                    <th scope="col"> Total </th>
-                    <th scope="col" style="width:40px;"> </th>
-                </tr>
-                <tr rowIndex="0">
-                    <td>
-                        <select class="form-control line-item-required" id="item0" name="items[][itemID]" rowIndex="0" onchange="itemChange($(this))">
-                            <option value=""> -- Please Select Item -- </option>
-                            <option value="1"> Item 1 </option>
-                            <option value="2"> Item 2 </option>
-                            <option value="3"> Item 3 </option>
-                            <option value="4"> Item 4 </option>
-                        </select>
-                    </td>
-                    <td> <input class="form-control line-item-required" type="text" id="quantity0" name="items[][quantity]" placeholder="Quantity" onchange="calculation($(this))" /> </td>
-                    <td> <input class="form-control line-item-required" type="text" id="price0" name="items[][price]" placeholder="Price" onchange="calculation($(this))" /> </td>
-                    <td> <input class="form-control total text-right" type="text" id="total0" name="total0" readonly /> </td>
-                    <td>
-                        <button type="button" class="btn btn-success" onclick="saveLineItem($(this))"> <i class="fas fa-save"></i></button>
-                    </td>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
-    </div>
-
-    <script>
-
-    var url = "@Url.Content("~/saleorder")";
-    var createURL = url + "/create/";
-    var detailsURL = url + "/details/";
-    var findURL = url + "/find/";
-    var formName = "#newRecord";
-    var rowIndex = 0;
-    var tableRow = `<tr rowIndex="0">
-                <td>
-                    <select class="form-control line-item-required" id="item0" name="items[][itemID]" rowIndex="0" onchange="itemChange($(this))">
-                        <option value=""> -- Please Select Item -- </option>
-                        <option value="1"> Item 1 </option>
-                        <option value="2"> Item 2 </option>
-                        <option value="3"> Item 3 </option>
-                        <option value="4"> Item 4 </option>
-                    </select>
-                </td>
-                <td> <input class="form-control line-item-required" type="text" id="quantity0" name="items[][quantity]" placeholder="Quantity" onchange="calculation($(this))" /> </td>
-                <td> <input class="form-control line-item-required" type="text" id="price0" name="items[][price]" placeholder="Price" onchange="calculation($(this))" /> </td>
-                <td> <input class="form-control total text-right" type="text" id="total0" name="total0" readonly /> </td>
-                <td>
-                    <button type="button" class="btn btn-success" onclick="saveLineItem($(this))"> <i class="fas fa-save"></i></button>
-                </td>
-            </tr>`;
-
-    $(document).ready(function () {
-
-        setupEvents();
-    });
-
-    //-> setupEvents
-    function setupEvents() {
-        //$("#tblLineItem").append(tableRow);
-        $("#btnSave").click(function () { save(); });
-        $("#btnCancel").click(function () { cancel(); });
-    }
-
-    //-> save
-    function save() {
-        if ($("#customerID").val() == null) {
-            $(".select2-selection").css("border-color", "red");
-            return;
-        }
-
-        if (isValid()) {
-            $('#tblLineItem tr:last').remove();
-            ajaxHelper(createURL, $('#newRecord').serializeObject(), requestMethod.POST).then(function (done) {
-                window.location.href = detailsURL  + done.id;
-            });
-        }
-    }
-
-    //-> cancel
-    function cancel() {
-        window.location.href = findURL;
-    }
-
-    function saveLineItem(prop) {
-        if (prop.attr('class') == "btn btn-success") {
-            if (isValidLineItem()) {
-                prop.removeClass("btn-success")
-                    .addClass("btn-danger")
-                    .attr('rowIndex', rowIndex)
-                    .html('<i class="fas fa-trash-alt"></i> ');
-                rowIndex++;
-                prop.closest("tr").attr("rowIndex", rowIndex)
-                $("#quantity0").attr('id', "quantity" + (rowIndex));
-                $("#price0").attr('id', "price" + (rowIndex));
-                $("#total0").attr('id', "total" + (rowIndex));
-                $("#tblLineItem").append(tableRow);
-            }
-        }
-        else {
-            if (confirm("Do you to delete this line item?"))
-                prop.closest("tr").remove();
-        }
-        headerCalculation();
-    }
-
-    //-> calculation
-    function calculation(prop) {
-        var index = prop.closest("tr").attr("rowIndex")
-        var quantity = toFloat($("#quantity" + index).val());
-        var price = toFloat($("#price" + index).val());
-        var total = quantity * price;
-        $("#total" + index).val(toFloatWithTwoPrecision(total));
-        if (index > 0)
-            headerCalculation()
-
-            
-    }
-
-    //-> itemChange
-    function itemChange(prop) {
-        //alert();
-        }
-
-    //-> headerCalculation
-        function headerCalculation() {
-            var sum = 0;
-            $(".total").each(function () {
-                //var value = $(this).val();
-                var value = toFloat($(this).val());
-                sum += parseFloat(value);
-            });
-            $("#total").val(toFloatWithTwoPrecision(sum));
-        }
-
-    </script>
-</form>
 
 
 

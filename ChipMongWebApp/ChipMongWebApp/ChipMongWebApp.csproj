@@ -208,6 +208,7 @@
     <Compile Include="Models\DTO\GetListDTO.cs" />
     <Compile Include="Models\DTO\Item\ItemBaseDTO.cs" />
     <Compile Include="Models\DTO\Item\ItemEditDTO.cs" />
+    <Compile Include="Models\DTO\Item\ItemFindDTO.cs" />
     <Compile Include="Models\DTO\Item\ItemNewDTO.cs" />
     <Compile Include="Models\DTO\Item\ItemViewDTO.cs" />
     <Compile Include="Models\DTO\MetaDataDTO.cs" />
@@ -351,6 +352,9 @@
     <Content Include="Views\Item\Index.cshtml" />
     <Content Include="Views\Item\Create.cshtml" />
     <Content Include="Views\Item\View.cshtml" />
+    <Content Include="Views\Item\Edit.cshtml" />
+    <Content Include="Views\Item\Find.cshtml" />
+    <Content Include="Views\Item\Paging.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

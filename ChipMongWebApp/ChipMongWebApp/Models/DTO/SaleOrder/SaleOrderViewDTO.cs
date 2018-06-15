@@ -1,4 +1,5 @@
 ﻿using ChipMongWebApp.Models.DTO.Customer;
+using ChipMongWebApp.Models.DTO.Item;
 using ChipMongWebApp.Models.DTO.SaleOrderItem;
 using System;
 using System.Collections.Generic;
@@ -18,11 +19,15 @@ namespace ChipMongWebApp.Models.DTO.SaleOrder
         [DisplayName("Total:")]
         public double total { get; set; }
 
+        /*
         [DisplayName("Status:")]
         public string status { get; set; }
+        */
 
         public CustomerViewDTO customer { get; set; }
 
         public List<SaleOrderItemViewDTO> items { get; set; }
+
+        public List<ItemViewDTO> itemSelection { get; set; }
     }
 }

@@ -113,6 +113,8 @@
                 <input type="hidden" name="@("lineItemID"+i)" id="@("lineItemID"+i)" value="@item.id" />
                 <input type="hidden" name="items[][id]" id="items[][id]" value="@item.id" />
                 <td>
+                    
+                    
                     <select class="form-control line-item-required" id="item0" name="items[][itemID]" onchange="itemChange($(this))">
                         <option value=""> -- Please Select Item -- </option>
                         <option value="1"> Item 1 </option>

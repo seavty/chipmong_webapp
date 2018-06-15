@@ -94,10 +94,10 @@
                 {
                     <tr>
                         <th scope="row" class="text-center" style="width:65px"> @i </th>
-                        <td class="text-left"> replace with item name </td>
-                        <td class="text-right"> @item.quantity </td>
-                        <td class="text-right"> @item.price </td>
-                        <td class="text-right"> @item.total </td>
+                        <td class="text-left"> @item.item.name </td>
+                        <td class="text-right"> @item.quantity.ToTwoDecimalPoint() </td>
+                        <td class="text-right"> @item.price.ToTwoDecimalPoint() </td>
+                        <td class="text-right"> @item.total.ToTwoDecimalPoint() </td>
                     </tr>
                     i++;
 

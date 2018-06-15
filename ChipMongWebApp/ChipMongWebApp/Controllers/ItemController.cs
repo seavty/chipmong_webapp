@@ -33,8 +33,6 @@ namespace ChipMongWebApp.Controllers
                 if (!ModelState.IsValid)
                     throw new HttpException((int)HttpStatusCode.BadRequest, ConstantHelper.KEY_IN_REQUIRED_FIELD);
                 Response.StatusCode = 200;
-
-                var myTEst = await handler.Create(newDTO);
                 return Json(await handler.Create(newDTO), JsonRequestBehavior.AllowGet);
 
             }
@@ -42,12 +40,48 @@ namespace ChipMongWebApp.Controllers
             {
                 return Json(ConstantHelper.ERROR, JsonRequestBehavior.AllowGet);
             }
-            
+
         }
-        
+
         //-> view
         public async Task<ActionResult> View(int id) { return View(await handler.SelectByID(id)); }
 
+        //-> Edit
+        public async Task<ActionResult> Edit(int id) { return View(await handler.SelectByID(id)); }
+
+        //-> Edit
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<JsonResult> Edit(ItemEditDTO editDTO)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    throw new HttpException((int)HttpStatusCode.BadRequest, ConstantHelper.KEY_IN_REQUIRED_FIELD);
+                Response.StatusCode = 200;
+                return Json(await handler.Edit(editDTO), JsonRequestBehavior.AllowGet);
+
+            }
+            catch (HttpException)
+            {
+                return Json(ConstantHelper.ERROR, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        //-> Find 
+        [HttpGet]
+        public ActionResult Find() { return View(); }
+
+        //-> Paging
+        [HttpPost]
+        public async Task<ActionResult> Paging(ItemFindDTO findDTO) { return PartialView(await handler.GetList(findDTO)); }
+
+
+        //-> view
+        public async Task<JsonResult> Record(int id)
+        {
+            return Json(await handler.SelectByID(id), JsonRequestBehavior.AllowGet);
+        }
 
     }
 }

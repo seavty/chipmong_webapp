@@ -27,9 +27,9 @@ namespace ChipMongWebApp.Controllers
         }
 
         //--> Create
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
-            return View();
+            return View(await handler.newDTO());
         }
 
         //-> Create

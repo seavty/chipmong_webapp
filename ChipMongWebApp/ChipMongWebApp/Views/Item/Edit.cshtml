@@ -1,8 +1,6 @@
 ﻿@model ChipMongWebApp.Models.DTO.Item.ItemViewDTO
 @{
-    /**/
-
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/Main/_Main.cshtml";
 }
 
@@ -17,6 +15,7 @@
 
 <form id="record" name="record">
     @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.id)
     <div class="card shadow-sm">
         <div class="card-header merienda"> Item </div>
 
@@ -58,6 +57,8 @@
 <script>
 
     var endPoint = "@Url.Content("~/item")";
+    var id = @Url.RequestContext.RouteData.Values["id"];
+
     $(document).ready(function () {
         setupEvents();
     });
@@ -71,11 +72,16 @@
     //-> save
     function save() {
         if (isValid()) {
-            ajaxHelper(endPoint + "/create", $("#record").serializeObject(), requestMethod.POST).then(function (data) {
+            ajaxHelper(endPoint + "/edit", $("#record").serializeObject(), requestMethod.POST).then(function (data) {
                 window.location.href = endPoint + "/view/" + data.id;
             });
         }
     }
-    
+
+    //-> cancel
+    function cancel() {
+        window.location.href = endPoint + "/view/" + id;
+    }
+
 </script>
 

@@ -1,5 +1,6 @@
 ﻿using ChipMongWebApp.Helpers;
 using ChipMongWebApp.Models.DB;
+using ChipMongWebApp.Models.DTO;
 using ChipMongWebApp.Models.DTO.Item;
 using System;
 using System.Collections.Generic;
@@ -35,6 +36,49 @@ namespace ChipMongWebApp.Handlers
             db.tblItems.Add(record);
             await db.SaveChangesAsync();
             return await SelectByID(record.id);
+        }
+
+        //-> Edit
+        public async Task<ItemViewDTO> Edit(ItemEditDTO editDTO)
+        {
+            var record = await db.tblItems.FirstOrDefaultAsync(x => x.deleted == null && x.id == editDTO.id);
+            if (record == null)
+                throw new HttpException((int)HttpStatusCode.NotFound, "NotFound");
+            editDTO = StringHelper.TrimStringProperties(editDTO);
+            record = (tblItem)MappingHelper.MapDTOToDBClass<ItemEditDTO, tblItem>(editDTO, record);
+            record.updatedDate = DateTime.Now;
+            await db.SaveChangesAsync();
+            return await SelectByID(record.id);
+        }
+
+        //-> GetList
+        public async Task<GetListDTO<ItemViewDTO>> GetList(ItemFindDTO findDTO)
+        {
+            //--seem like search sql not dynamic -> should write one helper function or interface to do dynamic search
+            IQueryable<tblItem> records = from x in db.tblItems
+                                                where x.deleted == null
+                                                && (string.IsNullOrEmpty(findDTO.code) ? 1 == 1 : x.code.Contains(findDTO.code))
+                                                && (string.IsNullOrEmpty(findDTO.name) ? 1 == 1 : x.name.Contains(findDTO.name))
+                                                orderby x.id ascending
+                                                select x;
+            return await Listing(findDTO.currentPage, records);
+        }
+
+        //*** private method ***/
+        //-> Listing
+        private async Task<GetListDTO<ItemViewDTO>> Listing(int currentPage, IQueryable<tblItem> records, string search = null)
+        {
+            var recordList = new List<ItemViewDTO>();
+            foreach (var record in PaginationHelper.GetList(currentPage, records))
+            {
+                recordList.Add(await SelectByID(record.id));
+            }
+
+            var getList = new GetListDTO<ItemViewDTO>();
+            getList.metaData = await PaginationHelper.GetMetaData(currentPage, records, "id", "asc", search);
+            getList.metaData.numberOfColumn = 4;
+            getList.items = recordList;
+            return getList;
         }
     }
 }

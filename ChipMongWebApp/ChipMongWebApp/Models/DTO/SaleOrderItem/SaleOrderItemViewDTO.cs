@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ChipMongWebApp.Models.DTO.Item;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,5 +10,7 @@ namespace ChipMongWebApp.Models.DTO.SaleOrderItem
     {
 
         public double total { get; set; }
+
+        public ItemViewDTO item { get; set; }
     }
 }

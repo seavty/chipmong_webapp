@@ -1,6 +1,7 @@
 ﻿using ChipMongWebApp.Helpers;
 using ChipMongWebApp.Models.DB;
 using ChipMongWebApp.Models.DTO;
+using ChipMongWebApp.Models.DTO.Item;
 using ChipMongWebApp.Models.DTO.SaleOrder;
 using ChipMongWebApp.Models.DTO.SaleOrderItem;
 using System;
@@ -47,7 +48,10 @@ namespace ChipMongWebApp.Handlers
             var listing = await records.ToListAsync();
             foreach (var item in listing)
             {
-                items.Add(MappingHelper.MapDBClassToDTO<tblSaleOrderItem, SaleOrderItemViewDTO>(item));
+                var mappingDTO = MappingHelper.MapDBClassToDTO<tblSaleOrderItem, SaleOrderItemViewDTO>(item);
+                mappingDTO.item = await (new ItemHandler().SelectByID(int.Parse(item.ItemID.ToString())));
+                //items.Add(MappingHelper.MapDBClassToDTO<tblSaleOrderItem, SaleOrderItemViewDTO>(item));
+                items.Add(mappingDTO);
             }
             return items;
         }
@@ -212,6 +216,26 @@ namespace ChipMongWebApp.Handlers
             getList.metaData.numberOfColumn = 6;
             getList.items = customerList;
             return getList;
+        }
+
+        //--> Item Selection 
+
+        public async Task<SaleOrderViewDTO> newDTO()
+        {
+            var newDTO = new SaleOrderViewDTO();
+            IQueryable<tblItem> records = from x in db.tblItems
+                                                where x.deleted == null
+                                                orderby x.id ascending
+                                                select x;
+            var items = await records.ToListAsync();
+            var recordList = new List<ItemViewDTO>();
+            foreach (var item in items)
+            {
+                recordList.Add((ItemViewDTO)MappingHelper.MapDBClassToDTO<tblItem, ItemViewDTO>(item));
+
+            }
+            newDTO.itemSelection = recordList;
+            return newDTO;
         }
     }
 }
