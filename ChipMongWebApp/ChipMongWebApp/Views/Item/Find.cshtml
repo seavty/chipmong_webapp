@@ -20,6 +20,7 @@
     <div class="card shadow-sm">
         <div class="card-header merienda"> Find Item </div>
 
+        <!-- card body -->
         <div class="card-body">
             <div class="row">
 
@@ -27,7 +28,6 @@
                     <div class="form-group">
                         @Html.LabelFor(m => m.code)
                         @Html.TextBoxFor(m => m.code, new { @class = "form-control", placeholder = "Code", @maxlength = "100" })
-
                     </div>
                 </div>
 
@@ -40,14 +40,12 @@
 
             </div>
         </div>
+        <!--end  card body -->
     </div>
 
     <br />
-
     <div id="tableData" class="shadow-sm bg-white"></div>
-
     <br />
-
 
 </form>
 
@@ -67,12 +65,11 @@
         $("#btnNew").click(function () { newRecord(); });
     }
 
-
     //-> getPage
     function paging(currentPage) {
         $("#currentPage").val(currentPage);
-        ajaxHelper(url + "/paging/", $("#record").serializeObject(), requestMethod.POST).then(function (done) {
-            $("#tableData").html(done);
+        ajaxHelper(url + "/paging/", $("#record").serializeObject(), requestMethod.POST).then(function (data) {
+            $("#tableData").html(data);
         });
     }
 
@@ -89,7 +86,7 @@
 
     //-> newRecord
     function newRecord() {
-        window.location.href = url + "/create/";
+        window.location.href = url + "/new";
     }
 
 </script>

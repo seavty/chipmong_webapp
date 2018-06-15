@@ -1,4 +1,5 @@
-﻿@model ChipMongWebApp.Models.DTO.GetListDTO<ChipMongWebApp.Models.DTO.Item.ItemViewDTO>
+﻿@using ChipMongWebApp.Extension
+@model ChipMongWebApp.Models.DTO.GetListDTO<ChipMongWebApp.Models.DTO.Item.ItemViewDTO>
 
 <table class="table table-bordered table-striped table-hover">
     <thead>
@@ -18,10 +19,9 @@
                     <th scope="row" class="text-center"> @(Model.metaData.startRow + i) </th>
                     <td class="align-middle"> <a href=" @Url.Content("~/item/view/")@item.id"> @item.code </a> </td>
                     <td> @item.name </td>
-                    <td class="text-right"> @item.price </td>
+                    <td class="text-right"> @item.price.ToTwoDecimalPoint() </td>
                 </tr>
                 i++;
-
             }
         }
 

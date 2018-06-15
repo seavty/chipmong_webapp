@@ -20,7 +20,6 @@
     <div class="card shadow-sm">
         <div class="card-header merienda"> Item </div>
 
-
         <!-- card body -->
         <div class="card-body">
 
@@ -58,6 +57,7 @@
 <script>
 
     var endPoint = "@Url.Content("~/item")";
+
     $(document).ready(function () {
         setupEvents();
     });
@@ -71,11 +71,16 @@
     //-> save
     function save() {
         if (isValid()) {
-            ajaxHelper(endPoint + "/create", $("#record").serializeObject(), requestMethod.POST).then(function (data) {
+            ajaxHelper(endPoint + "/new", $("#record").serializeObject(), requestMethod.POST).then(function (data) {
                 window.location.href = endPoint + "/view/" + data.id;
             });
         }
     }
-    
+
+    //-> cancel
+    function cancel() {
+        window.location.href = endPoint + "/find";
+    }
+
 </script>
 

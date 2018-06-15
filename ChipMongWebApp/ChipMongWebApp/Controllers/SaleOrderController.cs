@@ -15,16 +15,7 @@ namespace ChipMongWebApp.Controllers
     {
         private SaleOrderHandler handler = null;
 
-        public SaleOrderController()
-        {
-            handler = new SaleOrderHandler();
-        }
-
-        // GET: SaleOrder
-        public ActionResult Index()
-        {
-            return View();
-        }
+        public SaleOrderController() { handler = new SaleOrderHandler(); }
 
         //--> Create
         public async Task<ActionResult> Create()
@@ -103,6 +94,6 @@ namespace ChipMongWebApp.Controllers
             return PartialView();
         }
 
-        
+
     }
 }

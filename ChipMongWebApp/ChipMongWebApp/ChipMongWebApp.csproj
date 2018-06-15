@@ -327,14 +327,12 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Customer\Create.cshtml" />
+    <Content Include="Views\Customer\New.cshtml" />
     <Content Include="Views\Shared\Main\_Main.cshtml" />
     <Content Include="Views\Shared\Main\Css.cshtml" />
     <Content Include="Views\Shared\Main\JS.cshtml" />
     <Content Include="Views\Shared\Main\Navbar.cshtml" />
     <Content Include="Views\Shared\LoadingIndicator.cshtml" />
-    <Content Include="Views\Customer\Form.cshtml" />
-    <Content Include="Views\Customer\Details.cshtml" />
     <Content Include="Views\Customer\Edit.cshtml" />
     <Content Include="Views\Customer\Find.cshtml" />
     <Content Include="Views\Customer\Paging.cshtml" />
@@ -349,12 +347,12 @@
     <Content Include="Views\SaleOrder\Find.cshtml" />
     <Content Include="Views\SaleOrder\Edit.cshtml" />
     <Content Include="Views\SaleOrder\EditForm.cshtml" />
-    <Content Include="Views\Item\Index.cshtml" />
-    <Content Include="Views\Item\Create.cshtml" />
+    <Content Include="Views\Item\New.cshtml" />
     <Content Include="Views\Item\View.cshtml" />
     <Content Include="Views\Item\Edit.cshtml" />
     <Content Include="Views\Item\Find.cshtml" />
     <Content Include="Views\Item\Paging.cshtml" />
+    <Content Include="Views\Customer\View.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

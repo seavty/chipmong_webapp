@@ -1,0 +1,135 @@
+﻿@model ChipMongWebApp.Models.DTO.Customer.CustomerViewDTO
+@{
+    /**/
+
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/Main/_Main.cshtml";
+}
+
+<div class="card" id="action">
+    <div class="card" id="action">
+        <div class="card-body text-dark shadow-sm merienda">
+            <button type="button" class="btn btn-dark" id="btnBack"> <i class="fas fa-long-arrow-alt-left"></i> Back </button>
+            <button type="button" class="btn btn-primary" id="btnEdit"> <i class="fas fa-pencil-alt"></i> Edit </button>
+        </div>
+    </div>
+</div>
+
+<br />
+
+<form id="record" name="record">
+    <fieldset disabled class="summary">
+        <div class="card shadow-sm">
+            <div class="card-header merienda"> Customer </div>
+
+            <!-- card body -->
+            <div class="card-body">
+
+                <!--row 1-->
+                <div class="row">
+                    <div class="col-4">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.code)
+                            @Html.TextBoxFor(m => m.code, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.firstName)
+                            @Html.TextBoxFor(m => m.firstName, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.lastName)
+                            @Html.TextBoxFor(m => m.lastName, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                </div>
+                <!--end  row 1-->
+
+                <!--row 2-->
+                <div class="row">
+
+                    <div class="col-4">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.phone1)
+                            @Html.TextBoxFor(m => m.phone1, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.phone2)
+                            @Html.TextBoxFor(m => m.phone2, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.email)
+                            @Html.TextBoxFor(m => m.email, new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+                <!--end  row 2-->
+
+                <!--row 3-->
+                <div class="row">
+
+                    <div class="col-4">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.address)
+                            @Html.TextAreaFor(m => m.address, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                </div>
+                <!--end  row 3-->
+
+            </div>
+        </div>
+        <!-- end card body -->
+    </fieldset>
+</form>
+
+<script>
+
+    var endPoint = "@Url.Content("~/customer")";
+    var id = @Url.RequestContext.RouteData.Values["id"];
+
+    $(document).ready(function () {
+        setupEvents();
+    });
+
+    //-> setupEvents
+    function setupEvents() {
+        $("#btnBack").click(function () { back(); });
+        $("#btnEdit").click(function () { edit(); });
+    }
+
+    //-> save
+    function save() {
+        if (isValid()) {
+            ajaxHelper(endPoint + "/create", $("#record").serializeObject(), requestMethod.POST).then(function (data) {
+                window.location.href = detailsURL + done.id;
+            });
+        }
+    }
+
+    //-> edit
+    function edit() {
+        window.location.href = endPoint + "/edit/" + id;
+    }
+
+    //-> back
+    function back() {
+        window.location.href = endPoint + "/find/";
+    }
+
+</script>
+
+

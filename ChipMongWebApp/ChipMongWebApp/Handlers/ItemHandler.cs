@@ -73,10 +73,9 @@ namespace ChipMongWebApp.Handlers
             {
                 recordList.Add(await SelectByID(record.id));
             }
-
             var getList = new GetListDTO<ItemViewDTO>();
             getList.metaData = await PaginationHelper.GetMetaData(currentPage, records, "id", "asc", search);
-            getList.metaData.numberOfColumn = 4;
+            getList.metaData.numberOfColumn = 4; // need to change number of column
             getList.items = recordList;
             return getList;
         }

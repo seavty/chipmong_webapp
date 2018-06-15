@@ -7,11 +7,8 @@ using System.Web;
 
 namespace ChipMongWebApp.Models.DTO.Customer
 {
-    public class CustomerFindDTO
+    public class CustomerFindDTO : FindDTO
     {
-        //--> should make this class inherit from find dto
-        public int currentPage { get; set; }
-
         [MaxLength(100)]
         [DisplayName("Code:")]
         public string code { get; set; }

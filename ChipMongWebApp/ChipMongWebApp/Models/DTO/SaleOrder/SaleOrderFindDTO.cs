@@ -17,5 +17,8 @@ namespace ChipMongWebApp.Models.DTO.SaleOrder
         [MaxLength(100)]
         [DisplayName("Customer:")]
         public string customer { get; set; }
+
+        [DisplayName("Status:")]
+        public string status { get; set; }
     }
 }

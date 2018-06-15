@@ -18,113 +18,88 @@ namespace ChipMongWebApp.Handlers
     {
         private ChipMongEntities db = null;
 
-        public CustomerHandler()
-        {
-            db = new ChipMongEntities();
-        }
+        public CustomerHandler() { db = new ChipMongEntities(); }
 
         //-> SelectByID
         public async Task<CustomerViewDTO> SelectByID(int id)
         {
-            var customer = await db.tblCustomers.FirstOrDefaultAsync(c => c.deleted == null && c.id == id);
-            if (customer == null)
+            var record = await db.tblCustomers.FirstOrDefaultAsync(x => x.deleted == null && x.id == id);
+            if (record == null)
                 throw new HttpException((int)HttpStatusCode.NotFound, "NotFound");
-            return MappingHelper.MapDBClassToDTO<tblCustomer, CustomerViewDTO>(customer);
+            return MappingHelper.MapDBClassToDTO<tblCustomer, CustomerViewDTO>(record);
         }
 
         //-> Create
-        public async Task<CustomerViewDTO> Create(CustomerNewDTO cusotmerDTO)
+        public async Task<CustomerViewDTO> Create(CustomerNewDTO newDTO)
         {
-            cusotmerDTO = StringHelper.TrimStringProperties(cusotmerDTO);
-            var customer = (tblCustomer)MappingHelper.MapDTOToDBClass<CustomerNewDTO, tblCustomer>(cusotmerDTO, new tblCustomer());
-            customer.createdDate = DateTime.Now;
-            db.tblCustomers.Add(customer);
+            newDTO = StringHelper.TrimStringProperties(newDTO);
+            var record = (tblCustomer)MappingHelper.MapDTOToDBClass<CustomerNewDTO, tblCustomer>(newDTO, new tblCustomer());
+            record.createdDate = DateTime.Now;
+            db.tblCustomers.Add(record);
             await db.SaveChangesAsync();
-            return await SelectByID(customer.id);
+            return await SelectByID(record.id);
         }
 
-        //-> Save
-        public async Task<CustomerViewDTO> Edit(CustomerViewDTO viewDTO)
+        //-> Edit
+        public async Task<CustomerViewDTO> Edit(CustomerEditDTO editDTO)
         {
-            //--> big mistake need to change no need to map DTO 2 two from view to edit -> just map it when post from form is ok
-            var customer = await db.tblCustomers.FirstOrDefaultAsync(c => c.deleted == null && c.id == viewDTO.id);
-            if (customer == null)
+            var record = await db.tblCustomers.FirstOrDefaultAsync(x => x.deleted == null && x.id == editDTO.id);
+            if (record == null)
                 throw new HttpException((int)HttpStatusCode.NotFound, "NotFound");
-            viewDTO = StringHelper.TrimStringProperties(viewDTO);
-            var editDTO = new CustomerEditDTO();
-            editDTO  = (CustomerEditDTO)MappingHelper.MapDTOToDTO<CustomerViewDTO, CustomerEditDTO>(viewDTO, editDTO);
-
-            customer = (tblCustomer)MappingHelper.MapDTOToDBClass<CustomerEditDTO, tblCustomer>(editDTO, customer);
-            customer.updatedDate = DateTime.Now;
+            editDTO = StringHelper.TrimStringProperties(editDTO);
+            record = (tblCustomer)MappingHelper.MapDTOToDBClass<CustomerEditDTO, tblCustomer>(editDTO, record);
+            record.updatedDate = DateTime.Now;
             await db.SaveChangesAsync();
-            return await SelectByID(customer.id);
-
+            return await SelectByID(record.id);
         }
-        
+
         //-> GetList
         public async Task<GetListDTO<CustomerViewDTO>> GetList(CustomerFindDTO findDTO)
         {
             //--seem like search sql not dynamic -> should write one helper function or interface to do dynamic search
-            IQueryable<tblCustomer> customers = from c in db.tblCustomers
-                                              where c.deleted == null
-                                              && (string.IsNullOrEmpty(findDTO.code) ? 1 == 1 : c.code.Contains(findDTO.code))
-                                              && (string.IsNullOrEmpty(findDTO.firstName) ? 1 == 1 : c.firstName.Contains(findDTO.firstName))
-                                              && (string.IsNullOrEmpty(findDTO.lastName) ? 1 == 1 : c.lastName == findDTO.lastName)
-                                              orderby c.id ascending
-                                              select c;
-            return await Listing(findDTO.currentPage, customers);
+            IQueryable<tblCustomer> records = from x in db.tblCustomers
+                                                where x.deleted == null
+                                                && (string.IsNullOrEmpty(findDTO.code) ? 1 == 1 : x.code.Contains(findDTO.code))
+                                                && (string.IsNullOrEmpty(findDTO.firstName) ? 1 == 1 : x.firstName.Contains(findDTO.firstName))
+                                                && (string.IsNullOrEmpty(findDTO.lastName) ? 1 == 1 : x.lastName == findDTO.lastName)
+                                                orderby x.id ascending
+                                                select x;
+            return await Listing(findDTO.currentPage, records);
         }
 
-        internal Task<JsonResult> SSA(object findDTO)
+        //*** private method ***/
+        //-> Listing
+        private async Task<GetListDTO<CustomerViewDTO>> Listing(int currentPage, IQueryable<tblCustomer> records, string search = null)
         {
-            throw new NotImplementedException();
+            var recordList = new List<CustomerViewDTO>();
+            foreach (var record in PaginationHelper.GetList(currentPage, records))
+            {
+                recordList.Add(await SelectByID(record.id));
+            }
+            var getList = new GetListDTO<CustomerViewDTO>();
+            getList.metaData = await PaginationHelper.GetMetaData(currentPage, records, "id", "asc", search);
+            getList.metaData.numberOfColumn = 6; // need to change number of column
+            getList.items = recordList;
+            return getList;
         }
 
         //-> SSA
         public async Task<GetSSADTO<CustomerSSADTO>> SSA(string search)
         {
-            IQueryable<tblCustomer> customers = from c in db.tblCustomers
-                                                where c.deleted == null
-                                                && (string.IsNullOrEmpty(search) ? 1 == 1 : c.firstName.StartsWith(search))
-                                                orderby c.id ascending
-                                                select c;
-            var list = await Listing(1, customers);
-            
+            IQueryable<tblCustomer> records = from x in db.tblCustomers
+                                                where x.deleted == null
+                                                && (string.IsNullOrEmpty(search) ? 1 == 1 : x.firstName.StartsWith(search))
+                                                orderby x.id ascending
+                                                select x;
+            var list = await Listing(1, records);
             var customerList = new List<CustomerSSADTO>();
             foreach (var item in list.items)
             {
                 customerList.Add((CustomerSSADTO)MappingHelper.MapDTOToDTO<CustomerViewDTO, CustomerSSADTO>(item, new CustomerSSADTO()));
-
             }
             var ssa = new GetSSADTO<CustomerSSADTO>();
             ssa.results = customerList;
-
             return ssa;
-        }
-
-
-
-
-
-        //*** private method ***/
-        private async Task<GetListDTO<CustomerViewDTO>> Listing(int currentPage, IQueryable<tblCustomer> customers, string search = null)
-        {
-            var customerList = new List<CustomerViewDTO>();
-            foreach (var customer in PaginationHelper.GetList(currentPage, customers))
-            {
-                /*
-                var checkLoanRequest = new CheckLoanRequestViewDTO();
-                checkLoanRequest = await SelectByID(account.id);
-                checkLoanRequests.Add(checkLoanRequest);
-                */
-                customerList.Add(await SelectByID(customer.id));
-            }
-
-            var getList = new GetListDTO<CustomerViewDTO>();
-            getList.metaData = await PaginationHelper.GetMetaData(currentPage, customers, "id", "asc", search);
-            getList.metaData.numberOfColumn = 6;
-            getList.items = customerList;
-            return getList;
         }
     }
 }

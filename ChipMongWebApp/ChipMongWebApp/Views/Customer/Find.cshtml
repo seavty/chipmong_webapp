@@ -4,9 +4,8 @@
     Layout = "~/Views/Shared/Main/_Main.cshtml";
 }
 
-<form name="findCustomer" id="findCustomer">
+<form name="record" id="record">
     @Html.AntiForgeryToken()
-
     <input type="hidden" name="currentPage" id="currentPage" value="1" />
     <div class="card shadow-sm" id="dvAction">
         <div class="card-body text-dark shadow-sm merienda">
@@ -21,6 +20,7 @@
     <div class="card shadow-sm">
         <div class="card-header merienda"> Find Customer </div>
 
+        <!-- card body -->
         <div class="card-body">
             <div class="row">
 
@@ -28,7 +28,6 @@
                     <div class="form-group">
                         @Html.LabelFor(m => m.code)
                         @Html.TextBoxFor(m => m.code, new { @class = "form-control", placeholder = "Code", @maxlength = "100" })
-
                     </div>
                 </div>
 
@@ -48,25 +47,19 @@
 
             </div>
         </div>
+        <!--end  card body -->
     </div>
 
     <br />
-
     <div id="tableData" class="shadow-sm bg-white"></div>
-
     <br />
-
 
 </form>
 
 <script>
 
     var url = "@Url.Content("~/customer")";
-    var newRecordURL = url + "/create/";
-    var pagingURL = url + "/paging/";
-    var form = "#findCustomer";
-
-
+    
     $(document).ready(function () {
         setupEvents();
     });
@@ -79,12 +72,11 @@
         $("#btnNew").click(function () { newRecord(); });
     }
 
-    
     //-> getPage
     function paging(currentPage) {
         $("#currentPage").val(currentPage);
-        ajaxHelper(pagingURL, $(form).serialize(), requestMethod.POST).then(function (done) {
-            $("#tableData").html(done);
+        ajaxHelper(url + "/paging/", $("#record").serializeObject(), requestMethod.POST).then(function (data) {
+            $("#tableData").html(data);
         });
     }
 
@@ -101,7 +93,7 @@
 
     //-> newRecord
     function newRecord() {
-        window.location.href = newRecordURL;
+        window.location.href = url + "/new";
     }
 
 </script>

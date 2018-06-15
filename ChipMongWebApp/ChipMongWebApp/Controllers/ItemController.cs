@@ -17,16 +17,13 @@ namespace ChipMongWebApp.Controllers
 
         public ItemController() { handler = new ItemHandler(); }
 
-        //-> Index
-        public ActionResult Index() { return View(); }
+        //-> New
+        public ActionResult New() { return View(); }
 
-        //-> Create
-        public ActionResult Create() { return View(); }
-
-        //-> Create
+        //-> New
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<JsonResult> Create(ItemNewDTO newDTO)
+        public async Task<JsonResult> New(ItemNewDTO newDTO)
         {
             try
             {
@@ -34,16 +31,14 @@ namespace ChipMongWebApp.Controllers
                     throw new HttpException((int)HttpStatusCode.BadRequest, ConstantHelper.KEY_IN_REQUIRED_FIELD);
                 Response.StatusCode = 200;
                 return Json(await handler.Create(newDTO), JsonRequestBehavior.AllowGet);
-
             }
             catch (HttpException)
             {
                 return Json(ConstantHelper.ERROR, JsonRequestBehavior.AllowGet);
             }
-
         }
 
-        //-> view
+        //-> View
         public async Task<ActionResult> View(int id) { return View(await handler.SelectByID(id)); }
 
         //-> Edit
@@ -74,14 +69,11 @@ namespace ChipMongWebApp.Controllers
 
         //-> Paging
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> Paging(ItemFindDTO findDTO) { return PartialView(await handler.GetList(findDTO)); }
 
-
-        //-> view
-        public async Task<JsonResult> Record(int id)
-        {
-            return Json(await handler.SelectByID(id), JsonRequestBehavior.AllowGet);
-        }
+        //-> Record
+        public async Task<JsonResult> Record(int id) { return Json(await handler.SelectByID(id), JsonRequestBehavior.AllowGet); }
 
     }
 }
