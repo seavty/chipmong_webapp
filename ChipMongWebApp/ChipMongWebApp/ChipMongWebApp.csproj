@@ -248,6 +248,7 @@
     <Content Include="Content\js\function\loanCalculation.js" />
     <Content Include="Content\js\gijgo.min.js" />
     <Content Include="Content\js\helper\ajaxHelper.js" />
+    <Content Include="Content\js\helper\dateHelper.js" />
     <Content Include="Content\js\helper\numericHelper.js" />
     <Content Include="Content\js\helper\validationHelper.js" />
     <Content Include="Content\js\jquery-3.2.1.js" />
@@ -258,6 +259,7 @@
     <Content Include="Content\js\jquery.serialize-object.min.js" />
     <Content Include="Content\js\jquery.toast.js" />
     <Content Include="Content\js\jquery_min.js" />
+    <Content Include="Content\js\modules\SaleOrder.js" />
     <Content Include="Content\js\popper.min.js" />
     <Content Include="Content\js\select2.full.js" />
     <Content Include="Content\js\select2.min.js" />
@@ -354,6 +356,7 @@
     <Content Include="Views\Item\Find.cshtml" />
     <Content Include="Views\Item\Paging.cshtml" />
     <Content Include="Views\Customer\View.cshtml" />
+    <Content Include="Views\SaleOrder\New.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

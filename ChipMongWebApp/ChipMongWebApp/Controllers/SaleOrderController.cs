@@ -17,6 +17,15 @@ namespace ChipMongWebApp.Controllers
 
         public SaleOrderController() { handler = new SaleOrderHandler(); }
 
+        //-> New
+        public ActionResult New() { return View(); }
+
+
+
+
+
+
+
         //--> Create
         public async Task<ActionResult> Create()
         {
