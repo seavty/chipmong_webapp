@@ -159,6 +159,7 @@
     <Compile Include="Controllers\SaleOrderController.cs" />
     <Compile Include="Extension\DateTimeExtension.cs" />
     <Compile Include="Extension\DoubleExtension.cs" />
+    <Compile Include="Extension\StringExtension.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

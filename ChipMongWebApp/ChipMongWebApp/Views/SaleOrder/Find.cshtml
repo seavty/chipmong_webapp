@@ -1,4 +1,5 @@
-﻿@model ChipMongWebApp.Models.DTO.SaleOrder.SaleOrderFindDTO
+﻿@using ChipMongWebApp.Helpers
+@model ChipMongWebApp.Models.DTO.SaleOrder.SaleOrderFindDTO
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/Main/_Main.cshtml";
@@ -33,15 +34,15 @@
 
                 <div class="col">
                     <div class="form-group">
-                        @Html.LabelFor(m => m.code)
-                        @Html.TextBoxFor(m => m.code, new { @class = "form-control", placeholder = "Code", @maxlength = "100" })
+                        @Html.LabelFor(m => m.customer)
+                        @Html.TextBoxFor(m => m.customer, new { @class = "form-control", placeholder = "Customer", @maxlength = "100" })
                     </div>
                 </div>
 
                 <div class="col">
                     <div class="form-group">
-                        @Html.LabelFor(m => m.code)
-                        @Html.TextBoxFor(m => m.code, new { @class = "form-control", placeholder = "Code", @maxlength = "100" })
+                        @Html.LabelFor(m => m.status)
+                        @Html.DropDownListFor(m => m.status, SelectionHelper.SaleOrderStatus(), "-- Select Status --", new {@class = "form-control"})
                     </div>
                 </div>
 
@@ -50,6 +51,9 @@
     </div>
 
     <br />
+
+    
+
 
     <div id="tableData" class="shadow-sm bg-white"></div>
 
@@ -60,7 +64,7 @@
 <script>
 
     var url = "@Url.Content("~/saleorder")";
-    
+
     $(document).ready(function () {
         setupEvents();
     });

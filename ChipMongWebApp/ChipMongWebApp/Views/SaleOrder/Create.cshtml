@@ -33,7 +33,7 @@
                 <div class="col-4">
                     <div class="form-group">
                         @Html.Label("Date")
-                        <input type="text" name="date" id="date" class="form-control" value="" placeholder="Date" />
+                        @Html.TextBoxFor(m => m.date, new { @class = "form-control", Value = DateTime.Now.ToString("dd/MM/yyyy")})
                     </div>
                 </div>
 
@@ -237,6 +237,14 @@
 
 
 <script>
+    
+    $('#date').datepicker({
+        uiLibrary: 'bootstrap4',
+        iconsLibrary: 'fontawesome',
+        format: 'dd/mm/yyyy',
+    });
+    
+
     var ssaURL = "@Url.Content("~/customer/ssa")";
     var select2PlaceHolder = "Customer";
     $(document).ready(function () {

@@ -37,8 +37,8 @@
 
                 <div class="col-4">
                     <div class="form-group">
-                        @Html.Label("Date")
-                        @Html.TextBoxFor(m => m.code, new { @class = "form-control" })
+                        @Html.LabelFor(m => m.date)
+                        @Html.TextBoxFor(m => m.date, new { @class = "form-control", Value = Model.date.ToDisplayDate() })
                     </div>
                 </div>
 
@@ -166,6 +166,7 @@
 
 
 <script>
+
     var ssaURL = "@Url.Content("~/customer/ssa")";
     var endPoint = "@Url.Content("~/saleorder")";
     var select2PlaceHolder = "Customer";
@@ -193,6 +194,12 @@
         $("#btnCancel").click(function () { cancel(); });
 
         $("#status").val("@Model.status");
+        
+        $('#date').datepicker({
+            uiLibrary: 'bootstrap4',
+            iconsLibrary: 'fontawesome',
+            format: 'dd/mm/yyyy'
+        });
 
         $('#customerID').select2({
             ajax: {

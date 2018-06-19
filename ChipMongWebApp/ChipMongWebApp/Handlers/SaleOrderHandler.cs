@@ -1,4 +1,5 @@
-﻿using ChipMongWebApp.Helpers;
+﻿using ChipMongWebApp.Extension;
+using ChipMongWebApp.Helpers;
 using ChipMongWebApp.Models.DB;
 using ChipMongWebApp.Models.DTO;
 using ChipMongWebApp.Models.DTO.Item;
@@ -7,6 +8,7 @@ using ChipMongWebApp.Models.DTO.SaleOrderItem;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -79,6 +81,7 @@ namespace ChipMongWebApp.Handlers
                 try
                 {
                     newDTO = StringHelper.TrimStringProperties(newDTO);
+                    newDTO.date = newDTO.date.ToDBDate();
                     var record = (tblSaleOrder)MappingHelper.MapDTOToDBClass<SaleOrderNewDTO, tblSaleOrder>(newDTO, new tblSaleOrder());
                     record.createdDate = DateTime.Now;
                     db.tblSaleOrders.Add(record);
@@ -141,6 +144,7 @@ namespace ChipMongWebApp.Handlers
                 try
                 {
                     editDTO = StringHelper.TrimStringProperties(editDTO);
+                    editDTO.date = editDTO.date.ToDBDate();
                     var record = await db.tblSaleOrders.FirstOrDefaultAsync(r => r.deleted == null && r.id == editDTO.id);
                     if (record == null)
                         throw new HttpException((int)HttpStatusCode.NotFound, "NotFound");
@@ -216,11 +220,23 @@ namespace ChipMongWebApp.Handlers
         public async Task<GetListDTO<SaleOrderViewDTO>> GetList(SaleOrderFindDTO findDTO)
         {
             //--seem like search sql not dynamic -> should write one helper function or interface to do dynamic search
+            /*
             IQueryable<tblSaleOrder> records = from r in db.tblSaleOrders
                                                where r.deleted == null
                                                && (string.IsNullOrEmpty(findDTO.code) ? 1 == 1 : r.code.Contains(findDTO.code))
+                                               && (string.IsNullOrEmpty(findDTO.status) ? 1 == 1 : r.status == findDTO.status)
                                                orderby r.id ascending
                                                select r;
+           */
+            IQueryable<tblSaleOrder> records = from s in db.tblSaleOrders
+                                               join c in db.tblCustomers on s.customerID equals c.id
+                                               where s.deleted == null
+                                               && (string.IsNullOrEmpty(findDTO.code) ? 1 == 1 : s.code.Contains(findDTO.code))
+                                               && (string.IsNullOrEmpty(findDTO.status) ? 1 == 1 : s.status == findDTO.status)
+                                               && (string.IsNullOrEmpty(findDTO.customer) ? 1 == 1 : c.firstName.Contains(findDTO.customer))
+                                               orderby s.id ascending
+                                               select s;
+
             return await Listing(findDTO.currentPage, records);
         }
 

@@ -24,7 +24,7 @@
                     <div class="col-4">
                         <div class="form-group">
                             @Html.Label("Date")
-                            @Html.TextBoxFor(m => m.code, new { @class = "form-control" })
+                            @Html.TextBoxFor(m => m.date, new { @class = "form-control", Value = Model.date.ToDisplayDate() })
                         </div>
                     </div>
 

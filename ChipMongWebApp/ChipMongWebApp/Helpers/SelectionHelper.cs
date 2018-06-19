@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace ChipMongWebApp.Helpers
 {
@@ -21,6 +22,29 @@ namespace ChipMongWebApp.Helpers
                 default:
                     return "";
             }
+        }
+
+        public static List<SelectListItem> SaleOrderStatus()
+        {
+            List<SelectListItem> listItems = new List<SelectListItem>()
+            {
+                new SelectListItem
+                {
+                    Text = "New",
+                    Value = "New"
+                },
+                new SelectListItem
+                {
+                    Text = "In Progress",
+                    Value = "InProgress"
+                },
+                new SelectListItem
+                {
+                    Text = "Completed",
+                    Value = "Completed"
+                }
+            };
+            return listItems;
         }
     }
 }

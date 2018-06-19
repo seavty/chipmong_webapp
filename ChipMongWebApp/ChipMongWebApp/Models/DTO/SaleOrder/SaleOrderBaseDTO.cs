@@ -23,5 +23,10 @@ namespace ChipMongWebApp.Models.DTO.SaleOrder
         [MaxLength(1000)]
         [DisplayName("Remarks:")]
         public string remarks { get; set; }
+
+
+        
+        [DisplayName("Date:")]
+        public string date { get; set; }
     }
 }
