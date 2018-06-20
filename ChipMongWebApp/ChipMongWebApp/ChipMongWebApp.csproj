@@ -213,6 +213,7 @@
     <Compile Include="Models\DTO\Item\ItemNewDTO.cs" />
     <Compile Include="Models\DTO\Item\ItemViewDTO.cs" />
     <Compile Include="Models\DTO\MetaDataDTO.cs" />
+    <Compile Include="Models\DTO\ModeDTO.cs" />
     <Compile Include="Models\DTO\SaleOrderItem\SaleOrderItemBaseDTO.cs" />
     <Compile Include="Models\DTO\SaleOrderItem\SaleOrderItemEditDTO.cs" />
     <Compile Include="Models\DTO\SaleOrderItem\SaleOrderItemNewDTO.cs" />
@@ -259,6 +260,7 @@
     <Content Include="Content\js\jquery.serialize-object.min.js" />
     <Content Include="Content\js\jquery.toast.js" />
     <Content Include="Content\js\jquery_min.js" />
+    <Content Include="Content\js\modules\find.js" />
     <Content Include="Content\js\modules\SaleOrder.js" />
     <Content Include="Content\js\popper.min.js" />
     <Content Include="Content\js\select2.full.js" />
@@ -340,16 +342,9 @@
     <Content Include="Views\Customer\Find.cshtml" />
     <Content Include="Views\Customer\Paging.cshtml" />
     <Content Include="Views\Shared\Pagination.cshtml" />
-    <Content Include="Views\SaleOrder\Create.cshtml" />
-    <Content Include="Views\SaleOrder\Form.cshtml" />
-    <Content Include="Views\SaleOrder\Details.cshtml" />
-    <Content Include="Views\SaleOrder\TableRow.cshtml" />
-    <Content Include="Views\SaleOrder\CreateForm.cshtml" />
-    <Content Include="Views\SaleOrder\DetailsForm.cshtml" />
     <Content Include="Views\SaleOrder\Paging.cshtml" />
     <Content Include="Views\SaleOrder\Find.cshtml" />
     <Content Include="Views\SaleOrder\Edit.cshtml" />
-    <Content Include="Views\SaleOrder\EditForm.cshtml" />
     <Content Include="Views\Item\New.cshtml" />
     <Content Include="Views\Item\View.cshtml" />
     <Content Include="Views\Item\Edit.cshtml" />
@@ -359,6 +354,7 @@
     <Content Include="Views\SaleOrder\New.cshtml" />
     <Content Include="Views\SaleOrder\LineItem.cshtml" />
     <Content Include="Views\SaleOrder\View.cshtml" />
+    <Content Include="Views\SaleOrder\LineItemTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

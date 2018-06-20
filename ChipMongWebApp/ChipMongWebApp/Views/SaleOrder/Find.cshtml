@@ -51,55 +51,19 @@
     </div>
 
     <br />
-
-    
-
-
     <div id="tableData" class="shadow-sm bg-white"></div>
-
     <br />
 
 </form>
 
+<script src="~/Content/js/modules/find.js"></script>
 <script>
-
     var url = "@Url.Content("~/saleorder")";
 
-    $(document).ready(function () {
-        setupEvents();
-    });
-
-    //-> setupEvents
-    function setupEvents() {
-        paging(1);
-        $("#btnFind").click(function () { find(); });
-        $("#btnCancel").click(function () { cancel(); });
-        $("#btnNew").click(function () { newRecord(); });
-    }
-
-    //-> getPage
-    function paging(currentPage) {
-        $("#currentPage").val(currentPage);
-        ajaxHelper(url + "/paging/", $("#record").serializeObject(), requestMethod.POST).then(function (data) {
-            $("#tableData").html(data);
-        });
-    }
-
-    //-> find
-    function find() {
-        $("#currentPage").val(1);
-        paging(1);
-    }
-
-    //-> cancel
-    function cancel() {
-        window.location.reload();
-    }
+    $(document).ready(function () { setupEvents(); });
 
     //-> newRecord
-    function newRecord() {
-        window.location.href = url + "/create/";
-    }
+    function newRecord() { newRecordFromFindScreen(url); }
 
 </script>
 

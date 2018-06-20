@@ -98,3 +98,33 @@ function calculation(prop) {
     if (index > 0)
         headerCalculation();
 }
+
+//-> getItem
+function getItem(prop, endPoint) {
+    var index = prop.closest("tr").attr("rowIndex")
+    var itemID = prop.val();
+    simpleAjax(endPoint + "/record/" + itemID, null, requestMethod.GET).then(function (data) {
+        $("#price" + index).val(toFloatWithTwoPrecision(data.price));
+        calculation(prop);
+    });
+}
+
+//--saveRecord
+function saveRecord(endPoint, action) {
+    if ($("#customerID").val() == null) return $(".select2-selection").css("border-color", "red");
+
+    if (isValid()) {
+        $('#tblLineItem tr:last').remove();
+        ajaxHelper(endPoint + "/" + action, $('#record').serializeObject(), requestMethod.POST).then(function (data) {
+            window.location.href = endPoint + "/view/" + data.id;
+        });
+    }
+}
+
+//-> setupEvents
+function setupEvents() {
+    $("#btnSave").click(function () { save(); });
+    $("#btnCancel").click(function () { cancel(); });
+    setupDatePicker("#date");
+    customerSSA(ssaURL, select2PlaceHolder);
+}

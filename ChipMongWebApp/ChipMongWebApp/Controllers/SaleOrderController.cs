@@ -30,7 +30,7 @@ namespace ChipMongWebApp.Controllers
                 if (!ModelState.IsValid)
                     throw new HttpException((int)HttpStatusCode.BadRequest, ConstantHelper.KEY_IN_REQUIRED_FIELD);
                 Response.StatusCode = 200;
-                return Json(await handler.Create(newDTO), JsonRequestBehavior.AllowGet);
+                return Json(await handler.New(newDTO), JsonRequestBehavior.AllowGet);
             }
             catch (HttpException)
             {
@@ -39,10 +39,10 @@ namespace ChipMongWebApp.Controllers
         }
 
         //-> View
-        public async Task<ActionResult> View(int id) { return View(await handler.SelectByID(id)); }
+        public async Task<ActionResult> View(int id) { return View(await handler.SelectByID(id, ConstantHelper.MODE_VIEW)); }
 
         //-> Edit
-        public async Task<ActionResult> Edit(int id) { return View(await handler.SelectByID(id)); }
+        public async Task<ActionResult> Edit(int id) { return View(await handler.SelectByID(id, ConstantHelper.MODE_EDIT)); }
 
         //-> Edit
         [HttpPost]
@@ -63,75 +63,14 @@ namespace ChipMongWebApp.Controllers
             }
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-        /*
-        //--> Create
-        public async Task<ActionResult> Create()
-        {
-            return View(await handler.newDTO());
-        }
-
-        //-> Create
-        [HttpPost]
-        public async Task<JsonResult> Create(SaleOrderNewDTO newDTO)
-        {
-            try
-            {
-                if (!ModelState.IsValid)
-                    throw new HttpException((int)HttpStatusCode.BadRequest, ConstantHelper.KEY_IN_REQUIRED_FIELD);
-                Response.StatusCode = 200;
-                return Json(await handler.Create(newDTO), JsonRequestBehavior.AllowGet);
-            }
-            catch (HttpException)
-            {
-                return Json(ConstantHelper.ERROR, JsonRequestBehavior.AllowGet);
-            }
-        }
-        */
-
-
-        //-> Details
+        //-> Find 
         [HttpGet]
-        public async Task<ActionResult> Details(int id)
-        {
-            return View(await handler.SelectByID(id));
-        }
-
-        
-
-        
+        public ActionResult Find() { return View(); }
 
         //-> Paging
         [HttpPost]
-        public async Task<ActionResult> Paging(SaleOrderFindDTO findDTO)
-        {
-            return PartialView(await handler.GetList(findDTO));
-        }
-
-        //-> Find 
-        [HttpGet]
-        public ActionResult Find()
-        {
-            return View();
-        }
-
-        public ActionResult TableRow()
-        {
-            return PartialView();
-        }
-
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Paging(SaleOrderFindDTO findDTO) { return PartialView(await handler.GetList(findDTO)); }
 
     }
 }

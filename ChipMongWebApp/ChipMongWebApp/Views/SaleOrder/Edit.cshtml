@@ -16,7 +16,6 @@
 
 <br />
 
-@*@Html.Partial("~/Views/SaleOrder/EditForm.cshtml", Model)*@
 <form id="record" name="record">
     @Html.AntiForgeryToken()
     @Html.HiddenFor(m => m.id)
@@ -69,7 +68,7 @@
                 <div class="col-4">
                     <div class="form-group">
                         @Html.LabelFor(m => m.status)
-                        @Html.DropDownListFor(m => m.status, SelectionHelper.SaleOrderStatus(Model.status), "-- Select Status --", new { @class = "form-control" })
+                        @Html.DropDownListFor(m => m.status, SelectionHelper.SaleOrderStatus(Model.status), null, new { @class = "form-control" })
                     </div>
                 </div>
 
@@ -89,44 +88,9 @@
 
     <br />
 
-    <div id="tableData" class="shadow-sm bg-white">
-        <table class="table table-bordered table-striped table-hover" id="tblLineItem">
-            <thead>
-                <tr class="text-center">
-                    <th scope="col"> Item </th>
-                    <th scope="col"> Quantity </th>
-                    <th scope="col"> Price </th>
-                    <th scope="col"> Total </th>
-                    <th scope="col" style="width:40px;"> </th>
+    <!-- LineItemTable  -->
+    @Html.Partial("~/Views/SaleOrder/LineItemTable.cshtml", Model)
 
-                </tr>
-            </thead>
-            <tbody>
-                @{
-                    int i = 1;
-                    foreach (var item in Model.items)
-                    {
-                        <tr rowIndex="@i">
-                            <input type="hidden" name="@("lineItemID"+i)" id="@("lineItemID"+i)" value="@item.id" />
-                            <input type="hidden" name="items[][id]" id="items[][id]" value="@item.id" />
-                            <td>
-                                @Html.DropDownList("items[][itemID]", SelectionHelper.ItemSelection(item.item.id), "-- Select Status --", new { @class = "form-control line-item-required", @id = "item0", @onchange = "itemChange($(this))" })
-                            </td>
-                            <td> @Html.TextBox("items[][quantity]", null, new { @class = "form-control line-item-required", @id = ("quantity" + i.ToString()), @placeholder = "Quantity", Value = @item.quantity.ToTwoDecimalPoint(), @onchange = "calculation($(this))" }) </td>
-                            <td> @Html.TextBox("items[][price]", null, new { @class = "form-control line-item-required", @id = ("price" + i.ToString()), @placeholder = "Price", Value = @item.price.ToTwoDecimalPoint(), @onchange = "calculation($(this))" }) </td>
-                            <td> @Html.TextBox("total0", null, new { @class = "form-control text-right total", @id = ("total" + i.ToString()), @placeholder = "Price", Value = @item.total.ToTwoDecimalPoint(), @readonly = "readonly", @onchange = "calculation($(this))" }) </td>
-                            <td> <button type="button" class="btn btn-danger" onclick="deleteLineItem($(this))"> <i class="fas fa-trash-alt"></i></button> </td>
-                        </tr>
-                        i++;
-
-                    }
-                }
-
-                @Html.Partial("~/Views/SaleOrder/LineItem.cshtml")
-
-            </tbody>
-        </table>
-    </div>
 </form>
 
 <script src="~/Content/js/modules/SaleOrder.js"></script>
@@ -139,55 +103,16 @@
     var id = @Url.RequestContext.RouteData.Values["id"];
     var tableRow = `@Html.Partial("~/Views/SaleOrder/LineItem.cshtml")`;
 
-    $(document).ready(function () {
-        setupEvents();
-    });
-
-    //-> setupEvents
-    function setupEvents() {
-        $("#btnSave").click(function () { save(); });
-        $("#btnCancel").click(function () { cancel(); });
-        setupDatePicker("#date");
-        customerSSA(ssaURL, select2PlaceHolder);
-    }
+    $(document).ready(function () { setupEvents(); });
 
     //-> save
-    function save() {
-        //--when submit form to server should include route edit / id && form hidden id
-        // then compare on server whether route id && hidden id the same or not , if not the same it mean something wrong
-        if($("#customerID").val() == null) return $(".select2-selection").css("border-color", "red");
-        $('#tblLineItem tr:last').remove();
-        ajaxHelper(endPoint + "/edit", $('#record').serializeObject(), requestMethod.POST).then(function (data) {
-            window.location.href = endPoint + "/view/" + data.id;
-        });
-
-    }
+    function save() { saveRecord(endPoint, "edit"); }
 
     //--> cancel
-    function cancel() {
-        window.location.href = endPoint + "/view/" + id;
-    }
-
-    
-    
-
-    
-
-    
+    function cancel() { window.location.href = endPoint + "/view/" + id; }
 
     //-> itemChange
-    function itemChange(prop) {
-        var index = prop.closest("tr").attr("rowIndex")
-        var itemEndPoint = "@Url.Content("~/item")";
-        var itemID = prop.val();
-        simpleAjax(itemEndPoint + "/record/" + itemID, null, requestMethod.GET).then(function (data) {
-            $("#price" + index).val(toFloatWithTwoPrecision(data.price));
-            calculation(prop);
-        });
-    }
-
-    
-
+    function itemChange(prop) { getItem(prop, "@Url.Content("~/item")"); }
 
 </script>
 

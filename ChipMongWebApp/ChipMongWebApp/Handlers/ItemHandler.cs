@@ -28,7 +28,7 @@ namespace ChipMongWebApp.Handlers
         }
 
         //-> Create
-        public async Task<ItemViewDTO> Create(ItemNewDTO newDTO)
+        public async Task<ItemViewDTO> New(ItemNewDTO newDTO)
         {
             newDTO = StringHelper.TrimStringProperties(newDTO);
             var record = (tblItem)MappingHelper.MapDTOToDBClass<ItemNewDTO, tblItem>(newDTO, new tblItem());
@@ -64,7 +64,6 @@ namespace ChipMongWebApp.Handlers
             return await Listing(findDTO.currentPage, records);
         }
 
-        //*** private method ***/
         //-> Listing
         private async Task<GetListDTO<ItemViewDTO>> Listing(int currentPage, IQueryable<tblItem> records, string search = null)
         {

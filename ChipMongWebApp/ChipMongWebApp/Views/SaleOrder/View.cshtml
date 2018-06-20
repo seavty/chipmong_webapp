@@ -92,46 +92,17 @@
 
 <br />
 
-<div id="tableData" class="shadow-sm bg-white">
-    <table class="table table-bordered table-striped table-hover">
-        <thead>
-            <tr class="text-center">
-                <th scope="col">#</th>
-                <th scope="col"> Item </th>
-                <th scope="col"> Quantity </th>
-                <th scope="col"> Price </th>
-                <th scope="col"> Total </th>
-            </tr>
-        </thead>
-        <tbody>
-            @{
-                int i = 1;
-                foreach (var item in Model.items)
-                {
-                    <tr>
-                        <th scope="row" class="text-center" style="width:65px"> @i </th>
-                        <td class="text-left"> @item.item.name </td>
-                        <td class="text-right"> @item.quantity.ToTwoDecimalPoint() </td>
-                        <td class="text-right"> @item.price.ToTwoDecimalPoint() </td>
-                        <td class="text-right"> @item.total.ToTwoDecimalPoint() </td>
-                    </tr>
-                    i++;
+<!-- LineItemTable  -->
+@Html.Partial("~/Views/SaleOrder/LineItemTable.cshtml", Model)
 
-                }
-            }
 
-        </tbody>
-    </table>
-</div>
 
 <script>
 
     var endPoint = "@Url.Content("~/saleorder")";
     var id = @Url.RequestContext.RouteData.Values["id"];
 
-    $(document).ready(function () {
-        setupEvents();
-    });
+    $(document).ready(function () { setupEvents(); });
 
     //-> setupEvents
     function setupEvents() {
@@ -140,14 +111,10 @@
     }
 
     //-> edit
-    function edit() {
-        window.location.href = endPoint + "/edit/" + id;
-    }
+    function edit() { window.location.href = endPoint  + "/edit/" + id; }
 
     //-> back
-    function back() {
-        window.location.href = endPoint + "/find/";
-    }
+    function back() { window.location.href = endPoint + "/find/"; }
 
 </script>
 

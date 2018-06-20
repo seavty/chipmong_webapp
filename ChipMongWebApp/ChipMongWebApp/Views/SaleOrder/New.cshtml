@@ -62,7 +62,7 @@
                 <div class="col-4">
                     <div class="form-group">
                         @Html.LabelFor(m => m.status)
-                        @Html.DropDownListFor(m => m.status, SelectionHelper.SaleOrderStatus("New"), "-- Select Status --", new { @class = "form-control" })
+                        @Html.DropDownListFor(m => m.status, SelectionHelper.SaleOrderStatus("New"), null, new { @class = "form-control" })
                     </div>
                 </div>
 
@@ -82,23 +82,9 @@
 
     <br />
 
-    <!-- Line Item  -->
-    <div class="bg-white">
-        <table class="table table-bordered table-striped table-hover" id="tblLineItem">
-            <thead>
-                <tr class="text-center">
-                    <th scope="col"> Item </th>
-                    <th scope="col"> Quantity </th>
-                    <th scope="col"> Price </th>
-                    <th scope="col"> Total </th>
-                    <th scope="col" style="width:40px;"> </th>
-                </tr>
-            </thead>
-            <tbody>
-                @Html.Partial("~/Views/SaleOrder/LineItem.cshtml")
-            </tbody>
-        </table>
-    </div>
+    <!-- LineItemTable  -->
+    @Html.Partial("~/Views/SaleOrder/LineItemTable.cshtml", null)
+    
 
 
 </form>
@@ -113,92 +99,16 @@
     var rowIndex = 0;
     var tableRow = `@Html.Partial("~/Views/SaleOrder/LineItem.cshtml")`;
 
-    $(document).ready(function () {
-        setupEvents();
-    });
-
-    //-> setupEvents
-    function setupEvents() {
-        $("#btnSave").click(function () { save(); });
-        $("#btnCancel").click(function () { cancel(); });
-        setupDatePicker("#date");
-        customerSSA(ssaURL, select2PlaceHolder);
-    }
+    $(document).ready(function () { setupEvents(); });
 
     //-> save
-    function save() {
-        if ($("#customerID").val() == null)
-            return $(".select2-selection").css("border-color", "red");
-        if (isValid()) {
-            $('#tblLineItem tr:last').remove();
-            ajaxHelper(endPoint + "/new", $("#record").serializeObject(), requestMethod.POST).then(function (data) {
-                //window.location.href = endPoint + "/view/" + data.id;
-            });
-        }
-    }
+    function save() { saveRecord(endPoint, "new"); }
 
     //-> cancel
-    function cancel() {
-        window.location.href = endPoint + "/find";
-    }
-
-    //*** function for line item ***//
+    function cancel() { window.location.href = endPoint + "/find"; }
 
     //-> itemChange
-    function itemChange(prop) {
-        var index = prop.closest("tr").attr("rowIndex")
-        var itemEndPoint = "@Url.Content("~/item")";
-        var itemID = prop.val();
-        simpleAjax(itemEndPoint + "/record/" + itemID, null, requestMethod.GET).then(function (data) {
-            $("#price" + index).val(toFloatWithTwoPrecision(data.price));
-            calculation(prop);
-        });
-    }
-
-    //-> calculation
-    function calculation(prop) {
-        var index = prop.closest("tr").attr("rowIndex")
-        var quantity = toFloat($("#quantity" + index).val());
-        var price = toFloat($("#price" + index).val());
-        var total = quantity * price;
-        $("#total" + index).val(toFloatWithTwoPrecision(total));
-        if (index > 0)
-            headerCalculation()
-    }
-
-    //-> saveLineItem
-    function saveLineItem(prop) {
-        if (prop.attr('class') == "btn btn-success") {
-            if (isValidLineItem()) {
-                prop.removeClass("btn-success")
-                    .addClass("btn-danger")
-                    .attr('rowIndex', rowIndex)
-                    .html('<i class="fas fa-trash-alt"></i> ');
-                rowIndex++;
-                prop.closest("tr").attr("rowIndex", rowIndex)
-                $("#quantity0").attr('id', "quantity" + (rowIndex));
-                $("#price0").attr('id', "price" + (rowIndex));
-                $("#total0").attr('id', "total" + (rowIndex));
-                $("#tblLineItem").append(tableRow);
-            }
-        }
-        else {
-            if (confirm("Do you to delete this line item?"))
-                prop.closest("tr").remove();
-        }
-        headerCalculation();
-    }
-
-    //-> headerCalculation
-    function headerCalculation() {
-        var sum = 0;
-        $(".total").each(function () {
-            //var value = $(this).val();
-            var value = toFloat($(this).val());
-            sum += parseFloat(value);
-        });
-        $("#total").val(toFloatWithTwoPrecision(sum));
-    }
+    function itemChange(prop) { getItem(prop, "@Url.Content("~/item")"); }
 
 </script>
 

@@ -59,9 +59,7 @@
     var endPoint = "@Url.Content("~/item")";
     var id = @Url.RequestContext.RouteData.Values["id"];
 
-    $(document).ready(function () {
-        setupEvents();
-    });
+    $(document).ready(function () { setupEvents(); });
 
     //-> setupEvents
     function setupEvents() {
@@ -79,9 +77,7 @@
     }
 
     //-> cancel
-    function cancel() {
-        window.location.href = endPoint + "/view/" + id;
-    }
+    function cancel() { window.location.href = endPoint + "/view/" + id; }
 
 </script>
 

@@ -7,7 +7,7 @@ using System.Web;
 
 namespace ChipMongWebApp.Models.DTO.SaleOrder
 {
-    public class SaleOrderBaseDTO
+    public class SaleOrderBaseDTO: ModeDTO
     {
         public int? id { get; set; }
 

@@ -23,7 +23,7 @@ namespace ChipMongWebApp.Handlers
         public SaleOrderHandler() { db = new ChipMongEntities(); }
 
         //-> SelectByID
-        public async Task<SaleOrderViewDTO> SelectByID(int id)
+        public async Task<SaleOrderViewDTO> SelectByID(int id, int mode)
         {
             var record = await db.tblSaleOrders.FirstOrDefaultAsync(x => x.deleted == null && x.id == id);
             if (record == null)
@@ -32,23 +32,12 @@ namespace ChipMongWebApp.Handlers
             var saleOrderDTO = MappingHelper.MapDBClassToDTO<tblSaleOrder, SaleOrderViewDTO>(record);
             saleOrderDTO.customer = await new CustomerHandler().SelectByID(int.Parse(record.customerID.ToString()));
             saleOrderDTO.items = await GetLineItems(id);
+            saleOrderDTO.mode = mode;
 
-            IQueryable<tblItem> records = from x in db.tblItems
-                                          where x.deleted == null
-                                          orderby x.id ascending
-                                          select x;
-            var items = await records.ToListAsync();
-            var recordList = new List<ItemViewDTO>();
-            foreach (var item in items)
-            {
-                recordList.Add((ItemViewDTO)MappingHelper.MapDBClassToDTO<tblItem, ItemViewDTO>(item));
-
-            }
-            saleOrderDTO.itemSelection = recordList;
             return saleOrderDTO;
         }
 
-
+        //-> GetLineItems
         private async Task<List<SaleOrderItemViewDTO>> GetLineItems(int masterID)
         {
             var items = new List<SaleOrderItemViewDTO>();
@@ -68,8 +57,8 @@ namespace ChipMongWebApp.Handlers
         }
 
 
-        //-> Create
-        public async Task<SaleOrderViewDTO> Create(SaleOrderNewDTO newDTO)
+        //-> New
+        public async Task<SaleOrderViewDTO> New(SaleOrderNewDTO newDTO)
         {
             using (var transaction = db.Database.BeginTransaction())
             {
@@ -86,7 +75,7 @@ namespace ChipMongWebApp.Handlers
                     await db.SaveChangesAsync();
 
                     transaction.Commit();
-                    return await SelectByID(record.id);
+                    return await SelectByID(record.id, ConstantHelper.MODE_NEW);
                 }
                 catch (Exception ex)
                 {
@@ -121,19 +110,6 @@ namespace ChipMongWebApp.Handlers
         //-> Save
         public async Task<SaleOrderViewDTO> Edit(SaleOrderEditDTO editDTO)
         {
-            /*
-            
-            //--> big mistake need to change no need to map DTO 2 time from view to edit -> just map it when post from form is ok
-            var record = await db.tblSaleOrders.FirstOrDefaultAsync(r => r.deleted == null && r.id == editDTO.id);
-            if (record == null)
-                throw new HttpException((int)HttpStatusCode.NotFound, "NotFound");
-            editDTO = StringHelper.TrimStringProperties(editDTO);
-            record = (tblSaleOrder)MappingHelper.MapDTOToDBClass<SaleOrderEditDTO, tblSaleOrder>(editDTO, record);
-            record.updatedDate = DateTime.Now;
-            await db.SaveChangesAsync();
-            return await SelectByID(record.id);
-            */
-            //--> big mistake need to change no need to map DTO 2 time from view to edit -> just map it when post from form is ok
             using (var transaction = db.Database.BeginTransaction())
             {
                 try
@@ -149,7 +125,7 @@ namespace ChipMongWebApp.Handlers
                     record.total = lineItems.Sum(item => item.total);
                     await db.SaveChangesAsync();
                     transaction.Commit();
-                    return await SelectByID(record.id);
+                    return await SelectByID(record.id, ConstantHelper.MODE_EDIT);
                 }
                 catch (Exception ex)
                 {
@@ -160,7 +136,6 @@ namespace ChipMongWebApp.Handlers
 
         }
 
-
         //-> EditLineItem
         private async Task<List<tblSaleOrderItem>> EditLineItem(int mastetID, SaleOrderEditDTO editDTO)
         {
@@ -169,7 +144,6 @@ namespace ChipMongWebApp.Handlers
             {
                 foreach (var item in editDTO.items)
                 {
-                    //var record = (tblSaleOrderItem)MappingHelper.MapDTOToDBClass<SaleOrderItemEditDTO, tblSaleOrderItem>(item, new tblSaleOrderItem());
                     var record = new tblSaleOrderItem();
 
                     if (item.id == null)
@@ -209,20 +183,9 @@ namespace ChipMongWebApp.Handlers
             return list;
         }
 
-
-
         //-> GetList
         public async Task<GetListDTO<SaleOrderViewDTO>> GetList(SaleOrderFindDTO findDTO)
         {
-            //--seem like search sql not dynamic -> should write one helper function or interface to do dynamic search
-            /*
-            IQueryable<tblSaleOrder> records = from r in db.tblSaleOrders
-                                               where r.deleted == null
-                                               && (string.IsNullOrEmpty(findDTO.code) ? 1 == 1 : r.code.Contains(findDTO.code))
-                                               && (string.IsNullOrEmpty(findDTO.status) ? 1 == 1 : r.status == findDTO.status)
-                                               orderby r.id ascending
-                                               select r;
-           */
             IQueryable<tblSaleOrder> records = from s in db.tblSaleOrders
                                                join c in db.tblCustomers on s.customerID equals c.id
                                                where s.deleted == null
@@ -231,17 +194,16 @@ namespace ChipMongWebApp.Handlers
                                                && (string.IsNullOrEmpty(findDTO.customer) ? 1 == 1 : c.firstName.Contains(findDTO.customer))
                                                orderby s.id ascending
                                                select s;
-
             return await Listing(findDTO.currentPage, records);
         }
 
-        //*** private method ***/
+        //-> Listing
         private async Task<GetListDTO<SaleOrderViewDTO>> Listing(int currentPage, IQueryable<tblSaleOrder> records, string search = null)
         {
             var customerList = new List<SaleOrderViewDTO>();
             foreach (var customer in PaginationHelper.GetList(currentPage, records))
             {
-                customerList.Add(await SelectByID(customer.id));
+                customerList.Add(await SelectByID(customer.id, ConstantHelper.MODE_VIEW));
             }
 
             var getList = new GetListDTO<SaleOrderViewDTO>();
@@ -249,26 +211,6 @@ namespace ChipMongWebApp.Handlers
             getList.metaData.numberOfColumn = 6;
             getList.items = customerList;
             return getList;
-        }
-
-        //--> Item Selection 
-
-        public async Task<SaleOrderViewDTO> newDTO()
-        {
-            var newDTO = new SaleOrderViewDTO();
-            IQueryable<tblItem> records = from x in db.tblItems
-                                                where x.deleted == null
-                                                orderby x.id ascending
-                                                select x;
-            var items = await records.ToListAsync();
-            var recordList = new List<ItemViewDTO>();
-            foreach (var item in items)
-            {
-                recordList.Add((ItemViewDTO)MappingHelper.MapDBClassToDTO<tblItem, ItemViewDTO>(item));
-
-            }
-            newDTO.itemSelection = recordList;
-            return newDTO;
         }
     }
 }

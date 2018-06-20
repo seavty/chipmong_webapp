@@ -30,7 +30,7 @@ namespace ChipMongWebApp.Controllers
                 if (!ModelState.IsValid)
                     throw new HttpException((int)HttpStatusCode.BadRequest, ConstantHelper.KEY_IN_REQUIRED_FIELD);
                 Response.StatusCode = 200;
-                return Json(await handler.Create(newDTO), JsonRequestBehavior.AllowGet);
+                return Json(await handler.New(newDTO), JsonRequestBehavior.AllowGet);
             }
             catch (HttpException)
             {

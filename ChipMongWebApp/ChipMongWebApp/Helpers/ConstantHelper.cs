@@ -16,5 +16,12 @@ namespace ChipMongWebApp.Helpers
 
         public static readonly string ERROR = "Error occured while processing your request...";
 
+
+        public static readonly int MODE_NEW = 1;
+        public static readonly int MODE_EDIT = 2;
+        public static readonly int MODE_VIEW = 3;
+
+
+
     }
 }
