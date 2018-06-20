@@ -5,6 +5,7 @@
     PUT: "PUT"
 };
 
+//-> ajaxHelper
 function ajaxHelper(url, data, method) {
     $('#loadingIndicator').modal({
         keyboard: false,
@@ -30,6 +31,31 @@ function ajaxHelper(url, data, method) {
                 },
                 success: function (data) {
                     $('#loadingIndicator').modal("hide");
+                    resolve(data);
+                }
+            });
+        }, 100);
+    });
+    return promise;
+}
+
+
+//-> Simple ajax
+function simpleAjax(url, data, method) {
+    var promise = new Promise(function (resolve, reject) {
+        window.setTimeout(function () {
+            $.ajax({
+                url: url,
+                data: data,
+                type: method,
+                async: false,
+                error: function (jqXHR, textStatus, errorThrown) {
+                    if (jqXHR.status == 400) alert(jqXHR.responseText);
+                    else alert("Error code: " + jqXHR.status + "; Message: error occured while processing your request.");
+                    return;
+                },
+                beforeSend: function () {},
+                success: function (data) {
                     resolve(data);
                 }
             });

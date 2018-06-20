@@ -93,57 +93,10 @@
                     <th scope="col"> Total </th>
                     <th scope="col" style="width:40px;"> </th>
                 </tr>
-                <tr rowIndex="0">
-                    <td>
-                        @Html.DropDownList("items[][itemID]", SelectionHelper.ItemSelection(), " -- Select Item --",
-                          new
-                          {
-                              @class = "form-control",
-                              @id = "item0",
-                              rowIndex = "0",
-                              @onchange = "itemChange($(this))"
-                          })
-                    </td>
-
-                    <td>
-                        @Html.TextBox("items[][quantity]", null,
-                new
-                {
-                    @class = "form-control line-item-required",
-                    @id = "quantity0",
-                    @placeholder = "Quantity",
-                    @onchange = "calculation($(this))"
-                })
-                    </td>
-
-                    <td>
-                        @Html.TextBox("items[][price]", null,
-                new
-                {
-                    @class = "form-control line-item-required",
-                    @id = "price0",
-                    @placeholder = "Price",
-                    @onchange = "calculation($(this))"
-                })
-                    </td>
-
-                    <td>
-                        @Html.TextBox("total0", null,
-                new
-                {
-                    @class = "form-control total text-right",
-                    @id = "total0",
-                    @placeholder = "Price",
-                    @readonly = "readonly"
-                })
-                    </td>
-
-                        <td>
-                        <button type="button" class="btn btn-success" onclick="saveLineItem($(this))"> <i class="fas fa-save"></i></button>
-                    </td>
-                </tr>
             </thead>
-            <tbody></tbody>
+            <tbody>
+                @Html.Partial("~/Views/SaleOrder/LineItem.cshtml")
+            </tbody>
         </table>
     </div>
 
@@ -157,6 +110,8 @@
     var endPoint = "@Url.Content("~/saleorder")";
     var ssaURL = "@Url.Content("~/customer/ssa")";
     var select2PlaceHolder = "Customer";
+    var rowIndex = 0;
+    var tableRow = `@Html.Partial("~/Views/SaleOrder/LineItem.cshtml")`;
 
     $(document).ready(function () {
         setupEvents();
@@ -174,11 +129,10 @@
     function save() {
         if ($("#customerID").val() == null)
             return $(".select2-selection").css("border-color", "red");
-
         if (isValid()) {
             $('#tblLineItem tr:last').remove();
             ajaxHelper(endPoint + "/new", $("#record").serializeObject(), requestMethod.POST).then(function (data) {
-                window.location.href = endPoint + "/view/" + data.id;
+                //window.location.href = endPoint + "/view/" + data.id;
             });
         }
     }
@@ -195,7 +149,7 @@
         var index = prop.closest("tr").attr("rowIndex")
         var itemEndPoint = "@Url.Content("~/item")";
         var itemID = prop.val();
-        ajaxHelper(itemEndPoint + "/record/" + itemID, null, requestMethod.GET).then(function (data) {
+        simpleAjax(itemEndPoint + "/record/" + itemID, null, requestMethod.GET).then(function (data) {
             $("#price" + index).val(toFloatWithTwoPrecision(data.price));
             calculation(prop);
         });
@@ -210,6 +164,40 @@
         $("#total" + index).val(toFloatWithTwoPrecision(total));
         if (index > 0)
             headerCalculation()
+    }
+
+    //-> saveLineItem
+    function saveLineItem(prop) {
+        if (prop.attr('class') == "btn btn-success") {
+            if (isValidLineItem()) {
+                prop.removeClass("btn-success")
+                    .addClass("btn-danger")
+                    .attr('rowIndex', rowIndex)
+                    .html('<i class="fas fa-trash-alt"></i> ');
+                rowIndex++;
+                prop.closest("tr").attr("rowIndex", rowIndex)
+                $("#quantity0").attr('id', "quantity" + (rowIndex));
+                $("#price0").attr('id', "price" + (rowIndex));
+                $("#total0").attr('id', "total" + (rowIndex));
+                $("#tblLineItem").append(tableRow);
+            }
+        }
+        else {
+            if (confirm("Do you to delete this line item?"))
+                prop.closest("tr").remove();
+        }
+        headerCalculation();
+    }
+
+    //-> headerCalculation
+    function headerCalculation() {
+        var sum = 0;
+        $(".total").each(function () {
+            //var value = $(this).val();
+            var value = toFloat($(this).val());
+            sum += parseFloat(value);
+        });
+        $("#total").val(toFloatWithTwoPrecision(sum));
     }
 
 </script>

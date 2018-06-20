@@ -20,12 +20,63 @@ namespace ChipMongWebApp.Controllers
         //-> New
         public ActionResult New() { return View(); }
 
+        //-> New
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<JsonResult> New(SaleOrderNewDTO newDTO)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    throw new HttpException((int)HttpStatusCode.BadRequest, ConstantHelper.KEY_IN_REQUIRED_FIELD);
+                Response.StatusCode = 200;
+                return Json(await handler.Create(newDTO), JsonRequestBehavior.AllowGet);
+            }
+            catch (HttpException)
+            {
+                return Json(ConstantHelper.ERROR, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        //-> View
+        public async Task<ActionResult> View(int id) { return View(await handler.SelectByID(id)); }
+
+        //-> Edit
+        public async Task<ActionResult> Edit(int id) { return View(await handler.SelectByID(id)); }
+
+        //-> Edit
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<JsonResult> Edit(SaleOrderEditDTO editDTO)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    throw new HttpException((int)HttpStatusCode.BadRequest, ConstantHelper.KEY_IN_REQUIRED_FIELD);
+                Response.StatusCode = 200;
+                return Json(await handler.Edit(editDTO), JsonRequestBehavior.AllowGet);
+
+            }
+            catch (HttpException)
+            {
+                return Json(ConstantHelper.ERROR, JsonRequestBehavior.AllowGet);
+            }
+        }
 
 
 
 
 
 
+
+
+
+
+
+
+
+
+        /*
         //--> Create
         public async Task<ActionResult> Create()
         {
@@ -48,6 +99,7 @@ namespace ChipMongWebApp.Controllers
                 return Json(ConstantHelper.ERROR, JsonRequestBehavior.AllowGet);
             }
         }
+        */
 
 
         //-> Details
@@ -57,32 +109,9 @@ namespace ChipMongWebApp.Controllers
             return View(await handler.SelectByID(id));
         }
 
-        //-> Edit
-        [HttpGet]
-        public async Task<ActionResult> Edit(int id)
-        {
-            var tmp = await handler.SelectByID(id);
+        
 
-            return View(await handler.SelectByID(id));
-        }
-
-        //-> Create
-        [HttpPost]
-        public async Task<JsonResult> Edit(SaleOrderEditDTO editDTO)
-        {
-            try
-            {
-                if (!ModelState.IsValid)
-                    throw new HttpException((int)HttpStatusCode.BadRequest, ConstantHelper.KEY_IN_REQUIRED_FIELD);
-                Response.StatusCode = 200;
-                return Json(await handler.Edit(editDTO), JsonRequestBehavior.AllowGet);
-
-            }
-            catch (HttpException)
-            {
-                return Json(ConstantHelper.ERROR, JsonRequestBehavior.AllowGet);
-            }
-        }
+        
 
         //-> Paging
         [HttpPost]

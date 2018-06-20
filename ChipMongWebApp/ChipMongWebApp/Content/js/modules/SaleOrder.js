@@ -34,7 +34,67 @@ function templateResult(data) {
 
 //-> templateSelection
 function templateSelection(data) {
-    if (data.id === "")
-        return 'Customer';
+    if (data.text != "") return data.text;
+    if (data.id === "") return 'Customer';
     return data.firstName + " " + data.lastName;
+}
+
+
+//-> deleteLineItem
+function deleteLineItem(prop) {
+    if (confirm("Do you to delete this line item?")) {
+        var rowIndex = prop.closest("tr").attr("rowIndex");
+        var deleteLineItemID = $("#deleteLineItemID").val();
+        var lineItemID = $("#lineItemID" + rowIndex).val();
+        deleteLineItemID += "," + lineItemID;
+        $("#deleteLineItemID").val(deleteLineItemID);
+        prop.closest("tr").remove();
+        headerCalculation();
+    }
+}
+
+//-> headerCalculation
+function headerCalculation() {
+    var sum = 0;
+    $(".total").each(function () {
+        var value = toFloat($(this).val());
+        sum += parseFloat(value);
+    });
+    $("#total").val(toFloatWithTwoPrecision(sum));
+}
+
+//-> saveLineItem
+function saveLineItem(prop) {
+    if (prop.attr('class') == "btn btn-success") {
+        if (isValidLineItem()) {
+            prop.removeClass("btn-success")
+                .addClass("btn-danger")
+                .attr('rowIndex', rowIndex)
+                .html('<i class="fas fa-trash-alt"></i> ');
+            rowIndex++;
+            prop.closest("tr").attr("rowIndex", rowIndex)
+            $("#quantity0").attr('id', "quantity" + (rowIndex));
+            $("#price0").attr('id', "price" + (rowIndex));
+            $("#total0").attr('id', "total" + (rowIndex));
+            $("#tblLineItem").append(tableRow);
+            headerCalculation();
+        }
+    }
+    else {
+        if (confirm("Do you to delete this line item?")) {
+            prop.closest("tr").remove();
+            headerCalculation();
+        }
+    }
+}
+
+//-> calculation
+function calculation(prop) {
+    var index = prop.closest("tr").attr("rowIndex")
+    var quantity = toFloat($("#quantity" + index).val());
+    var price = toFloat($("#price" + index).val());
+    var total = quantity * price;
+    $("#total" + index).val(toFloatWithTwoPrecision(total));
+    if (index > 0)
+        headerCalculation();
 }

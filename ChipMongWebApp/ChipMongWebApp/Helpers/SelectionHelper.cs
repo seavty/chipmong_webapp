@@ -65,7 +65,7 @@ namespace ChipMongWebApp.Helpers
         }
 
         //-> ItemSelection
-        public static List<SelectListItem> ItemSelection(string value = null)
+        public static List<SelectListItem> ItemSelection(int? id = null)
         {
             ChipMongEntities db = new ChipMongEntities();
             IQueryable<tblItem> records = from x in db.tblItems
@@ -83,6 +83,19 @@ namespace ChipMongWebApp.Helpers
                     Value = item.id.ToString()
                 });
 
+            }
+
+            if (id != null)
+            {
+                foreach (var item in listItems)
+                {
+                    if (item.Value == id.ToString())
+                    {
+                        item.Selected = true;
+                        break;
+                    }
+
+                }
             }
             return listItems;
         }

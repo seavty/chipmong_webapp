@@ -357,6 +357,8 @@
     <Content Include="Views\Item\Paging.cshtml" />
     <Content Include="Views\Customer\View.cshtml" />
     <Content Include="Views\SaleOrder\New.cshtml" />
+    <Content Include="Views\SaleOrder\LineItem.cshtml" />
+    <Content Include="Views\SaleOrder\View.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

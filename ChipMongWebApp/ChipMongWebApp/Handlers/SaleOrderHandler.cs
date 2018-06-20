@@ -20,22 +20,18 @@ namespace ChipMongWebApp.Handlers
     {
         private ChipMongEntities db = null;
 
-        public SaleOrderHandler()
-        {
-            db = new ChipMongEntities();
-        }
+        public SaleOrderHandler() { db = new ChipMongEntities(); }
 
         //-> SelectByID
         public async Task<SaleOrderViewDTO> SelectByID(int id)
         {
-            var record = await db.tblSaleOrders.FirstOrDefaultAsync(r => r.deleted == null && r.id == id);
+            var record = await db.tblSaleOrders.FirstOrDefaultAsync(x => x.deleted == null && x.id == id);
             if (record == null)
                 throw new HttpException((int)HttpStatusCode.NotFound, "NotFound");
 
             var saleOrderDTO = MappingHelper.MapDBClassToDTO<tblSaleOrder, SaleOrderViewDTO>(record);
             saleOrderDTO.customer = await new CustomerHandler().SelectByID(int.Parse(record.customerID.ToString()));
             saleOrderDTO.items = await GetLineItems(id);
-
 
             IQueryable<tblItem> records = from x in db.tblItems
                                           where x.deleted == null
@@ -66,7 +62,6 @@ namespace ChipMongWebApp.Handlers
             {
                 var mappingDTO = MappingHelper.MapDBClassToDTO<tblSaleOrderItem, SaleOrderItemViewDTO>(item);
                 mappingDTO.item = await (new ItemHandler().SelectByID(int.Parse(item.itemID.ToString())));
-                //items.Add(MappingHelper.MapDBClassToDTO<tblSaleOrderItem, SaleOrderItemViewDTO>(item));
                 items.Add(mappingDTO);
             }
             return items;

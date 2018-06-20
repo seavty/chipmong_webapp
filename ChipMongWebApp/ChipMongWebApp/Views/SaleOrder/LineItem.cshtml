@@ -1,0 +1,8 @@
+﻿@using ChipMongWebApp.Helpers
+<tr rowIndex="0">
+    <td> @Html.DropDownList("items[][itemID]", SelectionHelper.ItemSelection(), " -- Select Item --", new { @class = "form-control line-item-required", @id = "item0", rowIndex = "0", @onchange = "itemChange($(this))" }) </td>
+    <td> @Html.TextBox("items[][quantity]", null, new { @class = "form-control line-item-required", @id = "quantity0", @placeholder = "Quantity", @onchange = "calculation($(this))" }) </td>
+    <td> @Html.TextBox("items[][price]", null, new { @class = "form-control line-item-required", @id = "price0", @placeholder = "Price", @onchange = "calculation($(this))" }) </td>
+    <td> @Html.TextBox("total0", null, new { @class = "form-control total text-right", @id = "total0", @placeholder = "Total", @readonly = "readonly" }) </td>
+    <td> <button type="button" class="btn btn-success" onclick="saveLineItem($(this))"> <i class="fas fa-save"></i></button> </td>
+</tr>
