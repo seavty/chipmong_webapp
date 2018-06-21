@@ -78,5 +78,20 @@ namespace ChipMongWebApp.Handlers
             getList.items = recordList;
             return getList;
         }
+
+        //-> Delete
+        public async Task<Boolean> Delete(int id)
+        {
+            var record = await db.tblItems.FirstOrDefaultAsync(x => x.deleted == null && x.id == id); //-> item table
+            if (record == null)
+                throw new HttpException((int)HttpStatusCode.NotFound, "NotFound");
+
+            var checkRecord = await db.tblSaleOrderItems.FirstOrDefaultAsync(x => x.deleted == null && x.itemID == id); //-> sale order item
+            if (checkRecord != null)
+                throw new HttpException((int)HttpStatusCode.BadRequest, "Cannot this record because it is currently in used!");
+            record.deleted = 1;
+            await db.SaveChangesAsync();
+            return true;
+        }
     }
 }

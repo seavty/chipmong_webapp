@@ -6,11 +6,19 @@
     Layout = "~/Views/Shared/Main/_Main.cshtml";
 }
 
+@*<nav aria-label="breadcrumb">
+    <ol class="breadcrumb shadow-sm">
+        <li class="breadcrumb-item active" aria-current="page"> Customer </li>
+        <li class="breadcrumb-item"> <a href="javascript:onclick=saleorderTab()"> SaleOrder </a></li>
+    </ol>
+</nav>*@
+
 <div class="card" id="action">
     <div class="card" id="action">
         <div class="card-body text-dark shadow-sm merienda">
             <button type="button" class="btn btn-dark" id="btnBack"> <i class="fas fa-long-arrow-alt-left"></i> Back </button>
             <button type="button" class="btn btn-primary" id="btnEdit"> <i class="fas fa-pencil-alt"></i> Edit </button>
+            <button type="button" class="btn btn-danger" id="btnDelete"> <i class="fas fa-trash-alt"></i> Delete </button>
         </div>
     </div>
 </div>
@@ -50,7 +58,6 @@
 
                 </div>
                 <!--end  row 1-->
-
                 <!--row 2-->
                 <div class="row">
 
@@ -76,7 +83,6 @@
                     </div>
                 </div>
                 <!--end  row 2-->
-
                 <!--row 3-->
                 <div class="row">
 
@@ -109,6 +115,7 @@
     function setupEvents() {
         $("#btnBack").click(function () { back(); });
         $("#btnEdit").click(function () { edit(); });
+        $("#btnDelete").click(function () { deleteRecord(); });
     }
 
     //-> save
@@ -121,13 +128,23 @@
     }
 
     //-> edit
-    function edit() {
-        window.location.href = endPoint + "/edit/" + id;
-    }
+    function edit() { window.location.href = endPoint + "/edit/" + id; }
 
     //-> back
-    function back() {
-        window.location.href = endPoint + "/find/";
+    function back() { window.location.href = endPoint + "/find/"; }
+
+    //-> saleorderTab
+    function saleorderTab() {
+        alert();
+    }
+
+    //-> deletRecord
+    function deleteRecord() {
+        if (confirm("Do you want to delete this customer")) {
+            ajaxHelper(endPoint + "/delete/" + id, null, requestMethod.POST).then(function (data) {
+                window.location.href = endPoint + "/find/";
+            });
+        }
     }
 
 </script>

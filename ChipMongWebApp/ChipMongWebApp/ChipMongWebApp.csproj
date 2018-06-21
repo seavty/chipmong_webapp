@@ -153,6 +153,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
@@ -199,6 +200,7 @@
     <Compile Include="Models\DB\tblSaleOrderItem.cs">
       <DependentUpon>ChipMongModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DTO\Auth\LoginDTO.cs" />
     <Compile Include="Models\DTO\Customer\CustomerBaseDTO.cs" />
     <Compile Include="Models\DTO\Customer\CustomerEditDTO.cs" />
     <Compile Include="Models\DTO\Customer\CustomerFindDTO.cs" />
@@ -256,6 +258,7 @@
     <Content Include="Content\js\jquery-3.3.1.slim.min.js" />
     <Content Include="Content\js\jquery-upload.js" />
     <Content Include="Content\js\jquery.fileupload.js" />
+    <Content Include="Content\js\jquery.numeric.min.js" />
     <Content Include="Content\js\jquery.preloader.min.js" />
     <Content Include="Content\js\jquery.serialize-object.min.js" />
     <Content Include="Content\js\jquery.toast.js" />
@@ -355,6 +358,8 @@
     <Content Include="Views\SaleOrder\LineItem.cshtml" />
     <Content Include="Views\SaleOrder\View.cshtml" />
     <Content Include="Views\SaleOrder\LineItemTable.cshtml" />
+    <Content Include="Views\Auth\Login.cshtml" />
+    <Content Include="Views\Shared\Basic\_Basic.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

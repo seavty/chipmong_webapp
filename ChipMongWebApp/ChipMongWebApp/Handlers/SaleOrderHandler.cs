@@ -212,5 +212,16 @@ namespace ChipMongWebApp.Handlers
             getList.items = customerList;
             return getList;
         }
+
+        //-> Delete
+        public async Task<Boolean> Delete(int id)
+        {
+            var record = await db.tblSaleOrders.FirstOrDefaultAsync(x => x.deleted == null && x.id == id);
+            if (record == null)
+                throw new HttpException((int)HttpStatusCode.NotFound, "NotFound");
+            record.deleted = 1;
+            await db.SaveChangesAsync();
+            return true;
+        }
     }
 }

@@ -72,5 +72,27 @@ namespace ChipMongWebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Paging(SaleOrderFindDTO findDTO) { return PartialView(await handler.GetList(findDTO)); }
 
+
+        //-> Delete
+        //??? why if use http delete - resource alway not found ? ???
+        [HttpPost]
+        public async Task<string> Delete(int id)
+        {
+            try
+            {
+                if (await handler.Delete(id))
+                {
+                    Response.StatusCode = 200;
+                    return "ok";
+                }
+                return null;
+            }
+            catch (HttpException ex)
+            {
+                Response.StatusCode = 400;
+                return ex.Message;
+            }
+        }
+
     }
 }

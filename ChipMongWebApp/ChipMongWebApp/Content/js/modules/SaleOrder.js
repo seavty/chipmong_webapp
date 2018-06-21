@@ -127,4 +127,5 @@ function setupEvents() {
     $("#btnCancel").click(function () { cancel(); });
     setupDatePicker("#date");
     customerSSA(ssaURL, select2PlaceHolder);
+    $('.numeric').numeric();
 }

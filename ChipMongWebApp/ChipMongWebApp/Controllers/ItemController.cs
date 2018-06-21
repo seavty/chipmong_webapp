@@ -75,5 +75,26 @@ namespace ChipMongWebApp.Controllers
         //-> Record
         public async Task<JsonResult> Record(int id) { return Json(await handler.SelectByID(id), JsonRequestBehavior.AllowGet); }
 
+        //-> Delete
+        //??? why if use http delete - resource alway not found ? ???
+        [HttpPost]
+        public async Task<string> Delete(int id)
+        {
+            try
+            {
+                if (await handler.Delete(id))
+                {
+                    Response.StatusCode = 200;
+                    return "ok";
+                }
+                return null;
+            }
+            catch (HttpException ex)
+            {
+                Response.StatusCode = 400;
+                return ex.Message;
+            }
+        }
+
     }
 }

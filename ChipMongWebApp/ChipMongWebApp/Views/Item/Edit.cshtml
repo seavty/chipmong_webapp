@@ -42,7 +42,7 @@
                 <div class="col-4">
                     <div class="form-group">
                         @Html.LabelFor(m => m.price)
-                        @Html.TextBoxFor(m => m.price, new { @class = "form-control required", placeholder = "Price", @maxlength = "100" })
+                        @Html.TextBoxFor(m => m.price, new { @class = "form-control required numeric", placeholder = "Price", @maxlength = "100" })
                     </div>
                 </div>
 
@@ -65,6 +65,7 @@
     function setupEvents() {
         $("#btnSave").click(function () { save(); });
         $("#btnCancel").click(function () { cancel(); });
+        $('.numeric').numeric();
     }
 
     //-> save
