@@ -360,6 +360,7 @@
     <Content Include="Views\SaleOrder\LineItemTable.cshtml" />
     <Content Include="Views\Auth\Login.cshtml" />
     <Content Include="Views\Shared\Basic\_Basic.cshtml" />
+    <Content Include="Views\Customer\SaleOrderTab.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

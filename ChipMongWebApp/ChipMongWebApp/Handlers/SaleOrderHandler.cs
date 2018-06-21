@@ -198,7 +198,7 @@ namespace ChipMongWebApp.Handlers
         }
 
         //-> Listing
-        private async Task<GetListDTO<SaleOrderViewDTO>> Listing(int currentPage, IQueryable<tblSaleOrder> records, string search = null)
+        public async Task<GetListDTO<SaleOrderViewDTO>> Listing(int currentPage, IQueryable<tblSaleOrder> records, string search = null)
         {
             var customerList = new List<SaleOrderViewDTO>();
             foreach (var customer in PaginationHelper.GetList(currentPage, records))

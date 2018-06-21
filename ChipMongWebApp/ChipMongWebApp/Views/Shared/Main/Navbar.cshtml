@@ -24,9 +24,11 @@
             </li>
 
             <li class="nav-item active">
-                <a class="nav-link" href="@Url.Content("~/auth/login")"> <i class="fas fa-sign-out-alt"></i> Logout  </a>
+                <a class="nav-link" href="javascript:onclick=logout()"> <i class="fas fa-sign-out-alt"></i> Logout  </a>
             </li>
         </ul>
+
+
     </div>
 </nav>
 
@@ -34,4 +36,12 @@
 <br />
 <br />
 
+
+<script>
+    function logout() {
+        if (confirm("Do you want to log out?")) {
+            window.location.href = "@Url.Content("~/auth/login")";
+        }
+    }
+</script>
 

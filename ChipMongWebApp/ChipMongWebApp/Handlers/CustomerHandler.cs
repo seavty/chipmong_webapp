@@ -2,6 +2,7 @@
 using ChipMongWebApp.Models.DB;
 using ChipMongWebApp.Models.DTO;
 using ChipMongWebApp.Models.DTO.Customer;
+using ChipMongWebApp.Models.DTO.SaleOrder;
 using ChipMongWebApp.Models.DTO.SSA;
 using System;
 using System.Collections.Generic;
@@ -114,6 +115,18 @@ namespace ChipMongWebApp.Handlers
             record.deleted = 1;
             await db.SaveChangesAsync();
             return true;
+        }
+
+        //-> GetList
+        public async Task<GetListDTO<SaleOrderViewDTO>> SaleOrderTabPaging(int customerID, int currentPage)
+        {
+            IQueryable<tblSaleOrder> records = from s in db.tblSaleOrders
+                                               join c in db.tblCustomers on s.customerID equals c.id
+                                               where s.deleted == null && s.customerID == customerID
+                                               orderby s.id ascending
+                                               select s;
+            var saleOrderHandler = new SaleOrderHandler();
+            return await saleOrderHandler.Listing(currentPage, records);
         }
     }
 }

@@ -99,5 +99,15 @@ namespace ChipMongWebApp.Controllers
             }
         }
 
+
+        //-> View
+        public ActionResult SaleOrderTab(int id) { return View(); }
+
+        //-> SaleOrderTabPaging
+        public async Task<ActionResult> SaleOrderTabPaging(int id)
+        {
+            var currentPage = int.Parse(Request.QueryString["currentPage"].ToString());
+            return PartialView("~/Views/SaleOrder/Paging.cshtml", await handler.SaleOrderTabPaging(id, currentPage));
+        }
     }
 }

@@ -1,0 +1,53 @@
+﻿
+@{
+    /**/
+
+    /**/
+
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/Main/_Main.cshtml";
+}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb shadow-sm">
+        <li class="breadcrumb-item"> <a href="javascript:onclick=customerTab()"> Customer </a> </li>
+        <li class="breadcrumb-item active" aria-current="page"> SaleOrder  </li>
+    </ol>
+</nav>
+
+<form name="record" id="record">
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="currentPage" id="currentPage" value="1" />
+</form>
+<div id="tableData" class="shadow-sm bg-white"></div>
+
+
+<script>
+
+    var id = @Url.RequestContext.RouteData.Values["id"];
+    var endPoint = "@Url.Content("~/customer")";
+
+    $(document).ready(function () {
+        paging(1);
+    });
+
+    //-> getPage
+    function paging(currentPage) {
+        $("#currentPage").val(currentPage);
+        ajaxHelper(endPoint + "/saleordertabpaging/" + id + "/?currentPage=1", null, requestMethod.POST).then(function (data) {
+            $("#tableData").html(data);
+        });
+        }
+
+        function customerTab() {
+            window.location.href = endPoint + "/view/" + id;
+        }
+</script>
+
+
+
+
+
+
+
+
