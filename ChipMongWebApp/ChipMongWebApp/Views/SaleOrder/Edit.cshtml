@@ -47,9 +47,7 @@
                 <div class="col-4">
                     <div class="form-group">
                         @Html.LabelFor(m => m.customerID)
-                        <select id="customerID" name="customerID" class="form-control">
-                            <option value="@Model.customerID" selected="selected"> @Model.customer.firstName @Model.customer.lastName </option>
-                        </select>
+                        @Html.DropDownListFor(m => m.customerID, SSAHelper.CustomerSSA(Model.customerID), null, new { @class = "form-control" })
                     </div>
                 </div>
 

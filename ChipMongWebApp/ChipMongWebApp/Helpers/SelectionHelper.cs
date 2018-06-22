@@ -11,7 +11,6 @@ namespace ChipMongWebApp.Helpers
 {
     public static class SelectionHelper
     {
-
         public static string AccountStatusCaption(string status)
         {
             switch (status)

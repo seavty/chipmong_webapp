@@ -2,6 +2,7 @@
 using ChipMongWebApp.Helpers;
 using ChipMongWebApp.Models.DTO.Customer;
 using ChipMongWebApp.Models.DTO.SSA;
+using ChipMongWebApp.Utils.Attribute;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -13,6 +14,7 @@ using System.Web.Mvc;
 
 namespace ChipMongWebApp.Controllers
 {
+    [ErrorLogger]
     public class CustomerController : Controller
     {
         private CustomerHandler handler = null;
@@ -109,5 +111,6 @@ namespace ChipMongWebApp.Controllers
             var currentPage = int.Parse(Request.QueryString["currentPage"].ToString());
             return PartialView("~/Views/SaleOrder/Paging.cshtml", await handler.SaleOrderTabPaging(id, currentPage));
         }
+    
     }
 }

@@ -46,15 +46,14 @@
                         </div>
                     </div>
 
+
                     <div class="col-4">
                         <div class="form-group">
                             @Html.LabelFor(m => m.customerID)
-                            <select class="form-control" id="customerID">
-                                <option> @Model.customer.firstName @Model.customer.lastName </option>
-                            </select>
-                            @Html.HiddenFor(m => m.customerID)
+                            @Html.DropDownListFor(m => m.customerID, SSAHelper.CustomerSSA(Model.customerID), null, new { @class = "form-control" })
                         </div>
                     </div>
+
 
                 </div>
                 <!--end  row 1-->
@@ -103,7 +102,9 @@
     var endPoint = "@Url.Content("~/saleorder")";
     var id = @Url.RequestContext.RouteData.Values["id"];
 
-    $(document).ready(function () { setupEvents(); });
+    $(document).ready(function () {
+        setupEvents();
+    });
 
     //-> setupEvents
     function setupEvents() {

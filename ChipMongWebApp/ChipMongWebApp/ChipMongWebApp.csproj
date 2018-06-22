@@ -172,6 +172,7 @@
     <Compile Include="Helpers\MappingHelper.cs" />
     <Compile Include="Helpers\PaginationHelper.cs" />
     <Compile Include="Helpers\SelectionHelper.cs" />
+    <Compile Include="Helpers\SSAHelper.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="Models\DB\ChipMongModel.Context.cs">
       <AutoGen>True</AutoGen>
@@ -231,6 +232,7 @@
     <Compile Include="Models\DTO\SSA\SSAItem.cs" />
     <Compile Include="Models\DTO\SSA\SSAList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\Attribute\ErrorLoggerAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />

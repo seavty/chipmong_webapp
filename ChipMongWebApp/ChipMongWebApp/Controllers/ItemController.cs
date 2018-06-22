@@ -1,6 +1,7 @@
 ﻿using ChipMongWebApp.Handlers;
 using ChipMongWebApp.Helpers;
 using ChipMongWebApp.Models.DTO.Item;
+using ChipMongWebApp.Utils.Attribute;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,11 +12,12 @@ using System.Web.Mvc;
 
 namespace ChipMongWebApp.Controllers
 {
+    [ErrorLogger]
     public class ItemController : Controller
     {
         private ItemHandler handler = null;
 
-        public ItemController() { handler = new ItemHandler(); }
+        //public ItemController() { handler = new ItemHandler(); }
 
         //-> New
         public ActionResult New() { return View(); }
