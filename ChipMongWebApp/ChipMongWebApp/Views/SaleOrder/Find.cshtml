@@ -5,6 +5,11 @@
     Layout = "~/Views/Shared/Main/_Main.cshtml";
 }
 
+<form name="frmUpload" id="frmUpload" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
+    <input type="file" id="ExcelFile" name="ExcelFile" style="display:none" accept=".xlsx" />
+</form>
+
 <form name="record" id="record">
     @Html.AntiForgeryToken()
     <input type="hidden" name="currentPage" id="currentPage" value="1" />
@@ -13,6 +18,7 @@
             <button type="button" class="btn btn-primary" id="btnFind"> <i class="fas fa-search"></i> Find </button>
             <button type="button" class="btn btn-danger" id="btnCancel"> <i class="fas fa-times"></i> Clear  </button>
             <button type="button" class="btn btn-success" id="btnNew"> <i class="fas fa-plus"></i> New  </button>
+            <button type="button" class="btn btn-info" id="btnUploadExcel"> <i class="fas fa-upload"></i> Upload Excel </button>
         </div>
     </div>
 
@@ -57,13 +63,36 @@
 </form>
 
 <script src="~/Content/js/modules/find.js"></script>
+<script src="~/Content/js/jquery-upload.js"></script>
 <script>
     var url = "@Url.Content("~/saleorder")";
 
-    $(document).ready(function () { setupEvents(); });
+    $(document).ready(function () {
+        setupEvents();
+        $("#btnUploadExcel").click(function () { $("#ExcelFile").trigger("click"); });
+        $("#ExcelFile").change(function () { uploadExcel(); });
+    });
 
     //-> newRecord
     function newRecord() { newRecordFromFindScreen(url); }
+
+    //-> uploadExcel
+    function uploadExcel() {
+        $('#loadingIndicator').modal({
+            keyboard: false,
+            backdrop: "static"
+        });
+
+        $("#ExcelFile").upload(url + "/UploadExcel?" + $("#frmUpload").serialize(), function (data) {
+            if (data.substring(0, 2) == "ok") {
+                alert(data.replace("ok", "") + " record(s) have been updated.");
+                window.location.reload();
+            }
+            else
+                alert("Error occur while processing your request...!");
+            $('#loadingIndicator').modal("hide");
+        });
+    }
 
 </script>
 

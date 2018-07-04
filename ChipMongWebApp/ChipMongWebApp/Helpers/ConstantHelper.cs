@@ -21,7 +21,6 @@ namespace ChipMongWebApp.Helpers
         public static readonly int MODE_EDIT = 2;
         public static readonly int MODE_VIEW = 3;
 
-
-
+        public static readonly string UPLOAD_FOLDER = "uploads";
     }
 }

@@ -13,6 +13,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web;
+using ClosedXML.Excel;
 
 namespace ChipMongWebApp.Handlers
 {
@@ -222,6 +223,51 @@ namespace ChipMongWebApp.Handlers
             record.deleted = 1;
             await db.SaveChangesAsync();
             return true;
+        }
+
+        //-> UploadExcel
+        public async Task<int> UploadExcel(SaleOrderUploadExcel uploadExcel)
+        {
+            if (uploadExcel.ExcelFile.ContentLength < 0)
+                throw new HttpException((int)HttpStatusCode.BadRequest, "Not a valid file");
+
+            if (!uploadExcel.ExcelFile.FileName.EndsWith(".xlsx"))
+                throw new HttpException((int)HttpStatusCode.BadRequest, "Only .xlsx is allowed");
+
+            using (var transaction = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    XLWorkbook Workbook = new XLWorkbook(uploadExcel.ExcelFile.InputStream);
+                    IXLWorksheet WorkSheet = null;
+                    WorkSheet = Workbook.Worksheet("sheet1");
+                    if (!DocumentHelper.SaveExcelFile(uploadExcel))
+                        throw new HttpException((int)HttpStatusCode.BadRequest, "Error saving file.");
+
+                    WorkSheet.FirstRow().Delete();//delete header column
+                    int countUpdateRecord = 0;
+                    foreach (var row in WorkSheet.RowsUsed())
+                    {
+                        var soNumber = row.Cell(1).Value.ToString().Trim().Replace(" ", string.Empty);//Get ist cell. 1 represent column number
+                        var status = row.Cell(2).Value.ToString().Trim().Replace(" ", string.Empty); ;
+
+                        var record = await db.tblSaleOrders.FirstOrDefaultAsync(x => x.deleted == null && x.code == soNumber);
+                        if (record != null)
+                        {
+                            countUpdateRecord++;
+                            record.status = status;
+                            await db.SaveChangesAsync();
+                        }
+                    }
+                    transaction.Commit();
+                    return countUpdateRecord++;
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw new Exception(ex.Message);
+                }
+            }
         }
     }
 }

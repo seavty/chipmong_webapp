@@ -187,6 +187,7 @@
     <Compile Include="Handlers\ItemHandler.cs" />
     <Compile Include="Handlers\SaleOrderHandler.cs" />
     <Compile Include="Helpers\ConstantHelper.cs" />
+    <Compile Include="Helpers\DocumentHelper.cs" />
     <Compile Include="Helpers\DoubleHelper.cs" />
     <Compile Include="Helpers\MappingHelper.cs" />
     <Compile Include="Helpers\PaginationHelper.cs" />

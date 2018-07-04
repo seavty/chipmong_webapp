@@ -14,12 +14,7 @@
             <button type="button" class="btn btn-dark" id="btnBack"> <i class="fas fa-long-arrow-alt-left"></i> Back </button>
             <button type="button" class="btn btn-primary" id="btnEdit"> <i class="fas fa-pencil-alt"></i> Edit </button>
             <button type="button" class="btn btn-danger" id="btnDelete"> <i class="fas fa-trash-alt"></i> Delete </button>
-
-            <button type="button" class="btn btn-success" id="btnUploadExcel"> <i class="fas fa-upload"></i> Upload Excel </button>
-            <form name="register" id="frmUpload" enctype="multipart/form-data">
-                <input type="file" id="ExcelFile" name="ExcelFile" style="display:none" accept=".xlsx" />
-            </form>
-        </div>
+    </div>
     </div>
 </div>
 
@@ -100,8 +95,6 @@
 <!-- LineItemTable  -->
 @Html.Partial("~/Views/SaleOrder/LineItemTable.cshtml", Model)
 
-
-<script src="~/Content/js/jquery-upload.js"></script>
 <script>
 
     var endPoint = "@Url.Content("~/saleorder")";
@@ -116,22 +109,6 @@
         $("#btnBack").click(function () { back(); });
         $("#btnEdit").click(function () { edit(); });
         $("#btnDelete").click(function () { deleteRecord(); });
-
-        $("#btnUploadExcel").click(function () { $("#ExcelFile").trigger("click"); });
-        $("#ExcelFile").change(function () { uploadExcel(); });
-    }
-
-    //-> uploadExcel
-    function uploadExcel() {
-        /*
-        $('#loadingIndicator').modal({
-            keyboard: false,
-            backdrop: "static"
-        });
-        */
-        $("#ExcelFile").upload(endPoint + "/UploadExcel?" + $("#frmUpload").serialize(), function (data) {
-
-        });
     }
 
     //-> edit
@@ -148,7 +125,6 @@
             });
         }
     }
-
 
 </script>
 
