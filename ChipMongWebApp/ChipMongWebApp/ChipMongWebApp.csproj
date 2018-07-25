@@ -416,6 +416,7 @@
     <Content Include="Views\SourceSupply\Edit.cshtml" />
     <Content Include="Views\SourceSupply\Find.cshtml" />
     <Content Include="Views\SourceSupply\Paging.cshtml" />
+    <Content Include="Views\Customer\SourceSupplyTab.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

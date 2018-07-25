@@ -111,6 +111,16 @@ namespace ChipMongWebApp.Controllers
             var currentPage = int.Parse(Request.QueryString["currentPage"].ToString());
             return PartialView("~/Views/SaleOrder/Paging.cshtml", await handler.SaleOrderTabPaging(id, currentPage));
         }
-    
+
+        //-> View
+        public ActionResult SourceSupplyTab(int id) { return View(); }
+
+        //-> SourceSupplyTabPaging
+        public async Task<ActionResult> SourceSupplyTabPaging(int id)
+        {
+            var currentPage = int.Parse(Request.QueryString["currentPage"].ToString());
+            return PartialView("~/Views/SourceSupply/Paging.cshtml", await handler.SourceSupplyTabPaging(id, currentPage));
+        }
+
     }
 }

@@ -3,6 +3,7 @@ using ChipMongWebApp.Models.DB;
 using ChipMongWebApp.Models.DTO;
 using ChipMongWebApp.Models.DTO.Customer;
 using ChipMongWebApp.Models.DTO.SaleOrder;
+using ChipMongWebApp.Models.DTO.SourceSupply;
 using ChipMongWebApp.Models.DTO.SSA;
 using System;
 using System.Collections.Generic;
@@ -117,7 +118,7 @@ namespace ChipMongWebApp.Handlers
             return true;
         }
 
-        //-> GetList
+        //-> GetList SaleOrderTabPaging
         public async Task<GetListDTO<SaleOrderViewDTO>> SaleOrderTabPaging(int customerID, int currentPage)
         {
             IQueryable<tblSaleOrder> records = from s in db.tblSaleOrders
@@ -127,6 +128,17 @@ namespace ChipMongWebApp.Handlers
                                                select s;
             var saleOrderHandler = new SaleOrderHandler();
             return await saleOrderHandler.Listing(currentPage, records);
+        }
+
+        //-> GetList SourceSupplyTabPaging
+        public async Task<GetListDTO<SourceSupplyViewDTO>> SourceSupplyTabPaging(int customerID, int currentPage)
+        {
+
+            IQueryable<tblSourceOfSupply> records = from x in db.tblSourceOfSupplies
+                                                    where x.deleted == null orderby x.name ascending
+                                                    select x;
+            var sourceSupplyHandler = new SourceSupplyHandler();
+            return await sourceSupplyHandler.Listing(currentPage, records);
         }
     }
 }

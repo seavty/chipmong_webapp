@@ -79,7 +79,7 @@ namespace ChipMongWebApp.Handlers
         }
 
         //-> Listing
-        private async Task<GetListDTO<SourceSupplyViewDTO>> Listing(int currentPage, IQueryable<tblSourceOfSupply> records, string search = null)
+        public async Task<GetListDTO<SourceSupplyViewDTO>> Listing(int currentPage, IQueryable<tblSourceOfSupply> records, string search = null)
         {
             var recordList = new List<SourceSupplyViewDTO>();
             foreach (var record in PaginationHelper.GetList(currentPage, records))
