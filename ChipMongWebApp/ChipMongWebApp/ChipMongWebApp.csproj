@@ -80,6 +80,9 @@
     <Reference Include="System.IO.Packaging, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.IO.Packaging.4.0.0\lib\net46\System.IO.Packaging.dll</HintPath>
     </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
@@ -88,6 +91,12 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -172,11 +181,13 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\SaleOrderController.cs" />
+    <Compile Include="Controllers\SourceSupplyController.cs" />
     <Compile Include="Extension\DateTimeExtension.cs" />
     <Compile Include="Extension\DoubleExtension.cs" />
     <Compile Include="Extension\StringExtension.cs" />
@@ -186,6 +197,7 @@
     <Compile Include="Handlers\CustomerHandler.cs" />
     <Compile Include="Handlers\ItemHandler.cs" />
     <Compile Include="Handlers\SaleOrderHandler.cs" />
+    <Compile Include="Handlers\SourceSupplyHandler.cs" />
     <Compile Include="Helpers\ConstantHelper.cs" />
     <Compile Include="Helpers\DocumentHelper.cs" />
     <Compile Include="Helpers\DoubleHelper.cs" />
@@ -212,6 +224,9 @@
     <Compile Include="Models\DB\tblCustomer.cs">
       <DependentUpon>ChipMongModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DB\tblDealerSourceOfSupply.cs">
+      <DependentUpon>ChipMongModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DB\tblItem.cs">
       <DependentUpon>ChipMongModel.tt</DependentUpon>
     </Compile>
@@ -219,6 +234,9 @@
       <DependentUpon>ChipMongModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DB\tblSaleOrderItem.cs">
+      <DependentUpon>ChipMongModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DB\tblSourceOfSupply.cs">
       <DependentUpon>ChipMongModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DTO\Auth\LoginDTO.cs" />
@@ -249,6 +267,11 @@
     <Compile Include="Models\DTO\SaleOrder\SaleOrderTestDTO.cs" />
     <Compile Include="Models\DTO\SaleOrder\SaleOrderUploadExcel.cs" />
     <Compile Include="Models\DTO\SaleOrder\SaleOrderViewDTO.cs" />
+    <Compile Include="Models\DTO\SourceSupply\SourceSupplyBaseDTO.cs" />
+    <Compile Include="Models\DTO\SourceSupply\SourceSupplyEditDTO.cs" />
+    <Compile Include="Models\DTO\SourceSupply\SourceSupplyFindDTO.cs" />
+    <Compile Include="Models\DTO\SourceSupply\SourceSupplyNewDTO.cs" />
+    <Compile Include="Models\DTO\SourceSupply\SourceSupplyViewDTO.cs" />
     <Compile Include="Models\DTO\SSA\GetSSADTO.cs" />
     <Compile Include="Models\DTO\SSA\SSAItem.cs" />
     <Compile Include="Models\DTO\SSA\SSAList.cs" />
@@ -333,6 +356,7 @@
     <Content Include="Models\DB\ChipMongModel.edmx.diagram">
       <DependentUpon>ChipMongModel.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -344,7 +368,9 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -385,6 +411,11 @@
     <Content Include="Views\Shared\Basic\_Basic.cshtml" />
     <Content Include="Views\Customer\SaleOrderTab.cshtml" />
     <Content Include="Views\Shared\Error\Error404.cshtml" />
+    <Content Include="Views\SourceSupply\New.cshtml" />
+    <Content Include="Views\SourceSupply\View.cshtml" />
+    <Content Include="Views\SourceSupply\Edit.cshtml" />
+    <Content Include="Views\SourceSupply\Find.cshtml" />
+    <Content Include="Views\SourceSupply\Paging.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

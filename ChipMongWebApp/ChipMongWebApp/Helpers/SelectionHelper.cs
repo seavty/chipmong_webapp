@@ -38,13 +38,23 @@ namespace ChipMongWebApp.Helpers
                 },
                 new SelectListItem
                 {
-                    Text = "In Progress",
-                    Value = "InProgress"
+                    Text = "Processed",
+                    Value = "Processed"
                 },
                 new SelectListItem
                 {
-                    Text = "Completed",
-                    Value = "Completed"
+                    Text = "Complete",
+                    Value = "Complete"
+                },
+                new SelectListItem
+                {
+                    Text = "Cancelled",
+                    Value = "Cancelled"
+                },
+                new SelectListItem
+                {
+                    Text = "Rejected",
+                    Value = "Rejected"
                 }
             };
 
@@ -93,12 +103,50 @@ namespace ChipMongWebApp.Helpers
                         item.Selected = true;
                         break;
                     }
-
                 }
             }
             return listItems;
         }
 
 
+        //-> Source Supply Selection
+        public static List<SelectListItem> SourceSupplySelection(int? id = null)
+        {
+            ChipMongEntities db = new ChipMongEntities();
+            IQueryable<tblSourceOfSupply> records = from x in db.tblSourceOfSupplies
+                                          where x.deleted == null
+                                          orderby x.name ascending
+                                          select x;
+            var items = records.ToList();
+            List<SelectListItem> listItems = new List<SelectListItem>();
+            listItems.Add(new SelectListItem()
+            {
+                Text = "--None--",
+                Value = ""
+            });
+            foreach (var item in items)
+            {
+
+                listItems.Add(new SelectListItem()
+                {
+                    Text = item.name,
+                    Value = item.id.ToString()
+                });
+
+            }
+            
+            if (id != null)
+            {
+                foreach (var item in listItems)
+                {
+                    if (item.Value == id.ToString())
+                    {
+                        item.Selected = true;
+                        break;
+                    }
+                }
+            }
+            return listItems;
+        }
     }
 }

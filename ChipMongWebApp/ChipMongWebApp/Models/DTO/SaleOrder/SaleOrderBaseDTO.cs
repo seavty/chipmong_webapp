@@ -16,17 +16,25 @@ namespace ChipMongWebApp.Models.DTO.SaleOrder
         public int customerID { get; set; }
 
         [Required]
+        [MaxLength(100)]
         [DisplayName("Status (*):")]
         public string status { get; set; }
-
-
+   
         [MaxLength(1000)]
         [DisplayName("Remarks:")]
         public string remarks { get; set; }
 
-
-        
-        [DisplayName("Date:")]
+        [MaxLength(100)]
+        [DisplayName("Date: (*)")]
         public string date { get; set; }
+
+        [Required]
+        [MaxLength(100)]
+        [DisplayName("Require Date (*):")]
+        public string requiredDate { get; set; }
+
+        [Required]
+        [DisplayName("Source Supply: (*)")]
+        public int sourceOfSupplyID { get; set; }
     }
 }

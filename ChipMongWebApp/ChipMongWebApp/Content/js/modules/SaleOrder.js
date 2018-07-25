@@ -111,7 +111,14 @@ function getItem(prop, endPoint) {
 
 //--saveRecord
 function saveRecord(endPoint, action) {
+    $(".select2-selection").css("border-color", "#ced4da")
+    $("#sourceOfSupplyID").css("border-color", "#ced4da");
+    if ($("#sourceOfSupplyID").val() == "")
+        $("#sourceOfSupplyID").css("border-color", "red");
+
     if ($("#customerID").val() == null) return $(".select2-selection").css("border-color", "red");
+
+    
 
     if (isValid()) {
         $('#tblLineItem tr:last').remove();
@@ -126,6 +133,7 @@ function setupEvents() {
     $("#btnSave").click(function () { save(); });
     $("#btnCancel").click(function () { cancel(); });
     setupDatePicker("#date");
+    setupDatePicker("#requiredDate");
     customerSSA(ssaURL, select2PlaceHolder);
     $('.numeric').numeric();
 }

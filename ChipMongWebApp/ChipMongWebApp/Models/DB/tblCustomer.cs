@@ -29,5 +29,10 @@ namespace ChipMongWebApp.Models.DB
         public string email { get; set; }
         public string address { get; set; }
         public Nullable<int> deleted { get; set; }
+        public string cust_LineID { get; set; }
+        public string cust_LastCommand { get; set; }
+        public string cust_LastCommandValue { get; set; }
+        public string cust_LastCommandValue2 { get; set; }
+        public string cust_Lang { get; set; }
     }
 }

@@ -1,31 +1,34 @@
 ﻿using ChipMongWebApp.Handlers;
 using ChipMongWebApp.Helpers;
-using ChipMongWebApp.Models.DTO.Item;
+using ChipMongWebApp.Models.DTO.Customer;
+using ChipMongWebApp.Models.DTO.SourceSupply;
+using ChipMongWebApp.Models.DTO.SSA;
 using ChipMongWebApp.Utils.Attribute;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
+
 namespace ChipMongWebApp.Controllers
 {
-    [ErrorLogger]
-    public class ItemController : Controller
+    public class SourceSupplyController : Controller
     {
-        private ItemHandler handler = null;
+        private SourceSupplyHandler handler = null;
 
-        public ItemController() { handler = new ItemHandler(); }
+        public SourceSupplyController() { handler = new SourceSupplyHandler(); }
 
-        //-> New
+        //--> New
         public ActionResult New() { return View(); }
 
         //-> New
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<JsonResult> New(ItemNewDTO newDTO)
+        public async Task<JsonResult> New(SourceSupplyNewDTO newDTO)
         {
             try
             {
@@ -49,7 +52,7 @@ namespace ChipMongWebApp.Controllers
         //-> Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<JsonResult> Edit(ItemEditDTO editDTO)
+        public async Task<JsonResult> Edit(SourceSupplyEditDTO editDTO)
         {
             try
             {
@@ -72,11 +75,9 @@ namespace ChipMongWebApp.Controllers
         //-> Paging
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Paging(ItemFindDTO findDTO) { return PartialView(await handler.GetList(findDTO)); }
+        public async Task<ActionResult> Paging(SourceSupplyFindDTO findDTO) { return PartialView(await handler.GetList(findDTO)); }
 
-        //-> Record
-        public async Task<JsonResult> Record(int id) { return Json(await handler.SelectByID(id), JsonRequestBehavior.AllowGet); }
-
+        
         //-> Delete
         //??? why if use http delete - resource alway not found ? ???
         [HttpPost]
@@ -97,6 +98,6 @@ namespace ChipMongWebApp.Controllers
                 return ex.Message;
             }
         }
-
+        
     }
 }

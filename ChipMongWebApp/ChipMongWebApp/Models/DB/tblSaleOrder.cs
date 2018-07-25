@@ -26,5 +26,10 @@ namespace ChipMongWebApp.Models.DB
         public string status { get; set; }
         public string remarks { get; set; }
         public Nullable<System.DateTime> date { get; set; }
+        public Nullable<int> retailerID { get; set; }
+        public Nullable<int> preOrderID { get; set; }
+        public Nullable<int> sourceOfSupplyID { get; set; }
+        public Nullable<System.DateTime> requiredDate { get; set; }
+        public string pickUp { get; set; }
     }
 }

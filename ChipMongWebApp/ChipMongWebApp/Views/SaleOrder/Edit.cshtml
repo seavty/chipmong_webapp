@@ -27,13 +27,14 @@
 
         <!-- card body -->
         <div class="card-body">
+
             <!--row 1-->
             <div class="row">
 
                 <div class="col-4">
                     <div class="form-group">
                         @Html.LabelFor(m => m.code)
-                        @Html.TextBoxFor(m => m.code, new { @class = "form-control", @readonly = "readonly" })
+                        @Html.TextBoxFor(m => m.code, new { @class = "form-control" })
                     </div>
                 </div>
 
@@ -44,12 +45,14 @@
                     </div>
                 </div>
 
+
                 <div class="col-4">
                     <div class="form-group">
-                        @Html.LabelFor(m => m.customerID)
-                        @Html.DropDownListFor(m => m.customerID, SSAHelper.CustomerSSA(Model.customerID), null, new { @class = "form-control" })
+                        @Html.LabelFor(m => m.requiredDate)
+                        @Html.TextBoxFor(m => m.requiredDate, new { @class = "form-control", Value = Model.requiredDate.ToDisplayDate() })
                     </div>
                 </div>
+
 
             </div>
             <!--end  row 1-->
@@ -58,15 +61,33 @@
 
                 <div class="col-4">
                     <div class="form-group">
-                        @Html.LabelFor(m => m.total)
-                        @Html.TextBoxFor(m => m.total, new { @class = "form-control", @readonly = "readonly", Value = Model.total.ToTwoDecimalPoint() })
+                        @Html.LabelFor(m => m.customerID)
+                        @Html.DropDownListFor(m => m.customerID, SSAHelper.CustomerSSA(Model.customerID), null, new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.sourceOfSupplyID)
+                        @Html.DropDownListFor(m => m.sourceOfSupplyID, SelectionHelper.SourceSupplySelection(Model.sourceOfSupplyID), null, new { @class = "form-control required" })
                     </div>
                 </div>
 
                 <div class="col-4">
                     <div class="form-group">
                         @Html.LabelFor(m => m.status)
-                        @Html.DropDownListFor(m => m.status, SelectionHelper.SaleOrderStatus(Model.status), null, new { @class = "form-control" })
+                        @Html.DropDownListFor(m => m.status, SelectionHelper.SaleOrderStatus(Model.status), "-- Select Status --", new { @class = "form-control" })
+                    </div>
+                </div>
+
+            </div>
+            <!--end  row 2-->
+            <!--row 3-->
+            <div class="row">
+                <div class="col-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.total)
+                        @Html.TextBoxFor(m => m.total, new { @class = "form-control", Value = Model.total.ToTwoDecimalPoint() })
                     </div>
                 </div>
 
@@ -76,11 +97,12 @@
                         @Html.TextAreaFor(m => m.remarks, new { @class = "form-control" })
                     </div>
                 </div>
-
             </div>
-            <!--end  row 2-->
+            <!--end  row 3-->
+
         </div>
-        <!--endcard body -->
+    </div>
+    <!-- end card body -->
     </div>
     <!-- end  card -->
 

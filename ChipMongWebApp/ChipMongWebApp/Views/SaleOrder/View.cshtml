@@ -41,7 +41,7 @@
 
                     <div class="col-4">
                         <div class="form-group">
-                            @Html.Label("Date")
+                            @Html.LabelFor(m => m.date)
                             @Html.TextBoxFor(m => m.date, new { @class = "form-control", Value = Model.date.ToDisplayDate() })
                         </div>
                     </div>
@@ -49,8 +49,8 @@
 
                     <div class="col-4">
                         <div class="form-group">
-                            @Html.LabelFor(m => m.customerID)
-                            @Html.DropDownListFor(m => m.customerID, SSAHelper.CustomerSSA(Model.customerID), null, new { @class = "form-control" })
+                            @Html.LabelFor(m => m.requiredDate)
+                            @Html.TextBoxFor(m => m.requiredDate, new { @class = "form-control", Value = Model.requiredDate.ToDisplayDate() })
                         </div>
                     </div>
 
@@ -62,8 +62,15 @@
 
                     <div class="col-4">
                         <div class="form-group">
-                            @Html.LabelFor(m => m.total)
-                            @Html.TextBoxFor(m => m.total, new { @class = "form-control", Value = Model.total.ToTwoDecimalPoint() })
+                            @Html.LabelFor(m => m.customerID)
+                            @Html.DropDownListFor(m => m.customerID, SSAHelper.CustomerSSA(Model.customerID), null, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.sourceOfSupplyID)
+                            @Html.DropDownListFor(m => m.sourceOfSupplyID, SelectionHelper.SourceSupplySelection(Model.sourceOfSupplyID), null, new { @class = "form-control required" })
                         </div>
                     </div>
 
@@ -74,15 +81,26 @@
                         </div>
                     </div>
 
+                </div>
+                <!--end  row 2-->
+
+                <!--row 3-->
+                <div class="row">
+                    <div class="col-4">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.total)
+                            @Html.TextBoxFor(m => m.total, new { @class = "form-control", Value = Model.total.ToTwoDecimalPoint() })
+                        </div>
+                    </div>
+
                     <div class="col-4">
                         <div class="form-group">
                             @Html.LabelFor(m => m.remarks)
                             @Html.TextAreaFor(m => m.remarks, new { @class = "form-control" })
                         </div>
                     </div>
-
                 </div>
-                <!--end  row 2-->
+                <!--end  row 3-->
 
             </div>
         </div>

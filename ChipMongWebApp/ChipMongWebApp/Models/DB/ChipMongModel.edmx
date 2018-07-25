@@ -24,6 +24,20 @@
           <Property Name="cust_Email" Type="nvarchar" MaxLength="100" />
           <Property Name="cust_Address" Type="nvarchar" MaxLength="100" />
           <Property Name="cust_Deleted" Type="int" />
+          <Property Name="cust_LineID" Type="nvarchar" MaxLength="50" />
+          <Property Name="cust_LastCommand" Type="nvarchar" MaxLength="50" />
+          <Property Name="cust_LastCommandValue" Type="nvarchar" MaxLength="50" />
+          <Property Name="cust_LastCommandValue2" Type="nvarchar" MaxLength="50" />
+          <Property Name="cust_Lang" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="tblDealerSourceOfSupply">
+          <Key>
+            <PropertyRef Name="dlss_DealerSourceOfSupplyID" />
+          </Key>
+          <Property Name="dlss_DealerSourceOfSupplyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="dlss_DealerID" Type="int" />
+          <Property Name="dlss_SourceOfSupplyID" Type="int" />
+          <Property Name="dlss_Deleted" Type="int" />
         </EntityType>
         <EntityType Name="tblItem">
           <Key>
@@ -39,6 +53,8 @@
           <Property Name="item_Cost" Type="numeric" Precision="18" Scale="5" />
           <Property Name="item_Price" Type="numeric" Precision="18" Scale="5" />
           <Property Name="item_Name" Type="nvarchar" MaxLength="100" />
+          <Property Name="item_Name2" Type="nvarchar" MaxLength="255" />
+          <Property Name="item_Index" Type="int" />
         </EntityType>
         <EntityType Name="tblSaleOrder">
           <Key>
@@ -56,6 +72,11 @@
           <Property Name="slor_Status" Type="nvarchar" MaxLength="100" />
           <Property Name="slor_Remarks" Type="nvarchar" MaxLength="1000" />
           <Property Name="slor_Date" Type="datetime" />
+          <Property Name="slor_RetailerID" Type="int" />
+          <Property Name="slor_PreOrderID" Type="int" />
+          <Property Name="slor_SourceOfSupply" Type="int" />
+          <Property Name="slor_RequiredDate" Type="datetime" />
+          <Property Name="slor_PickUp" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="tblSaleOrderItem">
           <Key>
@@ -74,11 +95,21 @@
           <Property Name="sloi_SaloeOrderID" Type="int" />
           <Property Name="sloi_ItemID" Type="int" />
         </EntityType>
+        <EntityType Name="tblSourceOfSupply">
+          <Key>
+            <PropertyRef Name="scsp_SourceOfSupplyID" />
+          </Key>
+          <Property Name="scsp_SourceOfSupplyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="scsp_Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="scsp_Deleted" Type="int" />
+        </EntityType>
         <EntityContainer Name="ChipMongModelStoreContainer">
           <EntitySet Name="tblCustomer" EntityType="Self.tblCustomer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblDealerSourceOfSupply" EntityType="Self.tblDealerSourceOfSupply" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblItem" EntityType="Self.tblItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblSaleOrder" EntityType="Self.tblSaleOrder" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblSaleOrderItem" EntityType="Self.tblSaleOrderItem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblSourceOfSupply" EntityType="Self.tblSourceOfSupply" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -103,12 +134,19 @@
           <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="deleted" Type="Int32" />
+          <Property Name="cust_LineID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="cust_LastCommand" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="cust_LastCommandValue" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="cust_LastCommandValue2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="cust_Lang" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityContainer Name="ChipMongEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="tblCustomers" EntityType="Self.tblCustomer" />
           <EntitySet Name="tblSaleOrders" EntityType="ChipMongModel.tblSaleOrder" />
           <EntitySet Name="tblSaleOrderItems" EntityType="ChipMongModel.tblSaleOrderItem" />
           <EntitySet Name="tblItems" EntityType="ChipMongModel.tblItem" />
+          <EntitySet Name="tblSourceOfSupplies" EntityType="ChipMongModel.tblSourceOfSupply" />
+          <EntitySet Name="tblDealerSourceOfSupplies" EntityType="ChipMongModel.tblDealerSourceOfSupply" />
         </EntityContainer>
         <EntityType Name="tblSaleOrder">
           <Key>
@@ -126,6 +164,11 @@
           <Property Name="status" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="remarks" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="date" Type="DateTime" Precision="3" />
+          <Property Name="retailerID" Type="Int32" />
+          <Property Name="preOrderID" Type="Int32" />
+          <Property Name="sourceOfSupplyID" Type="Int32" />
+          <Property Name="requiredDate" Type="DateTime" Precision="3" />
+          <Property Name="pickUp" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblSaleOrderItem">
           <Key>
@@ -158,6 +201,25 @@
           <Property Name="cost" Type="Decimal" Precision="18" Scale="5" />
           <Property Name="price" Type="Decimal" Precision="18" Scale="5" />
           <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="item_Name2" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="item_Index" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tblSourceOfSupply">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="deleted" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tblDealerSourceOfSupply">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="dealerID" Type="Int32" />
+          <Property Name="sourceOfSupplyID" Type="Int32" />
+          <Property Name="deleted" Type="Int32" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -168,6 +230,11 @@
           <EntitySetMapping Name="tblCustomers">
             <EntityTypeMapping TypeName="ChipMongModel.tblCustomer">
               <MappingFragment StoreEntitySet="tblCustomer">
+                <ScalarProperty Name="cust_Lang" ColumnName="cust_Lang" />
+                <ScalarProperty Name="cust_LastCommandValue2" ColumnName="cust_LastCommandValue2" />
+                <ScalarProperty Name="cust_LastCommandValue" ColumnName="cust_LastCommandValue" />
+                <ScalarProperty Name="cust_LastCommand" ColumnName="cust_LastCommand" />
+                <ScalarProperty Name="cust_LineID" ColumnName="cust_LineID" />
                 <ScalarProperty Name="deleted" ColumnName="cust_Deleted" />
                 <ScalarProperty Name="id" ColumnName="cust_CustomerID" />
                 <ScalarProperty Name="createdDate" ColumnName="cust_CreatedDate" />
@@ -189,6 +256,11 @@
           <EntitySetMapping Name="tblSaleOrders">
             <EntityTypeMapping TypeName="ChipMongModel.tblSaleOrder">
               <MappingFragment StoreEntitySet="tblSaleOrder">
+                <ScalarProperty Name="pickUp" ColumnName="slor_PickUp" />
+                <ScalarProperty Name="requiredDate" ColumnName="slor_RequiredDate" />
+                <ScalarProperty Name="sourceOfSupplyID" ColumnName="slor_SourceOfSupply" />
+                <ScalarProperty Name="preOrderID" ColumnName="slor_PreOrderID" />
+                <ScalarProperty Name="retailerID" ColumnName="slor_RetailerID" />
                 <ScalarProperty Name="date" ColumnName="slor_Date" />
                 <ScalarProperty Name="remarks" ColumnName="slor_Remarks" />
                 <ScalarProperty Name="status" ColumnName="slor_Status" />
@@ -225,6 +297,8 @@
           <EntitySetMapping Name="tblItems">
             <EntityTypeMapping TypeName="ChipMongModel.tblItem">
               <MappingFragment StoreEntitySet="tblItem">
+                <ScalarProperty Name="item_Index" ColumnName="item_Index" />
+                <ScalarProperty Name="item_Name2" ColumnName="item_Name2" />
                 <ScalarProperty Name="name" ColumnName="item_Name" />
                 <ScalarProperty Name="price" ColumnName="item_Price" />
                 <ScalarProperty Name="cost" ColumnName="item_Cost" />
@@ -235,6 +309,25 @@
                 <ScalarProperty Name="createdBy" ColumnName="item_CreatedBy" />
                 <ScalarProperty Name="createdDate" ColumnName="item_CreatedDate" />
                 <ScalarProperty Name="id" ColumnName="item_ItemID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblSourceOfSupplies">
+            <EntityTypeMapping TypeName="ChipMongModel.tblSourceOfSupply">
+              <MappingFragment StoreEntitySet="tblSourceOfSupply">
+                <ScalarProperty Name="deleted" ColumnName="scsp_Deleted" />
+                <ScalarProperty Name="name" ColumnName="scsp_Name" />
+                <ScalarProperty Name="id" ColumnName="scsp_SourceOfSupplyID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblDealerSourceOfSupplies">
+            <EntityTypeMapping TypeName="ChipMongModel.tblDealerSourceOfSupply">
+              <MappingFragment StoreEntitySet="tblDealerSourceOfSupply">
+                <ScalarProperty Name="deleted" ColumnName="dlss_Deleted" />
+                <ScalarProperty Name="sourceOfSupplyID" ColumnName="dlss_SourceOfSupplyID" />
+                <ScalarProperty Name="dealerID" ColumnName="dlss_DealerID" />
+                <ScalarProperty Name="id" ColumnName="dlss_DealerSourceOfSupplyID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

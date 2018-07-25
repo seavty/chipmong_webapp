@@ -43,8 +43,8 @@
 
                 <div class="col-4">
                     <div class="form-group">
-                        @Html.LabelFor(m => m.customerID)
-                        @Html.DropDownListFor(m => m.customerID, new SelectList(Enumerable.Empty<SelectListItem>()), new { @class = "form-control required" })
+                        @Html.LabelFor(m => m.requiredDate)
+                        @Html.TextBoxFor(m => m.requiredDate, new { @class = "form-control", Value = DateTime.Now.ToString("dd/MM/yyyy") })
                     </div>
                 </div>
 
@@ -54,8 +54,15 @@
             <div class="row">
                 <div class="col-4">
                     <div class="form-group">
-                        @Html.LabelFor(m => m.total)
-                        @Html.TextBoxFor(m => m.total, new { @class = "form-control", @readonly = "readonly", placeholder = "Total", Value = "0.00" })
+                        @Html.LabelFor(m => m.customerID)
+                        @Html.DropDownListFor(m => m.customerID, new SelectList(Enumerable.Empty<SelectListItem>()), new { @class = "form-control required" })
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.sourceOfSupplyID)
+                        @Html.DropDownListFor(m => m.sourceOfSupplyID, SelectionHelper.SourceSupplySelection(0), null, new { @class = "form-control required" })
                     </div>
                 </div>
 
@@ -66,15 +73,28 @@
                     </div>
                 </div>
 
+            </div>
+            <!--end  row 2-->
+
+            <!--row 3-->
+            <div class="row">
+                <div class="col-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.total)
+                        @Html.TextBoxFor(m => m.total, new { @class = "form-control", @readonly = "readonly", placeholder = "Total", Value = "0.00" })
+                    </div>
+                </div>
+
                 <div class="col-4">
                     <div class="form-group">
                         @Html.LabelFor(m => m.remarks)
                         @Html.TextAreaFor(m => m.remarks, new { @class = "form-control", placeholder = "Remarks", @maxlength = "1000" })
                     </div>
                 </div>
-
             </div>
-            <!--end  row 2-->
+            <!--end  row 3-->
+
+
         </div>
         <!-- end card body -->
     </div>

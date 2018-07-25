@@ -1,0 +1,70 @@
+﻿@model ChipMongWebApp.Models.DTO.SourceSupply.SourceSupplyViewDTO
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/Main/_Main.cshtml";
+}
+
+<div class="card" id="action">
+    <div class="card-body text-dark shadow-sm merienda">
+        <button type="button" class="btn btn-success" id="btnSave"> <i class="fas fa-save"></i>  Save  </button>
+        <button type="button" class="btn btn-danger" id="btnCancel"> <i class="fas fa-times"></i> Cancel  </button>
+    </div>
+</div>
+
+<br />
+
+<form id="record" name="record">
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.id)
+    <div class="card shadow-sm">
+        <div class="card-header merienda"> Source Supply </div>
+
+        <!-- card body -->
+        <div class="card-body">
+
+            <!--row 1-->
+            <div class="row">
+
+                <div class="col">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.name)
+                        @Html.TextBoxFor(m => m.name, new { @class = "form-control required", placeholder = "Name" })
+                    </div>
+                </div>
+            </div>
+            <!--end  row 1-->
+        </div>
+        <!-- end card body -->
+    </div>
+    
+</form>
+
+<script>
+
+    var endPoint = "@Url.Content("~/sourcesupply")";
+    var id = @Url.RequestContext.RouteData.Values["id"];
+
+    $(document).ready(function () {
+        setupEvents();
+    });
+
+    //-> setupEvents
+    function setupEvents() {
+        $("#btnSave").click(function () { save(); });
+        $("#btnCancel").click(function () { cancel(); });
+    }
+
+    //-> save
+    function save() {
+        if (isValid()) {
+            ajaxHelper(endPoint + "/edit", $("#record").serializeObject(), requestMethod.POST).then(function (data) {
+                window.location.href = endPoint + "/view/" + data.id;
+            });
+        }
+    }
+
+    //-> cancel
+    function cancel() { window.location.href = endPoint + "/view/" + id; }
+
+</script>
+

@@ -67,6 +67,7 @@ namespace ChipMongWebApp.Handlers
                 {
                     newDTO = StringHelper.TrimStringProperties(newDTO);
                     newDTO.date = newDTO.date.ToDBDate();
+                    newDTO.requiredDate = newDTO.requiredDate.ToDBDate();
                     var record = (tblSaleOrder)MappingHelper.MapDTOToDBClass<SaleOrderNewDTO, tblSaleOrder>(newDTO, new tblSaleOrder());
                     record.createdDate = DateTime.Now;
                     db.tblSaleOrders.Add(record);
@@ -117,6 +118,7 @@ namespace ChipMongWebApp.Handlers
                 {
                     editDTO = StringHelper.TrimStringProperties(editDTO);
                     editDTO.date = editDTO.date.ToDBDate();
+                    editDTO.requiredDate = editDTO.requiredDate.ToDBDate();
                     var record = await db.tblSaleOrders.FirstOrDefaultAsync(r => r.deleted == null && r.id == editDTO.id);
                     if (record == null)
                         throw new HttpException((int)HttpStatusCode.NotFound, "NotFound");
