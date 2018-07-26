@@ -1,0 +1,34 @@
+﻿@model IEnumerable<ChipMongWebApp.Models.DTO.DealerSourceSupply.DealerSourceSupplyDTO>
+
+<table class="table table-bordered table-striped table-hover">
+    <thead>
+        <tr class="text-center">
+            <th scope="col" width="65px">#</th>
+            <th scope="col"> Name </th>
+            <th scope="col" style="width:130px"> Action </th>
+        </tr>
+    </thead>
+    <tbody>
+
+
+        @{
+        int i = 1;
+        foreach (var m in Model)
+        {
+        <tr>
+            <th scope="row" class="text-center"> @i </th>
+            <td class="align-middle"> @m.name </td>
+            <td>
+                <button type="button" class="btn btn-info" onclick="editDealerSourceSupply(@m.id, @m.sourceSupplyID)"> <i class="far fa-edit"></i></button> &nbsp;
+                <button type="button" class="btn btn-danger" onclick="deleteDealerSourceSupply(@m.id)"> <i class="fas fa-trash-alt"></i></button>
+            </td>
+        </tr>
+        i++;
+    }
+        }
+
+    </tbody>
+
+</table>
+
+

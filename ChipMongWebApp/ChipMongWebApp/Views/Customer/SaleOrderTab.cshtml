@@ -12,6 +12,7 @@
     <ol class="breadcrumb shadow-sm">
         <li class="breadcrumb-item"> <a href="javascript:onclick=customerTab()"> Customer </a> </li>
         <li class="breadcrumb-item active" aria-current="page"> SaleOrder  </li>
+        <li class="breadcrumb-item"> <a href="javascript:onclick=sourceSupplyTab()"> Source Supply </a></li>
     </ol>
 </nav>
 
@@ -39,9 +40,14 @@
         });
         }
 
-        function customerTab() {
-            window.location.href = endPoint + "/view/" + id;
-        }
+    function customerTab() {
+        window.location.href = endPoint + "/view/" + id;
+    }
+
+    //-> sourceSupplyTab
+    function sourceSupplyTab() {
+        window.location.href = endPoint + "/sourceSupplytab/" + id;
+    }
 </script>
 
 

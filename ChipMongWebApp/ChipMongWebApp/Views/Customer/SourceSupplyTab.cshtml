@@ -36,24 +36,29 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel"> Add Source Supply </h5>
+                <h5 class="modal-title" id="exampleModalLabel"> Source Supply </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <div class="row">
-                    <div class="col">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.sourceOfSupplyID)
-                            @Html.DropDownListFor(m => m.sourceOfSupplyID, SelectionHelper.SourceSupplySelection(0), null, new { @class = "form-control required" })
+                <form name="frmPopup" id="frmPopup">
+                    @Html.AntiForgeryToken()
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.sourceOfSupplyID)
+                                @Html.DropDownListFor(m => m.sourceOfSupplyID, SelectionHelper.SourceSupplySelection(0), null, new { @class = "form-control required" })
+                                @Html.Hidden("dealerSupplyID")
+                            </div>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal"> <i class="fas fa-times"></i> Close</button>
-                <button type="button" class="btn btn-success" id="btnAddSourceSupply"> <i class="fas fa-plus"></i> Add </button>
+                <button type="button" class="btn btn-success" id="btnAdd" onclick="add()"> <i class="fas fa-plus"></i> Add </button>
+                <button type="button" class="btn btn-success" id="btnSave" onclick="save()"> <i class="fas fa-save"></i> Save </button>
             </div>
         </div>
     </div>
@@ -63,14 +68,24 @@
 
     var id = @Url.RequestContext.RouteData.Values["id"];
     var endPoint = "@Url.Content("~/customer")";
+    var dealerSourceSupplyEndPoint = "@Url.Content("~/dealersourcesupply")";
 
     $(document).ready(function () {
-        paging(1);
+        //paging(1);
+
+        getDealerSourceSupply();
 
         $("#btnAddSourceSupply").click(function () {
             handleAddSourceSupply();
-        })
+        });
     });
+
+    //-> getDealerSourceSupply
+    function getDealerSourceSupply() {
+        ajaxHelper(endPoint + "/dealersourcesupply/" + id, null, requestMethod.POST).then(function (data) {
+            $("#tableData").html(data);
+        })
+    }
 
     //-> getPage
     function paging(currentPage) {
@@ -90,8 +105,60 @@
     }
 
     function handleAddSourceSupply() {
+        $("#btnSave").hide();
+        $("#btnAdd").show();
+        $("#sourceOfSupplyID").css("border-color", "#ced4da");
+        $("#sourceOfSupplyID").val("");
         $("#exampleModal").modal("show");
     }
+
+    //-> add()
+    function add() {
+        if (isValid()) {
+            ajaxHelper(endPoint + "/addsourcesupply/" + id + "/?sourceOfSupplyID=" + $("#sourceOfSupplyID").val(), $("#frmPopup").serializeObject(), requestMethod.POST).then(function (data) {
+                window.location.reload();
+            });
+        }
+        else {
+            $("#sourceOfSupplyID").css("border-color", "red");
+        }
+    }
+
+    //-> editDealerSourceSupply
+    function editDealerSourceSupply(id, sourceSupplyID) {
+        $("#sourceOfSupplyID").val(sourceSupplyID);
+        $("#btnSave").show();
+        $("#btnAdd").hide();
+        $("#sourceOfSupplyID").css("border-color", "#ced4da");
+
+        $("#dealerSupplyID").val(id);
+        $("#exampleModal").modal("show");
+
+    }
+
+    //-> deleteDealerSourceSupply
+    function deleteDealerSourceSupply(id) {
+        if (confirm("Do you want to delee this record?")) {
+            simpleAjax(dealerSourceSupplyEndPoint + "/delete/" + id, null, requestMethod.POST).then(function (data) {
+                if (data == "ok")
+                    window.location.reload();
+            });
+        }
+    }
+
+    //-> save
+    function save() {
+        if (isValid()) {
+            ajaxHelper(dealerSourceSupplyEndPoint + "/edit/" + $("#dealerSupplyID").val() + "/?sourceOfSupplyID=" + $("#sourceOfSupplyID").val(), $("#frmPopup").serializeObject(), requestMethod.POST).then(function (data) {
+                window.location.reload();
+            });
+        }
+        else {
+            $("#sourceOfSupplyID").css("border-color", "red");
+        }
+    }
+
+
 </script>
 
 

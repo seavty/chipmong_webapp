@@ -2,6 +2,7 @@
 using ChipMongWebApp.Models.DB;
 using ChipMongWebApp.Models.DTO;
 using ChipMongWebApp.Models.DTO.Customer;
+using ChipMongWebApp.Models.DTO.DealerSourceSupply;
 using ChipMongWebApp.Models.DTO.SaleOrder;
 using ChipMongWebApp.Models.DTO.SourceSupply;
 using ChipMongWebApp.Models.DTO.SSA;
@@ -60,12 +61,12 @@ namespace ChipMongWebApp.Handlers
         {
             //--seem like search sql not dynamic -> should write one helper function or interface to do dynamic search
             IQueryable<tblCustomer> records = from x in db.tblCustomers
-                                                where x.deleted == null
-                                                && (string.IsNullOrEmpty(findDTO.code) ? 1 == 1 : x.code.Contains(findDTO.code))
-                                                && (string.IsNullOrEmpty(findDTO.firstName) ? 1 == 1 : x.firstName.Contains(findDTO.firstName))
-                                                && (string.IsNullOrEmpty(findDTO.lastName) ? 1 == 1 : x.lastName == findDTO.lastName)
-                                                orderby x.id ascending
-                                                select x;
+                                              where x.deleted == null
+                                              && (string.IsNullOrEmpty(findDTO.code) ? 1 == 1 : x.code.Contains(findDTO.code))
+                                              && (string.IsNullOrEmpty(findDTO.firstName) ? 1 == 1 : x.firstName.Contains(findDTO.firstName))
+                                              && (string.IsNullOrEmpty(findDTO.lastName) ? 1 == 1 : x.lastName == findDTO.lastName)
+                                              orderby x.id ascending
+                                              select x;
             return await Listing(findDTO.currentPage, records);
         }
 
@@ -88,10 +89,10 @@ namespace ChipMongWebApp.Handlers
         public async Task<GetSSADTO<CustomerSSADTO>> SSA(string search)
         {
             IQueryable<tblCustomer> records = from x in db.tblCustomers
-                                                where x.deleted == null
-                                                && (string.IsNullOrEmpty(search) ? 1 == 1 : x.firstName.StartsWith(search))
-                                                orderby x.id ascending
-                                                select x;
+                                              where x.deleted == null
+                                              && (string.IsNullOrEmpty(search) ? 1 == 1 : x.firstName.StartsWith(search))
+                                              orderby x.id ascending
+                                              select x;
             var list = await Listing(1, records);
             var customerList = new List<CustomerSSADTO>();
             foreach (var item in list.items)
@@ -131,14 +132,41 @@ namespace ChipMongWebApp.Handlers
         }
 
         //-> GetList SourceSupplyTabPaging
-        public async Task<GetListDTO<SourceSupplyViewDTO>> SourceSupplyTabPaging(int customerID, int currentPage)
+        public List<DealerSourceSupplyDTO> SourceSupplyTabPaging(int customerID)
         {
 
-            IQueryable<tblSourceOfSupply> records = from x in db.tblSourceOfSupplies
-                                                    where x.deleted == null orderby x.name ascending
-                                                    select x;
-            var sourceSupplyHandler = new SourceSupplyHandler();
-            return await sourceSupplyHandler.Listing(currentPage, records);
+            var records = from s in db.tblSourceOfSupplies
+                          join d in db.tblDealerSourceOfSupplies on s.id equals d.sourceOfSupplyID
+                          join c in db.tblCustomers on d.dealerID equals c.id
+                          where s.deleted == null && d.deleted == null && c.id == customerID
+                          orderby s.name ascending
+                          select
+                          (
+                           new DealerSourceSupplyDTO
+                           {
+                               id = d.id,
+                               sourceSupplyID = s.id,
+                               name = s.name
+
+                           });
+            return records.ToList(); ;
+
+            //var myTest = await records.ToListAsync();
+            //return await records.ToListAsync();
+
+        }
+
+        //-> New
+        public async Task<bool> AddSourceSupply(int customerID, int sourceSupplyID)
+        {
+
+            var record = new tblDealerSourceOfSupply();
+            record.dealerID = customerID;
+            record.sourceOfSupplyID = sourceSupplyID;
+            db.tblDealerSourceOfSupplies.Add(record);
+            await db.SaveChangesAsync();
+            return true;
+
         }
     }
 }

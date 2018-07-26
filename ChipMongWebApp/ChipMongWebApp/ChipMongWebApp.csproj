@@ -184,6 +184,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\DealerSourceSupplyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\SaleOrderController.cs" />
@@ -195,6 +196,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Handlers\CustomerHandler.cs" />
+    <Compile Include="Handlers\DealerSourceSupplyHandler.cs" />
     <Compile Include="Handlers\ItemHandler.cs" />
     <Compile Include="Handlers\SaleOrderHandler.cs" />
     <Compile Include="Handlers\SourceSupplyHandler.cs" />
@@ -246,6 +248,7 @@
     <Compile Include="Models\DTO\Customer\CustomerNewDTO.cs" />
     <Compile Include="Models\DTO\Customer\CustomerSSADTO.cs" />
     <Compile Include="Models\DTO\Customer\CustomerViewDTO.cs" />
+    <Compile Include="Models\DTO\DealerSourceSupply\DealerSourceSupplyDTO.cs" />
     <Compile Include="Models\DTO\FindDTO.cs" />
     <Compile Include="Models\DTO\GetListDTO.cs" />
     <Compile Include="Models\DTO\Item\ItemBaseDTO.cs" />
@@ -417,6 +420,7 @@
     <Content Include="Views\SourceSupply\Find.cshtml" />
     <Content Include="Views\SourceSupply\Paging.cshtml" />
     <Content Include="Views\Customer\SourceSupplyTab.cshtml" />
+    <Content Include="Views\DealerSourceSupply\Table.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

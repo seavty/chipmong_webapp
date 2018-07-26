@@ -116,10 +116,27 @@ namespace ChipMongWebApp.Controllers
         public ActionResult SourceSupplyTab(int id) { return View(); }
 
         //-> SourceSupplyTabPaging
-        public async Task<ActionResult> SourceSupplyTabPaging(int id)
+        public ActionResult DealerSourceSupply(int id)
         {
-            var currentPage = int.Parse(Request.QueryString["currentPage"].ToString());
-            return PartialView("~/Views/SourceSupply/Paging.cshtml", await handler.SourceSupplyTabPaging(id, currentPage));
+            return PartialView("~/Views/DealerSourceSupply/Table.cshtml", handler.SourceSupplyTabPaging(id));
+        }
+
+        //-> New
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<JsonResult> AddSourceSupply(int id)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    throw new HttpException((int)HttpStatusCode.BadRequest, ConstantHelper.KEY_IN_REQUIRED_FIELD);
+                Response.StatusCode = 200;
+                return Json(await handler.AddSourceSupply(id, int.Parse(Request.QueryString["sourceOfSupplyID"].ToString())), JsonRequestBehavior.AllowGet);
+            }
+            catch (HttpException)
+            {
+                return Json(ConstantHelper.ERROR, JsonRequestBehavior.AllowGet);
+            }
         }
 
     }
