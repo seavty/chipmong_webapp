@@ -73,6 +73,11 @@ namespace ChipMongWebApp.Handlers
             var checkRecord = await db.tblSaleOrders.FirstOrDefaultAsync(x => x.deleted == null && x.sourceOfSupplyID == id);
             if (checkRecord != null)
                 throw new HttpException((int)HttpStatusCode.BadRequest, "Cannot this record because it is currently in used!");
+
+            var checkDealerSourceSupply = await db.tblDealerSourceOfSupplies.FirstOrDefaultAsync(x => x.deleted == null && x.sourceOfSupplyID == id);
+            if (checkDealerSourceSupply != null)
+                throw new HttpException((int)HttpStatusCode.BadRequest, "Cannot this record because it is currently in used!");
+
             record.deleted = 1;
             await db.SaveChangesAsync();
             return true;
