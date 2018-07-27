@@ -4,11 +4,12 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web;
+
 using System.Web.Mvc;
 
 namespace ChipMongWebApp.Utils.Attribute
 {
-    public class ErrorLoggerAttribute : HandleErrorAttribute
+    public class ErrorLoggerAttribute: HandleErrorAttribute
     {
         public override void OnException(ExceptionContext filterContext)
         {

@@ -19,7 +19,10 @@ namespace ChipMongWebApp.Controllers
     {
         private CustomerHandler handler = null;
 
-        public CustomerController() { handler = new CustomerHandler(); }
+        public CustomerController()
+        {
+            handler = new CustomerHandler(); 
+        }
 
         //--> New
         public ActionResult New() { return View(); }

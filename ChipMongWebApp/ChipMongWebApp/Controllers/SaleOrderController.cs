@@ -18,7 +18,10 @@ namespace ChipMongWebApp.Controllers
     {
         private SaleOrderHandler handler = null;
 
-        public SaleOrderController() { handler = new SaleOrderHandler(); }
+        public SaleOrderController()
+        {
+            handler = new SaleOrderHandler();
+        }
 
         //-> New
         public ActionResult New() { return View(); }

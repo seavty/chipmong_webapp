@@ -16,11 +16,15 @@ using System.Web.Mvc;
 
 namespace ChipMongWebApp.Controllers
 {
+    [ErrorLogger]
     public class SourceSupplyController : Controller
     {
         private SourceSupplyHandler handler = null;
 
-        public SourceSupplyController() { handler = new SourceSupplyHandler(); }
+        public SourceSupplyController()
+        {
+            handler = new SourceSupplyHandler();
+        }
 
         //--> New
         public ActionResult New() { return View(); }

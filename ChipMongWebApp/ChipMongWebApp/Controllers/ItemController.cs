@@ -17,7 +17,10 @@ namespace ChipMongWebApp.Controllers
     {
         private ItemHandler handler = null;
 
-        public ItemController() { handler = new ItemHandler(); }
+        public ItemController()
+        {
+            handler = new ItemHandler();
+        }
 
         //-> New
         public ActionResult New() { return View(); }

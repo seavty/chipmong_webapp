@@ -7,6 +7,7 @@ using ChipMongWebApp.Models.DTO.DealerSourceSupply;
 using ChipMongWebApp.Models.DTO.SaleOrder;
 using ChipMongWebApp.Models.DTO.SourceSupply;
 using ChipMongWebApp.Models.DTO.SSA;
+using ChipMongWebApp.Utils.Attribute;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -19,11 +20,15 @@ using System.Web.Mvc;
 
 namespace ChipMongWebApp.Controllers
 {
+    [ErrorLogger]
     public class DealerSourceSupplyController : Controller
     {
         private DealerSourceSupplyHandler handler = null;
 
-        public DealerSourceSupplyController() { handler = new DealerSourceSupplyHandler(); }
+        public DealerSourceSupplyController()
+        {
+            handler = new DealerSourceSupplyHandler();
+        }
         //-> Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
