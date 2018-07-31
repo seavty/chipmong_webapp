@@ -19,6 +19,7 @@ function ajaxHelper(url, data, method) {
                 type: method,
                 async: false,
                 error: function (jqXHR, textStatus, errorThrown) {
+                    alert(jqXHR.status);
                     if (jqXHR.status == 400)
                         alert(jqXHR.responseText);
                     else 

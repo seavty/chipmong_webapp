@@ -7,10 +7,11 @@
       <Diagram DiagramId="432b6a1d644b4974a2cf424717e9417c" Name="Diagram1">
         <EntityTypeShape EntityType="ChipMongModel.tblCustomer" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ChipMongModel.tblSaleOrder" Width="2.25" PointX="3.375" PointY="0.75" />
-        <EntityTypeShape EntityType="ChipMongModel.tblSaleOrderItem" Width="1.5" PointX="3.375" PointY="5.375" />
+        <EntityTypeShape EntityType="ChipMongModel.tblSaleOrderItem" Width="1.5" PointX="0.75" PointY="5.75" />
         <EntityTypeShape EntityType="ChipMongModel.tblItem" Width="1.5" PointX="7" PointY="0.625" />
-        <EntityTypeShape EntityType="ChipMongModel.tblSourceOfSupply" Width="1.5" PointX="5.375" PointY="5.75" />
+        <EntityTypeShape EntityType="ChipMongModel.tblSourceOfSupply" Width="1.5" PointX="3.25" PointY="5.375" />
         <EntityTypeShape EntityType="ChipMongModel.tblDealerSourceOfSupply" Width="1.875" PointX="7.375" PointY="6.5" />
+        <EntityTypeShape EntityType="ChipMongModel.tblUser" Width="1.5" PointX="3.375" PointY="7.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

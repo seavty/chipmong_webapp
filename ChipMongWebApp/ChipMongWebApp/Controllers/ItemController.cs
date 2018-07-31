@@ -12,7 +12,8 @@ using System.Web.Mvc;
 
 namespace ChipMongWebApp.Controllers
 {
-    [ErrorLogger]
+
+    [ErrorLogger] 
     public class ItemController : Controller
     {
         private ItemHandler handler = null;

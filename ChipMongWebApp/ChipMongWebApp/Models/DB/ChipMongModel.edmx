@@ -103,6 +103,22 @@
           <Property Name="scsp_Name" Type="nvarchar" MaxLength="50" />
           <Property Name="scsp_Deleted" Type="int" />
         </EntityType>
+        <EntityType Name="tblUser">
+          <Key>
+            <PropertyRef Name="user_UserID" />
+          </Key>
+          <Property Name="user_UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_CreatedDate" Type="datetime" />
+          <Property Name="user_CreatedBy" Type="int" />
+          <Property Name="user_UpdatedDate" Type="datetime" />
+          <Property Name="user_UpdatedBy" Type="int" />
+          <Property Name="user_UserName" Type="nvarchar" MaxLength="100" />
+          <Property Name="user_FirstName" Type="nvarchar" MaxLength="100" />
+          <Property Name="user_LastName" Type="nvarchar" MaxLength="100" />
+          <Property Name="user_Deleted" Type="int" />
+          <Property Name="user_Password" Type="nvarchar" MaxLength="100" />
+          <Property Name="user_Session" Type="nvarchar" MaxLength="100" />
+        </EntityType>
         <EntityContainer Name="ChipMongModelStoreContainer">
           <EntitySet Name="tblCustomer" EntityType="Self.tblCustomer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblDealerSourceOfSupply" EntityType="Self.tblDealerSourceOfSupply" Schema="dbo" store:Type="Tables" />
@@ -110,6 +126,7 @@
           <EntitySet Name="tblSaleOrder" EntityType="Self.tblSaleOrder" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblSaleOrderItem" EntityType="Self.tblSaleOrderItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblSourceOfSupply" EntityType="Self.tblSourceOfSupply" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblUser" EntityType="Self.tblUser" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -147,6 +164,7 @@
           <EntitySet Name="tblItems" EntityType="ChipMongModel.tblItem" />
           <EntitySet Name="tblSourceOfSupplies" EntityType="ChipMongModel.tblSourceOfSupply" />
           <EntitySet Name="tblDealerSourceOfSupplies" EntityType="ChipMongModel.tblDealerSourceOfSupply" />
+          <EntitySet Name="tblUsers" EntityType="ChipMongModel.tblUser" />
         </EntityContainer>
         <EntityType Name="tblSaleOrder">
           <Key>
@@ -220,6 +238,22 @@
           <Property Name="dealerID" Type="Int32" />
           <Property Name="sourceOfSupplyID" Type="Int32" />
           <Property Name="deleted" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tblUser">
+          <Key>
+            <PropertyRef Name="userID" />
+          </Key>
+          <Property Name="userID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="createdDate" Type="DateTime" Precision="3" />
+          <Property Name="createdBy" Type="Int32" />
+          <Property Name="updatedDate" Type="DateTime" Precision="3" />
+          <Property Name="updatedBy" Type="Int32" />
+          <Property Name="firstName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="lastName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="deleted" Type="Int32" />
+          <Property Name="password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="session" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="userName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -328,6 +362,23 @@
                 <ScalarProperty Name="sourceOfSupplyID" ColumnName="dlss_SourceOfSupplyID" />
                 <ScalarProperty Name="dealerID" ColumnName="dlss_DealerID" />
                 <ScalarProperty Name="id" ColumnName="dlss_DealerSourceOfSupplyID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblUsers">
+            <EntityTypeMapping TypeName="ChipMongModel.tblUser">
+              <MappingFragment StoreEntitySet="tblUser">
+                <ScalarProperty Name="userName" ColumnName="user_UserName" />
+                <ScalarProperty Name="session" ColumnName="user_Session" />
+                <ScalarProperty Name="password" ColumnName="user_Password" />
+                <ScalarProperty Name="deleted" ColumnName="user_Deleted" />
+                <ScalarProperty Name="lastName" ColumnName="user_LastName" />
+                <ScalarProperty Name="firstName" ColumnName="user_FirstName" />
+                <ScalarProperty Name="updatedBy" ColumnName="user_UpdatedBy" />
+                <ScalarProperty Name="updatedDate" ColumnName="user_UpdatedDate" />
+                <ScalarProperty Name="createdBy" ColumnName="user_CreatedBy" />
+                <ScalarProperty Name="createdDate" ColumnName="user_CreatedDate" />
+                <ScalarProperty Name="userID" ColumnName="user_UserID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

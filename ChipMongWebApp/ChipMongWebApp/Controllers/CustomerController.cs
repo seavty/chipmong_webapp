@@ -14,6 +14,7 @@ using System.Web.Mvc;
 
 namespace ChipMongWebApp.Controllers
 {
+    [Authentication]
     [ErrorLogger]
     public class CustomerController : Controller
     {
