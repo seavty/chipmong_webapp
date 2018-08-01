@@ -19,8 +19,9 @@ function ajaxHelper(url, data, method) {
                 type: method,
                 async: false,
                 error: function (jqXHR, textStatus, errorThrown) {
-                    alert(jqXHR.status);
-                    if (jqXHR.status == 400)
+                    if (jqXHR.status == 401) 
+                        window.location.href =  $("#baseURL").val() + "/auth/login";
+                    else if (jqXHR.status == 400)
                         alert(jqXHR.responseText);
                     else 
                         alert("Error code: " + jqXHR.status + "; Message: error occured while processing your request.");

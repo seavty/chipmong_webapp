@@ -14,8 +14,16 @@ namespace ChipMongWebApp.Controllers
     {
         public ActionResult Login()
         {
+
+            var id = RouteData.Values["id"];
+            if (id == null)
+                return View();
+            
+            Response.StatusCode = 401;
             return View();
+            
         }
+
 
         [HttpPost]
         public async Task<string> Login(UserCredentialDTO credential)
