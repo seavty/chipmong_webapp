@@ -19,7 +19,8 @@ namespace ChipMongWebApp.Handlers
         //-> Login
         public async Task<UserViewDTO> Login(UserCredentialDTO crendential)
         {
-            string password = EncryptString(crendential.password);
+            //string password = EncryptString(crendential.password);
+            string password = CryptingHelper.EncryptString(crendential.password);
             //var user = await db.tblUsers.FirstOrDefaultAsync(x => x.deleted == null && x.userName == crendential.userName && x.password == password);
             var user = await db.tblUsers.FirstOrDefaultAsync(x => x.deleted == null && x.userName == crendential.userName);
 
@@ -27,7 +28,8 @@ namespace ChipMongWebApp.Handlers
                 return null;
 
             Guid token = Guid.NewGuid();
-            user.session = EncryptString(token.ToString());
+            //user.session = EncryptString(token.ToString());
+            user.session = CryptingHelper.EncryptString(token.ToString());
             await db.SaveChangesAsync();
 
             var userView = MappingHelper.MapDBClassToDTO<tblUser, UserViewDTO>(user);
@@ -38,7 +40,8 @@ namespace ChipMongWebApp.Handlers
         //-> IsValidSession
         public bool IsValidSession(UserViewDTO userDTO)
         {
-            var session = EncryptString(userDTO.session);
+            //var session = EncryptString(userDTO.session);
+            var session = CryptingHelper.EncryptString(userDTO.session);
             var user = db.tblUsers.FirstOrDefault(x => x.deleted == null && x.userID == userDTO.userID && x.session == session );
             if (user == null)
                 return false;
@@ -47,6 +50,7 @@ namespace ChipMongWebApp.Handlers
 
 
 
+        /*
         //-> encrypt string
         private string EncryptString(string str)
         {
@@ -57,7 +61,7 @@ namespace ChipMongWebApp.Handlers
 
             return _crypt.encrypt(plainText, key, iv);
 
-        }
+        }*/
     }
 
 }

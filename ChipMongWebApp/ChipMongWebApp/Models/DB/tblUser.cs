@@ -25,5 +25,7 @@ namespace ChipMongWebApp.Models.DB
         public string password { get; set; }
         public string session { get; set; }
         public string userName { get; set; }
+        public string phoneNumber { get; set; }
+        public string email { get; set; }
     }
 }

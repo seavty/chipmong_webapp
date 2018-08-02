@@ -46,10 +46,34 @@
                         @Html.TextBoxFor(m => m.lastName, new { @class = "form-control required", placeholder = "Last Name" })
                     </div>
                 </div>
-
             </div>
             <!--end  row 1-->
-            
+
+            <!--row 2-->
+            <div class="row">
+
+                <div class="col">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.phoneNumber)
+                        @Html.TextBoxFor(m => m.phoneNumber, new { @class = "form-control required", placeholder = "Phone Number" })
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.email)
+                        @Html.TextBoxFor(m => m.email, new { @class = "form-control", placeholder = "E-mail" })
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-group">
+                        
+                    </div>
+                </div>
+            </div>
+            <!--end  row 2-->
+
         </div>
     </div>
     <!-- end card body -->
@@ -71,7 +95,7 @@
     function save() {
         if (isValid()) {
             ajaxHelper(endPoint + "/new", $("#record").serializeObject(), requestMethod.POST).then(function (data) {
-                //window.location.href = endPoint + "/view/" + data.userID;
+                window.location.href = endPoint + "/view/" + data.userID;
             });
         }
     }

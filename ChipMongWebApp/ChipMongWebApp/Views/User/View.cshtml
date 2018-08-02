@@ -1,4 +1,5 @@
-﻿@model ChipMongWebApp.Models.DTO.User.UserViewDTO
+﻿@using ChipMongWebApp.Models.DTO.User
+@model ChipMongWebApp.Models.DTO.User.UserViewDTO
 @{
     /**/
 
@@ -11,7 +12,18 @@
         <div class="card-body text-dark shadow-sm merienda">
             <button type="button" class="btn btn-dark" id="btnBack"> <i class="fas fa-long-arrow-alt-left"></i> Back </button>
             <button type="button" class="btn btn-primary" id="btnEdit"> <i class="fas fa-pencil-alt"></i> Edit </button>
-            <button type="button" class="btn btn-danger" id="btnDelete"> <i class="fas fa-trash-alt"></i> Delete </button>
+
+
+
+            @if (@ViewContext.RouteData.Values["id"].ToString() != "1")
+            {
+                <button type="button" class="btn btn-danger" id="btnDelete"> <i class="fas fa-trash-alt"></i> Delete </button>
+            }
+
+
+
+
+
         </div>
     </div>
 </div>
@@ -50,10 +62,33 @@
                     </div>
                 </div>
                 <!--end  row 1-->
+                <!--row 2-->
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.phoneNumber)
+                            @Html.TextBoxFor(m => m.phoneNumber, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.email)
+                            @Html.TextBoxFor(m => m.email, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="form-group">
+                        </div>
+                    </div>
+                </div>
+                <!--end  row 2-->
+
             </div>
             <!-- end card body -->
         </div>
-        
+
     </fieldset>
 </form>
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ChipMongWebApp.Models.DTO.User;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -24,5 +25,7 @@ namespace ChipMongWebApp.Helpers
         public static readonly string UPLOAD_FOLDER = "uploads";
 
         public static readonly string LOGIN_NAME_EXIST = "This login name already exists!";
+
+        
     }
 }

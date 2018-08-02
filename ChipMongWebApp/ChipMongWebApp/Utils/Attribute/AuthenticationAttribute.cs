@@ -27,7 +27,6 @@ namespace ChipMongWebApp.Utils.Attribute
 
             //Redirect him to somewhere.
             var session = filterContext.HttpContext.Session;
-            var id = session["id"];
             UserViewDTO user = (UserViewDTO)session["user"];
             var isValidSession = new AuthHandler().IsValidSession(user);
 

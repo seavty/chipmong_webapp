@@ -118,6 +118,8 @@
           <Property Name="user_Deleted" Type="int" />
           <Property Name="user_Password" Type="nvarchar" MaxLength="100" />
           <Property Name="user_Session" Type="nvarchar" MaxLength="100" />
+          <Property Name="user_PhoneNumber" Type="nvarchar" MaxLength="100" />
+          <Property Name="user_Email" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityContainer Name="ChipMongModelStoreContainer">
           <EntitySet Name="tblCustomer" EntityType="Self.tblCustomer" Schema="dbo" store:Type="Tables" />
@@ -254,6 +256,8 @@
           <Property Name="password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="session" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="userName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="phoneNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -368,6 +372,8 @@
           <EntitySetMapping Name="tblUsers">
             <EntityTypeMapping TypeName="ChipMongModel.tblUser">
               <MappingFragment StoreEntitySet="tblUser">
+                <ScalarProperty Name="email" ColumnName="user_Email" />
+                <ScalarProperty Name="phoneNumber" ColumnName="user_PhoneNumber" />
                 <ScalarProperty Name="userName" ColumnName="user_UserName" />
                 <ScalarProperty Name="session" ColumnName="user_Session" />
                 <ScalarProperty Name="password" ColumnName="user_Password" />

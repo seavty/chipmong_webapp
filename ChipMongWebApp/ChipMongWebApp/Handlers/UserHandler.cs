@@ -46,7 +46,7 @@ namespace ChipMongWebApp.Handlers
         public async Task<UserViewDTO> Edit(UserEditDTO editDTO)
         {
             editDTO = StringHelper.TrimStringProperties(editDTO);
-            var checkRecord = await db.tblUsers.FirstOrDefaultAsync(x => x.deleted == null && x.userName == editDTO.userName);
+            var checkRecord = await db.tblUsers.FirstOrDefaultAsync(x => x.deleted == null && x.userName == editDTO.userName && x.userID != editDTO.userID);
             if (checkRecord != null)
                 throw new HttpException((int)HttpStatusCode.BadRequest, ConstantHelper.LOGIN_NAME_EXIST);
 

@@ -25,5 +25,14 @@ namespace ChipMongWebApp.Models.DTO.User
         [MaxLength(100)]
         [DisplayName("Last Name (*):")]
         public string lastName { get; set; }
+
+        [Required]
+        [MaxLength(100)]
+        [DisplayName("Phone Number (*):")]
+        public string phoneNumber { get; set; }
+
+        [MaxLength(100)]
+        [DisplayName("E-mail:")]
+        public string email { get; set; }
     }
 }

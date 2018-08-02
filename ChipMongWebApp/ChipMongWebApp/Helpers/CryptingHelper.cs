@@ -79,6 +79,7 @@ namespace ChipMongWebApp.Helpers
          * 			  initialization vector
          * @return encrypted or decrypted string based on the mode
         */
+        
         private String encryptDecrypt(string _inputText, string _encryptionKey, EncryptMode _mode, string _initVector)
         {
 
@@ -118,7 +119,8 @@ namespace ChipMongWebApp.Helpers
             _rcipher.Dispose();
             return _out;// return encrypted/decrypted string
         }
-
+        
+        
         /**
          * This function encrypts the plain text to cipher text using the key
          * provided. You'll have to use the same key for decryption
@@ -129,11 +131,13 @@ namespace ChipMongWebApp.Helpers
          *            Encryption Key. You'll have to use the same key for decryption
          * @return returns encrypted (cipher) text
          */
-        public string encrypt(string _plainText, string _key, string _initVector)
-        {
-            return encryptDecrypt(_plainText, _key, EncryptMode.ENCRYPT, _initVector);
-        }
-
+        
+       public string encrypt(string _plainText, string _key, string _initVector)
+       {
+           return encryptDecrypt(_plainText, _key, EncryptMode.ENCRYPT, _initVector);
+       }
+       
+       
         /***
          * This funtion decrypts the encrypted text to plain text using the key
          * provided. You'll have to use the same key which you used during
@@ -199,5 +203,17 @@ namespace ChipMongWebApp.Helpers
             return strBuilder.ToString();
         }
 
+        //-> encrypt string
+        //-> encrypt string
+        public static string EncryptString(string str)
+        {
+            CryptingHelper _crypt = new CryptingHelper();
+            string plainText = str;
+            string iv = "Xsoft";// CryptLib.GenerateRandomIV(16); //16 bytes = 128 bits
+            string key = CryptingHelper.getHashSha256("@XSoft201701", 31); //32 bytes = 256 bits
+
+            return _crypt.encrypt(plainText, key, iv);
+
+        }
     }
 }
