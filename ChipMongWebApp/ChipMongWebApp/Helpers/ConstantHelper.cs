@@ -22,5 +22,7 @@ namespace ChipMongWebApp.Helpers
         public static readonly int MODE_VIEW = 3;
 
         public static readonly string UPLOAD_FOLDER = "uploads";
+
+        public static readonly string LOGIN_NAME_EXIST = "This login name already exists!";
     }
 }

@@ -1,0 +1,70 @@
+﻿@model ChipMongWebApp.Models.DTO.User.UserFindDTO
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/Main/_Main.cshtml";
+}
+
+<form name="record" id="record">
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="currentPage" id="currentPage" value="1" />
+    <div class="card shadow-sm" id="dvAction">
+        <div class="card-body text-dark shadow-sm merienda">
+            <button type="button" class="btn btn-primary" id="btnFind"> <i class="fas fa-search"></i> Find </button>
+            <button type="button" class="btn btn-danger" id="btnCancel"> <i class="fas fa-times"></i> Clear  </button>
+            <button type="button" class="btn btn-success" id="btnNew"> <i class="fas fa-plus"></i> New  </button>
+        </div>
+    </div>
+
+    <br />
+
+    <div class="card shadow-sm">
+        <div class="card-header merienda"> Find User </div>
+
+        <!-- card body -->
+        <div class="card-body">
+            <div class="row">
+
+                <div class="col">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.userName)
+                        @Html.TextBoxFor(m => m.userName, new { @class = "form-control", placeholder = "Login Name", @maxlength = "100" })
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.firstName)
+                        @Html.TextBoxFor(m => m.firstName, new { @class = "form-control", placeholder = "First Name", @maxlength = "100" })
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.lastName)
+                        @Html.TextBoxFor(m => m.lastName, new { @class = "form-control", placeholder = "Last Name", @maxlength = "100" })
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!--end  card body -->
+    </div>
+
+    <br />
+    <div id="tableData" class="shadow-sm bg-white"></div>
+    <br />
+
+</form>
+
+<script src="~/Content/js/modules/find.js"></script>
+<script>
+
+    var url = "@Url.Content("~/user")";
+    
+    $(document).ready(function () { setupEvents(); });
+
+    //-> newRecord
+    function newRecord() { newRecordFromFindScreen(url); }
+
+</script>
+

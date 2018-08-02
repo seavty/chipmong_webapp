@@ -49,6 +49,10 @@
 </div>
 
 <script>
+
+    if ('@ViewContext.RouteData.Values["id"]' == -1)
+        alert("Session expired, please login again!");
+
     var url = "@Url.Content("~/auth")";
     $(document).ready(function () {
         $("#btnLogin").click(function () {

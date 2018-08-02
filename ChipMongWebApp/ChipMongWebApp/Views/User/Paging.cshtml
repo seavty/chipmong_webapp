@@ -1,0 +1,30 @@
+﻿@model ChipMongWebApp.Models.DTO.GetListDTO<ChipMongWebApp.Models.DTO.User.UserViewDTO>
+
+<table class="table table-bordered table-striped table-hover">
+    <thead>
+        <tr class="text-center">
+            <th scope="col" width="65px">#</th>
+            <th scope="col"> Login Name </th>
+            <th scope="col"> First Name </th>
+            <th scope="col"> Last Name </th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int i = 0;
+            foreach (var item in Model.items)
+            {
+        <tr>
+            <th scope="row" class="text-center"> @(Model.metaData.startRow + i) </th>
+            <td class="align-middle"> <a href=" @Url.Content("~/user/view/")@item.userID"> @item.userName </a> </td>
+            <td> @item.firstName </td>
+            <td> @item.lastName </td>
+        </tr>
+                i++;
+            }
+        }
+
+        @Html.Partial("~/Views/Shared/Pagination.cshtml", Model.metaData)
+
+
+

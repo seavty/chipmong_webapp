@@ -41,12 +41,9 @@ namespace ChipMongWebApp.Utils.Attribute
         {
             var redirectTarget = new RouteValueDictionary
             {
-                { "action", "login/0"}, {"controller", "auth"}
+                { "action", "login/-1"}, {"controller", "auth"}
             };
             filterContext.Result = new RedirectToRouteResult(redirectTarget);
-
-            
-            
         }
         
 

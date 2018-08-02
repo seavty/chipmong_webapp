@@ -7,23 +7,20 @@ using System.Web;
 
 namespace ChipMongWebApp.Models.DTO.User
 {
-    public class UserBaseDTO
+    public class UserFindDTO: FindDTO
     {
-        public int? userID { get; set; }
 
-        [Required]
         [MaxLength(100)]
-        [DisplayName("Login Name (*):")]
+        [DisplayName("Login Name:")]
         public string userName { get; set; }
 
-        [Required]
         [MaxLength(100)]
-        [DisplayName("First Name (*):")]
+        [DisplayName("First Name:")]
         public string firstName { get; set; }
 
-        [Required]
         [MaxLength(100)]
-        [DisplayName("Last Name (*):")]
+        [DisplayName("Last Name:")]
         public string lastName { get; set; }
+
     }
 }

@@ -19,8 +19,10 @@ function ajaxHelper(url, data, method) {
                 type: method,
                 async: false,
                 error: function (jqXHR, textStatus, errorThrown) {
-                    if (jqXHR.status == 401) 
-                        window.location.href =  $("#baseURL").val() + "/auth/login";
+                    if (jqXHR.status == 401) {
+                        //alert("Session expired, please login again!");
+                        window.location.href = $("#baseURL").val() + "/auth/login/-1";
+                    }
                     else if (jqXHR.status == 400)
                         alert(jqXHR.responseText);
                     else 
@@ -52,7 +54,11 @@ function simpleAjax(url, data, method) {
                 type: method,
                 async: false,
                 error: function (jqXHR, textStatus, errorThrown) {
-                    if (jqXHR.status == 400) alert(jqXHR.responseText);
+                    if (jqXHR.status == 401) {
+                        //alert("Session expired, please login again!");
+                        window.location.href = $("#baseURL").val() + "/auth/login/-1";
+                    }
+                    else if (jqXHR.status == 400) alert(jqXHR.responseText);
                     else alert("Error code: " + jqXHR.status + "; Message: error occured while processing your request.");
                     return;
                 },

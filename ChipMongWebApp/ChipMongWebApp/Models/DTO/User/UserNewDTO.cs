@@ -5,8 +5,7 @@ using System.Web;
 
 namespace ChipMongWebApp.Models.DTO.User
 {
-    public class UserViewDTO: UserBaseDTO
+    public class UserNewDTO: UserBaseDTO
     {
-        public string session { get; set; }
     }
 }

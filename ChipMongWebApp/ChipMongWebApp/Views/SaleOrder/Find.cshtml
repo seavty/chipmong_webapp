@@ -84,12 +84,14 @@
         });
 
         $("#ExcelFile").upload(url + "/UploadExcel?" + $("#frmUpload").serialize(), function (data) {
+            console.log(data);
             if (data.substring(0, 2) == "ok") {
                 alert(data.replace("ok", "") + " record(s) have been updated.");
                 window.location.reload();
             }
-            else
-                alert("Error occur while processing your request...!");
+            else {
+                window.location.href = $("#baseURL").val() + "/auth/login";
+            }
             $('#loadingIndicator').modal("hide");
         });
     }

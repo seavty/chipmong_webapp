@@ -16,6 +16,7 @@ using System.Web.Mvc;
 
 namespace ChipMongWebApp.Controllers
 {
+    [Authentication]
     [ErrorLogger]
     public class SourceSupplyController : Controller
     {

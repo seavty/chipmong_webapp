@@ -1,11 +1,9 @@
 ﻿using ChipMongWebApp.Handlers;
 using ChipMongWebApp.Helpers;
-using ChipMongWebApp.Models.DTO.Customer;
-using ChipMongWebApp.Models.DTO.SSA;
+using ChipMongWebApp.Models.DTO.User;
 using ChipMongWebApp.Utils.Attribute;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -16,13 +14,13 @@ namespace ChipMongWebApp.Controllers
 {
     [Authentication]
     [ErrorLogger]
-    public class CustomerController : Controller
+    public class UserController : Controller
     {
-        private CustomerHandler handler = null;
+        private UserHandler handler = null;
 
-        public CustomerController()
+        public UserController()
         {
-            handler = new CustomerHandler(); 
+            handler = new UserHandler();
         }
 
         //--> New
@@ -31,7 +29,7 @@ namespace ChipMongWebApp.Controllers
         //-> New
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<JsonResult> New(CustomerNewDTO newDTO)
+        public async Task<JsonResult> New(UserNewDTO newDTO)
         {
             try
             {
@@ -42,8 +40,12 @@ namespace ChipMongWebApp.Controllers
             }
             catch (HttpException ex)
             {
-                return Json(ConstantHelper.ERROR, JsonRequestBehavior.AllowGet);
-                
+                //return Json(ConstantHelper.ERROR, JsonRequestBehavior.AllowGet);
+                if (ex.Message == ConstantHelper.LOGIN_NAME_EXIST || ex.Message == ConstantHelper.KEY_IN_REQUIRED_FIELD)
+                    Response.StatusCode = 400;
+                else
+                    Response.StatusCode = 500;
+                return Json(ex.Message, JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -56,7 +58,7 @@ namespace ChipMongWebApp.Controllers
         //-> Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<JsonResult> Edit(CustomerEditDTO editDTO)
+        public async Task<JsonResult> Edit(UserEditDTO editDTO)
         {
             try
             {
@@ -66,9 +68,14 @@ namespace ChipMongWebApp.Controllers
                 return Json(await handler.Edit(editDTO), JsonRequestBehavior.AllowGet);
 
             }
-            catch (HttpException)
+            catch (HttpException ex)
             {
-                return Json(ConstantHelper.ERROR, JsonRequestBehavior.AllowGet);
+                //return Json(ConstantHelper.ERROR, JsonRequestBehavior.AllowGet);
+                if (ex.Message == ConstantHelper.LOGIN_NAME_EXIST || ex.Message == ConstantHelper.KEY_IN_REQUIRED_FIELD)
+                    Response.StatusCode = 400;
+                else
+                    Response.StatusCode = 500;
+                return Json(ex.Message, JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -79,10 +86,7 @@ namespace ChipMongWebApp.Controllers
         //-> Paging
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Paging(CustomerFindDTO findDTO) { return PartialView(await handler.GetList(findDTO)); }
-
-        //-> SSA
-        public async Task<JsonResult> SSA() { return Json(await handler.SSA(Request.QueryString["q"]), JsonRequestBehavior.AllowGet); }
+        public async Task<ActionResult> Paging(UserFindDTO findDTO) { return PartialView(await handler.GetList(findDTO)); }
 
 
         //-> Delete
@@ -103,44 +107,6 @@ namespace ChipMongWebApp.Controllers
             {
                 Response.StatusCode = 400;
                 return ex.Message;
-            }
-        }
-
-
-        //-> View
-        public ActionResult SaleOrderTab(int id) { return View(); }
-
-        //-> SaleOrderTabPaging
-        public async Task<ActionResult> SaleOrderTabPaging(int id)
-        {
-            var currentPage = int.Parse(Request.QueryString["currentPage"].ToString());
-            return PartialView("~/Views/SaleOrder/Paging.cshtml", await handler.SaleOrderTabPaging(id, currentPage));
-        }
-
-        //-> View
-        public ActionResult SourceSupplyTab(int id) { return View(); }
-
-        //-> SourceSupplyTabPaging
-        public ActionResult DealerSourceSupply(int id)
-        {
-            return PartialView("~/Views/DealerSourceSupply/Table.cshtml", handler.SourceSupplyTabPaging(id));
-        }
-
-        //-> New
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<JsonResult> AddSourceSupply(int id)
-        {
-            try
-            {
-                if (!ModelState.IsValid)
-                    throw new HttpException((int)HttpStatusCode.BadRequest, ConstantHelper.KEY_IN_REQUIRED_FIELD);
-                Response.StatusCode = 200;
-                return Json(await handler.AddSourceSupply(id, int.Parse(Request.QueryString["sourceOfSupplyID"].ToString())), JsonRequestBehavior.AllowGet);
-            }
-            catch (HttpException)
-            {
-                return Json(ConstantHelper.ERROR, JsonRequestBehavior.AllowGet);
             }
         }
 
