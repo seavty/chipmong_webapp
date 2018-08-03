@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
-namespace ChipMongWebApp.Helpers
+namespace ChipMongWebApp.Utils.Helpers
 {
     public static class SelectionHelper
     {

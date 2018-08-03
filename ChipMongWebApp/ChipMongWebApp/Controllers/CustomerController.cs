@@ -1,8 +1,8 @@
-﻿using ChipMongWebApp.Handlers;
-using ChipMongWebApp.Helpers;
-using ChipMongWebApp.Models.DTO.Customer;
+﻿using ChipMongWebApp.Models.DTO.Customer;
 using ChipMongWebApp.Models.DTO.SSA;
 using ChipMongWebApp.Utils.Attribute;
+using ChipMongWebApp.Utils.Handlers;
+using ChipMongWebApp.Utils.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

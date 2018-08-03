@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace ChipMongWebApp.Helpers
+namespace ChipMongWebApp.Utils.Helpers
 {
     public static class PaginationHelper
     {

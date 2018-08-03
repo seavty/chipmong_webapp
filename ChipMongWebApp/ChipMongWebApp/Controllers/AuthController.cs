@@ -1,7 +1,6 @@
-﻿using ChipMongWebApp.Handlers;
-using ChipMongWebApp.Helpers;
-using ChipMongWebApp.Models.DTO.Auth;
+﻿using ChipMongWebApp.Models.DTO.Auth;
 using ChipMongWebApp.Models.DTO.User;
+using ChipMongWebApp.Utils.Handlers;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,11 +1,11 @@
-﻿using ChipMongWebApp.Helpers;
-using ChipMongWebApp.Models.DB;
+﻿using ChipMongWebApp.Models.DB;
 using ChipMongWebApp.Models.DTO;
 using ChipMongWebApp.Models.DTO.Customer;
 using ChipMongWebApp.Models.DTO.DealerSourceSupply;
 using ChipMongWebApp.Models.DTO.SaleOrder;
 using ChipMongWebApp.Models.DTO.SourceSupply;
 using ChipMongWebApp.Models.DTO.SSA;
+using ChipMongWebApp.Utils.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
-namespace ChipMongWebApp.Handlers
+namespace ChipMongWebApp.Utils.Handlers
 {
     public class CustomerHandler
     {

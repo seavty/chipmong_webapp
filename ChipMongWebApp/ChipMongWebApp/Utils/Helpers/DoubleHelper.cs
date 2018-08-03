@@ -1,12 +1,11 @@
-﻿using ChipMongWebApp.Extension;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
 
 
-namespace ChipMongWebApp.Helpers
+namespace ChipMongWebApp.Utils.Helpers
 {
     public static class DoubleHelper
     {

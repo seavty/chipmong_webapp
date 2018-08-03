@@ -1,8 +1,8 @@
-﻿using ChipMongWebApp.Helpers;
-using ChipMongWebApp.Models.DB;
+﻿using ChipMongWebApp.Models.DB;
 using ChipMongWebApp.Models.DTO.User;
 using ChipMongWebApp.Utils;
 using ChipMongWebApp.Utils.Attribute;
+using ChipMongWebApp.Utils.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -11,7 +11,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace ChipMongWebApp.Handlers
+namespace ChipMongWebApp.Utils.Handlers
 {
     
     public class AuthHandler

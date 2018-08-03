@@ -1,4 +1,4 @@
-﻿@using ChipMongWebApp.Helpers
+﻿@using ChipMongWebApp.Utils.Helpers
 <tr rowIndex="0">
     <td> @Html.DropDownList("items[][itemID]", SelectionHelper.ItemSelection(), " -- Select Item --", new { @class = "form-control line-item-required", @id = "item0", rowIndex = "0", @onchange = "itemChange($(this))" }) </td>
     <td> @Html.TextBox("items[][quantity]", null, new { @class = "form-control line-item-required numeric", @id = "quantity0", @placeholder = "Quantity", @onchange = "calculation($(this))" }) </td>

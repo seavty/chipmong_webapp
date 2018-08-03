@@ -1,11 +1,12 @@
 ﻿using ChipMongWebApp.Models.DTO.SaleOrder;
+using ChipMongWebApp.Utils.Helpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
 
-namespace ChipMongWebApp.Helpers
+namespace ChipMongWebApp.Utils.Helpers
 {
     public class DocumentHelper
     {

@@ -7,7 +7,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace ChipMongWebApp.Handlers
+namespace ChipMongWebApp.Utils.Handlers
 {
     public class DealerSourceSupplyHandler
     {

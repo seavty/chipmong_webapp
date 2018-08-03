@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Web;
 
-namespace ChipMongWebApp.Extension
+namespace ChipMongWebApp.Utils.Extension
 {
     public static class StringExtension
     {

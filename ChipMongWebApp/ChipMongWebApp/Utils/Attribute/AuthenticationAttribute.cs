@@ -1,5 +1,5 @@
-﻿using ChipMongWebApp.Handlers;
-using ChipMongWebApp.Models.DTO.User;
+﻿using ChipMongWebApp.Models.DTO.User;
+using ChipMongWebApp.Utils.Handlers;
 using System.Web.Mvc;
 using System.Web.Routing;
 

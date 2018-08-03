@@ -2,7 +2,7 @@
 using System.Text;
 using System.Security.Cryptography;
 
-namespace ChipMongWebApp.Helpers
+namespace ChipMongWebApp.Utils.Helpers
 {
     public class CryptingHelper
     {

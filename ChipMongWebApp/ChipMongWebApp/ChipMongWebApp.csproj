@@ -443,6 +443,9 @@
     <Content Include="Views\User\Paging.cshtml" />
     <Content Include="Views\User\View.cshtml" />
     <Content Include="Views\User\ChangePassword.cshtml" />
+    <Content Include="Views\Shared\Template\NewMode\Button.cshtml" />
+    <Content Include="Views\Shared\Template\EditMode\Button.cshtml" />
+    <Content Include="Views\Shared\Template\ViewMode\Button.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

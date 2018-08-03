@@ -1,6 +1,4 @@
-﻿using ChipMongWebApp.Extension;
-using ChipMongWebApp.Helpers;
-using ChipMongWebApp.Models.DB;
+﻿using ChipMongWebApp.Models.DB;
 using ChipMongWebApp.Models.DTO;
 using ChipMongWebApp.Models.DTO.Item;
 using ChipMongWebApp.Models.DTO.SaleOrder;
@@ -14,8 +12,10 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using ClosedXML.Excel;
+using ChipMongWebApp.Utils.Helpers;
+using ChipMongWebApp.Utils.Extension;
 
-namespace ChipMongWebApp.Handlers
+namespace ChipMongWebApp.Utils.Handlers
 {
     public class SaleOrderHandler
     {

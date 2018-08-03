@@ -1,5 +1,4 @@
-﻿using ChipMongWebApp.Handlers;
-using ChipMongWebApp.Models.DB;
+﻿using ChipMongWebApp.Models.DB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +7,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
-namespace ChipMongWebApp.Helpers
+namespace ChipMongWebApp.Utils.Helpers
 {
     public static class SSAHelper
     {

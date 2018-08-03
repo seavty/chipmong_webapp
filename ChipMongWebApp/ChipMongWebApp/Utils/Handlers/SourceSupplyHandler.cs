@@ -1,7 +1,7 @@
-﻿using ChipMongWebApp.Helpers;
-using ChipMongWebApp.Models.DB;
+﻿using ChipMongWebApp.Models.DB;
 using ChipMongWebApp.Models.DTO;
 using ChipMongWebApp.Models.DTO.SourceSupply;
+using ChipMongWebApp.Utils.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -10,7 +10,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace ChipMongWebApp.Handlers
+namespace ChipMongWebApp.Utils.Handlers
 {
     public class SourceSupplyHandler
     {

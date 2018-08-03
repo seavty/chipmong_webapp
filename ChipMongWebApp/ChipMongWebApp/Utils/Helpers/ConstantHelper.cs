@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace ChipMongWebApp.Helpers
+namespace ChipMongWebApp.Utils.Helpers
 {
     public static class ConstantHelper
     {
@@ -33,6 +33,9 @@ namespace ChipMongWebApp.Helpers
 
 
         public static readonly string INCORRECT_USER_NAME_OR_PASSWORD = "Incorrect user name or password!";
+
+
+        public static readonly string CUSTOMER_CONTROLLER = "/customer";
 
     }
 }
