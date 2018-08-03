@@ -1,6 +1,7 @@
 ﻿using ChipMongWebApp.Helpers;
 using ChipMongWebApp.Models.DB;
 using ChipMongWebApp.Models.DTO.User;
+using ChipMongWebApp.Utils;
 using ChipMongWebApp.Utils.Attribute;
 using System;
 using System.Collections.Generic;
@@ -12,11 +13,15 @@ using System.Web;
 
 namespace ChipMongWebApp.Handlers
 {
-    [ErrorLogger]
+    
     public class AuthHandler
     {
         private ChipMongEntities db = null;
-        public AuthHandler() { db = new ChipMongEntities(); }
+        public AuthHandler()
+        {
+            //db = new ChipMongEntities();
+            db = XModelInstance.Edmx;
+        }
 
 
         //-> Login

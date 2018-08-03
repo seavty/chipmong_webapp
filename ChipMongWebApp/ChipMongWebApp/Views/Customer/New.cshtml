@@ -8,7 +8,7 @@
 
 <div class="card" id="action">
     <div class="card-body text-dark shadow-sm merienda">
-        <button type="button" class="btn btn-success" id="btnSave"> <i class="fas fa-save"></i>  Save  </button>
+        <button type="button" class="btn btn-success" id="btnSave" onclick="save()"> <i class="fas fa-save"></i>  Save  </button>
         <button type="button" class="btn btn-danger" id="btnCancel"> <i class="fas fa-times"></i> Cancel  </button>
     </div>
 </div>
@@ -96,9 +96,10 @@
 
 <script>
 
-    var endPoint = "@Url.Content("~/customer")";
+    const endPoint = "@Url.Content("~/customer")";
+    
 
-    $(document).ready(function () { setupEvents(); });
+   // $(document).ready(function () { setupEvents(); });
 
     //-> setupEvents
     function setupEvents() {
@@ -106,14 +107,28 @@
         $("#btnCancel").click(function () { cancel(); });
     }
 
-    //-> save
-    function save() {
+    const save = () => {
+        //alert("arrow function");
+        
         if (isValid()) {
             ajaxHelper(endPoint + "/new", $("#record").serializeObject(), requestMethod.POST).then(function (data) {
                 window.location.href = endPoint + "/view/" + data.id;
             });
         }
+        
     }
+
+    
+    //-> save
+    /*
+    function save() {
+       if (isValid()) {
+            ajaxHelper(endPoint + "/new", $("#record").serializeObject(), requestMethod.POST).then(function (data) {
+                window.location.href = endPoint + "/view/" + data.id;
+            });
+        }
+    }
+    */
 
     //-> cancel
     function cancel() { window.location.href = endPoint + "/find"; }

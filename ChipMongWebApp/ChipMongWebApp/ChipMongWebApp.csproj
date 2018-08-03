@@ -190,28 +190,28 @@
     <Compile Include="Controllers\SaleOrderController.cs" />
     <Compile Include="Controllers\SourceSupplyController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Extension\DateTimeExtension.cs" />
-    <Compile Include="Extension\DoubleExtension.cs" />
-    <Compile Include="Extension\StringExtension.cs" />
+    <Compile Include="Utils\Extension\DateTimeExtension.cs" />
+    <Compile Include="Utils\Extension\DoubleExtension.cs" />
+    <Compile Include="Utils\Extension\StringExtension.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Handlers\AuthHandler.cs" />
-    <Compile Include="Handlers\CustomerHandler.cs" />
-    <Compile Include="Handlers\DealerSourceSupplyHandler.cs" />
-    <Compile Include="Handlers\ItemHandler.cs" />
-    <Compile Include="Handlers\SaleOrderHandler.cs" />
-    <Compile Include="Handlers\SourceSupplyHandler.cs" />
-    <Compile Include="Handlers\UserHandler.cs" />
-    <Compile Include="Helpers\ConstantHelper.cs" />
-    <Compile Include="Helpers\CryptingHelper.cs" />
-    <Compile Include="Helpers\DocumentHelper.cs" />
-    <Compile Include="Helpers\DoubleHelper.cs" />
-    <Compile Include="Helpers\MappingHelper.cs" />
-    <Compile Include="Helpers\PaginationHelper.cs" />
-    <Compile Include="Helpers\SelectionHelper.cs" />
-    <Compile Include="Helpers\SSAHelper.cs" />
-    <Compile Include="Helpers\StringHelper.cs" />
+    <Compile Include="Utils\Handlers\AuthHandler.cs" />
+    <Compile Include="Utils\Handlers\CustomerHandler.cs" />
+    <Compile Include="Utils\Handlers\DealerSourceSupplyHandler.cs" />
+    <Compile Include="Utils\Handlers\ItemHandler.cs" />
+    <Compile Include="Utils\Handlers\SaleOrderHandler.cs" />
+    <Compile Include="Utils\Handlers\SourceSupplyHandler.cs" />
+    <Compile Include="Utils\Handlers\UserHandler.cs" />
+    <Compile Include="Utils\Helpers\ConstantHelper.cs" />
+    <Compile Include="Utils\Helpers\CryptingHelper.cs" />
+    <Compile Include="Utils\Helpers\DocumentHelper.cs" />
+    <Compile Include="Utils\Helpers\DoubleHelper.cs" />
+    <Compile Include="Utils\Helpers\MappingHelper.cs" />
+    <Compile Include="Utils\Helpers\PaginationHelper.cs" />
+    <Compile Include="Utils\Helpers\SelectionHelper.cs" />
+    <Compile Include="Utils\Helpers\SSAHelper.cs" />
+    <Compile Include="Utils\Helpers\StringHelper.cs" />
     <Compile Include="Models\DB\ChipMongModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -295,6 +295,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\Attribute\AuthenticationAttribute.cs" />
     <Compile Include="Utils\Attribute\ErrorLoggerAttribute.cs" />
+    <Compile Include="Utils\XModelInstance.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
