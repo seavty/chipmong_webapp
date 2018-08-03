@@ -7,6 +7,8 @@
             <th scope="col"> Login Name </th>
             <th scope="col"> First Name </th>
             <th scope="col"> Last Name </th>
+            <th scope="col"> Phone Number </th>
+            <th scope="col"> E-mail </th>
         </tr>
     </thead>
     <tbody>
@@ -19,6 +21,8 @@
             <td class="align-middle"> <a href=" @Url.Content("~/user/view/")@item.userID"> @item.userName </a> </td>
             <td> @item.firstName </td>
             <td> @item.lastName </td>
+            <td> @item.phoneNumber </td>
+            <td> @item.email </td>
         </tr>
                 i++;
             }

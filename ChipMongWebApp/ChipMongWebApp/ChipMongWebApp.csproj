@@ -286,6 +286,7 @@
     <Compile Include="Models\DTO\SSA\SSAItem.cs" />
     <Compile Include="Models\DTO\SSA\SSAList.cs" />
     <Compile Include="Models\DTO\User\UserBaseDTO.cs" />
+    <Compile Include="Models\DTO\User\UserChangePasswordDTO.cs" />
     <Compile Include="Models\DTO\User\UserCredentialDTO.cs" />
     <Compile Include="Models\DTO\User\UserEditDTO.cs" />
     <Compile Include="Models\DTO\User\UserFindDTO.cs" />
@@ -440,6 +441,7 @@
     <Content Include="Views\User\New.cshtml" />
     <Content Include="Views\User\Paging.cshtml" />
     <Content Include="Views\User\View.cshtml" />
+    <Content Include="Views\User\ChangePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -26,6 +26,13 @@ namespace ChipMongWebApp.Helpers
 
         public static readonly string LOGIN_NAME_EXIST = "This login name already exists!";
 
-        
+
+        public static readonly string INCORRECT_PASSWORD = "Incorrect Password!";
+
+        public static readonly string PASSWORD_DOES_NOT_MATCH = "New password and comfirm password do not match";
+
+
+        public static readonly string INCORRECT_USER_NAME_OR_PASSWORD = "Incorrect user name or password!";
+
     }
 }

@@ -110,5 +110,30 @@ namespace ChipMongWebApp.Controllers
             }
         }
 
+        //--- *** chnage password **--//
+        public ActionResult ChangePassword() { return View(); }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<JsonResult> ChangePassword(UserChangePasswordDTO changePasswordDTO)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    throw new HttpException((int)HttpStatusCode.BadRequest, ConstantHelper.KEY_IN_REQUIRED_FIELD);
+                Response.StatusCode = 200;
+                return Json(await handler.ChangePassword(changePasswordDTO), JsonRequestBehavior.AllowGet);
+            }
+            catch (HttpException ex)
+            {
+                
+                if (ex.Message == ConstantHelper.INCORRECT_PASSWORD || ex.Message == ConstantHelper.PASSWORD_DOES_NOT_MATCH || ex.Message == ConstantHelper.KEY_IN_REQUIRED_FIELD)
+                    Response.StatusCode = 400;
+                else
+                    Response.StatusCode = 500;
+                return Json(ex.Message, JsonRequestBehavior.AllowGet);
+            }
+        }
+
     }
 }

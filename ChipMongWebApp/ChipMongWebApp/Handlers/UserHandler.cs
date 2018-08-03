@@ -36,7 +36,8 @@ namespace ChipMongWebApp.Handlers
                 throw new HttpException((int)HttpStatusCode.BadRequest, ConstantHelper.LOGIN_NAME_EXIST);
 
             var record = (tblUser)MappingHelper.MapDTOToDBClass<UserNewDTO, tblUser>(newDTO, new tblUser());
-            //record.createdDate = DateTime.Now;
+            record.createdDate = DateTime.Now;
+            record.password = CryptingHelper.EncryptString("123");
             db.tblUsers.Add(record);
             await db.SaveChangesAsync();
             return await SelectByID(record.userID);
@@ -95,9 +96,28 @@ namespace ChipMongWebApp.Handlers
             }
             var getList = new GetListDTO<UserViewDTO>();
             getList.metaData = await PaginationHelper.GetMetaData(currentPage, records, "id", "asc", search);
-            getList.metaData.numberOfColumn = 4; // need to change number of column
+            getList.metaData.numberOfColumn = 6; // need to change number of column
             getList.items = recordList;
             return getList;
+        }
+
+        //-> Change Password
+        public async Task<UserViewDTO> ChangePassword(UserChangePasswordDTO changePasswordDTO)
+        {
+            var user = (UserViewDTO)HttpContext.Current.Session["user"];
+
+            var password = CryptingHelper.EncryptString(changePasswordDTO.password);
+            var checkRecord = await db.tblUsers.FirstOrDefaultAsync(x => x.deleted == null && x.userID == user.userID && x.password == password);
+            if (checkRecord == null)
+                throw new HttpException((int)HttpStatusCode.BadRequest, ConstantHelper.INCORRECT_PASSWORD);
+
+            if(changePasswordDTO.newPassword != changePasswordDTO.comfirmPassword)
+                throw new HttpException((int)HttpStatusCode.BadRequest, ConstantHelper.PASSWORD_DOES_NOT_MATCH);
+
+            checkRecord.password = CryptingHelper.EncryptString(changePasswordDTO.newPassword);
+            
+            await db.SaveChangesAsync();
+            return await SelectByID(checkRecord.userID);
         }
 
     }

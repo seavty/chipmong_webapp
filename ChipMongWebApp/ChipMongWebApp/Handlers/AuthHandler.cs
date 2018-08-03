@@ -1,15 +1,18 @@
 ﻿using ChipMongWebApp.Helpers;
 using ChipMongWebApp.Models.DB;
 using ChipMongWebApp.Models.DTO.User;
+using ChipMongWebApp.Utils.Attribute;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 
 namespace ChipMongWebApp.Handlers
 {
+    [ErrorLogger]
     public class AuthHandler
     {
         private ChipMongEntities db = null;
@@ -21,14 +24,13 @@ namespace ChipMongWebApp.Handlers
         {
             //string password = EncryptString(crendential.password);
             string password = CryptingHelper.EncryptString(crendential.password);
-            //var user = await db.tblUsers.FirstOrDefaultAsync(x => x.deleted == null && x.userName == crendential.userName && x.password == password);
-            var user = await db.tblUsers.FirstOrDefaultAsync(x => x.deleted == null && x.userName == crendential.userName);
+            var user = await db.tblUsers.FirstOrDefaultAsync(x => x.deleted == null && x.userName == crendential.userName && x.password == password);
+            //var user = await db.tblUsers.FirstOrDefaultAsync(x => x.deleted == null && x.userName == crendential.userName);
 
             if (user == null)
                 return null;
 
             Guid token = Guid.NewGuid();
-            //user.session = EncryptString(token.ToString());
             user.session = CryptingHelper.EncryptString(token.ToString());
             await db.SaveChangesAsync();
 

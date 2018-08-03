@@ -12,6 +12,7 @@
             <li class="nav-item active">
                 <a class="nav-link" href="@Url.Content("~/checkloanrequest/index")"> <i class="fas fa-home"></i>  Home <span class="sr-only">(current)</span></a>
             </li>
+            <li role="separator" class="divider-vertical"></li>
             <li class="nav-item active">
                 <a class="nav-link" href="@Url.Content("~/customer/find")"> <i class="fas fa-users"></i> Customer  </a>
             </li>
@@ -28,6 +29,8 @@
                 <a class="nav-link" href="@Url.Content("~/sourcesupply/find")"> <i class="fas fa-warehouse"></i> Source Supply  </a>
             </li>
 
+            <li role="separator" class="divider-vertical"></li>
+
             <li class="nav-item active">
                 <a class="nav-link" href="@Url.Content("~/user/find")"> <i class="fas fa-user-cog"></i> User  </a>
             </li>
@@ -40,14 +43,15 @@
                 <li class="nav-item active dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         @{
-        var user = (UserViewDTO)HttpContext.Current.Session["user"];
-                    @(user.firstName + " " +  user.lastName)
+                            var user = (UserViewDTO)HttpContext.Current.Session["user"];
+                            @(user.firstName + " " + user.lastName)
                         }
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="@Url.Content("~/user/changepassword")"> Change Password  </a>
                     </div>
                 </li>
+                <li role="separator" class="divider-vertical"></li>
                 <li class="nav-item active"> <a class="nav-link" href="javascript:onclick=logout()"> <i class="fas fa-sign-out-alt"></i> Logout  </a> </li>
             </ul>
 
@@ -67,7 +71,11 @@
 <script>
     function logout() {
         if (confirm("Do you want to log out?")) {
-            window.location.href = "@Url.Content("~/auth/login")";
+            const endPoint = "@Url.Content("~/auth")";
+            ajaxHelper(endPoint + "/logout", null, requestMethod.POST).then(function (data) {
+               window.location.href = "@Url.Content("~/auth/login")";
+            });
+            
         }
     }
 </script>

@@ -11,11 +11,7 @@ namespace ChipMongWebApp.Utils.Attribute
         {
             base.OnActionExecuting(filterContext);
 
-            /*
-            var session = filterContext.HttpContext.Session;
-            if ((bool?)session["IsManager"] == true)
-                return;
-            */
+            
             /*
             var controllerName = filterContext.RouteData.Values["controller"].ToString();
             var actionName = filterContext.RouteData.Values["action"].ToString();
@@ -24,16 +20,18 @@ namespace ChipMongWebApp.Utils.Attribute
                 return;
             }
             */
-
-            //Redirect him to somewhere.
             var session = filterContext.HttpContext.Session;
             UserViewDTO user = (UserViewDTO)session["user"];
-            var isValidSession = new AuthHandler().IsValidSession(user);
-
-            if (user == null || isValidSession == false)
+            if (session == null || user == null)
                 RedirectToLogin(filterContext);
             else
-                return;
+            {   
+                var isValidSession = new AuthHandler().IsValidSession(user);
+                if (isValidSession == false)
+                    RedirectToLogin(filterContext);
+                else
+                    return;
+            }
         }
 
         private void RedirectToLogin(ActionExecutingContext filterContext)
