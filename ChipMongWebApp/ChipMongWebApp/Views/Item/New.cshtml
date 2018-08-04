@@ -1,4 +1,5 @@
-﻿@model ChipMongWebApp.Models.DTO.Item.ItemViewDTO
+﻿@using ChipMongWebApp.Utils.Helpers
+@model ChipMongWebApp.Models.DTO.Item.ItemViewDTO
 @{
     /**/
 
@@ -6,12 +7,7 @@
     Layout = "~/Views/Shared/Main/_Main.cshtml";
 }
 
-<div class="card" id="action">
-    <div class="card-body text-dark shadow-sm merienda">
-        <button type="button" class="btn btn-success" id="btnSave"> <i class="fas fa-save"></i>  Save  </button>
-        <button type="button" class="btn btn-danger" id="btnCancel"> <i class="fas fa-times"></i> Cancel  </button>
-    </div>
-</div>
+@Html.Partial("~/Views/Shared/Template/NewMode/Button.cshtml")
 
 <br />
 
@@ -54,30 +50,8 @@
     <!-- end card body -->
 </form>
 
+<script src="~/Content/js/function/template/newmode/button.js"></script>
 <script>
-
-    var endPoint = "@Url.Content("~/item")";
-
-    $(document).ready(function () { setupEvents(); });
-
-    //-> setupEvents
-    function setupEvents() {
-        $("#btnSave").click(function () { save(); });
-        $("#btnCancel").click(function () { cancel(); });
-        $('.numeric').numeric();
-    }
-
-    //-> save
-    function save() {
-        if (isValid()) {
-            ajaxHelper(endPoint + "/new", $("#record").serializeObject(), requestMethod.POST).then(function (data) {
-                window.location.href = endPoint + "/view/" + data.id;
-            });
-        }
-    }
-
-    //-> cancel
-    function cancel() { window.location.href = endPoint + "/find"; }
-
+    const controller = "@ConstantHelper.ITEM_CONTROLLER";
 </script>
 

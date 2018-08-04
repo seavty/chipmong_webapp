@@ -87,11 +87,9 @@
     <!-- end card body -->
 </form>
 
+<script src="~/Content/js/function/template/editmode/button.js"></script>
 <script>
     const controller = "@ConstantHelper.CUSTOMER_CONTROLLER";
     const id = @Url.RequestContext.RouteData.Values["id"];
-
-    const save = () => { if (isValid()) ajaxHelper(controller + "/edit", $("#record").serializeObject(), requestMethod.POST).then((data) => location.href = controller + "/view/" + data.id) }
-    const cancel = () => location.href = controller + "/view/" + id;
 </script>
 

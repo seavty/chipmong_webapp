@@ -1,4 +1,5 @@
-﻿@using ChipMongWebApp.Utils.Extension
+﻿@using ChipMongWebApp.Utils.Helpers
+@using ChipMongWebApp.Utils.Extension
 @model ChipMongWebApp.Models.DTO.Item.ItemViewDTO
 @{
     /**/
@@ -8,12 +9,8 @@
 }
 
 <div class="card" id="action">
-    <div class="card" id="action">
-        <div class="card-body text-dark shadow-sm merienda">
-            <button type="button" class="btn btn-dark" id="btnBack"> <i class="fas fa-long-arrow-alt-left"></i> Back </button>
-            <button type="button" class="btn btn-primary" id="btnEdit"> <i class="fas fa-pencil-alt"></i> Edit </button>
-            <button type="button" class="btn btn-danger" id="btnDelete"> <i class="fas fa-trash-alt"></i> Delete </button>
-        </div>
+    <div class="card-body text-dark shadow-sm merienda">
+        @Html.Partial("~/Views/Shared/Template/ViewMode/Button.cshtml")
     </div>
 </div>
 
@@ -47,7 +44,7 @@
                     <div class="col-4">
                         <div class="form-group">
                             @Html.LabelFor(m => m.price)
-                            @Html.TextBoxFor(m => m.price, new { @class = "form-control", Value =Model.price.ToTwoDecimalPoint() })
+                            @Html.TextBoxFor(m => m.price, new { @class = "form-control", Value = Model.price.ToTwoDecimalPoint() })
                         </div>
                     </div>
 
@@ -60,50 +57,10 @@
     </fieldset>
 </form>
 
+<script src="~/Content/js/function/template/viewmode/button.js"></script>
 <script>
-
-    var endPoint = "@Url.Content("~/item")";
-    var id = @Url.RequestContext.RouteData.Values["id"];
-
-    $(document).ready(function () {
-        setupEvents();
-    });
-
-    //-> setupEvents
-    function setupEvents() {
-        $("#btnBack").click(function () { back(); });
-        $("#btnEdit").click(function () { edit(); });
-        $("#btnDelete").click(function () { deleteRecord(); });
-    }
-
-    //-> save
-    function save() {
-        if (isValid()) {
-            ajaxHelper(endPoint + "/create", $("#record").serializeObject(), requestMethod.POST).then(function (data) {
-                window.location.href = detailsURL + done.id;
-            });
-        }
-    }
-
-    //-> edit
-    function edit() {
-        window.location.href = endPoint + "/edit/" + id;
-    }
-
-    //-> back
-    function back() {
-        window.location.href = endPoint + "/find/";
-    }
-
-    //-> deletRecord
-    function deleteRecord() {
-        if (confirm("Do you want to delete this item?")) {
-            ajaxHelper(endPoint + "/delete/" + id, null, requestMethod.POST).then(function (data) {
-                window.location.href = endPoint + "/find/";
-            });
-        }
-    }
-
+    const controller = "@ConstantHelper.ITEM_CONTROLLER";
+    const id = @Url.RequestContext.RouteData.Values["id"];
 </script>
 
 

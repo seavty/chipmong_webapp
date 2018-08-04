@@ -88,8 +88,7 @@
     <!-- end card body -->
 </form>
 
-<script>
+<script src="~/Content/js/function/template/newmode/button.js"></script>
+<script> 
     const controller = "@ConstantHelper.CUSTOMER_CONTROLLER";
-    const save = () => { if (isValid()) ajaxHelper(controller + "/new", $("#record").serializeObject(), requestMethod.POST).then((data) => location.href = controller + "/view/" + data.id) };
-    const cancel = () => location.href = controller + "/find";
 </script>

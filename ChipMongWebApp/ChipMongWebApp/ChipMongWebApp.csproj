@@ -314,6 +314,10 @@
     <Content Include="Content\img\logo.png" />
     <Content Include="Content\js\bootstrap.min.js" />
     <Content Include="Content\js\function\loanCalculation.js" />
+    <Content Include="Content\js\function\template\editmode\button.js" />
+    <Content Include="Content\js\function\template\findmode\button.js" />
+    <Content Include="Content\js\function\template\newmode\button.js" />
+    <Content Include="Content\js\function\template\viewmode\button.js" />
     <Content Include="Content\js\gijgo.min.js" />
     <Content Include="Content\js\helper\ajaxHelper.js" />
     <Content Include="Content\js\helper\dateHelper.js" />
@@ -446,6 +450,7 @@
     <Content Include="Views\Shared\Template\NewMode\Button.cshtml" />
     <Content Include="Views\Shared\Template\EditMode\Button.cshtml" />
     <Content Include="Views\Shared\Template\ViewMode\Button.cshtml" />
+    <Content Include="Views\Shared\Template\FindMode\Button.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

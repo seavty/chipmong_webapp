@@ -7,15 +7,8 @@
 
 <form name="record" id="record">
     @Html.AntiForgeryToken()
-    <input type="hidden" name="currentPage" id="currentPage" value="1" />
-    <div class="card shadow-sm" id="dvAction">
-        <div class="card-body text-dark shadow-sm merienda">
-            <button type="button" class="btn btn-primary" id="btnFind" onclick="find()"> <i class="fas fa-search"></i> Find </button>
-            <button type="button" class="btn btn-danger" id="btnCancel" onclick="cancel()"> <i class="fas fa-times"></i> Clear  </button>
-            <button type="button" class="btn btn-success" id="btnNew" onclick="newRecord()"> <i class="fas fa-plus"></i> New  </button>
-        </div>
-    </div>
-
+    @Html.Partial("~/Views/Shared/Template/FindMode/Button.cshtml")
+    
     <br />
 
     <div class="card shadow-sm">
@@ -57,13 +50,9 @@
 
 </form>
 
-
+<script src="~/Content/js/function/template/findmode/button.js"></script>
 <script>
     const controller = "@ConstantHelper.CUSTOMER_CONTROLLER";
     $(document).ready(() => paging(1));
-    let paging = currentPage => { $("#currentPage").val(currentPage); ajaxHelper(controller + "/paging/", $("#record").serializeObject(), requestMethod.POST).then((data) => $("#tableData").html(data)) };
-    const cancel = () => location.reload();
-    const newRecord = () => location.href = controller + "/new";
-    const find = () => { $("#currentPage").val(1); paging(1) }
 </script>
 

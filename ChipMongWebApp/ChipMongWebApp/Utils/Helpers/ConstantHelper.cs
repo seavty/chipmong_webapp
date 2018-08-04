@@ -36,6 +36,7 @@ namespace ChipMongWebApp.Utils.Helpers
 
 
         public static readonly string CUSTOMER_CONTROLLER = "/customer";
+        public static readonly string ITEM_CONTROLLER = "/item";
 
     }
 }
