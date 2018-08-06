@@ -9,7 +9,7 @@ namespace ChipMongWebApp.Models.DTO.Customer
 {
     public class CustomerViewDTO : CustomerNewDTO
     {
-        public int? id { get; set; }
+        public int id { get; set; }
 
         [MaxLength(100)]
         [DisplayName("Code:")]

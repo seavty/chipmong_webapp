@@ -8,6 +8,7 @@ namespace ChipMongWebApp.Models.DTO.Item
 {
     public class ItemViewDTO : ItemBaseDTO
     {
+        public int id { get; set; }
         [DisplayName("Code")]
         public string code { get; set; }
     }

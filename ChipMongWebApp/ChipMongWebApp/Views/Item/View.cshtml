@@ -16,46 +16,7 @@
 
 <br />
 
-<form id="record" name="record">
-    <fieldset disabled class="summary">
-        <div class="card shadow-sm">
-            <div class="card-header merienda"> Item </div>
-
-
-            <!-- card body -->
-            <div class="card-body">
-
-                <!--row 1-->
-                <div class="row">
-                    <div class="col-4">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.code)
-                            @Html.TextBoxFor(m => m.code, new { @class = "form-control" })
-                        </div>
-                    </div>
-
-                    <div class="col-4">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.name)
-                            @Html.TextBoxFor(m => m.name, new { @class = "form-control" })
-                        </div>
-                    </div>
-
-                    <div class="col-4">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.price)
-                            @Html.TextBoxFor(m => m.price, new { @class = "form-control", Value = Model.price.ToTwoDecimalPoint() })
-                        </div>
-                    </div>
-
-                </div>
-                <!--end  row 1-->
-
-            </div>
-        </div>
-        <!-- end card body -->
-    </fieldset>
-</form>
+@Html.Partial("~/Views/Item/Form.cshtml")
 
 <script src="~/Content/js/function/template/viewmode/button.js"></script>
 <script>

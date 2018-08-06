@@ -7,6 +7,6 @@ namespace ChipMongWebApp.Models.DTO.Customer
 {
     public class CustomerEditDTO : CustomerBaseDTO
     {
-        public int? id { get; set; }
+        public int id { get; set; }
     }
 }

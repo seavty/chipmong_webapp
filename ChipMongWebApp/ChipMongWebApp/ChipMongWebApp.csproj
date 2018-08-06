@@ -452,6 +452,7 @@
     <Content Include="Views\Shared\Template\ViewMode\Button.cshtml" />
     <Content Include="Views\Shared\Template\FindMode\Button.cshtml" />
     <Content Include="Views\Customer\Form.cshtml" />
+    <Content Include="Views\Item\Form.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

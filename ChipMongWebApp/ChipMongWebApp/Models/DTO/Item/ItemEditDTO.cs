@@ -7,5 +7,6 @@ namespace ChipMongWebApp.Models.DTO.Item
 {
     public class ItemEditDTO : ItemBaseDTO
     {
+        public int id { get; set; }
     }
 }

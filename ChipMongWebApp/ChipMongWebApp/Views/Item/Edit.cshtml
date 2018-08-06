@@ -9,46 +9,7 @@
 
 <br />
 
-<form id="record" name="record">
-    @Html.AntiForgeryToken()
-    @Html.HiddenFor(m => m.id)
-    <div class="card shadow-sm">
-        <div class="card-header merienda"> Item </div>
-
-
-        <!-- card body -->
-        <div class="card-body">
-
-            <!--row 1-->
-            <div class="row">
-                <div class="col-4">
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.code)
-                        @Html.TextBoxFor(m => m.code, new { @class = "form-control", @readonly = "readonly" })
-                    </div>
-                </div>
-
-                <div class="col-4">
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.name)
-                        @Html.TextBoxFor(m => m.name, new { @class = "form-control required", placeholder = "Name", @maxlength = "100" })
-                    </div>
-                </div>
-
-                <div class="col-4">
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.price)
-                        @Html.TextBoxFor(m => m.price, new { @class = "form-control required numeric", placeholder = "Price", @maxlength = "100" })
-                    </div>
-                </div>
-
-            </div>
-            <!--end  row 1-->
-
-        </div>
-    </div>
-    <!-- end card body -->
-</form>
+@Html.Partial("~/Views/Item/Form.cshtml")
 
 <script src="~/Content/js/function/template/editmode/button.js"></script>
 <script>

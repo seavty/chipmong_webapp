@@ -45,7 +45,12 @@ namespace ChipMongWebApp.Controllers
         }
 
         //-> View
-        public async Task<ActionResult> View(int id) { return View(await handler.SelectByID(id)); }
+        public async Task<ActionResult> View(int id)
+        {
+            var record = await handler.SelectByID(id);
+            record.mode = ConstantHelper.MODE_VIEW;
+            return View(record);
+        }
 
         //-> Edit
         public async Task<ActionResult> Edit(int id) { return View(await handler.SelectByID(id)); }
