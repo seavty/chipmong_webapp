@@ -21,7 +21,7 @@ namespace ChipMongWebApp.Utils.Handlers
         //-> SelectByID
         public async Task<UserViewDTO> SelectByID(int id)
         {
-            var record = await db.tblUsers.FirstOrDefaultAsync(x => x.deleted == null && x.userID == id);
+            var record = await db.tblUsers.FirstOrDefaultAsync(x => x.deleted == null && x.id == id);
             if (record == null)
                 throw new HttpException((int)HttpStatusCode.NotFound, "NotFound");
             return MappingHelper.MapDBClassToDTO<tblSourceOfSupply, UserViewDTO>(record);
@@ -40,25 +40,25 @@ namespace ChipMongWebApp.Utils.Handlers
             record.password = CryptingHelper.EncryptString("123");
             db.tblUsers.Add(record);
             await db.SaveChangesAsync();
-            return await SelectByID(record.userID);
+            return await SelectByID(record.id);
         }
 
         //-> Edit
         public async Task<UserViewDTO> Edit(UserEditDTO editDTO)
         {
             editDTO = StringHelper.TrimStringProperties(editDTO);
-            var checkRecord = await db.tblUsers.FirstOrDefaultAsync(x => x.deleted == null && x.userName == editDTO.userName && x.userID != editDTO.userID);
+            var checkRecord = await db.tblUsers.FirstOrDefaultAsync(x => x.deleted == null && x.userName == editDTO.userName && x.id != editDTO.id);
             if (checkRecord != null)
                 throw new HttpException((int)HttpStatusCode.BadRequest, ConstantHelper.LOGIN_NAME_EXIST);
 
-            var record = await db.tblUsers.FirstOrDefaultAsync(x => x.deleted == null && x.userID == editDTO.userID);
+            var record = await db.tblUsers.FirstOrDefaultAsync(x => x.deleted == null && x.id == editDTO.id);
             if (record == null)
                 throw new HttpException((int)HttpStatusCode.NotFound, "NotFound");
             
             record = (tblUser)MappingHelper.MapDTOToDBClass<UserEditDTO, tblUser>(editDTO, record);
             //record.updatedDate = DateTime.Now;
             await db.SaveChangesAsync();
-            return await SelectByID(record.userID);
+            return await SelectByID(record.id);
         }
 
         //-> GetList
@@ -78,7 +78,7 @@ namespace ChipMongWebApp.Utils.Handlers
         //-> Delete
         public async Task<Boolean> Delete(int id)
         {
-            var record = await db.tblUsers.FirstOrDefaultAsync(x => x.deleted == null && x.userID == id);
+            var record = await db.tblUsers.FirstOrDefaultAsync(x => x.deleted == null && x.id == id);
             if (record == null)
                 throw new HttpException((int)HttpStatusCode.NotFound, "NotFound");
             record.deleted = 1;
@@ -92,7 +92,7 @@ namespace ChipMongWebApp.Utils.Handlers
             var recordList = new List<UserViewDTO>();
             foreach (var record in PaginationHelper.GetList(currentPage, records))
             {
-                recordList.Add(await SelectByID(record.userID));
+                recordList.Add(await SelectByID(record.id));
             }
             var getList = new GetListDTO<UserViewDTO>();
             getList.metaData = await PaginationHelper.GetMetaData(currentPage, records, "id", "asc", search);
@@ -107,7 +107,7 @@ namespace ChipMongWebApp.Utils.Handlers
             var user = (UserViewDTO)HttpContext.Current.Session["user"];
 
             var password = CryptingHelper.EncryptString(changePasswordDTO.password);
-            var checkRecord = await db.tblUsers.FirstOrDefaultAsync(x => x.deleted == null && x.userID == user.userID && x.password == password);
+            var checkRecord = await db.tblUsers.FirstOrDefaultAsync(x => x.deleted == null && x.id == user.id && x.password == password);
             if (checkRecord == null)
                 throw new HttpException((int)HttpStatusCode.BadRequest, ConstantHelper.INCORRECT_PASSWORD);
 
@@ -117,7 +117,7 @@ namespace ChipMongWebApp.Utils.Handlers
             checkRecord.password = CryptingHelper.EncryptString(changePasswordDTO.newPassword);
             
             await db.SaveChangesAsync();
-            return await SelectByID(checkRecord.userID);
+            return await SelectByID(checkRecord.id);
         }
 
     }

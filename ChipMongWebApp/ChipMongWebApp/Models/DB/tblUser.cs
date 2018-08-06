@@ -14,7 +14,7 @@ namespace ChipMongWebApp.Models.DB
     
     public partial class tblUser
     {
-        public int userID { get; set; }
+        public int id { get; set; }
         public Nullable<System.DateTime> createdDate { get; set; }
         public Nullable<int> createdBy { get; set; }
         public Nullable<System.DateTime> updatedDate { get; set; }

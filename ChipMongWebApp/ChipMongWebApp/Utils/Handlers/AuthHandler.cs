@@ -49,7 +49,7 @@ namespace ChipMongWebApp.Utils.Handlers
         {
             //var session = EncryptString(userDTO.session);
             var session = CryptingHelper.EncryptString(userDTO.session);
-            var user = db.tblUsers.FirstOrDefault(x => x.deleted == null && x.userID == userDTO.userID && x.session == session );
+            var user = db.tblUsers.FirstOrDefault(x => x.deleted == null && x.id == userDTO.id && x.session == session );
             if (user == null)
                 return false;
             return true;

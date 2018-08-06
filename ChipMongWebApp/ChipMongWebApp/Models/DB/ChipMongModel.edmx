@@ -243,9 +243,9 @@
         </EntityType>
         <EntityType Name="tblUser">
           <Key>
-            <PropertyRef Name="userID" />
+            <PropertyRef Name="id" />
           </Key>
-          <Property Name="userID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="createdDate" Type="DateTime" Precision="3" />
           <Property Name="createdBy" Type="Int32" />
           <Property Name="updatedDate" Type="DateTime" Precision="3" />
@@ -384,7 +384,7 @@
                 <ScalarProperty Name="updatedDate" ColumnName="user_UpdatedDate" />
                 <ScalarProperty Name="createdBy" ColumnName="user_CreatedBy" />
                 <ScalarProperty Name="createdDate" ColumnName="user_CreatedDate" />
-                <ScalarProperty Name="userID" ColumnName="user_UserID" />
+                <ScalarProperty Name="id" ColumnName="user_UserID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

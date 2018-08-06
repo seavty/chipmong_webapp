@@ -9,7 +9,7 @@ namespace ChipMongWebApp.Models.DTO.User
 {
     public class UserBaseDTO
     {
-        public int? userID { get; set; }
+        public int? id { get; set; }
 
         [Required]
         [MaxLength(100)]
