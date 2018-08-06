@@ -13,7 +13,11 @@ namespace ChipMongWebApp.Utils.Handlers
     {
         private ChipMongEntities db = null;
 
-        public DealerSourceSupplyHandler() { db = new ChipMongEntities(); }
+        public DealerSourceSupplyHandler()
+        {
+            //db = new ChipMongEntities();
+            db = DBSingleton.GetInstance;
+        }
 
         //-> Edit
         public async Task<string> Edit(int id, int sourceSupplyID)

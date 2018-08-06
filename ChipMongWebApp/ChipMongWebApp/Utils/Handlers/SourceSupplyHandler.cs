@@ -16,7 +16,11 @@ namespace ChipMongWebApp.Utils.Handlers
     {
         private ChipMongEntities db = null;
 
-        public SourceSupplyHandler() { db = new ChipMongEntities(); }
+        public SourceSupplyHandler()
+        {
+            //db = new ChipMongEntities();
+            db = DBSingleton.GetInstance;
+        }
 
         //-> SelectByID
         public async Task<SourceSupplyViewDTO> SelectByID(int id)

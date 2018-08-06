@@ -21,7 +21,11 @@ namespace ChipMongWebApp.Utils.Handlers
     {
         private ChipMongEntities db = null;
 
-        public SaleOrderHandler() { db = new ChipMongEntities(); }
+        public SaleOrderHandler()
+        {
+            //db = new ChipMongEntities();
+            db = DBSingleton.GetInstance;
+        }
 
         //-> SelectByID
         public async Task<SaleOrderViewDTO> SelectByID(int id, int mode)

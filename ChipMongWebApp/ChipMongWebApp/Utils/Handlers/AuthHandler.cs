@@ -20,7 +20,7 @@ namespace ChipMongWebApp.Utils.Handlers
         public AuthHandler()
         {
             //db = new ChipMongEntities();
-            db = XModelInstance.Edmx;
+            db = DBSingleton.GetInstance;
         }
 
 

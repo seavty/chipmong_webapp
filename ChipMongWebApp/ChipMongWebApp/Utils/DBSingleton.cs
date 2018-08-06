@@ -6,24 +6,24 @@ using System.Web;
 
 namespace ChipMongWebApp.Utils
 {
-    public sealed class XModelInstance
+    public sealed class DBSingleton
     {
-        private static ChipMongEntities edmx = null;
+        private static ChipMongEntities db = null;
         private static readonly object padlock = new object();
 
-        private XModelInstance() { }
+        private DBSingleton() { }
 
-        public static ChipMongEntities Edmx
+        public static ChipMongEntities GetInstance
         {
             get
             {
                 lock (padlock)
                 {
-                    if (edmx == null)
+                    if (db == null)
                     {
-                        edmx = new ChipMongEntities();
+                        db = new ChipMongEntities();
                     }
-                    return edmx;
+                    return db;
                 }
             }
         }
