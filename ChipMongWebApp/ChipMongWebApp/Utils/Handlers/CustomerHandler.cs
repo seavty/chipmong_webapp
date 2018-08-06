@@ -43,7 +43,9 @@ namespace ChipMongWebApp.Utils.Handlers
             var record = (tblCustomer)MappingHelper.MapDTOToDBClass<CustomerNewDTO, tblCustomer>(newDTO, new tblCustomer());
             record.createdDate = DateTime.Now;
             db.tblCustomers.Add(record);
+            
             await db.SaveChangesAsync();
+            db.Entry(record).Reload();
             return await SelectByID(record.id);
         }
 

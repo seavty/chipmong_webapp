@@ -7,10 +7,8 @@ using System.Web;
 
 namespace ChipMongWebApp.Models.DTO.Customer
 {
-    public class CustomerBaseDTO
+    public class CustomerBaseDTO: ModeDTO
     {
-        public int? id { get; set; }
-
         [Required]
         [MaxLength(100)]
         [DisplayName("First Name (*):")]
