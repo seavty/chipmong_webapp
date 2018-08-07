@@ -7,5 +7,6 @@ namespace ChipMongWebApp.Models.DTO.User
 {
     public class UserEditDTO: UserBaseDTO
     {
+        public int id { get; set; }
     }
 }

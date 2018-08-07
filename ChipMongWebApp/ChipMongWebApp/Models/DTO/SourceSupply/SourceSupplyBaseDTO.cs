@@ -9,8 +9,6 @@ namespace ChipMongWebApp.Models.DTO.SourceSupply
 {
     public class SourceSupplyBaseDTO: ModeDTO
     {
-        public int? id { get; set; }
-
         [Required]
         [MaxLength(100)]
         [DisplayName("Name (*):")]

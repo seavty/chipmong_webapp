@@ -28,7 +28,7 @@ namespace ChipMongWebApp.Utils.Handlers
             var record = await db.tblUsers.FirstOrDefaultAsync(x => x.deleted == null && x.id == id);
             if (record == null)
                 throw new HttpException((int)HttpStatusCode.NotFound, "NotFound");
-            return MappingHelper.MapDBClassToDTO<tblSourceOfSupply, UserViewDTO>(record);
+            return MappingHelper.MapDBClassToDTO<tblUser, UserViewDTO>(record);
         }
 
         //-> New
@@ -44,6 +44,7 @@ namespace ChipMongWebApp.Utils.Handlers
             record.password = CryptingHelper.EncryptString("123");
             db.tblUsers.Add(record);
             await db.SaveChangesAsync();
+            db.Entry(record).Reload();
             return await SelectByID(record.id);
         }
 

@@ -1,16 +1,10 @@
 ﻿@using ChipMongWebApp.Utils.Helpers
-@model ChipMongWebApp.Models.DTO.Customer.CustomerViewDTO
 @{
-    /**/
-
-    ViewBag.Title = "Edit";
-    Layout = "~/Views/Shared/Main/_Main.cshtml";
+Layout = "~/Views/Shared/Main/_Main.cshtml";
 }
 
 @Html.Partial("~/Views/Shared/Template/EditMode/Button.cshtml")
-
 <br />
-
 @Html.Partial("~/Views/Customer/Form.cshtml")
 
 <script src="~/Content/js/function/template/editmode/button.js"></script>

@@ -1,83 +1,14 @@
 ﻿@using ChipMongWebApp.Utils.Helpers
-@model ChipMongWebApp.Models.DTO.User.UserViewDTO
 @{
-    /**/
-
-    ViewBag.Title = "Create";
     Layout = "~/Views/Shared/Main/_Main.cshtml";
 }
 
 @Html.Partial("~/Views/Shared/Template/NewMode/Button.cshtml")
-
 <br />
-
-<form id="record" name="record">
-    @Html.AntiForgeryToken()
-    <div class="card shadow-sm">
-        <div class="card-header merienda"> User </div>
-
-        <!-- card body -->
-        <div class="card-body">
-
-            <!--row 1-->
-            <div class="row">
-
-                <div class="col">
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.userName)
-                        @Html.TextBoxFor(m => m.userName, new { @class = "form-control required", placeholder = "User Name" })
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.firstName)
-                        @Html.TextBoxFor(m => m.firstName, new { @class = "form-control required", placeholder = "First Name" })
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.lastName)
-                        @Html.TextBoxFor(m => m.lastName, new { @class = "form-control required", placeholder = "Last Name" })
-                    </div>
-                </div>
-            </div>
-            <!--end  row 1-->
-            <!--row 2-->
-            <div class="row">
-
-                <div class="col">
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.phoneNumber)
-                        @Html.TextBoxFor(m => m.phoneNumber, new { @class = "form-control required", placeholder = "Phone Number" })
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.email)
-                        @Html.TextBoxFor(m => m.email, new { @class = "form-control", placeholder = "E-mail" })
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="form-group">
-
-                    </div>
-                </div>
-            </div>
-            <!--end  row 2-->
-
-        </div>
-    </div>
-    <!-- end card body -->
-</form>
-
+@Html.Partial("~/Views/User/Form.cshtml")
 
 <script src="~/Content/js/function/template/newmode/button.js"></script>
 <script>
-
     const controller = "@ConstantHelper.USER_CONTROLLER";
 </script>
 

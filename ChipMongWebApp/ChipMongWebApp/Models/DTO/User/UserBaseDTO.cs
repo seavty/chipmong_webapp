@@ -7,10 +7,9 @@ using System.Web;
 
 namespace ChipMongWebApp.Models.DTO.User
 {
-    public class UserBaseDTO
+    public class UserBaseDTO: ModeDTO
     {
-        public int? id { get; set; }
-
+        
         [Required]
         [MaxLength(100)]
         [DisplayName("Login Name (*):")]

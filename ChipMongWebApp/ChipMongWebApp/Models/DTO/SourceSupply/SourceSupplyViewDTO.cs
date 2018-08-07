@@ -7,5 +7,6 @@ namespace ChipMongWebApp.Models.DTO.SourceSupply
 {
     public class SourceSupplyViewDTO: SourceSupplyBaseDTO
     {
+        public int id { get; set; }
     }
 }

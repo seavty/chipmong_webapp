@@ -39,6 +39,7 @@ namespace ChipMongWebApp.Utils.Handlers
             //record.createdDate = DateTime.Now;
             db.tblSourceOfSupplies.Add(record);
             await db.SaveChangesAsync();
+            db.Entry(record).Reload();
             return await SelectByID(record.id);
         }
 

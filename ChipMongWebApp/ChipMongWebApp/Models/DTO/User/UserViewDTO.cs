@@ -7,6 +7,7 @@ namespace ChipMongWebApp.Models.DTO.User
 {
     public class UserViewDTO: UserBaseDTO
     {
+        public int id { get; set; }
         public string session { get; set; }
     }
 }

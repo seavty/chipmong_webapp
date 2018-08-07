@@ -1,9 +1,5 @@
 ﻿@using ChipMongWebApp.Utils.Helpers
-@model ChipMongWebApp.Models.DTO.SourceSupply.SourceSupplyViewDTO
 @{
-    /**/
-
-    ViewBag.Title = "Create";
     Layout = "~/Views/Shared/Main/_Main.cshtml";
 }
 
@@ -15,30 +11,7 @@
 
 <br />
 
-<form id="record" name="record">
-    <fieldset disabled class="summary">
-        <div class="card shadow-sm">
-            <div class="card-header merienda"> Source Supply </div>
-
-            <!-- card body -->
-            <div class="card-body">
-
-                <!--row 1-->
-                <div class="row">
-                    <div class="col">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.name)
-                            @Html.TextBoxFor(m => m.name, new { @class = "form-control" })
-                        </div>
-                    </div>
-                </div>
-                <!--end  row 1-->
-            </div>
-            <!-- end card body -->
-        </div>
-
-    </fieldset>
-</form>
+@Html.Partial("~/Views/SourceSupply/Form.cshtml")
 
 <script src="~/Content/js/function/template/viewmode/button.js"></script>
 <script>
