@@ -1,24 +1,19 @@
-﻿var precision = 2;
+﻿const precision = 2;
 
 //-> toInt
-function toInt(number) {
-    return parseInt(number) ? parseInt(number) : 0;
-}
+let toInt = (number) => parseInt(number) ? parseInt(number) : 0;
+
 
 //-> toFloat
-function toFloat(number) {
-    return parseFloat(number) ? parseFloat(number) : 0.0;
-    
-}
+let toFloat = (number) => parseFloat(number) ? parseFloat(number) : 0.0;
+ 
 
 //-> toFloatWith
-function toFloatWithTwoPrecision(number) {
+let toFloatWithTwoPrecision = (number) => {
     var num = parseFloat(number) ? parseFloat(number) : 0.0;
     return parseFloat(num).toFixed(precision);
 }
 
 
 //-> toFloatWithDollarCurrency
-function toFloatWithDollarCurrency(number) {
-    return toFloat(number) +  " $";
-}
+let toFloatWithDollarCurrency = (number) => toFloat(number) +  " $";

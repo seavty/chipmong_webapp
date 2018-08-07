@@ -1,4 +1,4 @@
-﻿var requestMethod = {
+﻿const requestMethod = {
     GET: "GET",
     POST: "POST",
     DELETE: "DELETE",
@@ -6,34 +6,30 @@
 };
 
 //-> ajaxHelper
-function ajaxHelper(url, data, method) {
+let ajaxHelper = (url, data, method) => {
     $('#loadingIndicator').modal({
         keyboard: false,
         backdrop: "static"
     });
-    var promise = new Promise(function (resolve, reject) {
-        window.setTimeout(function () {
+    let promise = new Promise((resolve, reject) => {
+        window.setTimeout(() => {
             $.ajax({
                 url: url,
                 data: data,
                 type: method,
                 async: false,
-                error: function (jqXHR, textStatus, errorThrown) {
-                    if (jqXHR.status == 401) {
-                        //alert("Session expired, please login again!");
+                error: (jqXHR, textStatus, errorThrown) => {
+                    if (jqXHR.status == 401) 
                         window.location.href = $("#baseURL").val() + "/auth/login/-1";
-                    }
                     else if (jqXHR.status == 400)
                         alert(jqXHR.responseText);
                     else 
                         alert("Error code: " + jqXHR.status + "; Message: error occured while processing your request.");
-
                     $('#loadingIndicator').modal("hide");
                     return;
                 },
-                beforeSend: function () {
-                },
-                success: function (data) {
+                beforeSend: () => {},
+                success: (data) => {
                     $('#loadingIndicator').modal("hide");
                     resolve(data);
                 }
@@ -45,25 +41,25 @@ function ajaxHelper(url, data, method) {
 
 
 //-> Simple ajax
-function simpleAjax(url, data, method) {
-    var promise = new Promise(function (resolve, reject) {
-        window.setTimeout(function () {
+let simpleAjax = (url, data, method) => {
+    var promise = new Promise((resolve, reject) => {
+        window.setTimeout(() => {
             $.ajax({
                 url: url,
                 data: data,
                 type: method,
                 async: false,
-                error: function (jqXHR, textStatus, errorThrown) {
-                    if (jqXHR.status == 401) {
-                        //alert("Session expired, please login again!");
+                error: (jqXHR, textStatus, errorThrown) =>  {
+                    if (jqXHR.status == 401) 
                         window.location.href = $("#baseURL").val() + "/auth/login/-1";
-                    }
-                    else if (jqXHR.status == 400) alert(jqXHR.responseText);
-                    else alert("Error code: " + jqXHR.status + "; Message: error occured while processing your request.");
+                    else if (jqXHR.status == 400)
+                        alert(jqXHR.responseText);
+                    else
+                        alert("Error code: " + jqXHR.status + "; Message: error occured while processing your request.");
                     return;
                 },
-                beforeSend: function () {},
-                success: function (data) {
+                beforeSend: () => {},
+                success: (data) => {
                     resolve(data);
                 }
             });

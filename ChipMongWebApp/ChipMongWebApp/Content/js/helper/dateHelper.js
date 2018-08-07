@@ -1,4 +1,4 @@
-﻿function setupDatePicker(selector) {
+﻿let setupDatePicker = (selector) => {
     $(selector).datepicker({
         uiLibrary: "bootstrap4",
         iconsLibrary: "fontawesome",
