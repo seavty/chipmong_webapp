@@ -23,8 +23,7 @@ namespace ChipMongWebApp.Utils.Handlers
 
         public CustomerHandler()
         {
-            //db = new ChipMongEntities();
-            db = DBSingleton.GetInstance;
+            db = new ChipMongEntities();
         }
 
         //-> SelectByID

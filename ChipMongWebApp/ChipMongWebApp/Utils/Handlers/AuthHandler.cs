@@ -19,8 +19,7 @@ namespace ChipMongWebApp.Utils.Handlers
         private ChipMongEntities db = null;
         public AuthHandler()
         {
-            //db = new ChipMongEntities();
-            db = DBSingleton.GetInstance;
+            db = new ChipMongEntities();
         }
 
 

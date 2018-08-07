@@ -18,8 +18,7 @@ namespace ChipMongWebApp.Utils.Handlers
 
         public SourceSupplyHandler()
         {
-            //db = new ChipMongEntities();
-            db = DBSingleton.GetInstance;
+            db = new ChipMongEntities();
         }
 
         //-> SelectByID

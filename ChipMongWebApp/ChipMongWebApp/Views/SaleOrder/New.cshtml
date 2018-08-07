@@ -1,10 +1,12 @@
 ﻿@using ChipMongWebApp.Utils.Helpers
 @model ChipMongWebApp.Models.DTO.SaleOrder.SaleOrderViewDTO
 @{
-    /**/
+                /**/
 
-    ViewBag.Title = "Create";
-    Layout = "~/Views/Shared/Main/_Main.cshtml";
+                /**/
+
+                ViewBag.Title = "Create";
+                Layout = "~/Views/Shared/Main/_Main.cshtml";
 }
 
 <div class="card" id="action">
@@ -75,7 +77,6 @@
 
             </div>
             <!--end  row 2-->
-
             <!--row 3-->
             <div class="row">
                 <div class="col-4">
@@ -104,7 +105,7 @@
 
     <!-- LineItemTable  -->
     @Html.Partial("~/Views/SaleOrder/LineItemTable.cshtml", null)
-    
+
 
 
 </form>
@@ -131,4 +132,3 @@
     function itemChange(prop) { getItem(prop, "@Url.Content("~/item")"); }
 
 </script>
-

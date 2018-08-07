@@ -39,6 +39,7 @@ namespace ChipMongWebApp.Utils.Helpers
         public static readonly string ITEM_CONTROLLER = "/item";
         public static readonly string SOURCE_SUPPLY_CONTROLLER = "/sourcesupply";
         public static readonly string USER_CONTROLLER = "/user";
+        public static readonly string SALEORDER_CONTROLLER = "/saleorder";
 
     }
 }

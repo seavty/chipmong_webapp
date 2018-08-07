@@ -19,7 +19,6 @@ namespace ChipMongWebApp.Utils.Handlers
         public ItemHandler()
         {
             db = new ChipMongEntities();
-            db = DBSingleton.GetInstance;
         }
 
         //-> SelectByID

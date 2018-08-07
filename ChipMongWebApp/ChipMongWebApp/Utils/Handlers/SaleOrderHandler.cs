@@ -23,8 +23,8 @@ namespace ChipMongWebApp.Utils.Handlers
 
         public SaleOrderHandler()
         {
-            //db = new ChipMongEntities();
-            db = DBSingleton.GetInstance;
+            db = new ChipMongEntities();
+            
         }
 
         //-> SelectByID
@@ -79,7 +79,7 @@ namespace ChipMongWebApp.Utils.Handlers
                     var lineItems = await SaveLineItem(record.id, newDTO);
                     record.total = lineItems.Sum(item => item.total);
                     await db.SaveChangesAsync();
-
+                    db.Entry(record).Reload();
                     transaction.Commit();
                     return await SelectByID(record.id, ConstantHelper.MODE_NEW);
                 }

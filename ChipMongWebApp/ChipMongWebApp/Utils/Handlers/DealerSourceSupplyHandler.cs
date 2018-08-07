@@ -15,8 +15,7 @@ namespace ChipMongWebApp.Utils.Handlers
 
         public DealerSourceSupplyHandler()
         {
-            //db = new ChipMongEntities();
-            db = DBSingleton.GetInstance;
+            db = new ChipMongEntities();
         }
 
         //-> Edit
