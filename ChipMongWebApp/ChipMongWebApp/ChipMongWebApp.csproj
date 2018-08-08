@@ -317,6 +317,7 @@
     <Content Include="Content\js\function\template\editmode\button.js" />
     <Content Include="Content\js\function\template\findmode\button.js" />
     <Content Include="Content\js\function\template\newmode\button.js" />
+    <Content Include="Content\js\function\template\ssa.js" />
     <Content Include="Content\js\function\template\viewmode\button.js" />
     <Content Include="Content\js\gijgo.min.js" />
     <Content Include="Content\js\helper\ajaxHelper.js" />

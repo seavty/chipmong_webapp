@@ -27,14 +27,14 @@
                 <div class="col-4">
                     <div class="form-group">
                         @Html.Label("Date")
-                        @Html.TextBoxFor(m => m.date, new { @class = "form-control", Value = DateTime.Now.ToString("dd/MM/yyyy") })
+                        @Html.TextBoxFor(m => m.date, new { @class = "form-control date-picker", Value = DateTime.Now.ToString("dd/MM/yyyy") })
                     </div>
                 </div>
 
                 <div class="col-4">
                     <div class="form-group">
                         @Html.LabelFor(m => m.requiredDate)
-                        @Html.TextBoxFor(m => m.requiredDate, new { @class = "form-control", Value = DateTime.Now.ToString("dd/MM/yyyy") })
+                        @Html.TextBoxFor(m => m.requiredDate, new { @class = "form-control date-picker", Value = DateTime.Now.ToString("dd/MM/yyyy") })
                     </div>
                 </div>
 
@@ -98,23 +98,20 @@
 
 </form>
 
+
+<script src="~/Content/js/function/template/newmode/button.js"></script>
+<script src="~/Content/js/function/template/ssa.js"></script>
 <script src="~/Content/js/modules/SaleOrder.js"></script>
 <script>
-    var endPoint = "@Url.Content("~/saleorder")";
-    var ssaURL = "@Url.Content("~/customer/ssa")";
-    var select2PlaceHolder = "Customer";
-    var rowIndex = 0;
-    var tableRow = `@Html.Partial("~/Views/SaleOrder/LineItem.cshtml")`;
 
-    $(document).ready(function () {
-        setupEvents();
-    });
+    const ssaURL = "@Url.Content("~/customer/ssa")";
+    const select2PlaceHolder = "Customer";
+    let rowIndex = 0;
+    const tableRow = `@Html.Partial("~/Views/SaleOrder/LineItem.cshtml")`;
 
-    //-> save
-    function save() { saveRecord(endPoint, "new"); }
+    const controller = "@ConstantHelper.SALEORDER_CONTROLLER";
 
-    //-> cancel
-    function cancel() { window.location.href = endPoint + "/find"; }
+    $(document).ready(() => initializeComponents());
 
     //-> itemChange
     function itemChange(prop) { getItem(prop, "@Url.Content("~/item")"); }

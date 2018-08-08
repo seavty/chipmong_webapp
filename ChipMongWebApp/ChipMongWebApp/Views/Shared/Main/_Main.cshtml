@@ -22,7 +22,17 @@
         @RenderBody()
     </div>
     <script>
-        $(document).ready(() => $('.numeric').numeric());
+        $(document).ready(() => {
+            $(".numeric").numeric();
+            $(".date-picker").each(function(i, v) {
+                $(this).datepicker({
+                    uiLibrary: "bootstrap4",
+                    iconsLibrary: "fontawesome",
+                    format: "dd/mm/yyyy",
+                });
+            });
+
+        });
     </script>
 </body>
 </html>

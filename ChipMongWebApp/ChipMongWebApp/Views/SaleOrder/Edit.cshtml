@@ -7,13 +7,7 @@
     Layout = "~/Views/Shared/Main/_Main.cshtml";
 }
 
-<div class="card" id="action">
-    <div class="card-body text-dark shadow-sm merienda">
-        <button type="button" class="btn btn-success" id="btnSave"> <i class="fas fa-save"></i> Save </button>
-        <button type="button" class="btn btn-danger" id="btnCancel"> <i class="fas fa-times"></i> Cancel </button>
-    </div>
-</div>
-
+@Html.Partial("~/Views/Shared/Template/EditMode/Button.cshtml")
 <br />
 
 <form id="record" name="record">
@@ -41,7 +35,7 @@
                 <div class="col-4">
                     <div class="form-group">
                         @Html.LabelFor(m => m.date)
-                        @Html.TextBoxFor(m => m.date, new { @class = "form-control", Value = Model.date.ToDisplayDate() })
+                        @Html.TextBoxFor(m => m.date, new { @class = "form-control date-picker", Value = Model.date.ToDisplayDate() })
                     </div>
                 </div>
 
@@ -49,7 +43,7 @@
                 <div class="col-4">
                     <div class="form-group">
                         @Html.LabelFor(m => m.requiredDate)
-                        @Html.TextBoxFor(m => m.requiredDate, new { @class = "form-control", Value = Model.requiredDate.ToDisplayDate() })
+                        @Html.TextBoxFor(m => m.requiredDate, new { @class = "form-control date-picker", Value = Model.requiredDate.ToDisplayDate() })
                     </div>
                 </div>
 
@@ -113,23 +107,19 @@
 
 </form>
 
+<script src="~/Content/js/function/template/editmode/button.js"></script>
+<script src="~/Content/js/function/template/ssa.js"></script>
 <script src="~/Content/js/modules/SaleOrder.js"></script>
 <script>
-
-    var endPoint = "@Url.Content("~/saleorder")";
-    var ssaURL = "@Url.Content("~/customer/ssa")";
-    var select2PlaceHolder = "Customer";
+    const controller = "@ConstantHelper.SALEORDER_CONTROLLER";
+    const id = @Url.RequestContext.RouteData.Values["id"];
+    
+    const ssaURL = "@Url.Content("~/customer/ssa")";
+    const ssaPlaceHolder = "Customer";
+    const tableRow = `@Html.Partial("~/Views/SaleOrder/LineItem.cshtml")`;
     var rowIndex = @Model.items.Count();
-    var id = @Url.RequestContext.RouteData.Values["id"];
-    var tableRow = `@Html.Partial("~/Views/SaleOrder/LineItem.cshtml")`;
-
-    $(document).ready(function () { setupEvents(); });
-
-    //-> save
-    function save() { saveRecord(endPoint, "edit"); }
-
-    //--> cancel
-    function cancel() { window.location.href = endPoint + "/view/" + id; }
+    
+    $(document).ready(() => initializeComponents());
 
     //-> itemChange
     function itemChange(prop) { getItem(prop, "@Url.Content("~/item")"); }

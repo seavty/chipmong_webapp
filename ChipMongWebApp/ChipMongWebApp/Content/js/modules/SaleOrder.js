@@ -1,51 +1,14 @@
-﻿function customerSSA(ssaURL, select2PlaceHolder) {
-    $("#customerID").select2({
-        ajax: {
-            url: ssaURL,
-            dataType: "json",
-            delay: 50,
-            data: function (params) {
-                return {
-                    q: params.term, // search term
-                    page: params.page
-                };
-            },
-        },
-        placeholder: select2PlaceHolder,
-        escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
-        minimumInputLength: 1,
-        templateResult: templateResult,
-        templateSelection: templateSelection
-    });
-}
-
-//-> templateResult
-function templateResult(data) {
-    if (data.loading)
-        return data.text;
-
-    var markup = `<div class="row">
-                            <div class="col-4"> ${data.firstName}  </div>
-                            <div class="col-4"> ${data.lastName}  </div>
-                            <div class="col-4"> ${data.code}  </div>
-                        </div>`;
-    return markup;
-}
-
-//-> templateSelection
-function templateSelection(data) {
-    if (data.text != "") return data.text;
-    if (data.id === "") return 'Customer';
-    return data.firstName + " " + data.lastName;
+﻿const initializeComponents = () => {
+    setupSSA("#customerID", ssaURL, ssaPlaceHolder, customerTemplateResult, customerTemplateSelection);
 }
 
 
 //-> deleteLineItem
-function deleteLineItem(prop) {
+const deleteLineItem = (prop) => {
     if (confirm("Do you to delete this line item?")) {
-        var rowIndex = prop.closest("tr").attr("rowIndex");
-        var deleteLineItemID = $("#deleteLineItemID").val();
-        var lineItemID = $("#lineItemID" + rowIndex).val();
+        let rowIndex = prop.closest("tr").attr("rowIndex");
+        let deleteLineItemID = $("#deleteLineItemID").val();
+        let lineItemID = $("#lineItemID" + rowIndex).val();
         deleteLineItemID += "," + lineItemID;
         $("#deleteLineItemID").val(deleteLineItemID);
         prop.closest("tr").remove();
@@ -53,18 +16,8 @@ function deleteLineItem(prop) {
     }
 }
 
-//-> headerCalculation
-function headerCalculation() {
-    var sum = 0;
-    $(".total").each(function () {
-        var value = toFloat($(this).val());
-        sum += parseFloat(value);
-    });
-    $("#total").val(toFloatWithTwoPrecision(sum));
-}
-
 //-> saveLineItem
-function saveLineItem(prop) {
+const saveLineItem = (prop) => {
     if (prop.attr('class') == "btn btn-success") {
         if (isValidLineItem()) {
             prop.removeClass("btn-success")
@@ -88,42 +41,33 @@ function saveLineItem(prop) {
     }
 }
 
-//-> calculation
-function calculation(prop) {
-    var index = prop.closest("tr").attr("rowIndex")
-    var quantity = toFloat($("#quantity" + index).val());
-    var price = toFloat($("#price" + index).val());
-    var total = quantity * price;
+const headerCalculation = () => {
+    let sum = 0;
+    $(".total").each(function () {
+        var value = toFloat($(this).val());
+        sum += parseFloat(value);
+    });
+    $("#total").val(toFloatWithTwoPrecision(sum));
+}
+
+
+const calculation = (prop) => {
+    let index = prop.closest("tr").attr("rowIndex")
+    let quantity = toFloat($("#quantity" + index).val());
+    let price = toFloat($("#price" + index).val());
+    let total = quantity * price;
     $("#total" + index).val(toFloatWithTwoPrecision(total));
     if (index > 0)
         headerCalculation();
 }
 
-//-> getItem
-function getItem(prop, endPoint) {
-    var index = prop.closest("tr").attr("rowIndex")
-    var itemID = prop.val();
+const getItem = (prop, endPoint) => {
+    let index = prop.closest("tr").attr("rowIndex")
+    let itemID = prop.val();
     simpleAjax(endPoint + "/record/" + itemID, null, requestMethod.GET).then(function (data) {
         $("#price" + index).val(toFloatWithTwoPrecision(data.price));
         calculation(prop);
     });
 }
 
-//--saveRecord
-function saveRecord(endPoint, action) {
-    if (isValid()) {
-        $('#tblLineItem tr:last').remove();
-        ajaxHelper(endPoint + "/" + action, $('#record').serializeObject(), requestMethod.POST).then(function (data) {
-            window.location.href = endPoint + "/view/" + data.id;
-        });
-    }
-}
 
-//-> setupEvents
-function setupEvents() {
-    $("#btnSave").click(function () { save(); });
-    $("#btnCancel").click(function () { cancel(); });
-    setupDatePicker("#date");
-    setupDatePicker("#requiredDate");
-    customerSSA(ssaURL, select2PlaceHolder);
-}
