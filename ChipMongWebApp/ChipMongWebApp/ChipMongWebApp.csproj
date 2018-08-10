@@ -313,7 +313,6 @@
     <Content Include="Content\img\3.jpg" />
     <Content Include="Content\img\logo.png" />
     <Content Include="Content\js\bootstrap.min.js" />
-    <Content Include="Content\js\function\loanCalculation.js" />
     <Content Include="Content\js\function\template\editmode\button.js" />
     <Content Include="Content\js\function\template\findmode\button.js" />
     <Content Include="Content\js\function\template\newmode\button.js" />

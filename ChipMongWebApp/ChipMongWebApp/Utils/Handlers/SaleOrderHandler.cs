@@ -28,7 +28,7 @@ namespace ChipMongWebApp.Utils.Handlers
         }
 
         //-> SelectByID
-        public async Task<SaleOrderViewDTO> SelectByID(int id, int mode)
+        public async Task<SaleOrderViewDTO> SelectByID(int id)
         {
             var record = await db.tblSaleOrders.FirstOrDefaultAsync(x => x.deleted == null && x.id == id);
             if (record == null)
@@ -37,7 +37,6 @@ namespace ChipMongWebApp.Utils.Handlers
             var saleOrderDTO = MappingHelper.MapDBClassToDTO<tblSaleOrder, SaleOrderViewDTO>(record);
             saleOrderDTO.customer = await new CustomerHandler().SelectByID(int.Parse(record.customerID.ToString()));
             saleOrderDTO.items = await GetLineItems(id);
-            saleOrderDTO.mode = mode;
             return saleOrderDTO;
         }
 
@@ -80,7 +79,7 @@ namespace ChipMongWebApp.Utils.Handlers
                     await db.SaveChangesAsync();
                     db.Entry(record).Reload();
                     transaction.Commit();
-                    return await SelectByID(record.id, ConstantHelper.MODE_NEW);
+                    return await SelectByID(record.id);
                 }
                 catch (Exception ex)
                 {
@@ -131,7 +130,7 @@ namespace ChipMongWebApp.Utils.Handlers
                     record.total = lineItems.Sum(item => item.total);
                     await db.SaveChangesAsync();
                     transaction.Commit();
-                    return await SelectByID(record.id, ConstantHelper.MODE_EDIT);
+                    return await SelectByID(record.id);
                 }
                 catch (Exception ex)
                 {
@@ -209,7 +208,7 @@ namespace ChipMongWebApp.Utils.Handlers
             var customerList = new List<SaleOrderViewDTO>();
             foreach (var customer in PaginationHelper.GetList(currentPage, records))
             {
-                customerList.Add(await SelectByID(customer.id, ConstantHelper.MODE_VIEW));
+                customerList.Add(await SelectByID(customer.id));
             }
 
             var getList = new GetListDTO<SaleOrderViewDTO>();

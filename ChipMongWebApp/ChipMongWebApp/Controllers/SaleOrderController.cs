@@ -28,11 +28,9 @@ namespace ChipMongWebApp.Controllers
         public ActionResult New()
         {
             var record = new SaleOrderViewDTO();
-            //record.date = DateTime.Now.ToString(ConstantHelper.yyyyMMd_DASH_SEPARATOR);
-            //record.requiredDate = DateTime.Now.ToString(ConstantHelper.yyyyMMd_DASH_SEPARATOR);
-            var tmp = DateTime.Now.ToShortDateString();
             record.date = DateTime.Now.ToShortDateString();
             record.requiredDate = DateTime.Now.ToShortDateString();
+            record.mode = ConstantHelper.MODE_NEW;
             return View(record);
         }
 
@@ -55,10 +53,20 @@ namespace ChipMongWebApp.Controllers
         }
 
         //-> View
-        public async Task<ActionResult> View(int id) { return View(await handler.SelectByID(id, ConstantHelper.MODE_VIEW)); }
+        public async Task<ActionResult> View(int id)
+        {
+            var record = await handler.SelectByID(id);
+            record.mode = ConstantHelper.MODE_VIEW;
+            return View(record);
+        }
 
         //-> Edit
-        public async Task<ActionResult> Edit(int id) { return View(await handler.SelectByID(id, ConstantHelper.MODE_EDIT)); }
+        public async Task<ActionResult> Edit(int id)
+        {
+            var record = await handler.SelectByID(id);
+            record.mode = ConstantHelper.MODE_EDIT;
+            return View(record);
+        }
 
         //-> Edit
         [HttpPost]

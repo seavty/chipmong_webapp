@@ -4,15 +4,15 @@
             url: ssaURL,
             dataType: "json",
             delay: 50,
-            data: function (params) {
+            data: (params) => {
                 return {
                     q: params.term, // search term
                     page: params.page
                 };
-            },
+            }
         },
         placeholder: ssaPlaceHolder,
-        escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+        escapeMarkup: (markup) => markup, // let our custom formatter work
         minimumInputLength: 1,
         templateResult: templateResultCallBack,
         templateSelection: templateSelectionCallBack
@@ -25,7 +25,7 @@ const customerTemplateResult = (data) => {
     if (data.loading)
         return data.text;
     let markup = `<div class="row">
-                        <div class="col-4"> ${data.firstName}  </div>
+                        <div class="col-4"> ${data.firstName} </div>
                         <div class="col-4"> ${data.lastName}  </div>
                         <div class="col-4"> ${data.code}  </div>
                     </div>`;

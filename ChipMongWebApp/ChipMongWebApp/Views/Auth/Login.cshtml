@@ -1,4 +1,5 @@
-﻿@model ChipMongWebApp.Models.DTO.User.UserCredentialDTO
+﻿@using ChipMongWebApp.Utils.Helpers
+@model ChipMongWebApp.Models.DTO.User.UserCredentialDTO
 
 @{
     /**/
@@ -39,7 +40,7 @@
                 </div>
 
                 <div class="form-group">
-                    <button type="button" class="btn btn-primary merienda" id="btnLogin"> <i class="fas fa-sign-in-alt"></i> Login </button>
+                    <button type="button" class="btn btn-primary merienda" id="btnLogin" onclick="handleLogin()"> <i class="fas fa-sign-in-alt"></i> Login </button>
                     <label id="lblMsg" class="text-danger"> </label>
                 </div>
             </div>
@@ -49,33 +50,33 @@
 </div>
 
 <script>
-
     if ('@ViewContext.RouteData.Values["id"]' == -1)
         alert("Session expired, please login again!");
 
-    var url = "@Url.Content("~/auth")";
-    $(document).ready(function () {
-        $("#btnLogin").click(function () {
-            handleLogin();
+    const controller = "@ConstantHelper.AUTH_CONTROLLER";
+    $(document).ready(() =>{
+        $("form").keypress((e) => {
+            const code = e.keyCode || e.which;
+            if (code === 13)
+                handleLogin();
         });
-
     });
 
     //-> handleSubmit
-    function handleLogin() {
+    const handleLogin = () => {
         if (isValid()) {
             $('#loadingIndicator').modal({
                 keyboard: false,
                 backdrop: "static"
             });
-            var promise = new Promise(function (resolve, reject) {
-                window.setTimeout(function () {
+            const promise = new Promise((resolve, reject) => {
+                window.setTimeout(() => {
                     $.ajax({
-                        url: url + "/login",
+                        url: controller + "/login",
                         data: $("#login").serialize(),
                         type: requestMethod.POST,
                         async: false,
-                        error: function (jqXHR, textStatus, errorThrown) {
+                        error: (jqXHR, textStatus, errorThrown) => {
                             if (jqXHR.status == 404)
                                 $("#lblMsg").text("Incorrect user name or password")
                             else
@@ -84,12 +85,11 @@
                             $('#loadingIndicator').modal("hide");
                             return;
                         },
-                        beforeSend: function () {
-                        },
-                        success: function (data) {
+                        beforeSend: () => {},
+                        success: (data) => {
                             $('#loadingIndicator').modal("hide");
                             if (data == "ok")
-                                window.location.href = "@Url.Content("~/customer/find")";
+                                window.location.href = "@ConstantHelper.CUSTOMER_CONTROLLER/find";
                             else
                                 alert("Error");
                         }
