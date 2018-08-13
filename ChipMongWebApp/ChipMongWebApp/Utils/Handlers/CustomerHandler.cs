@@ -3,7 +3,6 @@ using ChipMongWebApp.Models.DTO;
 using ChipMongWebApp.Models.DTO.Customer;
 using ChipMongWebApp.Models.DTO.DealerSourceSupply;
 using ChipMongWebApp.Models.DTO.SaleOrder;
-using ChipMongWebApp.Models.DTO.SourceSupply;
 using ChipMongWebApp.Models.DTO.SSA;
 using ChipMongWebApp.Utils.Helpers;
 using System;
@@ -13,7 +12,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web;
-using System.Web.Mvc;
+using System.Linq.Dynamic;
 
 namespace ChipMongWebApp.Utils.Handlers
 {
@@ -70,9 +69,8 @@ namespace ChipMongWebApp.Utils.Handlers
                                               && (string.IsNullOrEmpty(findDTO.code) ? 1 == 1 : x.code.Contains(findDTO.code))
                                               && (string.IsNullOrEmpty(findDTO.firstName) ? 1 == 1 : x.firstName.Contains(findDTO.firstName))
                                               && (string.IsNullOrEmpty(findDTO.lastName) ? 1 == 1 : x.lastName == findDTO.lastName)
-                                              orderby x.id ascending
                                               select x;
-            return await Listing(findDTO.currentPage, records);
+            return await Listing(findDTO.currentPage, records.AsQueryable().OrderBy($"{findDTO.orderBy} {findDTO.orderDirection}"));
         }
 
         //-> Listing

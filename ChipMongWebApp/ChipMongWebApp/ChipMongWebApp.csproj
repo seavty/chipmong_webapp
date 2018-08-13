@@ -80,6 +80,9 @@
     <Reference Include="System.IO.Packaging, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.IO.Packaging.4.0.0\lib\net46\System.IO.Packaging.dll</HintPath>
     </Reference>
+    <Reference Include="System.Linq.Dynamic, Version=1.0.6132.35681, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Linq.Dynamic.1.0.7\lib\net40\System.Linq.Dynamic.dll</HintPath>
+    </Reference>
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
@@ -209,6 +212,7 @@
     <Compile Include="Utils\Helpers\DoubleHelper.cs" />
     <Compile Include="Utils\Helpers\MappingHelper.cs" />
     <Compile Include="Utils\Helpers\PaginationHelper.cs" />
+    <Compile Include="Utils\Helpers\PropertyHelper.cs" />
     <Compile Include="Utils\Helpers\SelectionHelper.cs" />
     <Compile Include="Utils\Helpers\SSAHelper.cs" />
     <Compile Include="Utils\Helpers\StringHelper.cs" />
@@ -455,6 +459,7 @@
     <Content Include="Views\SourceSupply\Form.cshtml" />
     <Content Include="Views\User\Form.cshtml" />
     <Content Include="Views\SaleOrder\Form.cshtml" />
+    <Content Include="Views\Customer\TableHeader.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

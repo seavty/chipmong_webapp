@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Web;
 
 namespace ChipMongWebApp.Utils.Helpers
@@ -44,5 +45,9 @@ namespace ChipMongWebApp.Utils.Helpers
 
         public static readonly string yyyyMMd_DASH_SEPARATOR = "yyyy-MM-dd";
         public static readonly string ddMMyyyy_DASH_SEPARATOR = "dd-MM-yyyy";
+
+        public static readonly string ASC = "ASC";
+        public static readonly string DESC = "DESC";
+
     }
 }

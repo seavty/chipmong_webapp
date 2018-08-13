@@ -12,7 +12,8 @@
 
     <div class="card shadow-sm">
         <div class="card-header merienda"> Find Customer </div>
-        @Html.Hidden("oderBy")
+        @Html.HiddenFor(m => m.orderBy, new { Value = "firstName" })
+        @Html.HiddenFor(m => m.orderDirection, new { Value = ConstantHelper.ASC })
         <!-- card body -->
         <div class="card-body">
             <div class="row">

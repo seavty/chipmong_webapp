@@ -1,12 +1,15 @@
-﻿@model ChipMongWebApp.Models.DTO.GetListDTO<ChipMongWebApp.Models.DTO.Customer.CustomerViewDTO>
+﻿@using ChipMongWebApp.Models.DTO.Customer
+@model ChipMongWebApp.Models.DTO.GetListDTO<ChipMongWebApp.Models.DTO.Customer.CustomerViewDTO>
+
+
 
 <table class="table table-bordered table-striped table-hover">
     <thead>
         <tr class="text-center">
             <th scope="col" width="65px">#</th>
             <th scope="col"> Code </th>
-            <th scope="col"> First Name </th>
-            <th scope="col"> Last Name </th>
+            <th scope="col"> <a href="#" id="sort_@nameof(CustomerViewDTO.firstName)" class="sort-data" onclick='javascript:sort("@nameof(CustomerViewDTO.firstName)", $(this))'> First Name </a>  </th>
+            <th scope="col"> <a href="#" class="sort-data" onclick='javascript:sort("@nameof(CustomerViewDTO.lastName)")'> Last Name </a>  </th>
             <th scope="col"> Phone1 </th>
             <th scope="col"> E-mail </th>
         </tr>
@@ -30,3 +33,5 @@
         }
 
         @Html.Partial("~/Views/Shared/Pagination.cshtml", Model.metaData)
+
+        
