@@ -1,6 +1,9 @@
 ﻿@using ChipMongWebApp.Utils.Helpers
+@using ChipMongWebApp.Models.DTO.Item
 @model ChipMongWebApp.Models.DTO.Item.ItemFindDTO
 @{
+    /**/
+
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/Main/_Main.cshtml";
 }
@@ -13,7 +16,8 @@
 
     <div class="card shadow-sm">
         <div class="card-header merienda"> Find Item </div>
-
+        @Html.HiddenFor(m => m.orderBy, new { Value = nameof(ItemViewDTO.name) })
+        @Html.HiddenFor(m => m.orderDirection, new { Value = ConstantHelper.ASC })
         <!-- card body -->
         <div class="card-body">
             <div class="row">

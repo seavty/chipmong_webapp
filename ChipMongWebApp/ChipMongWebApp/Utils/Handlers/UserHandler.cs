@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web;
+using System.Linq.Dynamic;
 
 namespace ChipMongWebApp.Utils.Handlers
 {
@@ -68,6 +69,7 @@ namespace ChipMongWebApp.Utils.Handlers
         //-> GetList
         public async Task<GetListDTO<UserViewDTO>> GetList(UserFindDTO findDTO)
         {
+            /*
             //--seem like search sql not dynamic -> should write one helper function or interface to do dynamic search
             IQueryable<tblUser> records = from x in db.tblUsers
                                                     where x.deleted == null
@@ -77,6 +79,14 @@ namespace ChipMongWebApp.Utils.Handlers
                                                     orderby x.firstName ascending
                                                     select x;
             return await Listing(findDTO.currentPage, records);
+            */
+            IQueryable<tblUser> records = from x in db.tblUsers
+                                          where x.deleted == null
+                                          && (string.IsNullOrEmpty(findDTO.userName) ? 1 == 1 : x.userName.Contains(findDTO.userName))
+                                          && (string.IsNullOrEmpty(findDTO.firstName) ? 1 == 1 : x.firstName.Contains(findDTO.firstName))
+                                          && (string.IsNullOrEmpty(findDTO.lastName) ? 1 == 1 : x.userName.Contains(findDTO.lastName))
+                                          select x;
+            return await Listing(findDTO.currentPage, records.AsQueryable().OrderBy($"{findDTO.orderBy} {findDTO.orderDirection}"));
         }
 
         //-> Delete

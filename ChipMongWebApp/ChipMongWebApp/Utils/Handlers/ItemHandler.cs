@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web;
+using System.Linq.Dynamic;
 
 namespace ChipMongWebApp.Utils.Handlers
 {
@@ -59,6 +60,7 @@ namespace ChipMongWebApp.Utils.Handlers
         //-> GetList
         public async Task<GetListDTO<ItemViewDTO>> GetList(ItemFindDTO findDTO)
         {
+            /*
             //--seem like search sql not dynamic -> should write one helper function or interface to do dynamic search
             IQueryable<tblItem> records = from x in db.tblItems
                                                 where x.deleted == null
@@ -67,6 +69,14 @@ namespace ChipMongWebApp.Utils.Handlers
                                                 orderby x.id ascending
                                                 select x;
             return await Listing(findDTO.currentPage, records);
+            */
+            //--seem like search sql not dynamic -> should write one helper function or interface to do dynamic search
+            IQueryable<tblItem> records = from x in db.tblItems
+                                          where x.deleted == null
+                                          && (string.IsNullOrEmpty(findDTO.code) ? 1 == 1 : x.code.Contains(findDTO.code))
+                                          && (string.IsNullOrEmpty(findDTO.name) ? 1 == 1 : x.name.Contains(findDTO.name))
+                                          select x;
+            return await Listing(findDTO.currentPage, records.AsQueryable().OrderBy($"{findDTO.orderBy} {findDTO.orderDirection}"));
         }
 
         //-> Listing

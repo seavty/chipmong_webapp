@@ -1,18 +1,21 @@
 ﻿@using ChipMongWebApp.Utils.Helpers
+@using ChipMongWebApp.Models.DTO.Customer
 @model ChipMongWebApp.Models.DTO.Customer.CustomerFindDTO
 @{
+    /**/
+
     Layout = "~/Views/Shared/Main/_Main.cshtml";
 }
 
 <form name="record" id="record">
     @Html.AntiForgeryToken()
     @Html.Partial("~/Views/Shared/Template/FindMode/Button.cshtml")
-    
+
     <br />
 
     <div class="card shadow-sm">
         <div class="card-header merienda"> Find Customer </div>
-        @Html.HiddenFor(m => m.orderBy, new { Value = "firstName" })
+        @Html.HiddenFor(m => m.orderBy, new { Value = nameof(CustomerViewDTO.firstName) })
         @Html.HiddenFor(m => m.orderDirection, new { Value = ConstantHelper.ASC })
         <!-- card body -->
         <div class="card-body">

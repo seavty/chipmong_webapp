@@ -1,14 +1,15 @@
-﻿@model ChipMongWebApp.Models.DTO.GetListDTO<ChipMongWebApp.Models.DTO.User.UserViewDTO>
+﻿@using ChipMongWebApp.Models.DTO.User
+@model ChipMongWebApp.Models.DTO.GetListDTO<ChipMongWebApp.Models.DTO.User.UserViewDTO>
 
 <table class="table table-bordered table-striped table-hover">
     <thead>
         <tr class="text-center">
             <th scope="col" width="65px">#</th>
-            <th scope="col"> Login Name </th>
-            <th scope="col"> First Name </th>
-            <th scope="col"> Last Name </th>
-            <th scope="col"> Phone Number </th>
-            <th scope="col"> E-mail </th>
+            <th scope="col"> <a href="#" id="sort_@nameof(UserViewDTO.userName)" class="sort-data" onclick='javascript:sort("@nameof(UserViewDTO.userName)", $(this))'> Login Name </a>  </th>
+            <th scope="col"> <a href="#" id="sort_@nameof(UserViewDTO.firstName)" class="sort-data" onclick='javascript:sort("@nameof(UserViewDTO.firstName)", $(this))'> First Name </a>  </th>
+            <th scope="col"> <a href="#" id="sort_@nameof(UserViewDTO.lastName)" class="sort-data" onclick='javascript:sort("@nameof(UserViewDTO.lastName)", $(this))'> Last Name </a>  </th>
+            <th scope="col"> <a href="#" id="sort_@nameof(UserViewDTO.phoneNumber)" class="sort-data" onclick='javascript:sort("@nameof(UserViewDTO.phoneNumber)", $(this))'> Phone Number </a>  </th>
+            <th scope="col"> <a href="#" id="sort_@nameof(UserViewDTO.email)" class="sort-data" onclick='javascript:sort("@nameof(UserViewDTO.email)", $(this))'> E-mail </a>  </th>
         </tr>
     </thead>
     <tbody>
@@ -16,14 +17,14 @@
             int i = 0;
             foreach (var item in Model.items)
             {
-        <tr>
-            <th scope="row" class="text-center"> @(Model.metaData.startRow + i) </th>
-            <td class="align-middle"> <a href=" @Url.Content("~/user/view/")@item.id"> @item.userName </a> </td>
-            <td> @item.firstName </td>
-            <td> @item.lastName </td>
-            <td> @item.phoneNumber </td>
-            <td> @item.email </td>
-        </tr>
+                <tr>
+                    <th scope="row" class="text-center"> @(Model.metaData.startRow + i) </th>
+                    <td class="align-middle"> <a href=" @Url.Content("~/user/view/")@item.id"> @item.userName </a> </td>
+                    <td> @item.firstName </td>
+                    <td> @item.lastName </td>
+                    <td> @item.phoneNumber </td>
+                    <td> @item.email </td>
+                </tr>
                 i++;
             }
         }

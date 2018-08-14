@@ -1,4 +1,5 @@
 ﻿@using ChipMongWebApp.Utils.Helpers
+@using ChipMongWebApp.Models.DTO.SourceSupply
 @model ChipMongWebApp.Models.DTO.SourceSupply.SourceSupplyFindDTO
 @{
     ViewBag.Title = "Index";
@@ -13,6 +14,8 @@
 
     <div class="card shadow-sm">
         <div class="card-header merienda"> Find Source Supply </div>
+        @Html.HiddenFor(m => m.orderBy, new { Value = nameof(SourceSupplyViewDTO.name) })
+        @Html.HiddenFor(m => m.orderDirection, new { Value = ConstantHelper.ASC })
 
         <!-- card body -->
         <div class="card-body">

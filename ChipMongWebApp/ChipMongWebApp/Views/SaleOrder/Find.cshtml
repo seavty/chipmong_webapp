@@ -1,4 +1,5 @@
 ﻿@using ChipMongWebApp.Utils.Helpers
+@using ChipMongWebApp.Models.DTO.SaleOrder
 @model ChipMongWebApp.Models.DTO.SaleOrder.SaleOrderFindDTO
 @{
     ViewBag.Title = "Index";
@@ -18,7 +19,7 @@
 
     <div class="card shadow-sm">
         <div class="card-header merienda"> Find SaleOrder </div>
-        @Html.HiddenFor(m => m.orderBy, new { Value = "code" })
+        @Html.HiddenFor(m => m.orderBy, new { Value = nameof(SaleOrderViewDTO.code) })
         @Html.HiddenFor(m => m.orderDirection, new { Value = ConstantHelper.ASC })
 
         <div class="card-body">
@@ -68,7 +69,7 @@
         $("#btnUploadExcel").click(() => $("#ExcelFile").trigger("click"));
         $("#ExcelFile").change(() => uploadExcel());
     });
-    
+
     //-> uploadExcel
     let uploadExcel = () => {
         $('#loadingIndicator').modal({
@@ -82,9 +83,9 @@
                 alert(data.replace("ok", "") + " record(s) have been updated.");
                 window.location.reload();
             }
-            else 
+            else
                 location.href = $("#baseURL").val() + "/auth/login";
-            
+
             $('#loadingIndicator').modal("hide");
         });
     }

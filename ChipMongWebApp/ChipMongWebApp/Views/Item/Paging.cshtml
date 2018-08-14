@@ -1,13 +1,14 @@
 ﻿@using ChipMongWebApp.Utils.Extension
+@using ChipMongWebApp.Models.DTO.Item
 @model ChipMongWebApp.Models.DTO.GetListDTO<ChipMongWebApp.Models.DTO.Item.ItemViewDTO>
 
 <table class="table table-bordered table-striped table-hover">
     <thead>
         <tr class="text-center">
             <th scope="col" width="65px">#</th>
-            <th scope="col"> Code </th>
-            <th scope="col"> Name </th>
-            <th scope="col"> Price </th>
+            <th scope="col"> <a href="#" id="sort_@nameof(ItemViewDTO.code)" class="sort-data" onclick='javascript:sort("@nameof(ItemViewDTO.code)", $(this))'> Code </a>  </th>
+            <th scope="col"> <a href="#" id="sort_@nameof(ItemViewDTO.name)" class="sort-data" onclick='javascript:sort("@nameof(ItemViewDTO.name)", $(this))'> Name </a>  </th>
+            <th scope="col"> <a href="#" id="sort_@nameof(ItemViewDTO.price)" class="sort-data" onclick='javascript:sort("@nameof(ItemViewDTO.price)", $(this))'> Price </a>  </th>
         </tr>
     </thead>
     <tbody>
