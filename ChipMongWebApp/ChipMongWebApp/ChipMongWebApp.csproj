@@ -193,6 +193,7 @@
     <Compile Include="Controllers\SaleOrderController.cs" />
     <Compile Include="Controllers\SourceSupplyController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Models\DTO\SaleOrder\SaleOrderFindResultDTO.cs" />
     <Compile Include="Utils\Extension\DateTimeExtension.cs" />
     <Compile Include="Utils\Extension\DoubleExtension.cs" />
     <Compile Include="Utils\Extension\StringExtension.cs" />

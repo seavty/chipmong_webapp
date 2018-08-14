@@ -7,11 +7,11 @@
     <thead>
         <tr class="text-center">
             <th scope="col" width="65px">#</th>
-            <th scope="col"> Code </th>
+            <th scope="col"> <a href="#" id="sort_@nameof(CustomerViewDTO.code)" class="sort-data" onclick='javascript:sort("@nameof(CustomerViewDTO.code)", $(this))'> Code </a>  </th>
             <th scope="col"> <a href="#" id="sort_@nameof(CustomerViewDTO.firstName)" class="sort-data" onclick='javascript:sort("@nameof(CustomerViewDTO.firstName)", $(this))'> First Name </a>  </th>
-            <th scope="col"> <a href="#" class="sort-data" onclick='javascript:sort("@nameof(CustomerViewDTO.lastName)")'> Last Name </a>  </th>
-            <th scope="col"> Phone1 </th>
-            <th scope="col"> E-mail </th>
+            <th scope="col"> <a href="#" id="sort_@nameof(CustomerViewDTO.lastName)" class="sort-data" onclick='javascript:sort("@nameof(CustomerViewDTO.lastName)")'> Last Name </a>  </th>
+            <th scope="col"> <a href="#" id="sort_@nameof(CustomerViewDTO.phone1)" class="sort-data" onclick='javascript:sort("@nameof(CustomerViewDTO.phone1)")'> Phone1 </a>  </th>
+            <th scope="col"> <a href="#" id="sort_@nameof(CustomerViewDTO.email)" class="sort-data" onclick='javascript:sort("@nameof(CustomerViewDTO.email)")'> E-mail </a>  </th>
         </tr>
     </thead>
     <tbody>

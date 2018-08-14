@@ -18,13 +18,8 @@ const paging = currentPage => {
         const descIcon = `<i id="sortIcon" class="fas fa-sort-down"></i>`;
 
         ($("#orderDirection").val() == "ASC") ? sortIcon = ascIcon : sortIcon = descIcon;
-        //prop.append(sortIcon);
-
         const sortColumnName = $("#orderBy").val();
-        alert(sortColumnName);
-        //$("#firstName").append(sortIcon);
-
-        $("#sort_firstName").append(sortIcon);
+        $("#sort_" + sortColumnName).append(sortIcon);
     });
 };
 
@@ -43,3 +38,4 @@ const sort = (orderBy, prop) => {
     $("#orderBy").val(orderBy);
     paging(1);
 }
+

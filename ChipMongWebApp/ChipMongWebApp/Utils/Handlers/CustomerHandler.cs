@@ -125,6 +125,7 @@ namespace ChipMongWebApp.Utils.Handlers
         //-> GetList SaleOrderTabPaging
         public async Task<GetListDTO<SaleOrderViewDTO>> SaleOrderTabPaging(int customerID, int currentPage)
         {
+            /*
             IQueryable<tblSaleOrder> records = from s in db.tblSaleOrders
                                                join c in db.tblCustomers on s.customerID equals c.id
                                                where s.deleted == null && s.customerID == customerID
@@ -132,6 +133,16 @@ namespace ChipMongWebApp.Utils.Handlers
                                                select s;
             var saleOrderHandler = new SaleOrderHandler();
             return await saleOrderHandler.Listing(currentPage, records);
+            */
+            
+            IQueryable<tblSaleOrder> records = from s in db.tblSaleOrders
+                                               join c in db.tblCustomers on s.customerID equals c.id
+                                               where s.deleted == null && s.customerID == customerID
+                                               orderby s.id ascending
+                                               select s;
+            var saleOrderHandler = new SaleOrderHandler();
+            return await saleOrderHandler.Listing(currentPage, records);
+            
         }
 
         //-> GetList SourceSupplyTabPaging

@@ -14,6 +14,7 @@ using System.Web;
 using ClosedXML.Excel;
 using ChipMongWebApp.Utils.Helpers;
 using ChipMongWebApp.Utils.Extension;
+using System.Linq.Dynamic;
 
 namespace ChipMongWebApp.Utils.Handlers
 {
@@ -191,6 +192,7 @@ namespace ChipMongWebApp.Utils.Handlers
         //-> GetList
         public async Task<GetListDTO<SaleOrderViewDTO>> GetList(SaleOrderFindDTO findDTO)
         {
+            /*
             IQueryable<tblSaleOrder> records = from s in db.tblSaleOrders
                                                join c in db.tblCustomers on s.customerID equals c.id
                                                where s.deleted == null
@@ -199,12 +201,33 @@ namespace ChipMongWebApp.Utils.Handlers
                                                && (string.IsNullOrEmpty(findDTO.customer) ? 1 == 1 : c.firstName.Contains(findDTO.customer))
                                                orderby s.id ascending
                                                select s;
+            
             return await Listing(findDTO.currentPage, records);
+            */
+
+            IQueryable<SaleOrderFindResultDTO> records = from s in db.tblSaleOrders
+                                               join c in db.tblCustomers on s.customerID equals c.id
+                                               where s.deleted == null
+                                               && (string.IsNullOrEmpty(findDTO.code) ? 1 == 1 : s.code.Contains(findDTO.code))
+                                               && (string.IsNullOrEmpty(findDTO.status) ? 1 == 1 : s.status == findDTO.status)
+                                               && (string.IsNullOrEmpty(findDTO.customer) ? 1 == 1 : c.firstName.Contains(findDTO.customer))
+                                               select new SaleOrderFindResultDTO
+                                               {
+                                                   id = s.id,
+                                                   code = s.code,
+                                                   date = s.date,
+                                                   firstName = c.firstName,
+                                                   total =  s.total,
+                                                   status = s.status
+                                               };
+            //return await Listing(findDTO.currentPage, records);
+            return await Listing(findDTO.currentPage, records.AsQueryable().OrderBy($"{findDTO.orderBy} {findDTO.orderDirection}"));
         }
 
         //-> Listing
-        public async Task<GetListDTO<SaleOrderViewDTO>> Listing(int currentPage, IQueryable<tblSaleOrder> records, string search = null)
+        public async Task<GetListDTO<SaleOrderViewDTO>> Listing(int currentPage, IQueryable<dynamic> records, string search = null)
         {
+            /*
             var customerList = new List<SaleOrderViewDTO>();
             foreach (var customer in PaginationHelper.GetList(currentPage, records))
             {
@@ -215,6 +238,18 @@ namespace ChipMongWebApp.Utils.Handlers
             getList.metaData = await PaginationHelper.GetMetaData(currentPage, records, "id", "asc", search);
             getList.metaData.numberOfColumn = 6;
             getList.items = customerList;
+            return getList;
+            */
+            var recordList = new List<SaleOrderViewDTO>();
+            foreach (var record in PaginationHelper.GetList(currentPage, records))
+            {
+                recordList.Add(await SelectByID(record.id));
+            }
+
+            var getList = new GetListDTO<SaleOrderViewDTO>();
+            getList.metaData = await PaginationHelper.GetMetaData(currentPage, records, "id", "asc", search);
+            getList.metaData.numberOfColumn = 6;
+            getList.items = recordList;
             return getList;
         }
 
@@ -273,5 +308,7 @@ namespace ChipMongWebApp.Utils.Handlers
                 }
             }
         }
+
     }
 }
+ 
