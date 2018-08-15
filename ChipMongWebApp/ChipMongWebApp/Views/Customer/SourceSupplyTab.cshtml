@@ -1,25 +1,14 @@
 ﻿@using ChipMongWebApp.Utils.Helpers
 @model ChipMongWebApp.Models.DTO.SaleOrder.SaleOrderViewDTO
 @{
-    /**/
-
-    /**/
-
-    ViewBag.Title = "Create";
     Layout = "~/Views/Shared/Main/_Main.cshtml";
 }
 
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb shadow-sm">
-        <li class="breadcrumb-item"> <a href="javascript:onclick=customerTab()"> Customer </a> </li>
-        <li class="breadcrumb-item active"> <a href="javascript:onclick=saleorderTab()"> SaleOrder </a>  </li>
-        <li class="breadcrumb-item active aria-current=" page""> Source Supply </li>
-    </ol>
-</nav>
+@Html.Partial("~/Views/Customer/Tabs.cshtml")
 
 <div class="card shadow-sm" id="dvAction">
     <div class="card-body text-dark shadow-sm merienda">
-        <button type="button" class="btn btn-success" id="btnAddSourceSupply"> <i class="fas fa-plus"></i> Add Source Supply  </button>
+        <button type="button" class="btn btn-success" id="btnAddSourceSupply" onclick="handleAddSourceSupply()"> <i class="fas fa-plus"></i> Add Source Supply  </button>
     </div>
 </div>
 
@@ -65,46 +54,25 @@
 </div>
 
 <script>
+    const id = @Url.RequestContext.RouteData.Values["id"];
+    const controller = "@ConstantHelper.CUSTOMER_CONTROLLER";
+    const dealerSourceSupplyEndPoint = "@ConstantHelper.DEALER_SOURCE_SUPPLY_CONTROLLER";
 
-    var id = @Url.RequestContext.RouteData.Values["id"];
-    var endPoint = "@Url.Content("~/customer")";
-    var dealerSourceSupplyEndPoint = "@Url.Content("~/dealersourcesupply")";
-
-    $(document).ready(function () {
-        //paging(1);
-
+    $(document).ready(() => {
+        $("#sourcesupplyTab").contents().unwrap();
         getDealerSourceSupply();
-
-        $("#btnAddSourceSupply").click(function () {
-            handleAddSourceSupply();
-        });
     });
 
-    //-> getDealerSourceSupply
-    function getDealerSourceSupply() {
-        ajaxHelper(endPoint + "/dealersourcesupply/" + id, null, requestMethod.POST).then(function (data) {
+    const getDealerSourceSupply = () => {
+        ajaxHelper(controller + "/dealersourcesupply/" + id, null, requestMethod.POST).then(function (data) {
             $("#tableData").html(data);
         })
     }
 
-    //-> getPage
-    function paging(currentPage) {
-        $("#currentPage").val(currentPage);
-        ajaxHelper(endPoint + "/sourcesupplytabpaging/" + id + "/?currentPage=1", null, requestMethod.POST).then(function (data) {
-            $("#tableData").html(data);
-        });
-    }
+    const customerTab = () => location.href = controller + "/view/" + id;
+    const saleorderTab = () => location.href = controller + "/saleordertab/" + id;
 
-    function customerTab() {
-        window.location.href = endPoint + "/view/" + id;
-    }
-
-    //-> saleorderTab
-    function saleorderTab() {
-        window.location.href = endPoint + "/saleordertab/" + id;
-    }
-
-    function handleAddSourceSupply() {
+    const handleAddSourceSupply = () => {
         $("#btnSave").hide();
         $("#btnAdd").show();
         $("#sourceOfSupplyID").css("border-color", "#ced4da");
@@ -112,11 +80,12 @@
         $("#exampleModal").modal("show");
     }
 
-    //-> add()
-    function add() {
+    
+    const add = () => {
         if (isValid()) {
-            ajaxHelper(endPoint + "/addsourcesupply/" + id + "/?sourceOfSupplyID=" + $("#sourceOfSupplyID").val(), $("#frmPopup").serializeObject(), requestMethod.POST).then(function (data) {
-                window.location.reload();
+            ajaxHelper(controller + "/addsourcesupply/" + id + "/?sourceOfSupplyID=" + $("#sourceOfSupplyID").val(), $("#frmPopup").serializeObject(), requestMethod.POST).then(function (data) {
+                $("#exampleModal").modal("hide");
+                getDealerSourceSupply();
             });
         }
         else {
@@ -124,8 +93,7 @@
         }
     }
 
-    //-> editDealerSourceSupply
-    function editDealerSourceSupply(id, sourceSupplyID) {
+    const editDealerSourceSupply = (id, sourceSupplyID) => {
         $("#sourceOfSupplyID").val(sourceSupplyID);
         $("#btnSave").show();
         $("#btnAdd").hide();
@@ -133,31 +101,27 @@
 
         $("#dealerSupplyID").val(id);
         $("#exampleModal").modal("show");
-
     }
 
-    //-> deleteDealerSourceSupply
-    function deleteDealerSourceSupply(id) {
+    const deleteDealerSourceSupply = (id) => {
         if (confirm("Do you want to delee this record?")) {
             simpleAjax(dealerSourceSupplyEndPoint + "/delete/" + id, null, requestMethod.POST).then(function (data) {
                 if (data == "ok")
-                    window.location.reload();
+                    getDealerSourceSupply();
             });
         }
     }
 
-    //-> save
-    function save() {
+    const save = () => {
         if (isValid()) {
             ajaxHelper(dealerSourceSupplyEndPoint + "/edit/" + $("#dealerSupplyID").val() + "/?sourceOfSupplyID=" + $("#sourceOfSupplyID").val(), $("#frmPopup").serializeObject(), requestMethod.POST).then(function (data) {
-                window.location.reload();
+                getDealerSourceSupply();
             });
         }
         else {
             $("#sourceOfSupplyID").css("border-color", "red");
         }
     }
-
 
 </script>
 

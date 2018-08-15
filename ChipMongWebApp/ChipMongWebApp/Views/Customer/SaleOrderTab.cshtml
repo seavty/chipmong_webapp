@@ -1,53 +1,31 @@
-﻿
+﻿@using ChipMongWebApp.Utils.Helpers
+@using ChipMongWebApp.Models.DTO.SaleOrder
+@model ChipMongWebApp.Models.DTO.SaleOrder.SaleOrderFindDTO
 @{
-    /**/
-
-    /**/
-
-    ViewBag.Title = "Create";
     Layout = "~/Views/Shared/Main/_Main.cshtml";
 }
 
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb shadow-sm">
-        <li class="breadcrumb-item"> <a href="javascript:onclick=customerTab()"> Customer </a> </li>
-        <li class="breadcrumb-item active" aria-current="page"> SaleOrder  </li>
-        <li class="breadcrumb-item"> <a href="javascript:onclick=sourceSupplyTab()"> Source Supply </a></li>
-    </ol>
-</nav>
+@Html.Partial("~/Views/Customer/Tabs.cshtml")
 
 <form name="record" id="record">
     @Html.AntiForgeryToken()
-    <input type="hidden" name="currentPage" id="currentPage" value="1" />
+    @Html.HiddenFor(m => m.orderBy, new { Value = nameof(SaleOrderViewDTO.code) })
+    @Html.HiddenFor(m => m.orderDirection, new { Value = ConstantHelper.ASC })
+
+    @Html.HiddenFor(m => m.currentPage, new { Value = 1 })
+    @Html.HiddenFor(m => m.customerID, new { Value = @Url.RequestContext.RouteData.Values["id"] })
 </form>
+
 <div id="tableData" class="shadow-sm bg-white"></div>
 
-
+<script src="~/Content/js/function/template/findmode/button.js"></script>
 <script>
+    const id = @Url.RequestContext.RouteData.Values["id"];
+    const controller = "@ConstantHelper.SALEORDER_CONTROLLER";
 
-    var id = @Url.RequestContext.RouteData.Values["id"];
-    var endPoint = "@Url.Content("~/customer")";
-
-    $(document).ready(function () {
-        paging(1);
-    });
-
-    //-> getPage
-    function paging(currentPage) {
-        $("#currentPage").val(currentPage);
-        ajaxHelper(endPoint + "/saleordertabpaging/" + id + "/?currentPage=1", null, requestMethod.POST).then(function (data) {
-            $("#tableData").html(data);
-        });
-        }
-
-    function customerTab() {
-        window.location.href = endPoint + "/view/" + id;
-    }
-
-    //-> sourceSupplyTab
-    function sourceSupplyTab() {
-        window.location.href = endPoint + "/sourceSupplytab/" + id;
-    }
+    $(document).ready(() => $("#saleorderTab").contents().unwrap());
+    const customerTab = () => location.href = "@ConstantHelper.CUSTOMER_CONTROLLER" + "/view/" + id;
+    const sourceSupplyTab = () => location.href = "@ConstantHelper.CUSTOMER_CONTROLLER" + "/sourceSupplytab/" + id;
 </script>
 
 

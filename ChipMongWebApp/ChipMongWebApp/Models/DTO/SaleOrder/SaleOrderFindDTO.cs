@@ -9,7 +9,6 @@ namespace ChipMongWebApp.Models.DTO.SaleOrder
 {
     public class SaleOrderFindDTO : FindDTO
     {
-
         [MaxLength(100)]
         [DisplayName("Code:")]
         public string code { get; set; }
@@ -20,5 +19,8 @@ namespace ChipMongWebApp.Models.DTO.SaleOrder
 
         [DisplayName("Status:")]
         public string status { get; set; }
+
+        [DisplayName("CustomerID:")]
+        public int customerID { get; set; }
     }
 }

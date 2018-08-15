@@ -3,14 +3,7 @@
     Layout = "~/Views/Shared/Main/_Main.cshtml";
 }
 
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb shadow-sm">
-        <li class="breadcrumb-item active" aria-current="page"> Customer </li>
-        <li class="breadcrumb-item"> <a href="javascript:onclick=saleorderTab()"> SaleOrder </a></li>
-        <li class="breadcrumb-item"> <a href="javascript:onclick=sourceSupplyTab()"> Source Supply </a></li>
-    </ol>
-</nav>
-
+@Html.Partial("~/Views/Customer/Tabs.cshtml")
 
 <div class="card" id="action">
     <div class="card-body text-dark shadow-sm merienda">
@@ -26,6 +19,8 @@
 <script>
     const controller = "@ConstantHelper.CUSTOMER_CONTROLLER";
     const id = @Url.RequestContext.RouteData.Values["id"];
+
+    $(document).ready(() => $("#customerTab").contents().unwrap());
     const saleorderTab = () => location.href = controller + "/saleordertab/" + id;
     const sourceSupplyTab = () => location.href = controller + "/sourceSupplytab/" + id;
 </script>

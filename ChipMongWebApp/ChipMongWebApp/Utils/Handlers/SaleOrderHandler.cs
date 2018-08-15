@@ -25,7 +25,7 @@ namespace ChipMongWebApp.Utils.Handlers
         public SaleOrderHandler()
         {
             db = new ChipMongEntities();
-            
+
         }
 
         //-> SelectByID
@@ -206,20 +206,21 @@ namespace ChipMongWebApp.Utils.Handlers
             */
 
             IQueryable<SaleOrderFindResultDTO> records = from s in db.tblSaleOrders
-                                               join c in db.tblCustomers on s.customerID equals c.id
-                                               where s.deleted == null
-                                               && (string.IsNullOrEmpty(findDTO.code) ? 1 == 1 : s.code.Contains(findDTO.code))
-                                               && (string.IsNullOrEmpty(findDTO.status) ? 1 == 1 : s.status == findDTO.status)
-                                               && (string.IsNullOrEmpty(findDTO.customer) ? 1 == 1 : c.firstName.Contains(findDTO.customer))
-                                               select new SaleOrderFindResultDTO
-                                               {
-                                                   id = s.id,
-                                                   code = s.code,
-                                                   date = s.date,
-                                                   firstName = c.firstName,
-                                                   total =  s.total,
-                                                   status = s.status
-                                               };
+                                                         join c in db.tblCustomers on s.customerID equals c.id
+                                                         where s.deleted == null
+                                                         && (string.IsNullOrEmpty(findDTO.code) ? 1 == 1 : s.code.Contains(findDTO.code))
+                                                         && (string.IsNullOrEmpty(findDTO.status) ? 1 == 1 : s.status == findDTO.status)
+                                                         && (string.IsNullOrEmpty(findDTO.customer) ? 1 == 1 : c.firstName.Contains(findDTO.customer))
+                                                         && (findDTO.customerID == 0 ? 1 == 1 : c.id == findDTO.customerID)
+                                                         select new SaleOrderFindResultDTO
+                                                         {
+                                                             id = s.id,
+                                                             code = s.code,
+                                                             date = s.date,
+                                                             firstName = c.firstName,
+                                                             total = s.total,
+                                                             status = s.status
+                                                         };
             //return await Listing(findDTO.currentPage, records);
             return await Listing(findDTO.currentPage, records.AsQueryable().OrderBy($"{findDTO.orderBy} {findDTO.orderDirection}"));
         }
@@ -311,4 +312,3 @@ namespace ChipMongWebApp.Utils.Handlers
 
     }
 }
- 

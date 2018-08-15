@@ -460,7 +460,7 @@
     <Content Include="Views\SourceSupply\Form.cshtml" />
     <Content Include="Views\User\Form.cshtml" />
     <Content Include="Views\SaleOrder\Form.cshtml" />
-    <Content Include="Views\Customer\TableHeader.cshtml" />
+    <Content Include="Views\Customer\Tabs.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
