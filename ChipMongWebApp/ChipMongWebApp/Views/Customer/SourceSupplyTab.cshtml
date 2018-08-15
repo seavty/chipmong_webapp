@@ -17,7 +17,7 @@
     @Html.AntiForgeryToken()
     <input type="hidden" name="currentPage" id="currentPage" value="1" />
 </form>
-<div id="tableData" class="shadow-sm bg-white"></div>
+@Html.Partial("~/Views/Shared/Template/FindMode/TableData.cshtml")
 
 
 <!-- Modal -->
@@ -80,7 +80,7 @@
         $("#exampleModal").modal("show");
     }
 
-    
+
     const add = () => {
         if (isValid()) {
             ajaxHelper(controller + "/addsourcesupply/" + id + "/?sourceOfSupplyID=" + $("#sourceOfSupplyID").val(), $("#frmPopup").serializeObject(), requestMethod.POST).then(function (data) {

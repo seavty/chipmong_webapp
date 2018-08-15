@@ -16,7 +16,7 @@
     @Html.HiddenFor(m => m.customerID, new { Value = @Url.RequestContext.RouteData.Values["id"] })
 </form>
 
-<div id="tableData" class="shadow-sm bg-white"></div>
+@Html.Partial("~/Views/Shared/Template/FindMode/TableData.cshtml")
 
 <script src="~/Content/js/function/template/findmode/button.js"></script>
 <script>

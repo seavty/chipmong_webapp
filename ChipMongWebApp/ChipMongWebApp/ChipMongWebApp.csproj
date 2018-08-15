@@ -461,6 +461,7 @@
     <Content Include="Views\User\Form.cshtml" />
     <Content Include="Views\SaleOrder\Form.cshtml" />
     <Content Include="Views\Customer\Tabs.cshtml" />
+    <Content Include="Views\Shared\Template\FindMode\TableData.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

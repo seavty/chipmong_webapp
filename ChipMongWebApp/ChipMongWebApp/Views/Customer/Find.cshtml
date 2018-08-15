@@ -10,7 +10,6 @@
     @Html.Partial("~/Views/Shared/Template/FindMode/Button.cshtml")
 
     <br />
-
     <div class="card shadow-sm">
         <div class="card-header merienda"> Find Customer </div>
         @Html.HiddenFor(m => m.orderBy, new { Value = nameof(CustomerViewDTO.firstName) })
@@ -46,7 +45,7 @@
     </div>
 
     <br />
-    <div id="tableData" class="shadow-sm bg-white"></div>
+    @Html.Partial("~/Views/Shared/Template/FindMode/TableData.cshtml")
     <br />
 
 </form>
