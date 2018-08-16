@@ -70,15 +70,59 @@ namespace ChipMongWebApp.Utils.Helpers
             //-- start row
             if (currentPage > 0)
                 metaData.startRow = GetStartRow(currentPage) + 1;
-            
+
             //-- end row 
             int endRow = currentPage * myPageSize;
             if (endRow > totalRecord)
                 endRow = totalRecord;
             metaData.endRow = endRow;
 
-            metaData.startPage = GetStartPage(currentPage);
-            metaData.endPage = GetEndPage( GetStartPage(currentPage), totalPage);
+            //metaData.startPage = GetStartPage(currentPage);
+            //metaData.endPage = GetEndPage( GetStartPage(currentPage), totalPage);
+
+            int useStarPage = 0;
+            int useEndPage = 0;
+            if (totalPage == 0)
+            {
+                useEndPage = -1;
+            }
+            else if (currentPage <= NUMBER_OF_PAGING_IN_PAGINATION_BAR)
+            {
+                useStarPage = 1;
+                useEndPage = NUMBER_OF_PAGING_IN_PAGINATION_BAR;
+                if (totalPage < NUMBER_OF_PAGING_IN_PAGINATION_BAR)
+                    useEndPage = totalPage;
+            }
+            else
+            {
+                if (currentPage % NUMBER_OF_PAGING_IN_PAGINATION_BAR == 0)
+                {
+                    useEndPage = currentPage;
+                    useStarPage = currentPage - NUMBER_OF_PAGING_IN_PAGINATION_BAR + 1;
+                }
+                else
+                {
+                    int getDivideResult = currentPage / NUMBER_OF_PAGING_IN_PAGINATION_BAR;
+
+                    useStarPage = getDivideResult * NUMBER_OF_PAGING_IN_PAGINATION_BAR + 1;
+
+                    useEndPage = useStarPage + NUMBER_OF_PAGING_IN_PAGINATION_BAR - 1;
+                    if (useEndPage > totalPage)
+                        useEndPage = totalPage;
+
+
+                }
+
+
+            }
+            metaData.startPage = useStarPage;
+            metaData.endPage = useEndPage;
+
+
+
+
+
+
 
             //-- first page
             if (currentPage == 0 || currentPage == 1)
@@ -99,10 +143,10 @@ namespace ChipMongWebApp.Utils.Helpers
                 metaData.nextPageCssClass = PAGINATION_DISABLE_CLASS;
             else
                 metaData.nextPage = currentPage + 1;
-           
+
             //--supplment row 
             if (currentPage == totalPage)
-                metaData.supplementRow = currentPage * PAGE_SIZE - totalRecord ;
+                metaData.supplementRow = currentPage * PAGE_SIZE - totalRecord;
 
             metaData.pageSize = myPageSize;
             metaData.totalPage = totalPage;
@@ -125,7 +169,7 @@ namespace ChipMongWebApp.Utils.Helpers
                 if (currentPage % NUMBER_OF_PAGING_IN_PAGINATION_BAR == 0)
                     startPage = currentPage - NUMBER_OF_PAGING_IN_PAGINATION_BAR + 1;
                 else
-                    startPage = ( currentPage / NUMBER_OF_PAGING_IN_PAGINATION_BAR )  * NUMBER_OF_PAGING_IN_PAGINATION_BAR + 1;
+                    startPage = (currentPage / NUMBER_OF_PAGING_IN_PAGINATION_BAR) * NUMBER_OF_PAGING_IN_PAGINATION_BAR + 1;
             }
             return startPage;
         }
@@ -140,22 +184,22 @@ namespace ChipMongWebApp.Utils.Helpers
                 */
 
 
-            
+
             if (totalPage <= startPage + NUMBER_OF_PAGING_IN_PAGINATION_BAR)
                 return totalPage;
             else
                 return startPage + NUMBER_OF_PAGING_IN_PAGINATION_BAR - 1;
-                /*
-            if (totalPage <= NUMBER_OF_PAGING_IN_PAGINATION_BAR)
-                return totalPage;
+            /*
+        if (totalPage <= NUMBER_OF_PAGING_IN_PAGINATION_BAR)
+            return totalPage;
 
-            if (startPage == totalPage)
-                return startPage;
-            else if (totalPage <= startPage + NUMBER_OF_PAGING_IN_PAGINATION_BAR)
-                return totalPage - 1;
-            else
-                return startPage + NUMBER_OF_PAGING_IN_PAGINATION_BAR - 1;
-                */
+        if (startPage == totalPage)
+            return startPage;
+        else if (totalPage <= startPage + NUMBER_OF_PAGING_IN_PAGINATION_BAR)
+            return totalPage - 1;
+        else
+            return startPage + NUMBER_OF_PAGING_IN_PAGINATION_BAR - 1;
+            */
         }
     }
 }
