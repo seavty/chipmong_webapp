@@ -50,5 +50,7 @@ namespace ChipMongWebApp.Utils.Helpers
         public static readonly string ASC = "ASC";
         public static readonly string DESC = "DESC";
 
+        public static readonly int DB_TIMEOUT = 3600;
+
     }
 }

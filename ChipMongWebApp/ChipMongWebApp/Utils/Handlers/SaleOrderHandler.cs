@@ -25,6 +25,7 @@ namespace ChipMongWebApp.Utils.Handlers
         public SaleOrderHandler()
         {
             db = new ChipMongEntities();
+            db.Database.CommandTimeout = ConstantHelper.DB_TIMEOUT;
 
         }
 

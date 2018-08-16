@@ -4,7 +4,7 @@
         if (code === 13)
             find();
     });
-    paging(1);
+    //paging(1);
 });
 
 

@@ -1,4 +1,5 @@
-﻿using ChipMongWebApp.Models.DTO.User;
+﻿using ChipMongWebApp.Models.DB;
+using ChipMongWebApp.Models.DTO.User;
 using ChipMongWebApp.Utils.Attribute;
 using ChipMongWebApp.Utils.Handlers;
 using ChipMongWebApp.Utils.Helpers;
@@ -24,7 +25,10 @@ namespace ChipMongWebApp.Controllers
         }
 
         //--> New
-        public ActionResult New() { return View(); }
+        public ActionResult New()
+        {
+            return View();
+        }
 
         //-> New
         [HttpPost]

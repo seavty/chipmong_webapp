@@ -30,7 +30,20 @@ namespace ChipMongWebApp.Utils.Helpers
             }
             return startRow;
         }
-        
+
+        public static int GetStartRow_ME(int currentPage, bool isMasterDetailList = false)
+        {
+            int startRow = 0;
+            if (currentPage > 1)
+            {
+                int myPageSize = PAGE_SIZE;
+                if (isMasterDetailList)
+                    myPageSize = PAGE_SIZE_MASTER_DETAIL_List;
+                startRow = (currentPage - 1) * myPageSize;
+            }
+            return startRow;
+        }
+
         //->  get list 
         public static IQueryable<dynamic> GetList(int currentPage, IQueryable<dynamic> records)
         {
@@ -119,10 +132,30 @@ namespace ChipMongWebApp.Utils.Helpers
 
         private static int GetEndPage(int startPage, int totalPage)
         {
+            /*
             if (totalPage <= NUMBER_OF_PAGING_IN_PAGINATION_BAR)
                 return totalPage;
             else
                 return startPage + NUMBER_OF_PAGING_IN_PAGINATION_BAR - 1;
+                */
+
+
+            
+            if (totalPage <= startPage + NUMBER_OF_PAGING_IN_PAGINATION_BAR)
+                return totalPage;
+            else
+                return startPage + NUMBER_OF_PAGING_IN_PAGINATION_BAR - 1;
+                /*
+            if (totalPage <= NUMBER_OF_PAGING_IN_PAGINATION_BAR)
+                return totalPage;
+
+            if (startPage == totalPage)
+                return startPage;
+            else if (totalPage <= startPage + NUMBER_OF_PAGING_IN_PAGINATION_BAR)
+                return totalPage - 1;
+            else
+                return startPage + NUMBER_OF_PAGING_IN_PAGINATION_BAR - 1;
+                */
         }
     }
 }

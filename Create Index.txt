@@ -1,0 +1,14 @@
+Create NonClustered Index IX_tblCustomer_cust_FirstName
+ON tblCustomer(cust_FirstName)
+
+Create NonClustered Index IX_tblCustomer_cust_LastName
+ON tblCustomer(cust_LastName)
+
+Create NonClustered Index IX_tblCustomer_cust_Code
+ON tblCustomer(cust_Code)
+
+Create NonClustered Index IX_tblCustomer_cust_Phone1
+ON tblCustomer(cust_Phone1)
+
+Create NonClustered Index IX_tblCustomer_cust_Email
+ON tblCustomer(cust_Email)

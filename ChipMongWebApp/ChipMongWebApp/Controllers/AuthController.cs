@@ -1,4 +1,6 @@
-﻿using ChipMongWebApp.Models.DTO.Auth;
+﻿using ChipMongWebApp.Models.DB;
+using ChipMongWebApp.Models.DTO.Auth;
+using ChipMongWebApp.Models.DTO.Customer;
 using ChipMongWebApp.Models.DTO.User;
 using ChipMongWebApp.Utils.Handlers;
 using System;
@@ -17,10 +19,9 @@ namespace ChipMongWebApp.Controllers
             var id = RouteData.Values["id"];
             if (id == null)
                 return View();
-            
+
             Response.StatusCode = 401;
             return View();
-            
         }
 
 
@@ -35,7 +36,7 @@ namespace ChipMongWebApp.Controllers
                 Response.StatusCode = 404;
                 return "";
             }
-                    
+
             else
             {
                 Response.StatusCode = 200;

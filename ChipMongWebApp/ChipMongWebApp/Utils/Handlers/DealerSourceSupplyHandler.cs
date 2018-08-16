@@ -1,4 +1,5 @@
 ﻿using ChipMongWebApp.Models.DB;
+using ChipMongWebApp.Utils.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -16,6 +17,7 @@ namespace ChipMongWebApp.Utils.Handlers
         public DealerSourceSupplyHandler()
         {
             db = new ChipMongEntities();
+            db.Database.CommandTimeout = ConstantHelper.DB_TIMEOUT;
         }
 
         //-> Edit

@@ -13,6 +13,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Linq.Dynamic;
+using ChipMongWebApp.Utils.Extension;
 
 namespace ChipMongWebApp.Utils.Handlers
 {
@@ -23,6 +24,7 @@ namespace ChipMongWebApp.Utils.Handlers
         public CustomerHandler()
         {
             db = new ChipMongEntities();
+            db.Database.CommandTimeout = ConstantHelper.DB_TIMEOUT;
         }
 
         //-> SelectByID
@@ -64,13 +66,16 @@ namespace ChipMongWebApp.Utils.Handlers
         public async Task<GetListDTO<CustomerViewDTO>> GetList(CustomerFindDTO findDTO)
         {
             //--seem like search sql not dynamic -> should write one helper function or interface to do dynamic search
+            
             IQueryable<tblCustomer> records = from x in db.tblCustomers
                                               where x.deleted == null
                                               && (string.IsNullOrEmpty(findDTO.code) ? 1 == 1 : x.code.Contains(findDTO.code))
                                               && (string.IsNullOrEmpty(findDTO.firstName) ? 1 == 1 : x.firstName.Contains(findDTO.firstName))
                                               && (string.IsNullOrEmpty(findDTO.lastName) ? 1 == 1 : x.lastName == findDTO.lastName)
                                               select x;
+                                              
             return await Listing(findDTO.currentPage, records.AsQueryable().OrderBy($"{findDTO.orderBy} {findDTO.orderDirection}"));
+            
         }
 
         //-> Listing

@@ -20,6 +20,7 @@ namespace ChipMongWebApp.Utils.Handlers
         public AuthHandler()
         {
             db = new ChipMongEntities();
+            db.Database.CommandTimeout = ConstantHelper.DB_TIMEOUT;
         }
 
 
