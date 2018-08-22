@@ -20,7 +20,7 @@ namespace ChipMongWebApp.Utils.Handlers
 {
     public class SaleOrderHandler
     {
-        private ChipMongEntities db = null;
+        private readonly ChipMongEntities db;
 
         public SaleOrderHandler()
         {
@@ -206,7 +206,7 @@ namespace ChipMongWebApp.Utils.Handlers
             return await Listing(findDTO.currentPage, records);
             */
 
-            IQueryable<SaleOrderFindResultDTO> records = from s in db.tblSaleOrders
+            IQueryable<SaleOrderFindResultDTO> query = from s in db.tblSaleOrders
                                                          join c in db.tblCustomers on s.customerID equals c.id
                                                          where s.deleted == null
                                                          && (string.IsNullOrEmpty(findDTO.code) ? 1 == 1 : s.code.Contains(findDTO.code))
@@ -223,35 +223,24 @@ namespace ChipMongWebApp.Utils.Handlers
                                                              status = s.status
                                                          };
             //return await Listing(findDTO.currentPage, records);
-            return await Listing(findDTO.currentPage, records.AsQueryable().OrderBy($"{findDTO.orderBy} {findDTO.orderDirection}"));
+            return await ListingHandler(findDTO.currentPage, query.AsQueryable().OrderBy($"{findDTO.orderBy} {findDTO.orderDirection}"));
         }
 
         //-> Listing
-        public async Task<GetListDTO<SaleOrderViewDTO>> Listing(int currentPage, IQueryable<dynamic> records, string search = null)
+        public async Task<GetListDTO<SaleOrderViewDTO>> ListingHandler(int currentPage, IQueryable<dynamic> query)
         {
-            /*
-            var customerList = new List<SaleOrderViewDTO>();
-            foreach (var customer in PaginationHelper.GetList(currentPage, records))
+            int totalRecord = await query.CountAsync();
+            var records = await query.Page(currentPage).ToListAsync();
+           
+            var myList = new List<SaleOrderViewDTO>();
+            foreach (var record in records)
             {
-                customerList.Add(await SelectByID(customer.id));
+                myList.Add(await SelectByID(record.id));
             }
-
             var getList = new GetListDTO<SaleOrderViewDTO>();
-            getList.metaData = await PaginationHelper.GetMetaData(currentPage, records, "id", "asc", search);
-            getList.metaData.numberOfColumn = 6;
-            getList.items = customerList;
-            return getList;
-            */
-            var recordList = new List<SaleOrderViewDTO>();
-            foreach (var record in PaginationHelper.GetList(currentPage, records))
-            {
-                recordList.Add(await SelectByID(record.id));
-            }
-
-            var getList = new GetListDTO<SaleOrderViewDTO>();
-            getList.metaData = await PaginationHelper.GetMetaData(currentPage, records, "id", "asc", search);
-            getList.metaData.numberOfColumn = 6;
-            getList.items = recordList;
+            getList.metaData = PaginationHelper.MyTestGetMetaData(currentPage, totalRecord);
+            getList.metaData.numberOfColumn = 6; // need to change number of column
+            getList.items = myList;
             return getList;
         }
 

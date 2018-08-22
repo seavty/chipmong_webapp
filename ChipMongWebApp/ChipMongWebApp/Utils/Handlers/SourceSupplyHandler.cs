@@ -10,12 +10,13 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Linq.Dynamic;
+using ChipMongWebApp.Utils.Extension;
 
 namespace ChipMongWebApp.Utils.Handlers
 {
     public class SourceSupplyHandler
     {
-        private ChipMongEntities db = null;
+        private readonly ChipMongEntities db;
 
         public SourceSupplyHandler()
         {
@@ -60,21 +61,42 @@ namespace ChipMongWebApp.Utils.Handlers
         //-> GetList
         public async Task<GetListDTO<SourceSupplyViewDTO>> GetList(SourceSupplyFindDTO findDTO)
         {
-            //--seem like search sql not dynamic -> should write one helper function or interface to do dynamic search
+
             /*
-            IQueryable<tblSourceOfSupply> records = from x in db.tblSourceOfSupplies
-                                              where x.deleted == null &&
-                                              (string.IsNullOrEmpty(findDTO.name) ? 1 == 1 : x.name.Contains(findDTO.name))
-                                              orderby x.name ascending
-                                              select x;
-            return await Listing(findDTO.currentPage, records);
-            */
             IQueryable<tblSourceOfSupply> records = from x in db.tblSourceOfSupplies
                                                     where x.deleted == null &&
                                                     (string.IsNullOrEmpty(findDTO.name) ? 1 == 1 : x.name.Contains(findDTO.name))
                                                     select x;
             return await Listing(findDTO.currentPage, records.AsQueryable().OrderBy($"{findDTO.orderBy} {findDTO.orderDirection}"));
+            */
+
+            IQueryable<tblSourceOfSupply> query = db.tblSourceOfSupplies.Where(x => x.deleted == null);
+
+            if (!string.IsNullOrEmpty(findDTO.name)) query = query.Where(x => x.name.StartsWith(findDTO.name));
+            query = query.AsQueryable().OrderBy($"{findDTO.orderBy} {findDTO.orderDirection}");
+
+            return await ListingHandler(findDTO.currentPage, query);
         }
+
+        //-> ListingHandler
+        private async Task<GetListDTO<SourceSupplyViewDTO>> ListingHandler(int currentPage, IQueryable<tblSourceOfSupply> query)
+        {
+            int totalRecord = await query.CountAsync();
+            List<tblSourceOfSupply> records = await query.Page(currentPage).ToListAsync();
+
+            var myList = new List<SourceSupplyViewDTO>();
+            foreach (var record in records)
+            {
+                myList.Add(await SelectByID(record.id));
+            }
+            var getList = new GetListDTO<SourceSupplyViewDTO>();
+            getList.metaData = PaginationHelper.MyTestGetMetaData(currentPage, totalRecord);
+            getList.metaData.numberOfColumn = 2; // need to change number of column
+            getList.items = myList;
+            return getList;
+        }
+
+
 
         //-> Delete
         public async Task<Boolean> Delete(int id)
@@ -95,21 +117,5 @@ namespace ChipMongWebApp.Utils.Handlers
             await db.SaveChangesAsync();
             return true;
         }
-
-        //-> Listing
-        public async Task<GetListDTO<SourceSupplyViewDTO>> Listing(int currentPage, IQueryable<tblSourceOfSupply> records, string search = null)
-        {
-            var recordList = new List<SourceSupplyViewDTO>();
-            foreach (var record in PaginationHelper.GetList(currentPage, records))
-            {
-                recordList.Add(await SelectByID(record.id));
-            }
-            var getList = new GetListDTO<SourceSupplyViewDTO>();
-            getList.metaData = await PaginationHelper.GetMetaData(currentPage, records, "id", "asc", search);
-            getList.metaData.numberOfColumn = 2; // need to change number of column
-            getList.items = recordList;
-            return getList;
-        }
-
     }
 }

@@ -19,7 +19,7 @@ namespace ChipMongWebApp.Utils.Handlers
 {
     public class CustomerHandler
     {
-        private ChipMongEntities db = null;
+        private readonly ChipMongEntities db;
 
         public CustomerHandler()
         {
@@ -71,22 +71,16 @@ namespace ChipMongWebApp.Utils.Handlers
             if (!string.IsNullOrEmpty(findDTO.firstName))   query = query.Where(x => x.firstName.StartsWith(findDTO.firstName));
             if (!string.IsNullOrEmpty(findDTO.lastName))    query = query.Where(x => x.lastName.StartsWith(findDTO.lastName));
 
-            
             query = query.AsQueryable().OrderBy($"{findDTO.orderBy} {findDTO.orderDirection}");
             
             return await ListingHandler(findDTO.currentPage, query);
         }
 
-
-
-
-        //--- my test function --//
-        //-> Listing
+        //-> ListingHandler
         private async Task<GetListDTO<CustomerViewDTO>> ListingHandler(int currentPage, IQueryable<tblCustomer> query)
         {
             int totalRecord = await query.CountAsync();
-            int startRow = PaginationHelper.GetStartRow(currentPage);
-            List<tblCustomer> records = await query.Skip(startRow).Take(PaginationHelper.PAGE_SIZE).ToListAsync();
+            List<tblCustomer> records = await query.Page(currentPage).ToListAsync();
 
             var myList = new List<CustomerViewDTO>();
             foreach (var record in records)
@@ -100,19 +94,14 @@ namespace ChipMongWebApp.Utils.Handlers
             return getList;
         }
 
-        //-- end my test function
-
         //-> SSA
         public async Task<GetSSADTO<CustomerViewDTO>> SSA(string search)
         {
             IQueryable<tblCustomer> query = db.tblCustomers.Where(x => x.deleted == null);
-
             if (!string.IsNullOrEmpty(search))
                 query = query.Where(x => x.firstName.StartsWith(search));
-
             query = query.OrderBy(x => x.firstName);
 
-            int totalRecord = await query.CountAsync();
             var ssa = new GetSSADTO<CustomerViewDTO>();
             ssa.results = (await ListingHandler(1, query)).items;
 
@@ -153,7 +142,7 @@ namespace ChipMongWebApp.Utils.Handlers
                                                orderby s.id ascending
                                                select s;
             var saleOrderHandler = new SaleOrderHandler();
-            return await saleOrderHandler.Listing(currentPage, records);
+            return await saleOrderHandler.ListingHandler(currentPage, records);
 
         }
 
@@ -185,14 +174,12 @@ namespace ChipMongWebApp.Utils.Handlers
         //-> New
         public async Task<bool> AddSourceSupply(int customerID, int sourceSupplyID)
         {
-
             var record = new tblDealerSourceOfSupply();
             record.dealerID = customerID;
             record.sourceOfSupplyID = sourceSupplyID;
             db.tblDealerSourceOfSupplies.Add(record);
             await db.SaveChangesAsync();
             return true;
-
         }
     }
 }

@@ -10,12 +10,13 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Linq.Dynamic;
+using ChipMongWebApp.Utils.Extension;
 
 namespace ChipMongWebApp.Utils.Handlers
 {
     public class UserHandler
     {
-        private ChipMongEntities db = null;
+        private readonly ChipMongEntities db;
 
         public UserHandler()
         {
@@ -81,6 +82,7 @@ namespace ChipMongWebApp.Utils.Handlers
                                                     select x;
             return await Listing(findDTO.currentPage, records);
             */
+            /*
             IQueryable<tblUser> records = from x in db.tblUsers
                                           where x.deleted == null
                                           && (string.IsNullOrEmpty(findDTO.userName) ? 1 == 1 : x.userName.Contains(findDTO.userName))
@@ -88,6 +90,17 @@ namespace ChipMongWebApp.Utils.Handlers
                                           && (string.IsNullOrEmpty(findDTO.lastName) ? 1 == 1 : x.userName.Contains(findDTO.lastName))
                                           select x;
             return await Listing(findDTO.currentPage, records.AsQueryable().OrderBy($"{findDTO.orderBy} {findDTO.orderDirection}"));
+            */
+
+            IQueryable<tblUser> query = db.tblUsers.Where(x => x.deleted == null);
+
+            if (!string.IsNullOrEmpty(findDTO.userName)) query = query.Where(x => x.userName.StartsWith(findDTO.userName));
+            if (!string.IsNullOrEmpty(findDTO.firstName)) query = query.Where(x => x.firstName.StartsWith(findDTO.firstName));
+            if (!string.IsNullOrEmpty(findDTO.lastName)) query = query.Where(x => x.lastName.StartsWith(findDTO.lastName));
+
+            query = query.AsQueryable().OrderBy($"{findDTO.orderBy} {findDTO.orderDirection}");
+
+            return await ListingHandler(findDTO.currentPage, query);
         }
 
         //-> Delete
@@ -101,18 +114,21 @@ namespace ChipMongWebApp.Utils.Handlers
             return true;
         }
 
-        //-> Listing
-        public async Task<GetListDTO<UserViewDTO>> Listing(int currentPage, IQueryable<tblUser> records, string search = null)
+        //-> ListingHandler
+        private async Task<GetListDTO<UserViewDTO>> ListingHandler(int currentPage, IQueryable<tblUser> query)
         {
-            var recordList = new List<UserViewDTO>();
-            foreach (var record in PaginationHelper.GetList(currentPage, records))
+            int totalRecord = await query.CountAsync();
+            List<tblUser> records = await query.Page(currentPage).ToListAsync();
+
+            var myList = new List<UserViewDTO>();
+            foreach (var record in records)
             {
-                recordList.Add(await SelectByID(record.id));
+                myList.Add(await SelectByID(record.id));
             }
             var getList = new GetListDTO<UserViewDTO>();
-            getList.metaData = await PaginationHelper.GetMetaData(currentPage, records, "id", "asc", search);
+            getList.metaData = PaginationHelper.MyTestGetMetaData(currentPage, totalRecord);
             getList.metaData.numberOfColumn = 6; // need to change number of column
-            getList.items = recordList;
+            getList.items = myList;
             return getList;
         }
 

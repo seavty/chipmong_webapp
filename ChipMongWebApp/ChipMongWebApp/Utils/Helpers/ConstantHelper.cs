@@ -52,5 +52,7 @@ namespace ChipMongWebApp.Utils.Helpers
 
         public static readonly int DB_TIMEOUT = 3600;
 
+        public static readonly int PAGE_SIZE = 10;
+
     }
 }

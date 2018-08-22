@@ -23,7 +23,10 @@
     const id = @Url.RequestContext.RouteData.Values["id"];
     const controller = "@ConstantHelper.SALEORDER_CONTROLLER";
 
-    $(document).ready(() => $("#saleorderTab").contents().unwrap());
+    $(document).ready(() => {
+        $("#saleorderTab").contents().unwrap();
+        find();
+    });
     const customerTab = () => location.href = "@ConstantHelper.CUSTOMER_CONTROLLER" + "/view/" + id;
     const sourceSupplyTab = () => location.href = "@ConstantHelper.CUSTOMER_CONTROLLER" + "/sourceSupplytab/" + id;
 </script>
