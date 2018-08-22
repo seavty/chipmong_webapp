@@ -43,7 +43,7 @@ namespace ChipMongWebApp.Utils.Handlers
             var record = (tblCustomer)MappingHelper.MapDTOToDBClass<CustomerNewDTO, tblCustomer>(newDTO, new tblCustomer());
             record.createdDate = DateTime.Now;
             db.tblCustomers.Add(record);
-            
+
             await db.SaveChangesAsync();
             db.Entry(record).Reload();
             return await SelectByID(record.id);
@@ -65,50 +65,57 @@ namespace ChipMongWebApp.Utils.Handlers
         //-> GetList
         public async Task<GetListDTO<CustomerViewDTO>> GetList(CustomerFindDTO findDTO)
         {
-            //--seem like search sql not dynamic -> should write one helper function or interface to do dynamic search
+            IQueryable<tblCustomer> query = db.tblCustomers.Where(x => x.deleted == null);
+
+            if (!string.IsNullOrEmpty(findDTO.code))        query = query.Where(x => x.code.StartsWith(findDTO.code));
+            if (!string.IsNullOrEmpty(findDTO.firstName))   query = query.Where(x => x.firstName.StartsWith(findDTO.firstName));
+            if (!string.IsNullOrEmpty(findDTO.lastName))    query = query.Where(x => x.lastName.StartsWith(findDTO.lastName));
+
             
-            IQueryable<tblCustomer> records = from x in db.tblCustomers
-                                              where x.deleted == null
-                                              && (string.IsNullOrEmpty(findDTO.code) ? 1 == 1 : x.code.Contains(findDTO.code))
-                                              && (string.IsNullOrEmpty(findDTO.firstName) ? 1 == 1 : x.firstName.Contains(findDTO.firstName))
-                                              && (string.IsNullOrEmpty(findDTO.lastName) ? 1 == 1 : x.lastName == findDTO.lastName)
-                                              select x;
-                                              
-            return await Listing(findDTO.currentPage, records.AsQueryable().OrderBy($"{findDTO.orderBy} {findDTO.orderDirection}"));
+            query = query.AsQueryable().OrderBy($"{findDTO.orderBy} {findDTO.orderDirection}");
             
+            return await ListingHandler(findDTO.currentPage, query);
         }
 
+
+
+
+        //--- my test function --//
         //-> Listing
-        private async Task<GetListDTO<CustomerViewDTO>> Listing(int currentPage, IQueryable<tblCustomer> records, string search = null)
+        private async Task<GetListDTO<CustomerViewDTO>> ListingHandler(int currentPage, IQueryable<tblCustomer> query)
         {
-            var recordList = new List<CustomerViewDTO>();
-            foreach (var record in PaginationHelper.GetList(currentPage, records))
+            int totalRecord = await query.CountAsync();
+            int startRow = PaginationHelper.GetStartRow(currentPage);
+            List<tblCustomer> records = await query.Skip(startRow).Take(PaginationHelper.PAGE_SIZE).ToListAsync();
+
+            var myList = new List<CustomerViewDTO>();
+            foreach (var record in records)
             {
-                recordList.Add(await SelectByID(record.id));
+                myList.Add(await SelectByID(record.id));
             }
             var getList = new GetListDTO<CustomerViewDTO>();
-            getList.metaData = await PaginationHelper.GetMetaData(currentPage, records, "id", "asc", search);
+            getList.metaData = PaginationHelper.MyTestGetMetaData(currentPage, totalRecord);
             getList.metaData.numberOfColumn = 6; // need to change number of column
-            getList.items = recordList;
+            getList.items = myList;
             return getList;
         }
 
+        //-- end my test function
+
         //-> SSA
-        public async Task<GetSSADTO<CustomerSSADTO>> SSA(string search)
+        public async Task<GetSSADTO<CustomerViewDTO>> SSA(string search)
         {
-            IQueryable<tblCustomer> records = from x in db.tblCustomers
-                                              where x.deleted == null
-                                              && (string.IsNullOrEmpty(search) ? 1 == 1 : x.firstName.StartsWith(search))
-                                              orderby x.id ascending
-                                              select x;
-            var list = await Listing(1, records);
-            var customerList = new List<CustomerSSADTO>();
-            foreach (var item in list.items)
-            {
-                customerList.Add((CustomerSSADTO)MappingHelper.MapDTOToDTO<CustomerViewDTO, CustomerSSADTO>(item, new CustomerSSADTO()));
-            }
-            var ssa = new GetSSADTO<CustomerSSADTO>();
-            ssa.results = customerList;
+            IQueryable<tblCustomer> query = db.tblCustomers.Where(x => x.deleted == null);
+
+            if (!string.IsNullOrEmpty(search))
+                query = query.Where(x => x.firstName.StartsWith(search));
+
+            query = query.OrderBy(x => x.firstName);
+
+            int totalRecord = await query.CountAsync();
+            var ssa = new GetSSADTO<CustomerViewDTO>();
+            ssa.results = (await ListingHandler(1, query)).items;
+
             return ssa;
         }
 
@@ -139,7 +146,7 @@ namespace ChipMongWebApp.Utils.Handlers
             var saleOrderHandler = new SaleOrderHandler();
             return await saleOrderHandler.Listing(currentPage, records);
             */
-            
+
             IQueryable<tblSaleOrder> records = from s in db.tblSaleOrders
                                                join c in db.tblCustomers on s.customerID equals c.id
                                                where s.deleted == null && s.customerID == customerID
@@ -147,7 +154,7 @@ namespace ChipMongWebApp.Utils.Handlers
                                                select s;
             var saleOrderHandler = new SaleOrderHandler();
             return await saleOrderHandler.Listing(currentPage, records);
-            
+
         }
 
         //-> GetList SourceSupplyTabPaging
