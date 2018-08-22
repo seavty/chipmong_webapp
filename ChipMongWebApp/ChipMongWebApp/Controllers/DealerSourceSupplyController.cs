@@ -23,7 +23,7 @@ namespace ChipMongWebApp.Controllers
     [ErrorLogger]
     public class DealerSourceSupplyController : Controller
     {
-        private DealerSourceSupplyHandler handler = null;
+        private readonly DealerSourceSupplyHandler handler;
 
         public DealerSourceSupplyController()
         {

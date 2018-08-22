@@ -16,7 +16,8 @@ namespace ChipMongWebApp.Utils.Handlers
     
     public class AuthHandler
     {
-        private ChipMongEntities db = null;
+        private readonly ChipMongEntities db;
+
         public AuthHandler()
         {
             db = new ChipMongEntities();

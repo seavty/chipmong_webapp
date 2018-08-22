@@ -16,7 +16,7 @@ namespace ChipMongWebApp.Controllers
     [ErrorLogger] 
     public class ItemController : Controller
     {
-        private ItemHandler handler = null;
+        private readonly ItemHandler handler;
 
         public ItemController()
         {

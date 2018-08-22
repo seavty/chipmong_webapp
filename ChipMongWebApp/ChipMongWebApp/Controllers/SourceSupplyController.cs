@@ -20,7 +20,7 @@ namespace ChipMongWebApp.Controllers
     [ErrorLogger]
     public class SourceSupplyController : Controller
     {
-        private SourceSupplyHandler handler = null;
+        private readonly SourceSupplyHandler handler;
 
         public SourceSupplyController()
         {

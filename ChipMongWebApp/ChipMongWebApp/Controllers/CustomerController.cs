@@ -18,7 +18,7 @@ namespace ChipMongWebApp.Controllers
     [ErrorLogger]
     public class CustomerController : Controller
     {
-        private CustomerHandler handler = null;
+        private readonly CustomerHandler handler;
 
         public CustomerController()
         {

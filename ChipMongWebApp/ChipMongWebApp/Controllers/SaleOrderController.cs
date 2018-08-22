@@ -17,7 +17,7 @@ namespace ChipMongWebApp.Controllers
     [ErrorLogger]
     public class SaleOrderController : Controller
     {
-        private SaleOrderHandler handler = null;
+        private readonly SaleOrderHandler handler;
 
         public SaleOrderController()
         {

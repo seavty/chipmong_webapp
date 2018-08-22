@@ -17,7 +17,7 @@ namespace ChipMongWebApp.Controllers
     [ErrorLogger]
     public class UserController : Controller
     {
-        private UserHandler handler = null;
+        private readonly UserHandler handler;
 
         public UserController()
         {

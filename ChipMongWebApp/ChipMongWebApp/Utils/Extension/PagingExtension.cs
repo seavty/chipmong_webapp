@@ -11,7 +11,7 @@ namespace ChipMongWebApp.Utils.Extension
         //used by LINQ to SQL
         public static IQueryable<TSource> Page<TSource>(this IQueryable<TSource> source, int currentPage)
         {
-            return source.Skip((currentPage - 1) * ConstantHelper.PAGE_SIZE).Take(ConstantHelper.PAGE_SIZE);
+            return source.Skip((currentPage - 1) * PaginationHelper.PAGE_SIZE).Take(PaginationHelper.PAGE_SIZE);
         }
 
         //used by LINQ

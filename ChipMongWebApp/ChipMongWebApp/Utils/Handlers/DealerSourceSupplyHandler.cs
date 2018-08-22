@@ -12,7 +12,7 @@ namespace ChipMongWebApp.Utils.Handlers
 {
     public class DealerSourceSupplyHandler
     {
-        private ChipMongEntities db = null;
+        private readonly ChipMongEntities db;
 
         public DealerSourceSupplyHandler()
         {
