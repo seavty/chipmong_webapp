@@ -9,9 +9,6 @@
 
     <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            <li class="nav-item active">
-                <a class="nav-link" href="@Url.Content("~/customer/find")"> <i class="fas fa-home"></i>  Home <span class="sr-only">(current)</span></a>
-            </li>
             <li role="separator" class="divider-vertical"></li>
             <li class="nav-item active">
                 <a class="nav-link" href="@Url.Content("~/customer/find")"> <i class="fas fa-users"></i> Customer  </a>
@@ -75,7 +72,7 @@
             ajaxHelper(endPoint + "/logout", null, requestMethod.POST).then(function (data) {
                window.location.href = "@Url.Content("~/auth/login")";
             });
-            
+
         }
     }
 </script>

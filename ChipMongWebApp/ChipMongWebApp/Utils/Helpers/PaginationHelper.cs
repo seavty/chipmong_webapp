@@ -11,7 +11,6 @@ namespace ChipMongWebApp.Utils.Helpers
     public static class PaginationHelper
     {
         public static readonly int PAGE_SIZE = 10;
-        public static readonly int PAGE_SIZE_MASTER_DETAIL_List = 10;
         public static readonly int NUMBER_OF_PAGING_IN_PAGINATION_BAR = 5;
 
         public static readonly string PAGINATION_DISABLE_CLASS = "disabled";
@@ -19,11 +18,8 @@ namespace ChipMongWebApp.Utils.Helpers
         //-> GetMetaData
         public static MetaDataDTO GetMetaData(int currentPage, int totalRecord, bool isMasterDetailList = false)
         {
-            int myPageSize = PAGE_SIZE;
-            if (isMasterDetailList)
-                myPageSize = PAGE_SIZE_MASTER_DETAIL_List;
-
-            double getTotalPage = ((double)totalRecord / myPageSize);
+            
+            double getTotalPage = ((double)totalRecord / PAGE_SIZE);
             int totalPage = (int)Math.Ceiling(getTotalPage);
 
             if (currentPage < 1 || currentPage > totalPage)
@@ -34,10 +30,10 @@ namespace ChipMongWebApp.Utils.Helpers
 
             //-- start row
             if (currentPage > 0)
-                metaData.startRow = (currentPage - 1) * myPageSize + 1;
+                metaData.startRow = (currentPage - 1) * PAGE_SIZE + 1;
 
             //-- end row 
-            int endRow = currentPage * myPageSize;
+            int endRow = currentPage * PAGE_SIZE;
             if (endRow > totalRecord)
                 endRow = totalRecord;
             metaData.endRow = endRow;
@@ -98,7 +94,7 @@ namespace ChipMongWebApp.Utils.Helpers
             if (currentPage == totalPage)
                 metaData.supplementRow = currentPage * PAGE_SIZE - totalRecord;
 
-            metaData.pageSize = myPageSize;
+            metaData.pageSize = PAGE_SIZE;
             metaData.totalPage = totalPage;
             metaData.totalRecord = totalRecord;
             return metaData;
