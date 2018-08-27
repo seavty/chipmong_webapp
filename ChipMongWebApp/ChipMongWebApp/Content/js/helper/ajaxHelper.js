@@ -19,16 +19,16 @@ const ajaxHelper = (url, data, method) => {
                 type: method,
                 async: false,
                 error: (jqXHR, textStatus, errorThrown) => {
-                    if (jqXHR.status == 401) 
+                    if (jqXHR.status == 401)
                         window.location.href = $("#baseURL").val() + "/auth/login/-1";
                     else if (jqXHR.status == 400)
                         alert(jqXHR.responseText);
-                    else 
+                    else
                         alert("Error code: " + jqXHR.status + "; Message: error occured while processing your request.");
                     $('#loadingIndicator').modal("hide");
                     return;
                 },
-                beforeSend: () => {},
+                beforeSend: () => { },
                 success: (data) => {
                     $('#loadingIndicator').modal("hide");
                     resolve(data);
@@ -37,11 +37,11 @@ const ajaxHelper = (url, data, method) => {
         }, 100);
     });
     return promise;
-}
+};
 
 
 //-> Simple ajax
-let simpleAjax = (url, data, method) => {
+const simpleAjax = (url, data, method) => {
     var promise = new Promise((resolve, reject) => {
         window.setTimeout(() => {
             $.ajax({
@@ -49,8 +49,8 @@ let simpleAjax = (url, data, method) => {
                 data: data,
                 type: method,
                 async: false,
-                error: (jqXHR, textStatus, errorThrown) =>  {
-                    if (jqXHR.status == 401) 
+                error: (jqXHR, textStatus, errorThrown) => {
+                    if (jqXHR.status == 401)
                         window.location.href = $("#baseURL").val() + "/auth/login/-1";
                     else if (jqXHR.status == 400)
                         alert(jqXHR.responseText);
@@ -58,7 +58,7 @@ let simpleAjax = (url, data, method) => {
                         alert("Error code: " + jqXHR.status + "; Message: error occured while processing your request.");
                     return;
                 },
-                beforeSend: () => {},
+                beforeSend: () => { },
                 success: (data) => {
                     resolve(data);
                 }
@@ -66,4 +66,5 @@ let simpleAjax = (url, data, method) => {
         }, 100);
     });
     return promise;
-}
+};
+

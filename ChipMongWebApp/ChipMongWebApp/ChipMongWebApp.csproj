@@ -313,6 +313,7 @@
     <Content Include="Content\css\gijgo.min.css" />
     <Content Include="Content\css\Hind.css" />
     <Content Include="Content\css\jquery.toast.css" />
+    <Content Include="Content\css\loader.css" />
     <Content Include="Content\css\Merienda.css" />
     <Content Include="Content\css\select2.min.css" />
     <Content Include="Content\img\1.jpg" />
@@ -338,7 +339,6 @@
     <Content Include="Content\js\jquery.serialize-object.min.js" />
     <Content Include="Content\js\jquery.toast.js" />
     <Content Include="Content\js\jquery_min.js" />
-    <Content Include="Content\js\modules\find.js" />
     <Content Include="Content\js\modules\SaleOrder.js" />
     <Content Include="Content\js\popper.min.js" />
     <Content Include="Content\js\select2.full.js" />

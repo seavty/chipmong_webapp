@@ -28,7 +28,7 @@ const newRecord = () => location.href = controller + "/new";
 const find = () => {
     $("#currentPage").val(1);
     paging(1);
-}
+};
 
 const sort = (orderBy, prop) => {
     if ($("#orderBy").val() == orderBy)
@@ -37,5 +37,5 @@ const sort = (orderBy, prop) => {
         $("#orderDirection").val("ASC");
     $("#orderBy").val(orderBy);
     paging(1);
-}
+};
 
