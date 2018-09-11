@@ -321,7 +321,6 @@
     <Content Include="Content\js\function\template\viewmode\button.js" />
     <Content Include="Content\js\gijgo.min.js" />
     <Content Include="Content\js\helper\ajaxHelper.js" />
-    <Content Include="Content\js\helper\dateHelper.js" />
     <Content Include="Content\js\helper\numericHelper.js" />
     <Content Include="Content\js\helper\validationHelper.js" />
     <Content Include="Content\js\jquery-3.2.1.js" />
@@ -456,6 +455,7 @@
     <Content Include="Views\Item\Form.cshtml" />
     <Content Include="Views\SourceSupply\Form.cshtml" />
     <Content Include="Views\User\Form.cshtml" />
+    <Content Include="Views\SaleOrder\Form.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

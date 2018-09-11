@@ -1,4 +1,4 @@
-﻿let isValid = () => {
+﻿const isValid = () => {
     let isOk = true;
     $(".required").each(function (i, v) {
         $(this).removeClass("is-invalid file-error error");
@@ -34,7 +34,7 @@
 
 
 //-- line item ---//
-let isValidLineItem = () => {
+const isValidLineItem = () => {
     let isOk = true;
     $(".line-item-required").each(function (i, v) {
         $(this).removeClass("is-invalid");

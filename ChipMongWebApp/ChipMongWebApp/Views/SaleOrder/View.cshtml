@@ -1,149 +1,24 @@
-﻿@using ChipMongWebApp.Utils.Extension
-@using ChipMongWebApp.Utils.Helpers
-@model ChipMongWebApp.Models.DTO.SaleOrder.SaleOrderViewDTO
+﻿@using ChipMongWebApp.Utils.Helpers
 @{
-    /**/
-
-    ViewBag.Title = "Create";
     Layout = "~/Views/Shared/Main/_Main.cshtml";
 }
 
 <div class="card" id="action">
-    <div class="card" id="action">
-        <div class="card-body text-dark shadow-sm merienda">
-            <button type="button" class="btn btn-dark" id="btnBack"> <i class="fas fa-long-arrow-alt-left"></i> Back </button>
-            <button type="button" class="btn btn-primary" id="btnEdit"> <i class="fas fa-pencil-alt"></i> Edit </button>
-            <button type="button" class="btn btn-danger" id="btnDelete"> <i class="fas fa-trash-alt"></i> Delete </button>
-    </div>
+    <div class="card-body text-dark shadow-sm merienda">
+        @Html.Partial("~/Views/Shared/Template/ViewMode/Button.cshtml")
     </div>
 </div>
 
 <br />
 
-<form id="record" name="record">
-    <fieldset disabled class="summary">
-        <div class="card shadow-sm">
-            <div class="card-header merienda"> Item </div>
+@Html.Partial("~/Views/SaleOrder/Form.cshtml")
 
 
-            <!-- card body -->
-            <div class="card-body">
-
-                <!--row 1-->
-                <div class="row">
-
-                    <div class="col-4">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.code)
-                            @Html.TextBoxFor(m => m.code, new { @class = "form-control" })
-                        </div>
-                    </div>
-
-                    <div class="col-4">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.date)
-                            @Html.TextBoxFor(m => m.date, new { @class = "form-control", Value = Model.date.ToDisplayDate() })
-                        </div>
-                    </div>
-
-
-                    <div class="col-4">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.requiredDate)
-                            @Html.TextBoxFor(m => m.requiredDate, new { @class = "form-control", Value = Model.requiredDate.ToDisplayDate() })
-                        </div>
-                    </div>
-
-
-                </div>
-                <!--end  row 1-->
-                <!--row 2-->
-                <div class="row">
-
-                    <div class="col-4">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.customerID)
-                            @Html.DropDownListFor(m => m.customerID, SSAHelper.CustomerSSA(Model.customerID), null, new { @class = "form-control" })
-                        </div>
-                    </div>
-
-                    <div class="col-4">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.sourceOfSupplyID)
-                            @Html.DropDownListFor(m => m.sourceOfSupplyID, SelectionHelper.SourceSupplySelection(Model.sourceOfSupplyID), null, new { @class = "form-control required" })
-                        </div>
-                    </div>
-
-                    <div class="col-4">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.status)
-                            @Html.DropDownListFor(m => m.status, SelectionHelper.SaleOrderStatus(Model.status), "-- Select Status --", new { @class = "form-control" })
-                        </div>
-                    </div>
-
-                </div>
-                <!--end  row 2-->
-
-                <!--row 3-->
-                <div class="row">
-                    <div class="col-4">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.total)
-                            @Html.TextBoxFor(m => m.total, new { @class = "form-control", Value = Model.total.ToTwoDecimalPoint() })
-                        </div>
-                    </div>
-
-                    <div class="col-4">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.remarks)
-                            @Html.TextAreaFor(m => m.remarks, new { @class = "form-control" })
-                        </div>
-                    </div>
-                </div>
-                <!--end  row 3-->
-
-            </div>
-        </div>
-        <!-- end card body -->
-    </fieldset>
-</form>
-
-<br />
-
-<!-- LineItemTable  -->
-@Html.Partial("~/Views/SaleOrder/LineItemTable.cshtml", Model)
-
+<script src="~/Content/js/function/template/viewmode/button.js"></script>
 <script>
-
-    var endPoint = "@Url.Content("~/saleorder")";
-    var id = @Url.RequestContext.RouteData.Values["id"];
-
-    $(document).ready(function () {
-        setupEvents();
-    });
-
-    //-> setupEvents
-    function setupEvents() {
-        $("#btnBack").click(function () { back(); });
-        $("#btnEdit").click(function () { edit(); });
-        $("#btnDelete").click(function () { deleteRecord(); });
-    }
-
-    //-> edit
-    function edit() { window.location.href = endPoint  + "/edit/" + id; }
-
-    //-> back
-    function back() { window.location.href = endPoint + "/find/"; }
-
-    //-> deletRecord
-    function deleteRecord() {
-        if (confirm("Do you want to delete this SaleOrder")) {
-            ajaxHelper(endPoint + "/delete/" + id, null, requestMethod.POST).then(function (data) {
-                window.location.href = endPoint + "/find/";
-            });
-        }
-    }
-
+    const controller = "@ConstantHelper.SALEORDER_CONTROLLER";
+    const id = @Url.RequestContext.RouteData.Values["id"];
+    $(document).ready(() => removePlaceHolder());
 </script>
 
 

@@ -1,5 +1,5 @@
 ﻿const initializeComponents = () => {
-    setupSSA("#customerID", ssaURL, ssaPlaceHolder, customerTemplateResult, customerTemplateSelection);
+    setupSSA("#customerID", "/customer/ssa", "Customer", customerTemplateResult, customerTemplateSelection);
 }
 
 

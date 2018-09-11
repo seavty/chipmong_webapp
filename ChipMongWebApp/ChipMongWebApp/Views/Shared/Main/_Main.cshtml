@@ -1,4 +1,5 @@
-﻿<!doctype html>
+﻿@using ChipMongWebApp.Utils.Helpers
+<!doctype html>
 <html lang="en">
 <head>
     <!-- Required meta tags -->
@@ -24,11 +25,11 @@
     <script>
         $(document).ready(() => {
             $(".numeric").numeric();
-            $(".date-picker").each(function(i, v) {
+            $(".date-picker").each(function (i, v) {
                 $(this).datepicker({
                     uiLibrary: "bootstrap4",
                     iconsLibrary: "fontawesome",
-                    format: "dd/mm/yyyy",
+                    format: "dd-mm-yyyy"
                 });
             });
 

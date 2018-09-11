@@ -6,7 +6,7 @@
 };
 
 //-> ajaxHelper
-let ajaxHelper = (url, data, method) => {
+const ajaxHelper = (url, data, method) => {
     $('#loadingIndicator').modal({
         keyboard: false,
         backdrop: "static"

@@ -11,6 +11,11 @@ namespace ChipMongWebApp.Utils.Extension
         {
             return value.ToString("0.00");
         }
-        
+
+        public static string ThousandSeparator(this double value)
+        {
+            return value.ToString("#,##0.00");
+        }
+
     }
 }

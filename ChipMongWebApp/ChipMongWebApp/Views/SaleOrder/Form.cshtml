@@ -1,0 +1,121 @@
+﻿@using ChipMongWebApp.Utils.Extension
+@using ChipMongWebApp.Utils.Helpers
+@model ChipMongWebApp.Models.DTO.SaleOrder.SaleOrderViewDTO
+
+@{
+    /**/
+
+    var isDiable = "";
+    var isSummary = "";
+
+    if (Model != null)
+    {
+        if (Model.mode == ConstantHelper.MODE_VIEW)
+        {
+            isDiable = "disabled";
+            isSummary = "summary";
+        }
+    }
+}
+
+
+<form id="record" name="record">
+    <fieldset @isDiable class=@isSummary>
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.id)
+        @Html.Hidden("deleteLineItemID", "0")
+
+        <!-- card -->
+        <div class="card shadow-sm">
+            <div class="card-header merienda"> SaleOrder </div>
+
+            <!-- card body -->
+            <div class="card-body">
+
+                <!--row 1-->
+                <div class="row">
+
+                    <div class="col-4">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.code)
+                            @Html.TextBoxFor(m => m.code, new { @class = "form-control", @readonly = "readonly", placeholder = "Code" })
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.date)
+                            @Html.TextBoxFor(m => m.date, new { @class = "form-control date-picker required", Value = Model.date.ToHumanDate() })
+                        </div>
+                    </div>
+
+
+                    <div class="col-4">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.requiredDate)
+                            @Html.TextBoxFor(m => m.requiredDate, new { @class = "form-control date-picker required", Value = Model.requiredDate.ToHumanDate() })
+                        </div>
+                    </div>
+
+
+                </div>
+                <!--end  row 1-->
+
+                <!--row 2-->
+                <div class="row">
+
+                    <div class="col-4">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.customerID)
+                            @Html.DropDownListFor(m => m.customerID, SSAHelper.CustomerSSA(Model.customerID), null, new { @class = "form-control required" })
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.sourceOfSupplyID)
+                            @Html.DropDownListFor(m => m.sourceOfSupplyID, SelectionHelper.SourceSupplySelection(Model.sourceOfSupplyID), null, new { @class = "form-control required" })
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.status)
+                            @Html.DropDownListFor(m => m.status, SelectionHelper.SaleOrderStatus(Model.status), "-- Select Status --", new { @class = "form-control required" })
+                        </div>
+                    </div>
+
+                </div>
+                <!--end  row 2-->
+
+                <!--row 3-->
+                <div class="row">
+                    <div class="col-4">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.total)
+                            @Html.TextBoxFor(m => m.total, new { @class = "form-control", @readonly = "readonly", Value = Model.total.ThousandSeparator() })
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.remarks)
+                            @Html.TextAreaFor(m => m.remarks, new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+                <!--end  row 3-->
+
+            </div>
+            <!-- end card body -->
+        </div>
+        <!-- end  card -->
+
+        <br />
+
+        <!-- LineItemTable  -->
+        @Html.Partial("~/Views/SaleOrder/LineItemTable.cshtml", Model)
+
+    </fieldset>
+</form>
+

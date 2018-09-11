@@ -14,53 +14,61 @@
         </thead>
         <tbody>
             @{
-                /**/
+        /**/
 
-                if (Model == null)
-                {
-                    @Html.Partial("~/Views/SaleOrder/LineItem.cshtml")
-                }
-                else
-                {
-                    int i = 1;
-                    foreach (var item in Model.items)
-                    {
-                        if (Model.mode == ConstantHelper.MODE_VIEW)
-                        {
-                            <tr>
-                                <th scope="row" class="text-center" style="width:65px"> @i </th>
-                                <td class="text-left"> @item.item.name </td>
-                                <td class="text-right"> @item.quantity.ToTwoDecimalPoint() </td>
-                                <td class="text-right"> @item.price.ToTwoDecimalPoint() </td>
-                                <td class="text-right"> @item.total.ToTwoDecimalPoint() </td>
-                            </tr>
-                        }
-                        else
-                        {
-                            <tr rowIndex="@i">
-                                <input type="hidden" name="@("lineItemID"+i)" id="@("lineItemID"+i)" value="@item.id" />
-                                <input type="hidden" name="items[][id]" id="items[][id]" value="@item.id" />
-                                <td>
-                                    @Html.DropDownList("items[][itemID]", SelectionHelper.ItemSelection(item.item.id), "-- Select Status --", new { @class = "form-control line-item-required", @id = "item0", @onchange = "itemChange($(this))" })
-                                </td>
-                                <td> @Html.TextBox("items[][quantity]", null, new { @class = "form-control line-item-required numeric", @id = ("quantity" + i.ToString()), @placeholder = "Quantity", Value = @item.quantity.ToTwoDecimalPoint(), @onchange = "calculation($(this))" }) </td>
-                                <td> @Html.TextBox("items[][price]", null, new { @class = "form-control line-item-required numeric", @id = ("price" + i.ToString()), @placeholder = "Price", Value = @item.price.ToTwoDecimalPoint(), @onchange = "calculation($(this))" }) </td>
-                                <td> @Html.TextBox("total0", null, new { @class = "form-control text-right total", @id = ("total" + i.ToString()), @placeholder = "Price", Value = @item.total.ToTwoDecimalPoint(), @readonly = "readonly", @onchange = "calculation($(this))" }) </td>
-                                <td> <button type="button" class="btn btn-danger" onclick="deleteLineItem($(this))"> <i class="fas fa-trash-alt"></i></button> </td>
-                            </tr>
+        if (Model == null)
+        {
+            @Html.Partial("~/Views/SaleOrder/LineItem.cshtml")
+}
+else
+{
+    if (Model.items != null)
+    {
+
+        int i = 1;
+        foreach (var item in Model.items)
+        {
+            if (Model.mode == ConstantHelper.MODE_VIEW)
+            {
+                <tr>
+                    <th scope="row" class="text-center" style="width:65px"> @i </th>
+                    <td class="text-left"> @item.item.name </td>
+                    <td class="text-right"> @item.quantity.ToTwoDecimalPoint() </td>
+                    <td class="text-right"> @item.price.ToTwoDecimalPoint() </td>
+                    <td class="text-right"> @item.total.ToTwoDecimalPoint() </td>
+                </tr>
+    }
+    else
+    {
+        <tr rowIndex="@i">
+            <input type="hidden" name="@("lineItemID" + i)" id="@("lineItemID" + i)" value="@item.id" />
+            <input type="hidden" name="items[][id]" id="items[][id]" value="@item.id" />
+            <td>
+                @Html.DropDownList("items[][itemID]", SelectionHelper.ItemSelection(item.item.id), "-- Select Status --", new { @class = "form-control line-item-required", @id = "item0", @onchange = "itemChange($(this))" })
+            </td>
+            <td> @Html.TextBox("items[][quantity]", null, new { @class = "form-control line-item-required numeric", @id = ("quantity" + i.ToString()), @placeholder = "Quantity", Value = @item.quantity.ToTwoDecimalPoint(), @onchange = "calculation($(this))" }) </td>
+            <td> @Html.TextBox("items[][price]", null, new { @class = "form-control line-item-required numeric", @id = ("price" + i.ToString()), @placeholder = "Price", Value = @item.price.ToTwoDecimalPoint(), @onchange = "calculation($(this))" }) </td>
+            <td> @Html.TextBox("total0", null, new { @class = "form-control text-right total", @id = ("total" + i.ToString()), @placeholder = "Price", Value = @item.total.ToTwoDecimalPoint(), @readonly = "readonly", @onchange = "calculation($(this))" }) </td>
+            <td> <button type="button" class="btn btn-danger" onclick="deleteLineItem($(this))"> <i class="fas fa-trash-alt"></i></button> </td>
+        </tr>
 
 
-                        }
+}
 
-                        i++;
+i++;
+}
 
-                    }
+}
+else
+{
+        @Html.Partial("~/Views/SaleOrder/LineItem.cshtml")
+}
 
-                    if (Model.mode == ConstantHelper.MODE_EDIT)
-                    {
-                        @Html.Partial("~/Views/SaleOrder/LineItem.cshtml")
-                    }
-                }
+if (Model.mode == ConstantHelper.MODE_EDIT)
+{
+        @Html.Partial("~/Views/SaleOrder/LineItem.cshtml")
+}
+}
             }
 
 

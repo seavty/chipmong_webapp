@@ -13,6 +13,12 @@ namespace ChipMongWebApp.Utils.Helpers
     {
         public static List<SelectListItem> CustomerSSA(int id)
         {
+            if (id == 0)
+            {
+                return new List<SelectListItem>();
+            
+
+            }
             ChipMongEntities db = new ChipMongEntities();
             var record = db.tblCustomers.FirstOrDefault(x => x.deleted == null && x.id == id);
             if (record == null)

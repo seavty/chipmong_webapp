@@ -22,7 +22,7 @@
                 <td class="align-middle"> <a href=" @Url.Content("~/saleorder/view/")@item.id"> @item.code </a> </td>
                 <td> @item.date.ToDisplayDate() </td>
                 <td> @item.customer.firstName @item.customer.lastName </td>
-                <td class="text-right"> @item.total.ToTwoDecimalPoint() </td>
+                <td class="text-right"> @item.total.ThousandSeparator() </td>
                 <td> @item.status </td>
 
             </tr>

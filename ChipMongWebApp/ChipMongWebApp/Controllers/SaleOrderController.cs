@@ -25,7 +25,16 @@ namespace ChipMongWebApp.Controllers
         }
 
         //-> New
-        public ActionResult New() { return View(); }
+        public ActionResult New()
+        {
+            var record = new SaleOrderViewDTO();
+            //record.date = DateTime.Now.ToString(ConstantHelper.yyyyMMd_DASH_SEPARATOR);
+            //record.requiredDate = DateTime.Now.ToString(ConstantHelper.yyyyMMd_DASH_SEPARATOR);
+            var tmp = DateTime.Now.ToShortDateString();
+            record.date = DateTime.Now.ToShortDateString();
+            record.requiredDate = DateTime.Now.ToShortDateString();
+            return View(record);
+        }
 
         //-> New
         [HttpPost]
@@ -39,7 +48,7 @@ namespace ChipMongWebApp.Controllers
                 Response.StatusCode = 200;
                 return Json(await handler.New(newDTO), JsonRequestBehavior.AllowGet);
             }
-            catch (HttpException)
+            catch (HttpException ex)
             {
                 return Json(ConstantHelper.ERROR, JsonRequestBehavior.AllowGet);
             }

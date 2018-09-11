@@ -38,7 +38,6 @@ namespace ChipMongWebApp.Utils.Handlers
             saleOrderDTO.customer = await new CustomerHandler().SelectByID(int.Parse(record.customerID.ToString()));
             saleOrderDTO.items = await GetLineItems(id);
             saleOrderDTO.mode = mode;
-
             return saleOrderDTO;
         }
 

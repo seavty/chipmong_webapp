@@ -1,115 +1,19 @@
 ﻿@using ChipMongWebApp.Utils.Helpers
-@model ChipMongWebApp.Models.DTO.SaleOrder.SaleOrderViewDTO
 @{
     Layout = "~/Views/Shared/Main/_Main.cshtml";
 }
 
 @Html.Partial("~/Views/Shared/Template/NewMode/Button.cshtml")
 <br />
-<form id="record" name="record">
-    @Html.AntiForgeryToken()
-    <!-- card -->
-    <div class="card shadow-sm">
-        <div class="card-header merienda"> SaleOrder </div>
-
-        <!-- card body -->
-        <div class="card-body">
-
-            <!--row 1-->
-            <div class="row">
-                <div class="col-4">
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.code)
-                        @Html.TextBoxFor(m => m.code, new { @class = "form-control", @readonly = "readonly", placeholder = "Code" })
-                    </div>
-                </div>
-
-                <div class="col-4">
-                    <div class="form-group">
-                        @Html.Label("Date")
-                        @Html.TextBoxFor(m => m.date, new { @class = "form-control date-picker", Value = DateTime.Now.ToString("dd/MM/yyyy") })
-                    </div>
-                </div>
-
-                <div class="col-4">
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.requiredDate)
-                        @Html.TextBoxFor(m => m.requiredDate, new { @class = "form-control date-picker", Value = DateTime.Now.ToString("dd/MM/yyyy") })
-                    </div>
-                </div>
-
-            </div>
-            <!--end  row 1-->
-            <!--row 2-->
-            <div class="row">
-                <div class="col-4">
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.customerID)
-                        @Html.DropDownListFor(m => m.customerID, new SelectList(Enumerable.Empty<SelectListItem>()), new { @class = "form-control required" })
-                    </div>
-                </div>
-
-                <div class="col-4">
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.sourceOfSupplyID)
-                        @Html.DropDownListFor(m => m.sourceOfSupplyID, SelectionHelper.SourceSupplySelection(0), null, new { @class = "form-control required" })
-                    </div>
-                </div>
-
-                <div class="col-4">
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.status)
-                        @Html.DropDownListFor(m => m.status, SelectionHelper.SaleOrderStatus("New"), null, new { @class = "form-control" })
-                    </div>
-                </div>
-
-            </div>
-            <!--end  row 2-->
-            <!--row 3-->
-            <div class="row">
-                <div class="col-4">
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.total)
-                        @Html.TextBoxFor(m => m.total, new { @class = "form-control", @readonly = "readonly", placeholder = "Total", Value = "0.00" })
-                    </div>
-                </div>
-
-                <div class="col-4">
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.remarks)
-                        @Html.TextAreaFor(m => m.remarks, new { @class = "form-control", placeholder = "Remarks", @maxlength = "1000" })
-                    </div>
-                </div>
-            </div>
-            <!--end  row 3-->
-
-
-        </div>
-        <!-- end card body -->
-    </div>
-    <!-- end card -->
-
-    <br />
-
-    <!-- LineItemTable  -->
-    @Html.Partial("~/Views/SaleOrder/LineItemTable.cshtml", null)
-
-
-
-</form>
-
+@Html.Partial("~/Views/SaleOrder/Form.cshtml")
 
 <script src="~/Content/js/function/template/newmode/button.js"></script>
 <script src="~/Content/js/function/template/ssa.js"></script>
 <script src="~/Content/js/modules/SaleOrder.js"></script>
 <script>
-
-    const ssaURL = "@Url.Content("~/customer/ssa")";
-    const select2PlaceHolder = "Customer";
+    const controller = "@ConstantHelper.SALEORDER_CONTROLLER";
     let rowIndex = 0;
     const tableRow = `@Html.Partial("~/Views/SaleOrder/LineItem.cshtml")`;
-
-    const controller = "@ConstantHelper.SALEORDER_CONTROLLER";
 
     $(document).ready(() => initializeComponents());
 
