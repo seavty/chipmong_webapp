@@ -22,7 +22,7 @@
 
 <script src="~/Content/js/function/template/viewmode/button.js"></script>
 <script>
-    const controller = "@ConstantHelper.USER_CONTROLLER";
+    const controller = "@Url.Content($"~/{ConstantHelper.USER_CONTROLLER}")";
     const id = @Url.RequestContext.RouteData.Values["id"];
 </script>
 

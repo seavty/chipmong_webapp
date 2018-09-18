@@ -9,7 +9,7 @@ Layout = "~/Views/Shared/Main/_Main.cshtml";
 
 <script src="~/Content/js/function/template/editmode/button.js"></script>
 <script>
-    const controller = "@ConstantHelper.CUSTOMER_CONTROLLER";
+    const controller = "@Url.Content($"~/{ConstantHelper.CUSTOMER_CONTROLLER}")";
     const id = @Url.RequestContext.RouteData.Values["id"];
 </script>
 

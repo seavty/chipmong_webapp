@@ -55,8 +55,8 @@
 
 <script>
     const id = @Url.RequestContext.RouteData.Values["id"];
-    const controller = "@ConstantHelper.CUSTOMER_CONTROLLER";
-    const dealerSourceSupplyEndPoint = "@ConstantHelper.DEALER_SOURCE_SUPPLY_CONTROLLER";
+    const controller = "@Url.Content($"~/{ConstantHelper.CUSTOMER_CONTROLLER}")";
+    const dealerSourceSupplyEndPoint = "@Url.Content($"~/{ConstantHelper.DEALER_SOURCE_SUPPLY_CONTROLLER}")";
 
     $(document).ready(() => {
         $("#sourcesupplyTab").contents().unwrap();

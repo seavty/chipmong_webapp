@@ -63,7 +63,7 @@
 <br />
 <br />
 
-<input type="hidden" name="baseURL" id="baseURL" value="@Request.Url.GetLeftPart(UriPartial.Authority)" />
+<input type="hidden" name="baseURL" id="baseURL" value="@Url.Content("~")" />
 
 <script>
     function logout() {

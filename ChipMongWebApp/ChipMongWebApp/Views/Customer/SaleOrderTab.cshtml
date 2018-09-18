@@ -21,14 +21,14 @@
 <script src="~/Content/js/function/template/findmode/button.js"></script>
 <script>
     const id = @Url.RequestContext.RouteData.Values["id"];
-    const controller = "@ConstantHelper.SALEORDER_CONTROLLER";
+    const controller = "@Url.Content($"~/{ConstantHelper.SALEORDER_CONTROLLER}")";
 
     $(document).ready(() => {
         $("#saleorderTab").contents().unwrap();
         find();
     });
-    const customerTab = () => location.href = "@ConstantHelper.CUSTOMER_CONTROLLER" + "/view/" + id;
-    const sourceSupplyTab = () => location.href = "@ConstantHelper.CUSTOMER_CONTROLLER" + "/sourceSupplytab/" + id;
+    const customerTab = () => location.href = "@Url.Content($"~/{ConstantHelper.CUSTOMER_CONTROLLER}/view/")"+ id;
+    const sourceSupplyTab = () => location.href = "@Url.Content($"~/{ConstantHelper.CUSTOMER_CONTROLLER}/sourceSupplytab/")" + id;
 </script>
 
 

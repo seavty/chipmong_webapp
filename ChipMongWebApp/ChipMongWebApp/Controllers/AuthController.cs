@@ -2,6 +2,7 @@
 using ChipMongWebApp.Models.DTO.Auth;
 using ChipMongWebApp.Models.DTO.Customer;
 using ChipMongWebApp.Models.DTO.User;
+using ChipMongWebApp.Utils.Attribute;
 using ChipMongWebApp.Utils.Handlers;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ using System.Web.Mvc;
 
 namespace ChipMongWebApp.Controllers
 {
+    [ErrorLogger]
     public class AuthController : Controller
     {
         public ActionResult Login()

@@ -15,7 +15,7 @@
 
 <script src="~/Content/js/function/template/viewmode/button.js"></script>
 <script>
-    const controller = "@ConstantHelper.ITEM_CONTROLLER";
+    const controller = "@Url.Content($"~/{ConstantHelper.ITEM_CONTROLLER}")";
     const id = @Url.RequestContext.RouteData.Values["id"];
 </script>
 

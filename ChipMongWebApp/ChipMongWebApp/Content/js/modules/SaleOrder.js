@@ -1,5 +1,6 @@
 ﻿const initializeComponents = () => {
-    setupSSA("#customerID", "/customer/ssa", "Customer", customerTemplateResult, customerTemplateSelection);
+    let url = $("#baseURL").val();
+    setupSSA("#customerID", url + "/customer/ssa", "Customer", customerTemplateResult, customerTemplateSelection);
 }
 
 

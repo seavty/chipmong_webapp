@@ -60,7 +60,7 @@
 <script src="~/Content/js/jquery-upload.js"></script>
 <script src="~/Content/js/function/template/findmode/button.js"></script>
 <script>
-    const controller = "@ConstantHelper.SALEORDER_CONTROLLER";
+    const controller = "@Url.Content($"~/{ConstantHelper.SALEORDER_CONTROLLER}")";
     const uploadExcelButton = `<button type="button" class="btn btn-info" id="btnUploadExcel"> <i class="fas fa-upload"></i> Upload Excel </button>`;
 
     $(document).ready(() => {
@@ -84,7 +84,9 @@
                 window.location.reload();
             }
             else
-                location.href = $("#baseURL").val() + "/auth/login";
+                location.href = "@Url.Content($"~/{@ConstantHelper.AUTH_CONTROLLER}/login")";
+
+                //location.href = $("#baseURL").val() + "/auth/login";
 
             $('#loadingIndicator').modal("hide");
         });

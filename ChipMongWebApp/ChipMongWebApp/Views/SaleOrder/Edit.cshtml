@@ -13,15 +13,15 @@
 <script src="~/Content/js/function/template/ssa.js"></script>
 <script src="~/Content/js/modules/SaleOrder.js"></script>
 <script>
-    const controller = "@ConstantHelper.SALEORDER_CONTROLLER";
+    const controller = "@Url.Content($"~/{ConstantHelper.SALEORDER_CONTROLLER}")";
     const id = @Url.RequestContext.RouteData.Values["id"];
-    const tableRow = `@Html.Partial("~/Views/SaleOrder/LineItem.cshtml")`;
+    const tableRow = `@Html.Partial($"~/Views/{ConstantHelper.SALEORDER_CONTROLLER}/LineItem.cshtml")`;
     var rowIndex = @Model.items.Count();
 
     $(document).ready(() => initializeComponents());
 
     //-> itemChange
-    function itemChange(prop) { getItem(prop, "@Url.Content("~/item")"); }
+    function itemChange(prop) { getItem(prop, "@Url.Content($"~/{ConstantHelper.ITEM_CONTROLLER}")"); }
 
 </script>
 

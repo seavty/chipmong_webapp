@@ -2,7 +2,7 @@
 @using ChipMongWebApp.Models.DTO.Customer
 @model ChipMongWebApp.Models.DTO.Customer.CustomerFindDTO
 @{
-   Layout = "~/Views/Shared/Main/_Main.cshtml";
+    Layout = "~/Views/Shared/Main/_Main.cshtml";
 }
 
 <form name="record" id="record">
@@ -52,6 +52,7 @@
 
 <script src="~/Content/js/function/template/findmode/button.js"></script>
 <script>
-    const controller = "@ConstantHelper.CUSTOMER_CONTROLLER";
+    
+    const controller = "@Url.Content($"~/{ConstantHelper.CUSTOMER_CONTROLLER}")";
 </script>
 

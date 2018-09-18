@@ -16,7 +16,7 @@
 
 <script src="~/Content/js/function/template/viewmode/button.js"></script>
 <script>
-    const controller = "@ConstantHelper.SALEORDER_CONTROLLER";
+    const controller = "@Url.Content($"~/{ConstantHelper.SALEORDER_CONTROLLER}")";
     const id = @Url.RequestContext.RouteData.Values["id"];
     $(document).ready(() => removePlaceHolder());
 </script>
