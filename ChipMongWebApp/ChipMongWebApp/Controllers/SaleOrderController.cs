@@ -118,7 +118,7 @@ namespace ChipMongWebApp.Controllers
             }
         }
 
-        //-> Edit
+        //-> UploadExcel
         [HttpPost]
         //[ValidateAntiForgeryToken]
         public async Task<String> UploadExcel(SaleOrderUploadExcel uploadExcel)

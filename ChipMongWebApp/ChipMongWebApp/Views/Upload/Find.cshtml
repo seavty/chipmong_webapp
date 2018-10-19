@@ -1,0 +1,63 @@
+﻿@using ChipMongWebApp.Utils.Helpers
+@using ChipMongWebApp.Models.DTO.SaleOrder
+@model ChipMongWebApp.Models.DTO.SaleOrder.SaleOrderFindDTO
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/Main/_Main.cshtml";
+}
+
+<form name="frmUpload" id="frmUpload" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
+    <input type="file" id="ExcelFile" name="ExcelFile" style="display:none" accept=".xlsx" />
+</form>
+
+<form name="record" id="record">
+    @Html.AntiForgeryToken()
+    @Html.Partial("~/Views/Shared/Template/FindMode/Button.cshtml")
+
+    <br />
+</form>
+
+<script src="~/Content/js/jquery-upload.js"></script>
+<script src="~/Content/js/function/template/findmode/button.js"></script>
+<script>
+    const controller = "@Url.Content($"~/{ConstantHelper.UPLOAD_CONTROLLER}")";
+    const uploadExcelButton = `<button type="button" class="btn btn-info" id="btnUploadExcel"> <i class="fas fa-upload"></i> Upload Retailer </button>`;
+
+    $(document).ready(() => {
+        $("#btnNew").closest("div").append(uploadExcelButton);
+
+        btnFind
+
+        $("#btnFind").remove();
+        $("#btnCancel").remove();
+        $("#btnNew").remove();
+
+        $("#btnUploadExcel").click(() => $("#ExcelFile").trigger("click"));
+        $("#ExcelFile").change(() => uploadExcel());
+    });
+
+    //-> uploadExcel
+    let uploadExcel = () => {
+        $('#loadingIndicator').modal({
+            keyboard: false,
+            backdrop: "static"
+        });
+
+        $("#ExcelFile").upload(controller + "/UploadRetailer?" + $("#frmUpload").serialize(), function (data) {
+            console.log(data);
+            if (data.substring(0, 2) == "ok") {
+                alert(data.replace("ok", "") + " record(s) have been uploaded.");
+                window.location.reload();
+            }
+            else
+                location.href = "@Url.Content($"~/{@ConstantHelper.AUTH_CONTROLLER}/login")";
+
+                //location.href = $("#baseURL").val() + "/auth/login";
+
+            $('#loadingIndicator').modal("hide");
+        });
+    }
+</script>
+
+

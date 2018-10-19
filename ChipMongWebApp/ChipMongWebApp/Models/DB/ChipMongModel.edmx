@@ -56,6 +56,21 @@
           <Property Name="item_Name2" Type="nvarchar" MaxLength="255" />
           <Property Name="item_Index" Type="int" />
         </EntityType>
+        <EntityType Name="tblRetailer">
+          <Key>
+            <PropertyRef Name="retl_RetailerID" />
+          </Key>
+          <Property Name="retl_RetailerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="retl_Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="retl_Address" Type="nvarchar" MaxLength="50" />
+          <Property Name="retl_Deleted" Type="int" />
+          <Property Name="retl_CustomerID" Type="int" />
+          <Property Name="retl_Code" Type="nvarchar" MaxLength="50" />
+          <Property Name="retl_Province" Type="nvarchar" MaxLength="50" />
+          <Property Name="retl_District" Type="nvarchar" MaxLength="50" />
+          <Property Name="retl_Phone" Type="nvarchar" MaxLength="50" />
+          <Property Name="retl_Phone2" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="tblSaleOrder">
           <Key>
             <PropertyRef Name="slor_SaleOrderID" />
@@ -116,7 +131,7 @@
           <Property Name="user_FirstName" Type="nvarchar" MaxLength="100" />
           <Property Name="user_LastName" Type="nvarchar" MaxLength="100" />
           <Property Name="user_Deleted" Type="int" />
-          <Property Name="user_Password" Type="nvarchar" MaxLength="100" />
+          <Property Name="user_Password" Type="nvarchar" MaxLength="300" />
           <Property Name="user_Session" Type="nvarchar" MaxLength="100" />
           <Property Name="user_PhoneNumber" Type="nvarchar" MaxLength="100" />
           <Property Name="user_Email" Type="nvarchar" MaxLength="100" />
@@ -125,6 +140,7 @@
           <EntitySet Name="tblCustomer" EntityType="Self.tblCustomer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblDealerSourceOfSupply" EntityType="Self.tblDealerSourceOfSupply" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblItem" EntityType="Self.tblItem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblRetailer" EntityType="Self.tblRetailer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblSaleOrder" EntityType="Self.tblSaleOrder" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblSaleOrderItem" EntityType="Self.tblSaleOrderItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblSourceOfSupply" EntityType="Self.tblSourceOfSupply" Schema="dbo" store:Type="Tables" />
@@ -167,6 +183,7 @@
           <EntitySet Name="tblSourceOfSupplies" EntityType="ChipMongModel.tblSourceOfSupply" />
           <EntitySet Name="tblDealerSourceOfSupplies" EntityType="ChipMongModel.tblDealerSourceOfSupply" />
           <EntitySet Name="tblUsers" EntityType="ChipMongModel.tblUser" />
+          <EntitySet Name="tblRetailers" EntityType="ChipMongModel.tblRetailer" />
         </EntityContainer>
         <EntityType Name="tblSaleOrder">
           <Key>
@@ -253,11 +270,26 @@
           <Property Name="firstName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="lastName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="deleted" Type="Int32" />
-          <Property Name="password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
           <Property Name="session" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="userName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="phoneNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblRetailer">
+          <Key>
+            <PropertyRef Name="retl_RetailerID" />
+          </Key>
+          <Property Name="retl_RetailerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="retl_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="retl_Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="retl_Deleted" Type="Int32" />
+          <Property Name="retl_CustomerID" Type="Int32" />
+          <Property Name="retl_Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="retl_Province" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="retl_District" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="retl_Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="retl_Phone2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -385,6 +417,22 @@
                 <ScalarProperty Name="createdBy" ColumnName="user_CreatedBy" />
                 <ScalarProperty Name="createdDate" ColumnName="user_CreatedDate" />
                 <ScalarProperty Name="id" ColumnName="user_UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblRetailers">
+            <EntityTypeMapping TypeName="ChipMongModel.tblRetailer">
+              <MappingFragment StoreEntitySet="tblRetailer">
+                <ScalarProperty Name="retl_Phone2" ColumnName="retl_Phone2" />
+                <ScalarProperty Name="retl_Phone" ColumnName="retl_Phone" />
+                <ScalarProperty Name="retl_District" ColumnName="retl_District" />
+                <ScalarProperty Name="retl_Province" ColumnName="retl_Province" />
+                <ScalarProperty Name="retl_Code" ColumnName="retl_Code" />
+                <ScalarProperty Name="retl_CustomerID" ColumnName="retl_CustomerID" />
+                <ScalarProperty Name="retl_Deleted" ColumnName="retl_Deleted" />
+                <ScalarProperty Name="retl_Address" ColumnName="retl_Address" />
+                <ScalarProperty Name="retl_Name" ColumnName="retl_Name" />
+                <ScalarProperty Name="retl_RetailerID" ColumnName="retl_RetailerID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

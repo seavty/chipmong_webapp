@@ -32,5 +32,6 @@ namespace ChipMongWebApp.Models.DB
         public virtual DbSet<tblSourceOfSupply> tblSourceOfSupplies { get; set; }
         public virtual DbSet<tblDealerSourceOfSupply> tblDealerSourceOfSupplies { get; set; }
         public virtual DbSet<tblUser> tblUsers { get; set; }
+        public virtual DbSet<tblRetailer> tblRetailers { get; set; }
     }
 }

@@ -44,6 +44,8 @@ namespace ChipMongWebApp.Utils.Helpers
         public static readonly string AUTH_CONTROLLER = "/auth";
         public static readonly string DEALER_SOURCE_SUPPLY_CONTROLLER = "/dealersourcesupply";
 
+        public static readonly string UPLOAD_CONTROLLER = "/upload";
+
         public static readonly string yyyyMMd_DASH_SEPARATOR = "yyyy-MM-dd";
         public static readonly string ddMMyyyy_DASH_SEPARATOR = "dd-MM-yyyy";
 

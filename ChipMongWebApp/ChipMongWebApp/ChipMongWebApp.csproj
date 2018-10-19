@@ -192,9 +192,14 @@
     <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\SaleOrderController.cs" />
     <Compile Include="Controllers\SourceSupplyController.cs" />
+    <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Models\DB\tblRetailer.cs">
+      <DependentUpon>ChipMongModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DTO\Customer\CustomerFindResultDTO.cs" />
     <Compile Include="Models\DTO\SaleOrder\SaleOrderFindResultDTO.cs" />
+    <Compile Include="Models\DTO\Upload\UploadRetailer.cs" />
     <Compile Include="Utils\Extension\DateTimeExtension.cs" />
     <Compile Include="Utils\Extension\DoubleExtension.cs" />
     <Compile Include="Utils\Extension\PagingExtension.cs" />
@@ -208,6 +213,7 @@
     <Compile Include="Utils\Handlers\ItemHandler.cs" />
     <Compile Include="Utils\Handlers\SaleOrderHandler.cs" />
     <Compile Include="Utils\Handlers\SourceSupplyHandler.cs" />
+    <Compile Include="Utils\Handlers\UploadExcelHandler.cs" />
     <Compile Include="Utils\Handlers\UserHandler.cs" />
     <Compile Include="Utils\Helpers\ConstantHelper.cs" />
     <Compile Include="Utils\Helpers\CryptingHelper.cs" />
@@ -464,6 +470,7 @@
     <Content Include="Views\SaleOrder\Form.cshtml" />
     <Content Include="Views\Customer\Tabs.cshtml" />
     <Content Include="Views\Shared\Template\FindMode\TableData.cshtml" />
+    <Content Include="Views\Upload\Find.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
