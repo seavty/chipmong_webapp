@@ -271,7 +271,7 @@ namespace ChipMongWebApp.Utils.Handlers
                     XLWorkbook Workbook = new XLWorkbook(uploadExcel.ExcelFile.InputStream);
                     IXLWorksheet WorkSheet = null;
                     WorkSheet = Workbook.Worksheet("sheet1");
-                    if (!DocumentHelper.SaveExcelFile(uploadExcel))
+                    if (!DocumentHelper.SaveExcelFile(uploadExcel.ExcelFile))
                         throw new HttpException((int)HttpStatusCode.BadRequest, "Error saving file.");
 
                     WorkSheet.FirstRow().Delete();//delete header column

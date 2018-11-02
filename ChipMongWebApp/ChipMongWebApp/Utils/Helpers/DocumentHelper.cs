@@ -11,6 +11,8 @@ namespace ChipMongWebApp.Utils.Helpers
 {
     public class DocumentHelper
     {
+        /*
+        //-> SaveExcelFile
         public static bool SaveExcelFile(SaleOrderUploadExcel uploadExcel)
         {
             string path = "";
@@ -36,8 +38,10 @@ namespace ChipMongWebApp.Utils.Helpers
                 uploadExcel.ExcelFile.SaveAs(path + @"\" + fileName);
             return true;
         }
+        */
 
-        public static bool SaveRetailerExcelFile(UploadRetailer uploadExcel)
+        //->  SaveExcelFile
+        public static bool SaveExcelFile(HttpPostedFileBase uploadExcel)
         {
             string path = "";
             string year = DateTime.Now.Year.ToString();
@@ -48,18 +52,18 @@ namespace ChipMongWebApp.Utils.Helpers
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
 
-            var file = path + @"\" + uploadExcel.ExcelFile.FileName;
-            var fileName = uploadExcel.ExcelFile.FileName;
+            var file = path + @"\" + uploadExcel.FileName;
+            var fileName = uploadExcel.FileName;
 
             if (File.Exists(file))
             {
                 var currentDateIime = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss-fff");
                 var fileWithoutExtension = fileName.Substring(0, fileName.Length - 5);
-                uploadExcel.ExcelFile.SaveAs(path + @"\" + fileWithoutExtension + "-" + currentDateIime + ".xlsx");
+                uploadExcel.SaveAs(path + @"\" + fileWithoutExtension + "-" + currentDateIime + ".xlsx");
 
             }
             else
-                uploadExcel.ExcelFile.SaveAs(path + @"\" + fileName);
+                uploadExcel.SaveAs(path + @"\" + fileName);
             return true;
         }
     }

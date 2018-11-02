@@ -34,5 +34,9 @@ namespace ChipMongWebApp.Models.DB
         public string cust_LastCommandValue { get; set; }
         public string cust_LastCommandValue2 { get; set; }
         public string cust_Lang { get; set; }
+        public string cust_LastCommandValue3 { get; set; }
+        public Nullable<int> cust_EditPOID { get; set; }
+        public Nullable<int> cust_EditSOID { get; set; }
+        public Nullable<int> cust_cPage { get; set; }
     }
 }

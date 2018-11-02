@@ -50,6 +50,24 @@ namespace ChipMongWebApp.Controllers
                 return "no";
             }
         }
+
+        //->
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public async Task<String> UploadCustomer(UploadCustomer uploadExcel)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    throw new HttpException((int)HttpStatusCode.BadRequest, ConstantHelper.KEY_IN_REQUIRED_FIELD);
+                Response.StatusCode = 200;
+                return $"ok{await handler.UploadCustomer(uploadExcel)}";
+            }
+            catch (HttpException)
+            {
+                return "no";
+            }
+        }
     }
 
     

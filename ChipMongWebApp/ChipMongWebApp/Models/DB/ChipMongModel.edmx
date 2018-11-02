@@ -29,6 +29,10 @@
           <Property Name="cust_LastCommandValue" Type="nvarchar" MaxLength="50" />
           <Property Name="cust_LastCommandValue2" Type="nvarchar" MaxLength="50" />
           <Property Name="cust_Lang" Type="nvarchar" MaxLength="10" />
+          <Property Name="cust_LastCommandValue3" Type="nvarchar" MaxLength="50" />
+          <Property Name="cust_EditPOID" Type="int" />
+          <Property Name="cust_EditSOID" Type="int" />
+          <Property Name="cust_cPage" Type="int" />
         </EntityType>
         <EntityType Name="tblDealerSourceOfSupply">
           <Key>
@@ -92,6 +96,7 @@
           <Property Name="slor_SourceOfSupply" Type="int" />
           <Property Name="slor_RequiredDate" Type="datetime" />
           <Property Name="slor_PickUp" Type="nvarchar" MaxLength="50" />
+          <Property Name="slor_TruckNo" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="tblSaleOrderItem">
           <Key>
@@ -136,6 +141,58 @@
           <Property Name="user_PhoneNumber" Type="nvarchar" MaxLength="100" />
           <Property Name="user_Email" Type="nvarchar" MaxLength="100" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'CM.dbo.vExportSaleOrder' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vExportSaleOrder">
+          <Key>
+            <PropertyRef Name="slor_SaleOrderID" />
+          </Key>
+          <Property Name="slor_SaleOrderID" Type="int" Nullable="false" />
+          <Property Name="slor_CreatedDate" Type="datetime" />
+          <Property Name="slor_CreatedBy" Type="int" />
+          <Property Name="slor_UpdatedDate" Type="datetime" />
+          <Property Name="slor_UpdatedBy" Type="int" />
+          <Property Name="slor_Code" Type="nvarchar" MaxLength="100" />
+          <Property Name="slor_Deleted" Type="int" />
+          <Property Name="slor_CustomerID" Type="int" />
+          <Property Name="slor_Total" Type="numeric" Precision="18" Scale="5" />
+          <Property Name="slor_Status" Type="nvarchar" MaxLength="100" />
+          <Property Name="slor_Remarks" Type="nvarchar" MaxLength="1000" />
+          <Property Name="slor_Date" Type="datetime" />
+          <Property Name="slor_RetailerID" Type="int" />
+          <Property Name="slor_PreOrderID" Type="int" />
+          <Property Name="slor_SourceOfSupply" Type="int" />
+          <Property Name="slor_RequiredDate" Type="datetime" />
+          <Property Name="slor_PickUp" Type="nvarchar" MaxLength="50" />
+          <Property Name="slor_TruckNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="cust_CustomerID" Type="int" />
+          <Property Name="cust_CreatedDate" Type="datetime" />
+          <Property Name="cust_CreatedBy" Type="int" />
+          <Property Name="cust_UpdatedDate" Type="datetime" />
+          <Property Name="cust_UpdatedBy" Type="int" />
+          <Property Name="cust_Code" Type="nvarchar" MaxLength="100" />
+          <Property Name="cust_FirstName" Type="nvarchar" MaxLength="100" />
+          <Property Name="cust_LastName" Type="nvarchar" MaxLength="100" />
+          <Property Name="cust_Phone1" Type="nvarchar" MaxLength="100" />
+          <Property Name="cust_Phone2" Type="nvarchar" MaxLength="100" />
+          <Property Name="cust_Password" Type="nvarchar" MaxLength="100" />
+          <Property Name="cust_Token" Type="nvarchar" MaxLength="100" />
+          <Property Name="cust_Email" Type="nvarchar" MaxLength="100" />
+          <Property Name="cust_Address" Type="nvarchar" MaxLength="100" />
+          <Property Name="cust_Deleted" Type="int" />
+          <Property Name="cust_LineID" Type="nvarchar" MaxLength="50" />
+          <Property Name="cust_LastCommand" Type="nvarchar" MaxLength="50" />
+          <Property Name="cust_LastCommandValue" Type="nvarchar" MaxLength="50" />
+          <Property Name="cust_LastCommandValue2" Type="nvarchar" MaxLength="50" />
+          <Property Name="cust_Lang" Type="nvarchar" MaxLength="10" />
+          <Property Name="cust_LastCommandValue3" Type="nvarchar" MaxLength="50" />
+          <Property Name="cust_EditPOID" Type="int" />
+          <Property Name="cust_EditSOID" Type="int" />
+          <Property Name="cust_cPage" Type="int" />
+          <Property Name="scsp_SourceOfSupplyID" Type="int" />
+          <Property Name="scsp_Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="scsp_Deleted" Type="int" />
+        </EntityType>
         <EntityContainer Name="ChipMongModelStoreContainer">
           <EntitySet Name="tblCustomer" EntityType="Self.tblCustomer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblDealerSourceOfSupply" EntityType="Self.tblDealerSourceOfSupply" Schema="dbo" store:Type="Tables" />
@@ -145,6 +202,55 @@
           <EntitySet Name="tblSaleOrderItem" EntityType="Self.tblSaleOrderItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblSourceOfSupply" EntityType="Self.tblSourceOfSupply" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblUser" EntityType="Self.tblUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vExportSaleOrder" EntityType="Self.vExportSaleOrder" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vExportSaleOrder].[slor_SaleOrderID] AS [slor_SaleOrderID], 
+    [vExportSaleOrder].[slor_CreatedDate] AS [slor_CreatedDate], 
+    [vExportSaleOrder].[slor_CreatedBy] AS [slor_CreatedBy], 
+    [vExportSaleOrder].[slor_UpdatedDate] AS [slor_UpdatedDate], 
+    [vExportSaleOrder].[slor_UpdatedBy] AS [slor_UpdatedBy], 
+    [vExportSaleOrder].[slor_Code] AS [slor_Code], 
+    [vExportSaleOrder].[slor_Deleted] AS [slor_Deleted], 
+    [vExportSaleOrder].[slor_CustomerID] AS [slor_CustomerID], 
+    [vExportSaleOrder].[slor_Total] AS [slor_Total], 
+    [vExportSaleOrder].[slor_Status] AS [slor_Status], 
+    [vExportSaleOrder].[slor_Remarks] AS [slor_Remarks], 
+    [vExportSaleOrder].[slor_Date] AS [slor_Date], 
+    [vExportSaleOrder].[slor_RetailerID] AS [slor_RetailerID], 
+    [vExportSaleOrder].[slor_PreOrderID] AS [slor_PreOrderID], 
+    [vExportSaleOrder].[slor_SourceOfSupply] AS [slor_SourceOfSupply], 
+    [vExportSaleOrder].[slor_RequiredDate] AS [slor_RequiredDate], 
+    [vExportSaleOrder].[slor_PickUp] AS [slor_PickUp], 
+    [vExportSaleOrder].[slor_TruckNo] AS [slor_TruckNo], 
+    [vExportSaleOrder].[cust_CustomerID] AS [cust_CustomerID], 
+    [vExportSaleOrder].[cust_CreatedDate] AS [cust_CreatedDate], 
+    [vExportSaleOrder].[cust_CreatedBy] AS [cust_CreatedBy], 
+    [vExportSaleOrder].[cust_UpdatedDate] AS [cust_UpdatedDate], 
+    [vExportSaleOrder].[cust_UpdatedBy] AS [cust_UpdatedBy], 
+    [vExportSaleOrder].[cust_Code] AS [cust_Code], 
+    [vExportSaleOrder].[cust_FirstName] AS [cust_FirstName], 
+    [vExportSaleOrder].[cust_LastName] AS [cust_LastName], 
+    [vExportSaleOrder].[cust_Phone1] AS [cust_Phone1], 
+    [vExportSaleOrder].[cust_Phone2] AS [cust_Phone2], 
+    [vExportSaleOrder].[cust_Password] AS [cust_Password], 
+    [vExportSaleOrder].[cust_Token] AS [cust_Token], 
+    [vExportSaleOrder].[cust_Email] AS [cust_Email], 
+    [vExportSaleOrder].[cust_Address] AS [cust_Address], 
+    [vExportSaleOrder].[cust_Deleted] AS [cust_Deleted], 
+    [vExportSaleOrder].[cust_LineID] AS [cust_LineID], 
+    [vExportSaleOrder].[cust_LastCommand] AS [cust_LastCommand], 
+    [vExportSaleOrder].[cust_LastCommandValue] AS [cust_LastCommandValue], 
+    [vExportSaleOrder].[cust_LastCommandValue2] AS [cust_LastCommandValue2], 
+    [vExportSaleOrder].[cust_Lang] AS [cust_Lang], 
+    [vExportSaleOrder].[cust_LastCommandValue3] AS [cust_LastCommandValue3], 
+    [vExportSaleOrder].[cust_EditPOID] AS [cust_EditPOID], 
+    [vExportSaleOrder].[cust_EditSOID] AS [cust_EditSOID], 
+    [vExportSaleOrder].[cust_cPage] AS [cust_cPage], 
+    [vExportSaleOrder].[scsp_SourceOfSupplyID] AS [scsp_SourceOfSupplyID], 
+    [vExportSaleOrder].[scsp_Name] AS [scsp_Name], 
+    [vExportSaleOrder].[scsp_Deleted] AS [scsp_Deleted]
+    FROM [dbo].[vExportSaleOrder] AS [vExportSaleOrder]</DefiningQuery>
+          </EntitySet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -174,6 +280,10 @@
           <Property Name="cust_LastCommandValue" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="cust_LastCommandValue2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="cust_Lang" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="cust_LastCommandValue3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="cust_EditPOID" Type="Int32" />
+          <Property Name="cust_EditSOID" Type="Int32" />
+          <Property Name="cust_cPage" Type="Int32" />
         </EntityType>
         <EntityContainer Name="ChipMongEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="tblCustomers" EntityType="Self.tblCustomer" />
@@ -184,6 +294,7 @@
           <EntitySet Name="tblDealerSourceOfSupplies" EntityType="ChipMongModel.tblDealerSourceOfSupply" />
           <EntitySet Name="tblUsers" EntityType="ChipMongModel.tblUser" />
           <EntitySet Name="tblRetailers" EntityType="ChipMongModel.tblRetailer" />
+          <EntitySet Name="vExportSaleOrders" EntityType="ChipMongModel.vExportSaleOrder" />
         </EntityContainer>
         <EntityType Name="tblSaleOrder">
           <Key>
@@ -206,6 +317,7 @@
           <Property Name="sourceOfSupplyID" Type="Int32" />
           <Property Name="requiredDate" Type="DateTime" Precision="3" />
           <Property Name="pickUp" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="slor_TruckNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblSaleOrderItem">
           <Key>
@@ -291,6 +403,56 @@
           <Property Name="retl_Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="retl_Phone2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="vExportSaleOrder">
+          <Key>
+            <PropertyRef Name="slor_SaleOrderID" />
+          </Key>
+          <Property Name="slor_SaleOrderID" Type="Int32" Nullable="false" />
+          <Property Name="slor_CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="slor_CreatedBy" Type="Int32" />
+          <Property Name="slor_UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="slor_UpdatedBy" Type="Int32" />
+          <Property Name="slor_Code" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="slor_Deleted" Type="Int32" />
+          <Property Name="slor_CustomerID" Type="Int32" />
+          <Property Name="slor_Total" Type="Decimal" Precision="18" Scale="5" />
+          <Property Name="slor_Status" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="slor_Remarks" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="slor_Date" Type="DateTime" Precision="3" />
+          <Property Name="slor_RetailerID" Type="Int32" />
+          <Property Name="slor_PreOrderID" Type="Int32" />
+          <Property Name="slor_SourceOfSupply" Type="Int32" />
+          <Property Name="slor_RequiredDate" Type="DateTime" Precision="3" />
+          <Property Name="slor_PickUp" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="slor_TruckNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="cust_CustomerID" Type="Int32" />
+          <Property Name="cust_CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="cust_CreatedBy" Type="Int32" />
+          <Property Name="cust_UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="cust_UpdatedBy" Type="Int32" />
+          <Property Name="cust_Code" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="cust_FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="cust_LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="cust_Phone1" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="cust_Phone2" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="cust_Password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="cust_Token" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="cust_Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="cust_Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="cust_Deleted" Type="Int32" />
+          <Property Name="cust_LineID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="cust_LastCommand" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="cust_LastCommandValue" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="cust_LastCommandValue2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="cust_Lang" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="cust_LastCommandValue3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="cust_EditPOID" Type="Int32" />
+          <Property Name="cust_EditSOID" Type="Int32" />
+          <Property Name="cust_cPage" Type="Int32" />
+          <Property Name="scsp_SourceOfSupplyID" Type="Int32" />
+          <Property Name="scsp_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="scsp_Deleted" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -300,6 +462,10 @@
           <EntitySetMapping Name="tblCustomers">
             <EntityTypeMapping TypeName="ChipMongModel.tblCustomer">
               <MappingFragment StoreEntitySet="tblCustomer">
+                <ScalarProperty Name="cust_cPage" ColumnName="cust_cPage" />
+                <ScalarProperty Name="cust_EditSOID" ColumnName="cust_EditSOID" />
+                <ScalarProperty Name="cust_EditPOID" ColumnName="cust_EditPOID" />
+                <ScalarProperty Name="cust_LastCommandValue3" ColumnName="cust_LastCommandValue3" />
                 <ScalarProperty Name="cust_Lang" ColumnName="cust_Lang" />
                 <ScalarProperty Name="cust_LastCommandValue2" ColumnName="cust_LastCommandValue2" />
                 <ScalarProperty Name="cust_LastCommandValue" ColumnName="cust_LastCommandValue" />
@@ -326,6 +492,7 @@
           <EntitySetMapping Name="tblSaleOrders">
             <EntityTypeMapping TypeName="ChipMongModel.tblSaleOrder">
               <MappingFragment StoreEntitySet="tblSaleOrder">
+                <ScalarProperty Name="slor_TruckNo" ColumnName="slor_TruckNo" />
                 <ScalarProperty Name="pickUp" ColumnName="slor_PickUp" />
                 <ScalarProperty Name="requiredDate" ColumnName="slor_RequiredDate" />
                 <ScalarProperty Name="sourceOfSupplyID" ColumnName="slor_SourceOfSupply" />
@@ -433,6 +600,57 @@
                 <ScalarProperty Name="retl_Address" ColumnName="retl_Address" />
                 <ScalarProperty Name="retl_Name" ColumnName="retl_Name" />
                 <ScalarProperty Name="retl_RetailerID" ColumnName="retl_RetailerID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vExportSaleOrders">
+            <EntityTypeMapping TypeName="ChipMongModel.vExportSaleOrder">
+              <MappingFragment StoreEntitySet="vExportSaleOrder">
+                <ScalarProperty Name="scsp_Deleted" ColumnName="scsp_Deleted" />
+                <ScalarProperty Name="scsp_Name" ColumnName="scsp_Name" />
+                <ScalarProperty Name="scsp_SourceOfSupplyID" ColumnName="scsp_SourceOfSupplyID" />
+                <ScalarProperty Name="cust_cPage" ColumnName="cust_cPage" />
+                <ScalarProperty Name="cust_EditSOID" ColumnName="cust_EditSOID" />
+                <ScalarProperty Name="cust_EditPOID" ColumnName="cust_EditPOID" />
+                <ScalarProperty Name="cust_LastCommandValue3" ColumnName="cust_LastCommandValue3" />
+                <ScalarProperty Name="cust_Lang" ColumnName="cust_Lang" />
+                <ScalarProperty Name="cust_LastCommandValue2" ColumnName="cust_LastCommandValue2" />
+                <ScalarProperty Name="cust_LastCommandValue" ColumnName="cust_LastCommandValue" />
+                <ScalarProperty Name="cust_LastCommand" ColumnName="cust_LastCommand" />
+                <ScalarProperty Name="cust_LineID" ColumnName="cust_LineID" />
+                <ScalarProperty Name="cust_Deleted" ColumnName="cust_Deleted" />
+                <ScalarProperty Name="cust_Address" ColumnName="cust_Address" />
+                <ScalarProperty Name="cust_Email" ColumnName="cust_Email" />
+                <ScalarProperty Name="cust_Token" ColumnName="cust_Token" />
+                <ScalarProperty Name="cust_Password" ColumnName="cust_Password" />
+                <ScalarProperty Name="cust_Phone2" ColumnName="cust_Phone2" />
+                <ScalarProperty Name="cust_Phone1" ColumnName="cust_Phone1" />
+                <ScalarProperty Name="cust_LastName" ColumnName="cust_LastName" />
+                <ScalarProperty Name="cust_FirstName" ColumnName="cust_FirstName" />
+                <ScalarProperty Name="cust_Code" ColumnName="cust_Code" />
+                <ScalarProperty Name="cust_UpdatedBy" ColumnName="cust_UpdatedBy" />
+                <ScalarProperty Name="cust_UpdatedDate" ColumnName="cust_UpdatedDate" />
+                <ScalarProperty Name="cust_CreatedBy" ColumnName="cust_CreatedBy" />
+                <ScalarProperty Name="cust_CreatedDate" ColumnName="cust_CreatedDate" />
+                <ScalarProperty Name="cust_CustomerID" ColumnName="cust_CustomerID" />
+                <ScalarProperty Name="slor_TruckNo" ColumnName="slor_TruckNo" />
+                <ScalarProperty Name="slor_PickUp" ColumnName="slor_PickUp" />
+                <ScalarProperty Name="slor_RequiredDate" ColumnName="slor_RequiredDate" />
+                <ScalarProperty Name="slor_SourceOfSupply" ColumnName="slor_SourceOfSupply" />
+                <ScalarProperty Name="slor_PreOrderID" ColumnName="slor_PreOrderID" />
+                <ScalarProperty Name="slor_RetailerID" ColumnName="slor_RetailerID" />
+                <ScalarProperty Name="slor_Date" ColumnName="slor_Date" />
+                <ScalarProperty Name="slor_Remarks" ColumnName="slor_Remarks" />
+                <ScalarProperty Name="slor_Status" ColumnName="slor_Status" />
+                <ScalarProperty Name="slor_Total" ColumnName="slor_Total" />
+                <ScalarProperty Name="slor_CustomerID" ColumnName="slor_CustomerID" />
+                <ScalarProperty Name="slor_Deleted" ColumnName="slor_Deleted" />
+                <ScalarProperty Name="slor_Code" ColumnName="slor_Code" />
+                <ScalarProperty Name="slor_UpdatedBy" ColumnName="slor_UpdatedBy" />
+                <ScalarProperty Name="slor_UpdatedDate" ColumnName="slor_UpdatedDate" />
+                <ScalarProperty Name="slor_CreatedBy" ColumnName="slor_CreatedBy" />
+                <ScalarProperty Name="slor_CreatedDate" ColumnName="slor_CreatedDate" />
+                <ScalarProperty Name="slor_SaleOrderID" ColumnName="slor_SaleOrderID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

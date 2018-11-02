@@ -31,5 +31,6 @@ namespace ChipMongWebApp.Models.DB
         public Nullable<int> sourceOfSupplyID { get; set; }
         public Nullable<System.DateTime> requiredDate { get; set; }
         public string pickUp { get; set; }
+        public string slor_TruckNo { get; set; }
     }
 }

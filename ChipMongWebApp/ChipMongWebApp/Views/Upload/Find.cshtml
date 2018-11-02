@@ -16,24 +16,35 @@
     @Html.Partial("~/Views/Shared/Template/FindMode/Button.cshtml")
 
     <br />
+
+    <input type="hidden" id="uploadRoute" name="uploadRoute" value="" />
 </form>
 
 <script src="~/Content/js/jquery-upload.js"></script>
 <script src="~/Content/js/function/template/findmode/button.js"></script>
 <script>
     const controller = "@Url.Content($"~/{ConstantHelper.UPLOAD_CONTROLLER}")";
-    const uploadExcelButton = `<button type="button" class="btn btn-info" id="btnUploadExcel"> <i class="fas fa-upload"></i> Upload Retailer </button>`;
+    const uploadExcelButton = `<button type="button" class="btn btn-info" id="btnUploadExcel"> <i class="fas fa-upload"></i> Upload Retailer </button> `;
+
+    const customerUploadExcelButton = `<button type="button" class="btn btn-warning" id="btnUploadCustomer"> <i class="fas fa-upload"></i> Upload Customer </button>`;
 
     $(document).ready(() => {
         $("#btnNew").closest("div").append(uploadExcelButton);
-
-        btnFind
-
+        $("#btnNew").closest("div").append(customerUploadExcelButton);
+        
         $("#btnFind").remove();
         $("#btnCancel").remove();
         $("#btnNew").remove();
 
-        $("#btnUploadExcel").click(() => $("#ExcelFile").trigger("click"));
+        $("#btnUploadExcel").click(() => {
+            $("#uploadRoute").val("UploadRetailer");
+            $("#ExcelFile").trigger("click");
+        });
+        $("#btnUploadCustomer").click(() => {
+            $("#uploadRoute").val("UploadCustomer");
+            $("#ExcelFile").trigger("click");
+        });
+
         $("#ExcelFile").change(() => uploadExcel());
     });
 
@@ -44,7 +55,9 @@
             backdrop: "static"
         });
 
-        $("#ExcelFile").upload(controller + "/UploadRetailer?" + $("#frmUpload").serialize(), function (data) {
+        const route = $("#uploadRoute").val();
+
+        $("#ExcelFile").upload(`${controller}/${route}?${$("#frmUpload").serialize()}`, function (data) {
             console.log(data);
             if (data.substring(0, 2) == "ok") {
                 alert(data.replace("ok", "") + " record(s) have been uploaded.");
@@ -54,7 +67,6 @@
                 location.href = "@Url.Content($"~/{@ConstantHelper.AUTH_CONTROLLER}/login")";
 
                 //location.href = $("#baseURL").val() + "/auth/login";
-
             $('#loadingIndicator').modal("hide");
         });
     }

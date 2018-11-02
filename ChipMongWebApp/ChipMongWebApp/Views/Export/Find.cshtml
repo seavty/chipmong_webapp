@@ -1,0 +1,67 @@
+﻿@using ChipMongWebApp.Utils.Helpers
+@using ChipMongWebApp.Models.DTO.SaleOrder
+@model ChipMongWebApp.Models.DTO.SaleOrder.SaleOrderExportExcel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/Main/_Main.cshtml";
+}
+
+
+<form name="record" id="record">
+    @Html.AntiForgeryToken()
+
+    <div class="card shadow-sm" id="dvAction">
+        <div class="card-body text-dark shadow-sm merienda">
+            <button type="button" class="btn btn-info" id="btnExportSaleOrder"> <i class="fas fa-file-excel"></i> Export SaleOrder </button>
+
+            <br />
+            <br />
+            <!--row 1-->
+            <div class="row">
+
+                <div class="col-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.fromDate)
+                        @Html.TextBoxFor(m => m.fromDate, new { @class = "form-control date-picker", placeholder = "From Date" })
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.toDate)
+                        @Html.TextBoxFor(m => m.toDate, new { @class = "form-control date-picker required", placeholder = "To Date" })
+                    </div>
+                </div>
+            </div>
+            <!--end  row 1-->
+        </div>
+        
+    </div>
+
+
+
+    <br />
+
+
+</form>
+
+<script src="~/Content/js/jquery-upload.js"></script>
+<script src="~/Content/js/function/template/findmode/button.js"></script>
+<script>
+    const controller = "@Url.Content($"~/{ConstantHelper.EXPORT_CONTROLLER}")";
+    $(document).ready(() => {
+        $("#btnExportSaleOrder").click(() => {
+            exportExcel();
+        });
+    });
+
+    const exportExcel = () => {
+        ajaxHelper(controller + "/export", $("#frmExport").serializeObject(), requestMethod.POST).then((data) => {
+            //location.href = controller + "/view/" + data.id
+            alert("Export successfully");
+        });
+    };
+
+</script>
+
+
