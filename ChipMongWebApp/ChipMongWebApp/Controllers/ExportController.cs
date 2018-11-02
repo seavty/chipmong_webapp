@@ -1,10 +1,13 @@
 ﻿using ChipMongWebApp.Models.DB;
+using ChipMongWebApp.Models.DTO.SaleOrder;
 using ChipMongWebApp.Utils.Extension;
+using ChipMongWebApp.Utils.Helpers;
 using ClosedXML.Excel;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,11 +26,14 @@ namespace ChipMongWebApp.Controllers
 
         //-> Find 
         [HttpGet]
-        public ActionResult Find() { return View(); }
+        public ActionResult Export()
+        {
+            return View();
+        }
 
 
         [HttpPost]
-        public async Task<string> Export()
+        public async Task<string> Export(SaleOrderExportExcel export)
         {
             try
             {
@@ -44,8 +50,27 @@ namespace ChipMongWebApp.Controllers
 
                 });
 
+                DateTime? fromDate = null;
+                DateTime? toDate = null;
+               
+                    
+                if(!string.IsNullOrEmpty(export.fromDate) && !string.IsNullOrEmpty(export.toDate))
+                {
+                   
+                    fromDate = DateTime.ParseExact(export.fromDate, ConstantHelper.ddMMyyyy_DASH_SEPARATOR, CultureInfo.InvariantCulture);
+                    toDate = DateTime.ParseExact(export.toDate, ConstantHelper.ddMMyyyy_DASH_SEPARATOR, CultureInfo.InvariantCulture);
+
+                }
+
                 ChipMongEntities db = new ChipMongEntities();
-                var records = await db.vExportSaleOrders.Where(x => x.slor_Deleted == null).ToListAsync();
+
+                var query =  db.vExportSaleOrders.Where(x => x.slor_Deleted == null);
+                if (!string.IsNullOrEmpty(export.fromDate) && !string.IsNullOrEmpty(export.toDate))
+                {
+                    query = query.Where(x => DbFunctions.TruncateTime(x.slor_Date) >= DbFunctions.TruncateTime(fromDate) &&  DbFunctions.TruncateTime(x.slor_Date) <= DbFunctions.TruncateTime(toDate));
+                }
+
+                var records = await query.OrderBy(x => x.slor_Date).ToListAsync();
                 foreach (var item in records)
                 {
 
@@ -55,11 +80,11 @@ namespace ChipMongWebApp.Controllers
                         slorDate = item.slor_Date.ToString().ToHumanDate();
 
                     dt.Rows.Add(
-                        item.slor_Code,
-                        slorDate, 
+                        item.slor_Code                               ,
+                        slorDate                                     , 
                         $"{item.cust_FirstName} {item.cust_LastName}", 
-                        item.scsp_Name, 
-                        item.slor_Status,
+                        item.scsp_Name                               , 
+                        item.slor_Status                             ,
                         total
                         );
                 }

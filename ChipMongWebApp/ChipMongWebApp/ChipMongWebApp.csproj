@@ -477,7 +477,7 @@
     <Content Include="Views\Customer\Tabs.cshtml" />
     <Content Include="Views\Shared\Template\FindMode\TableData.cshtml" />
     <Content Include="Views\Upload\Find.cshtml" />
-    <Content Include="Views\Export\Find.cshtml" />
+    <Content Include="Views\Export\Export.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
