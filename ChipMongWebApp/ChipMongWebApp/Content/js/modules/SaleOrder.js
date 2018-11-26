@@ -1,6 +1,8 @@
 ﻿const initializeComponents = () => {
-    let url = $("#baseURL").val();
+    //let url = $("#baseURL").val();
+    let url = $("#my_url").val();
     setupSSA("#customerID", url + "/customer/ssa", "Customer", customerTemplateResult, customerTemplateSelection);
+    //alert();
 }
 
 
@@ -28,8 +30,8 @@ const saveLineItem = (prop) => {
             rowIndex++;
             prop.closest("tr").attr("rowIndex", rowIndex)
             $("#quantity0").attr('id', "quantity" + (rowIndex));
-            $("#price0").attr('id', "price" + (rowIndex));
-            $("#total0").attr('id', "total" + (rowIndex));
+            //$("#price0").attr('id', "price" + (rowIndex));
+            //$("#total0").attr('id', "total" + (rowIndex));
             $("#tblLineItem").append(tableRow);
             headerCalculation();
         }
@@ -44,30 +46,30 @@ const saveLineItem = (prop) => {
 
 const headerCalculation = () => {
     let sum = 0;
-    $(".total").each(function () {
+    /*$(".total").each(function () {
         var value = toFloat($(this).val());
         sum += parseFloat(value);
     });
-    $("#total").val(toFloatWithTwoPrecision(sum));
+    $("#total").val(toFloatWithTwoPrecision(sum));*/
 }
 
 
 const calculation = (prop) => {
     let index = prop.closest("tr").attr("rowIndex")
     let quantity = toFloat($("#quantity" + index).val());
-    let price = toFloat($("#price" + index).val());
+    /*let price = toFloat($("#price" + index).val());
     let total = quantity * price;
     $("#total" + index).val(toFloatWithTwoPrecision(total));
     if (index > 0)
-        headerCalculation();
+        headerCalculation();*/
 }
 
 const getItem = (prop, endPoint) => {
     let index = prop.closest("tr").attr("rowIndex")
     let itemID = prop.val();
     simpleAjax(endPoint + "/record/" + itemID, null, requestMethod.GET).then(function (data) {
-        $("#price" + index).val(toFloatWithTwoPrecision(data.price));
-        calculation(prop);
+        //$("#price" + index).val(toFloatWithTwoPrecision(data.price));
+        //calculation(prop);
     });
 }
 

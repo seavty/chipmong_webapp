@@ -1,9 +1,22 @@
 ﻿@using ChipMongWebApp.Utils.Helpers
 @using ChipMongWebApp.Models.DTO.SourceSupply
 @model ChipMongWebApp.Models.DTO.SourceSupply.SourceSupplyFindDTO
+@using ChipMongWebApp.Models.DTO.User
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/Main/_Main.cshtml";
+}
+@{
+    var session = HttpContext.Current.Session;
+    UserViewDTO user = (UserViewDTO)session["user"];
+    if (user != null)
+    {
+        if (user.user_Profile != 1)
+        {
+            @Html.Label("Insufficient Privileges !");
+            return;
+        }
+    }
 }
 
 <form name="record" id="record">

@@ -32,9 +32,33 @@ namespace ChipMongWebApp.Models.DTO.SaleOrder
         [MaxLength(100)]
         [DisplayName("Require Date (*):")]
         public string requiredDate { get; set; }
+        
+        [DisplayName("Source Supply:")]
+        public int? sourceOfSupplyID { get; set; }
 
-        [Required]
-        [DisplayName("Source Supply: (*)")]
-        public int sourceOfSupplyID { get; set; }
+        [DisplayName("Pickup:")]
+        public string pickup { get; set; }
+
+        [DisplayName("Truck No:")]
+        public string slor_TruckNo { get; set; }
+
+        [DisplayName("User :")]
+        public int? slor_UserID { get; set; }
+
+        [DisplayName("Doc No :")]
+        public string slor_DocNo { get; set; }
+
+        [DisplayName("ShipmentNo :")]
+        public string slor_ShipmentNo { get; set; }
+
+        [DisplayName("Updated Date :")]
+        public string updatedDate { get; set; }
+
+        [DisplayName("Updated By :")]
+        public int? updatedBy { get; set; }
+
+
+        [DisplayName("Truck Driver Phone No:")]
+        public string slor_TruckDriverPhoneNo { get; set; }
     }
 }

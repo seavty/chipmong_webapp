@@ -4,6 +4,29 @@
     Layout = "~/Views/Shared/Main/_Main.cshtml";
 }
 
+@if (Model != null)
+{
+    if (Model.mode == ConstantHelper.MODE_EDIT)
+    {
+
+
+        if (Model.id == null)
+        {
+            if (Model.status == "_inuse")
+            {
+                @Html.Label("Record Currently in use by " + Model.product +" !")
+                return;
+            }
+            else
+            {
+                @Html.Label("Record Not Found !")
+                return;
+            }
+        }
+
+    }
+}
+
 @Html.Partial("~/Views/Shared/Template/EditMode/Button.cshtml")
 <br />
 @Html.Partial("~/Views/SaleOrder/Form.cshtml")
@@ -18,7 +41,22 @@
     const tableRow = `@Html.Partial($"~/Views/{ConstantHelper.SALEORDER_CONTROLLER}/LineItem.cshtml")`;
     var rowIndex = @Model.items.Count();
 
-    $(document).ready(() => initializeComponents());
+    $(document).ready(() => {
+        initializeComponents();
+        $("#btnCancel").removeAttr("onclick");
+        $("#btnCancel").click(function (e) {
+             var cont = "@ConstantHelper.SALEORDER_CONTROLLER";
+            ajaxHelper(cont + "/unlockRec/" + id,
+                "id=" + id , requestMethod.POST).then((data) => {
+                   
+                    if (data == "True") { location.href = cont + "/view/" + id; }
+                    else {
+                        alert(data);
+                    }
+                });
+        })
+        
+    });
 
     //-> itemChange
     function itemChange(prop) { getItem(prop, "@Url.Content($"~/{ConstantHelper.ITEM_CONTROLLER}")"); }

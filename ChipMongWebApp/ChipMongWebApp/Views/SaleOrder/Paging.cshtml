@@ -1,17 +1,131 @@
 ﻿@using ChipMongWebApp.Utils.Extension
 @using ChipMongWebApp.Models.DTO.SaleOrder
 @using ChipMongWebApp.Models.DTO.Customer
-@model ChipMongWebApp.Models.DTO.GetListDTO<ChipMongWebApp.Models.DTO.SaleOrder.SaleOrderViewDTO>
+@using ChipMongWebApp.Utils.Helpers
+@model ChipMongWebApp.Models.DTO.GetListDTO<ChipMongWebApp.Models.DTO.SaleOrder.vSaleOrderDTO>
+
+<script>
+    $(document).ready(function (e) {
+        $(".btEdit").click(function (e) {
+            // locking SO
+
+            var cont = "@Url.Content($"~/{@ConstantHelper.SALEORDER_CONTROLLER}")";
+            id = ($(this).attr("rel"));
+            ajaxHelper(cont + "/lockRec/" + id,
+                "" , requestMethod.POST).then((data) => {
+                    if (data == "True") {
+                        $(".btEdit").hide();
+                        $(".btSave").hide();
+                        $(".btCancel").hide();
+                        $(".btUnlock").hide();
+
+                        $(".btSave[rel='" + $(this).attr("rel") + "']").show();
+                        $(".btCancel[rel='" + $(this).attr("rel") + "']").show();
+
+                        $(".slor_DocNo,.slor_ShipmentNo,.slor_Status").hide();
+                        //$(".lbl_slor_DocNo,.lbl_slor_ShipmentNo,.lbl_slor_Status").hide();
+
+                        $(this).closest("tr").find("input:eq(0)").val($(this).closest("tr").find("label:eq(0)").text());
+                        $(this).closest("tr").find("input:eq(1)").val($(this).closest("tr").find("label:eq(1)").text());
+                        $(this).closest("tr").find("select:eq(0)").val($(this).closest("tr").find("label:eq(2)").text());
+
+                        $(this).closest("tr").find("label:eq(0)").hide();
+                        $(this).closest("tr").find("label:eq(1)").hide();
+                        $(this).closest("tr").find("label:eq(2)").hide();
+
+                        $(this).closest("tr").find("input:eq(0)").show();
+                        $(this).closest("tr").find("input:eq(1)").show();
+                        $(this).closest("tr").find("select:eq(0)").show();
+                    }
+                    else
+                        alert(data);
+                });
+        })
+
+        $(".btSave").click(function (e) {
+
+            id = ($(this).attr("rel"));
+            p1 = ($(this).closest("tr").find("input:eq(0)").val());
+            p2 = ($(this).closest("tr").find("input:eq(1)").val());
+            p3 = ($(this).closest("tr").find("select:eq(0)").val());
+            var cont = "@Url.Content($"~/{@ConstantHelper.SALEORDER_CONTROLLER}")";
+
+            ajaxHelper(cont + "/qedit",
+                "id=" + id + "&p1=" + p1 + "&p2=" + p2 + "&p3=" + p3, requestMethod.POST).then((data) =>
+                {
+                    if (data == "True") {
+                        $(this).closest("tr").find("label:eq(0)").text($(this).closest("tr").find("input:eq(0)").val());
+                        $(this).closest("tr").find("label:eq(1)").text($(this).closest("tr").find("input:eq(1)").val());
+                        $(this).closest("tr").find("label:eq(2)").text($(this).closest("tr").find("select:eq(0)").val());
+
+                        $(".btSave").hide();
+                        $(".btCancel").hide();
+                        $(".btEdit").show();
+                        $(".btUnlock").show();
+                        $(".slor_DocNo,.slor_ShipmentNo,.slor_Status").hide();
+                        $(".lbl_slor_DocNo,.lbl_slor_ShipmentNo,.lbl_slor_Status").show();
+                    }
+                    else
+                        alert(data);
+                });
+
+
+        })
+
+        $(".btCancel").click(function (e) {
+            var cont = "@Url.Content($"~/{@ConstantHelper.SALEORDER_CONTROLLER}")";
+            id = ($(this).attr("rel"));
+            ajaxHelper(cont + "/unlockRec/" + id,
+                "" , requestMethod.POST).then((data) => {
+                    if (data == "True") {
+
+                        $(".btSave").hide();
+                        $(".btEdit").show();
+                        $(".btCancel").hide();
+                        $(".btUnlock").show();
+                        $(".slor_DocNo,.slor_ShipmentNo,.slor_Status").hide();
+                        $(".lbl_slor_DocNo,.lbl_slor_ShipmentNo,.lbl_slor_Status").show();
+                    }
+                    else
+                        alert(data);
+                });
+
+        })
+
+        $(".btUnlock").click(function (e) {
+            var cont = "@Url.Content($"~/{@ConstantHelper.SALEORDER_CONTROLLER}")";
+            id = ($(this).attr("rel"));
+            ajaxHelper(cont + "/unlockRec/" + id,
+                "" , requestMethod.POST).then((data) => {
+                    if (data == "True") {
+                        $(this).remove();
+                    }
+                    else
+                        alert(data);
+                });
+
+        })
+    })
+</script>
 
 <table class="table table-bordered table-striped table-hover">
     <thead>
-        <tr class="text-center">
+        <tr>
             <th scope="col" width="65px">#</th>
-            <th scope="col"> <a href="#" id="sort_@nameof(SaleOrderViewDTO.code)" class="sort-data" onclick='javascript:sort("@nameof(SaleOrderViewDTO.code)", $(this))'> Code </a>  </th>
-            <th scope="col"> <a href="#" id="sort_@nameof(SaleOrderViewDTO.date)" class="sort-data" onclick='javascript:sort("@nameof(SaleOrderViewDTO.date)", $(this))'> Date </a>  </th>
-            <th scope="col"> <a href="#" id="sort_@nameof(CustomerViewDTO.firstName)" class="sort-data" onclick='javascript:sort("@nameof(CustomerViewDTO.firstName)", $(this))'> Customer </a>  </th>
-            <th scope="col"> <a href="#" id="sort_@nameof(SaleOrderViewDTO.total)" class="sort-data" onclick='javascript:sort("@nameof(SaleOrderViewDTO.total)", $(this))'> Total </a>  </th>
-            <th scope="col"> <a href="#" id="sort_@nameof(SaleOrderViewDTO.status)" class="sort-data" onclick='javascript:sort("@nameof(SaleOrderViewDTO.status)", $(this))'> Status </a>  </th>
+            <th scope="col"> <a href="#" id="sort_@nameof(vSaleOrderDTO.cust_Code)" class="sort-data" onclick='javascript:sort("@nameof(vSaleOrderDTO.cust_Code)", $(this))'> Code </a>  </th>
+            <th scope="col"> <a href="#" id="sort_@nameof(vSaleOrderDTO.slor_RequiredDate)" class="sort-data" onclick='javascript:sort("@nameof(vSaleOrderDTO.slor_RequiredDate)", $(this))'> Request Date </a>  </th>
+            <th scope="col"> <a href="#" id="sort_@nameof(vSaleOrderDTO.cust_FirstName)" class="sort-data" onclick='javascript:sort("@nameof(vSaleOrderDTO.cust_FirstName)", $(this))'> Customer </a>  </th>
+            <th scope="col"> <a href="#" id="sort_@nameof(vSaleOrderDTO.shipMode)" class="sort-data" onclick='javascript:sort("@nameof(vSaleOrderDTO.shipMode)", $(this))'> Mode </a>  </th>
+            <th scope="col"> <a href="#" id="sort_@nameof(vSaleOrderDTO.shipMode)" class="sort-data" onclick='javascript:sort("@nameof(vSaleOrderDTO.shipMode)", $(this))'> Ship-To </a>  </th>
+            <th scope="col"> <a href="#" id="sort_@nameof(vSaleOrderDTO.sourceOfSupply)" class="sort-data" onclick='javascript:sort("@nameof(vSaleOrderDTO.sourceOfSupply)", $(this))'> Supply Point </a>  </th>
+            <th scope="col"> <a href="#" id="sort_@nameof(vSaleOrderDTO.product)" class="sort-data" onclick='javascript:sort("@nameof(vSaleOrderDTO.product)", $(this))'> Product </a>  </th>
+            <th scope="col"> <a href="#" id="sort_@nameof(vSaleOrderDTO.slor_TruckNo)" class="sort-data" onclick='javascript:sort("@nameof(vSaleOrderDTO.slor_TruckNo)", $(this))'> Truck No </a>  </th>
+            <th scope="col"> <a href="#" id="sort_@nameof(vSaleOrderDTO.slor_DocNo)" class="sort-data" onclick='javascript:sort("@nameof(vSaleOrderDTO.slor_DocNo)", $(this))'> Doc No </a>  </th>
+            <th scope="col"> <a href="#" id="sort_@nameof(vSaleOrderDTO.slor_ShipmentNo)" class="sort-data" onclick='javascript:sort("@nameof(vSaleOrderDTO.slor_ShipmentNo)", $(this))'> Shipment No </a>  </th>
+            <th scope="col"> <a href="#" id="sort_@nameof(vSaleOrderDTO.slor_Status)" class="sort-data" onclick='javascript:sort("@nameof(vSaleOrderDTO.slor_Status)", $(this))'> Status </a>  </th>
+            <th scope="col" style="min-width:90px"></th>
+            <th scope="col" style="min-width:40px"></th>
+
         </tr>
     </thead>
     <tbody>
@@ -21,11 +135,64 @@
 
             <tr>
                 <th scope="row" class="text-center"> @(Model.metaData.startRow + i) </th>
-                <td class="align-middle"> <a href=" @Url.Content("~/saleorder/view/")@item.id"> @item.code </a> </td>
-                <td> @item.date.ToDisplayDate() </td>
-                <td> <a href=" @Url.Content("~/customer/view/")@item.customer.id"> @item.customer.firstName @item.customer.lastName </a> </td>
-                <td class="text-right"> @item.total.ThousandSeparator() </td>
-                <td> @item.status </td>
+                <td class="align-middle"> <a href=" @Url.Content("~/saleorder/view/")@item.slor_SaleOrderID"> @item.slor_Code </a> </td>
+
+                @if (item.slor_RequiredDate != null)
+                {
+                    <td>
+                        @item.slor_RequiredDate.Value.ToString("dd/MM/yyyy")
+                    </td>
+                }
+                else
+                {
+                    <td></td>
+                }
+
+                <td>
+                    <a href=" @Url.Content("~/customer/view/")@item.cust_CustomerID">
+                        @item.cust_FirstName @item.cust_LastName
+                    </a>
+                </td>
+                <td> @item.shipMode </td>
+                <td> @item.shipMode </td>
+                <td> @item.sourceOfSupply </td>
+                <td> @Html.Raw(item.product) </td>
+                <td> @item.slor_TruckNo </td>
+                <td>
+                    @Html.TextBoxFor(m => m.items[i].slor_DocNo, new { @class = "form-control slor_DocNo", placeholder = "Doc No", @style = "display:none" })
+                    <label class="lbl_slor_DocNo">@item.slor_DocNo</label>
+                </td>
+                <td>
+                    @Html.TextBoxFor(m => m.items[i].slor_ShipmentNo, new { @class = "form-control slor_ShipmentNo", placeholder = "Shipment No", name = "txt", @style = "display:none" })
+                    <label class="lbl_slor_ShipmentNo">@item.slor_ShipmentNo</label>
+                </td>
+                <td>
+                    @Html.DropDownListFor(m => m.items[i].slor_Status, SelectionHelper.SaleOrderStatus(Model.items[i].slor_Status), "-- Select Status --", new { @class = "form-control slor_Status", @style = "display:none" })
+                    <label class="lbl_slor_Status">@item.slor_Status</label>
+                </td>
+
+                <td>
+                    <button rel="@item.slor_SaleOrderID" type="button" class="btn btn-sm btn-primary btEdit">
+                        <i class="fas fa-pencil-alt"></i>
+                    </button>
+                    @if (item.slor_LockBy != null)
+                    {
+                        <button rel="@item.slor_SaleOrderID" type="button" class="btn btn-sm btn-secondary btUnlock">
+                            <i class="fas fa-unlock-alt"></i>
+                        </button>
+                    }
+
+                    <button rel="@item.slor_SaleOrderID" type="button" style="display:none" class="btn btn-sm btn-success btSave">
+                        <i class="fas fa-save"></i>
+                    </button>
+                    <button rel="@item.slor_SaleOrderID" type="button" style="display:none" class="btn btn-sm btn-danger btCancel">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </td>
+
+                <td>
+                    <input type="checkbox" class="chk" value="@item.slor_SaleOrderID" />
+                </td>
 
             </tr>
             i++;

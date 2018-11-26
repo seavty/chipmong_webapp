@@ -33,5 +33,8 @@ namespace ChipMongWebApp.Models.DTO.User
         [MaxLength(100)]
         [DisplayName("E-mail:")]
         public string email { get; set; }
+
+        [DisplayName("Profile (*):")]
+        public int user_Profile { get; set; }
     }
 }

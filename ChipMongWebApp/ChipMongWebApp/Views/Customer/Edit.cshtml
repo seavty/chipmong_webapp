@@ -1,7 +1,22 @@
 ﻿@using ChipMongWebApp.Utils.Helpers
 @{
-Layout = "~/Views/Shared/Main/_Main.cshtml";
+    Layout = "~/Views/Shared/Main/_Main.cshtml";
 }
+
+@if (Model.id == null)
+{
+    @Html.Label("Record Not Found !")
+    return;
+}
+else
+{
+    if (Model.id == 0)
+    {
+        @Html.Label("Record Not Found !")
+        return;
+    }
+}
+
 
 @Html.Partial("~/Views/Shared/Template/EditMode/Button.cshtml")
 <br />

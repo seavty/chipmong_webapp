@@ -31,7 +31,7 @@
                     <div class="col-4">
                         <div class="form-group">
                             @Html.LabelFor(m => m.code)
-                            @Html.TextBoxFor(m => m.code, new { @class = "form-control", @readonly = "readonly" })
+                            @Html.TextBoxFor(m => m.code, new { @class = "form-control required"})
                         </div>
                     </div>
 
@@ -83,6 +83,13 @@
                         <div class="form-group">
                             @Html.LabelFor(m => m.address)
                             @Html.TextAreaFor(m => m.address, new { @class = "form-control", placeholder = "Address", @maxlength = "100" })
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.cust_UserID)
+                            @Html.DropDownListFor(m => m.cust_UserID, SelectionHelper.user() ,"-- Select One --",
+                           new { @class = "form-control", placeholder = "User" })
                         </div>
                     </div>
 

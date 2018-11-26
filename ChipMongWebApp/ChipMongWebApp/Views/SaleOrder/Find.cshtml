@@ -19,12 +19,12 @@
 
     <div class="card shadow-sm">
         <div class="card-header merienda"> Find SaleOrder </div>
-        @Html.HiddenFor(m => m.orderBy, new { Value = nameof(SaleOrderViewDTO.code) })
+        @Html.HiddenFor(m => m.orderBy, new { Value = nameof(vSaleOrderDTO.slor_Code) })
         @Html.HiddenFor(m => m.orderDirection, new { Value = ConstantHelper.ASC })
 
         <div class="card-body">
+            <!-- row 1 -->
             <div class="row">
-
                 <div class="col">
                     <div class="form-group">
                         @Html.LabelFor(m => m.code)
@@ -46,8 +46,64 @@
                         @Html.DropDownListFor(m => m.status, SelectionHelper.SaleOrderStatus(), "-- Select Status --", new { @class = "form-control" })
                     </div>
                 </div>
-
             </div>
+            <!-- end row 1 -->
+            <!-- row 2 -->
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        @Html.Label("Request Date (From)")
+                        @Html.TextBoxFor(m => m.slor_RequiredDate_From, new { @class = "form-control date-picker", placeholder = "Request Date From", @maxlength = "100" })
+                        @Html.Label("Request Date (To)")
+                        @Html.TextBoxFor(m => m.slor_RequiredDate_To, new { @class = "form-control date-picker", placeholder = "Request Date To", @maxlength = "100" })
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1"> Supply Point </label>
+                        <select class="form-control" name="slor_SourceOfSupply" id="slor_SourceOfSupply">
+                            <option value="" selected> -- Select Supply Point  -- </option>
+                            <option value="2"> Oknha Mong Port </option>
+                            <option value="3"> Poi Pet WH </option>
+                            <option value="4">  Railway WH - Phnom Penh </option>
+                            <option value="1"> TMP Plant </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.slor_TruckNo)
+                        @Html.TextBoxFor(m => m.slor_TruckNo, new { @class = "form-control", placeholder = "Truck No", @maxlength = "100" })
+                    </div>
+                </div>
+            </div>
+            <!-- end row 2 -->
+
+            <!-- row 3 -->
+            <div class="row">
+                <div class="col col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.slor_DocNo)
+                        @Html.TextBoxFor(m => m.slor_DocNo, new { @class = "form-control", placeholder = "Doc No", @maxlength = "100" })
+                    </div>
+                </div>
+
+                <div class="col col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.slor_ShipmentNo)
+                        @Html.TextBoxFor(m => m.slor_ShipmentNo, new { @class = "form-control", placeholder = "Shipment No", @maxlength = "100" })
+                    </div>
+                </div>
+            </div>
+            <!-- end row 3 -->
+
+
+
+
+
+
         </div>
     </div>
 
@@ -63,11 +119,34 @@
     const controller = "@Url.Content($"~/{ConstantHelper.SALEORDER_CONTROLLER}")";
     const uploadExcelButton = `<button type="button" class="btn btn-info" id="btnUploadExcel"> <i class="fas fa-upload"></i> Upload Excel </button>`;
 
+    const sendLine = `&nbsp;<button type="button" class="btn btn-secondary" id="btnSendLine"> <i class="fas fa-envelope"></i> Send </button>`;
+
     $(document).ready(() => {
         $("#btnNew").closest("div").append(uploadExcelButton);
+        $("#btnNew").closest("div").append(sendLine);
         //paging(1);
         $("#btnUploadExcel").click(() => $("#ExcelFile").trigger("click"));
         $("#ExcelFile").change(() => uploadExcel());
+
+        $("#btnSendLine").click(function (e) {
+            var controller = "@Url.Content($"~/{@ConstantHelper.SALEORDER_CONTROLLER}/sendLine")";
+            var ids = [];
+            $(".chk").each(function (i, v) {
+                if ($(v).is(":checked"))
+                    ids.push($(v).val());
+            });
+            if (ids.length <= 0) {
+                alert("Please select record(s) to send !");
+                return false;
+            }
+            
+            ajaxHelper(controller, "ids=" + ids, requestMethod.POST).then((data) => {
+                if (data == "True")
+                    alert("PO(s) sent !");
+                else
+                    alert(data);
+            })
+        });
     });
 
     //-> uploadExcel
@@ -91,6 +170,8 @@
             $('#loadingIndicator').modal("hide");
         });
     }
+
+    
 </script>
 
 

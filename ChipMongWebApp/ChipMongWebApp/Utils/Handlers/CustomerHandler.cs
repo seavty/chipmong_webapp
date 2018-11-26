@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Linq.Dynamic;
 using ChipMongWebApp.Utils.Extension;
+using ChipMongWebApp.Models.DTO.User;
 
 namespace ChipMongWebApp.Utils.Handlers
 {
@@ -30,15 +31,33 @@ namespace ChipMongWebApp.Utils.Handlers
         //-> SelectByID
         public async Task<CustomerViewDTO> SelectByID(int id)
         {
-            var record = await db.tblCustomers.FirstOrDefaultAsync(x => x.deleted == null && x.id == id);
+            var session = HttpContext.Current.Session;
+            UserViewDTO user = (UserViewDTO)session["user"];
+            int _user = 0;
+            if (user != null)
+            {
+                _user = user.id;
+                if (user.user_Profile == 1)
+                    _user = -1;
+            }
+
+            var record = await db.tblCustomers.FirstOrDefaultAsync(x => x.deleted == null && x.id == id
+                && (_user == -1? 1 == 1 : _user == x.cust_UserID)
+                );
             if (record == null)
-                throw new HttpException((int)HttpStatusCode.NotFound, "NotFound");
+                return new CustomerViewDTO();
             return MappingHelper.MapDBClassToDTO<tblCustomer, CustomerViewDTO>(record);
         }
 
         //-> New
         public async Task<CustomerViewDTO> New(CustomerNewDTO newDTO)
         {
+            var session = HttpContext.Current.Session;
+            UserViewDTO user = (UserViewDTO)session["user"];
+            if (user != null)
+            {
+                newDTO.cust_UserID = user.id;
+            }
             newDTO = StringHelper.TrimStringProperties(newDTO);
             var record = (tblCustomer)MappingHelper.MapDTOToDBClass<CustomerNewDTO, tblCustomer>(newDTO, new tblCustomer());
             record.createdDate = DateTime.Now;
@@ -65,12 +84,22 @@ namespace ChipMongWebApp.Utils.Handlers
         //-> GetList
         public async Task<GetListDTO<CustomerViewDTO>> GetList(CustomerFindDTO findDTO)
         {
+            var session = HttpContext.Current.Session;
+            UserViewDTO user = (UserViewDTO)session["user"];
+            int _user = 0;
+            if (user != null)
+            {
+                _user = user.id;
+                if(user.user_Profile == 1)
+                    _user = -1;
+            }
+            
             IQueryable<tblCustomer> query = db.tblCustomers.Where(x => x.deleted == null);
 
             if (!string.IsNullOrEmpty(findDTO.code))        query = query.Where(x => x.code.StartsWith(findDTO.code));
             if (!string.IsNullOrEmpty(findDTO.firstName))   query = query.Where(x => x.firstName.StartsWith(findDTO.firstName));
             if (!string.IsNullOrEmpty(findDTO.lastName))    query = query.Where(x => x.lastName.StartsWith(findDTO.lastName));
-
+            if (_user != -1) { query = query.Where(x => x.cust_UserID == _user); }
             query = query.AsQueryable().OrderBy($"{findDTO.orderBy} {findDTO.orderDirection}");
             
             return await ListingHandler(findDTO.currentPage, query);
@@ -124,7 +153,7 @@ namespace ChipMongWebApp.Utils.Handlers
         }
 
         //-> GetList SaleOrderTabPaging
-        public async Task<GetListDTO<SaleOrderViewDTO>> SaleOrderTabPaging(int customerID, int currentPage)
+        public async Task<GetListDTO<vSaleOrderDTO>> SaleOrderTabPaging(int customerID, int currentPage)
         {
             /*
             IQueryable<tblSaleOrder> records = from s in db.tblSaleOrders
@@ -135,12 +164,24 @@ namespace ChipMongWebApp.Utils.Handlers
             var saleOrderHandler = new SaleOrderHandler();
             return await saleOrderHandler.Listing(currentPage, records);
             */
-
+            var session = HttpContext.Current.Session;
+            UserViewDTO user = (UserViewDTO)session["user"];
+            int _user = 0;
+            if (user != null)
+            {
+                _user = user.id;
+                if (user.user_Profile == 1)
+                    _user = -1;
+            }
+            /*
             IQueryable<tblSaleOrder> records = from s in db.tblSaleOrders
                                                join c in db.tblCustomers on s.customerID equals c.id
                                                where s.deleted == null && s.customerID == customerID
+                                               && (_user == -1 ? 1==1 : _user == s.slor_UserID)
                                                orderby s.id ascending
-                                               select s;
+                                               select s;*/
+            var records = db.vSaleOrders.Where(x => x.slor_Deleted == null
+                && (_user == -1 ? 1 == 1 : _user == x.slor_UserID)).OrderBy(x=>x.slor_SaleOrderID);
             var saleOrderHandler = new SaleOrderHandler();
             return await saleOrderHandler.ListingHandler(currentPage, records);
 

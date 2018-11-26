@@ -14,9 +14,12 @@
         {
             isDiable = "disabled";
             isSummary = "summary";
+            
         }
     }
 }
+
+
 
 
 <form id="record" name="record">
@@ -60,7 +63,6 @@
 
                 </div>
                 <!--end  row 1-->
-
                 <!--row 2-->
                 <div class="row">
 
@@ -74,7 +76,7 @@
                     <div class="col-4">
                         <div class="form-group">
                             @Html.LabelFor(m => m.sourceOfSupplyID)
-                            @Html.DropDownListFor(m => m.sourceOfSupplyID, SelectionHelper.SourceSupplySelection(Model.sourceOfSupplyID), null, new { @class = "form-control required" })
+                            @Html.DropDownListFor(m => m.sourceOfSupplyID, SelectionHelper.SourceSupplySelection(Model.sourceOfSupplyID), null, new { @class = "form-control " })
                         </div>
                     </div>
 
@@ -86,25 +88,85 @@
                     </div>
 
                 </div>
-                <!--end  row 2-->
 
+                <!--end  row 2-->
                 <!--row 3-->
                 <div class="row">
+                    <!--<div class="col-4">
+        <div class="form-group">
+            @Html.LabelFor(m => m.total)
+            @Html.TextBoxFor(m => m.total, new { @class = "form-control", @readonly = "readonly", Value = Model.total.ThousandSeparator() })
+        </div>
+    </div>
+        -->
                     <div class="col-4">
                         <div class="form-group">
-                            @Html.LabelFor(m => m.total)
-                            @Html.TextBoxFor(m => m.total, new { @class = "form-control", @readonly = "readonly", Value = Model.total.ThousandSeparator() })
+                            @Html.LabelFor(m => m.pickup)
+                            @Html.DropDownListFor(m => m.pickup, SelectionHelper.YesNo(), "-- Select One --", new { @class = "form-control" })
+
                         </div>
                     </div>
 
+                    <div class="col-4">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.slor_TruckNo)
+                            @Html.TextBoxFor(m => m.slor_TruckNo, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.slor_TruckDriverPhoneNo)
+                            @Html.TextBoxFor(m => m.slor_TruckDriverPhoneNo, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+
+
+                </div>
+                <!--end  row 3-->
+
+                <div class="row">
                     <div class="col-4">
                         <div class="form-group">
                             @Html.LabelFor(m => m.remarks)
                             @Html.TextAreaFor(m => m.remarks, new { @class = "form-control" })
                         </div>
                     </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.slor_DocNo)
+                            @Html.TextBoxFor(m => m.slor_DocNo, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.slor_ShipmentNo)
+                            @Html.TextBoxFor(m => m.slor_ShipmentNo, new { @class = "form-control" })
+                        </div>
+                    </div>
                 </div>
-                <!--end  row 3-->
+
+                <div class="row">
+                    <div class="col-4">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.updatedBy)
+                            @Html.DropDownListFor(m => m.updatedBy, SelectionHelper.user(), "-- Select One --",
+                                new { @class = "form-control", placeholder = "User" , @readonly = "readonly"})
+                            
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.updatedDate)
+                            @if (Model.updatedDate != null)
+                            {
+                                @Html.TextBoxFor(m => m.updatedDate, new { @class = "form-control", @readonly = "readonly", Value = Model.updatedDate.ToHumanDate() })
+                            }
+                        </div>
+                    </div>
+                   
+                </div>
 
             </div>
             <!-- end card body -->
@@ -118,4 +180,3 @@
 
     </fieldset>
 </form>
-

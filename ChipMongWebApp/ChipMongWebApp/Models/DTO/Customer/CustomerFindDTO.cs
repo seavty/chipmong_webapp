@@ -21,7 +21,7 @@ namespace ChipMongWebApp.Models.DTO.Customer
         [MaxLength(100)]
         [DisplayName("Last Name:")]
         public string lastName { get; set; }
-
+        
         
     }
 }

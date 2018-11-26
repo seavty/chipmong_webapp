@@ -7,30 +7,30 @@
             <tr class="text-center">
                 <th scope="col"> Item </th>
                 <th scope="col"> Quantity </th>
-                <th scope="col"> Price </th>
-                <th scope="col"> Total </th>
-                @if (Model.mode != ConstantHelper.MODE_VIEW)
-                {
-                    <th scope="col" style="width:40px;"> </th>
-                }
-            </tr>
-        </thead>
-        <tbody>
-            @{
-                if (Model.mode == ConstantHelper.MODE_VIEW || Model.mode == ConstantHelper.MODE_EDIT)
-                {
-                    int i = 1;
+                <!--<th scope="col"> Price </th>
+                <th scope="col"> Total </th>-->
+            @if (Model.mode != ConstantHelper.MODE_VIEW)
+            {
+                <th scope="col" style="width:40px;"> </th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            if (Model.mode == ConstantHelper.MODE_VIEW || Model.mode == ConstantHelper.MODE_EDIT)
+            {
+                int i = 1;
 
-                    foreach (var item in Model.items)
+                foreach (var item in Model.items)
+                {
+                    if (Model.mode == ConstantHelper.MODE_VIEW)
                     {
-                        if (Model.mode == ConstantHelper.MODE_VIEW)
-                        {
-                            <tr>
-                                <td scope="row" class="text-left"> @item.item.name </td>
-                                <td class="text-right"> @item.quantity.ThousandSeparator() </td>
-                                <td class="text-right"> @item.price.ThousandSeparator() </td>
-                                <td class="text-right"> @item.total.ThousandSeparator() </td>
-                            </tr>
+                        <tr>
+                            <td scope="row" class="text-left"> @item.item.name </td>
+                            <td class="text-right"> @item.quantity.ThousandSeparator() </td>
+                            <!--<td class="text-right"> @item.price.ThousandSeparator() </td>
+                            <td class="text-right"> @item.total.ThousandSeparator() </td>-->
+            </tr>
                         }
                         else
                         {
@@ -41,8 +41,9 @@
                                     @Html.DropDownList("items[][itemID]", SelectionHelper.ItemSelection(item.item.id), "-- Select Status --", new { @class = "form-control line-item-required", @id = "item0", @onchange = "itemChange($(this))" })
                                 </td>
                                 <td> @Html.TextBox("items[][quantity]", null, new { @class = "form-control line-item-required numeric", @id = ("quantity" + i.ToString()), @placeholder = "Quantity", Value = @item.quantity.ToTwoDecimalPoint(), @onchange = "calculation($(this))" }) </td>
-                                <td> @Html.TextBox("items[][price]", null, new { @class = "form-control line-item-required numeric", @id = ("price" + i.ToString()), @placeholder = "Price", Value = @item.price.ToTwoDecimalPoint(), @onchange = "calculation($(this))" }) </td>
+                                <!--<td> @Html.TextBox("items[][price]", null, new { @class = "form-control line-item-required numeric", @id = ("price" + i.ToString()), @placeholder = "Price", Value = @item.price.ToTwoDecimalPoint(), @onchange = "calculation($(this))" }) </td>
                                 <td> @Html.TextBox("total0", null, new { @class = "form-control text-right total", @id = ("total" + i.ToString()), @placeholder = "Price", Value = @item.total.ToTwoDecimalPoint(), @readonly = "readonly", @onchange = "calculation($(this))" }) </td>
+                                    -->
                                 <td> <button type="button" class="btn btn-danger" onclick="deleteLineItem($(this))"> <i class="fas fa-trash-alt"></i></button> </td>
                             </tr>
                         }

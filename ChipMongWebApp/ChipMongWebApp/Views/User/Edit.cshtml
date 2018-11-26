@@ -1,6 +1,19 @@
 ﻿@using ChipMongWebApp.Utils.Helpers
+@using ChipMongWebApp.Models.DTO.User
 @{
     Layout = "~/Views/Shared/Main/_Main.cshtml";
+}
+@{
+    var session = HttpContext.Current.Session;
+    UserViewDTO user = (UserViewDTO)session["user"];
+    if (user != null)
+    {
+        if (user.user_Profile != 1)
+        {
+            @Html.Label("Insufficient Privileges !");
+            return;
+        }
+    }
 }
 
 @Html.Partial("~/Views/Shared/Template/EditMode/Button.cshtml")

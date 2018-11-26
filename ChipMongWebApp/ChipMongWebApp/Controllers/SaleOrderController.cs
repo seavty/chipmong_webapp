@@ -7,6 +7,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -61,13 +64,45 @@ namespace ChipMongWebApp.Controllers
         }
 
         //-> Edit
+        public async Task<String> unlockRec(int id)
+        {
+            return await handler.unlockRec(id);
+        }
+
+        public async Task<String> lockRec(int id)
+        {
+            return await handler.lockRec(id);
+        }
+
+
+        //-> Edit
         public async Task<ActionResult> Edit(int id)
         {
-            var record = await handler.SelectByID(id);
+            var record = await handler.SelectByID(id,true);
             record.mode = ConstantHelper.MODE_EDIT;
             return View(record);
         }
 
+        
+
+        //-> Edit
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public async Task<String> qedit(int id,string p1,string p2,string p3)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    throw new HttpException((int)HttpStatusCode.BadRequest, ConstantHelper.KEY_IN_REQUIRED_FIELD);
+                Response.StatusCode = 200;
+                return (await handler.QEdit(id, p1, p2, p3));
+
+            }
+            catch (HttpException ex)
+            {
+                return ex.Message;
+            }
+        }
         //-> Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -89,7 +124,10 @@ namespace ChipMongWebApp.Controllers
 
         //-> Find 
         [HttpGet]
-        public ActionResult Find() { return View(); }
+        public ActionResult Find() {
+
+            return View();
+        }
 
         //-> Paging
         [HttpPost]
@@ -129,6 +167,21 @@ namespace ChipMongWebApp.Controllers
                     throw new HttpException((int)HttpStatusCode.BadRequest, ConstantHelper.KEY_IN_REQUIRED_FIELD);
                 Response.StatusCode = 200;
                 return $"ok{await handler.UploadExcel(uploadExcel)}";
+            }
+            catch (HttpException)
+            {
+                return "no";
+            }
+        }
+
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public async Task<String> sendLine(string ids)
+        {
+            try
+            {
+                Response.StatusCode = 200;
+                return await handler.sendLine(ids);
             }
             catch (HttpException)
             {

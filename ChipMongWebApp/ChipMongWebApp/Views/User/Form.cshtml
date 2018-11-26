@@ -68,9 +68,11 @@
                         </div>
                     </div>
 
-                    <div class="col">
+                    <div class="col-4">
                         <div class="form-group">
-
+                            @Html.LabelFor(m => m.user_Profile)
+                            @Html.DropDownListFor(m => m.user_Profile, SelectionHelper.profile() ,"-- Select One --",
+                           new { @class = "form-control", placeholder = "Profile" })
                         </div>
                     </div>
                 </div>

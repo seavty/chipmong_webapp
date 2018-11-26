@@ -201,9 +201,13 @@
     <Compile Include="Models\DB\vExportSaleOrder.cs">
       <DependentUpon>ChipMongModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DB\vSaleOrder.cs">
+      <DependentUpon>ChipMongModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DTO\Customer\CustomerFindResultDTO.cs" />
     <Compile Include="Models\DTO\SaleOrder\SaleOrderExportExcel.cs" />
     <Compile Include="Models\DTO\SaleOrder\SaleOrderFindResultDTO.cs" />
+    <Compile Include="Models\DTO\SaleOrder\vSaleOrderDTO.cs" />
     <Compile Include="Models\DTO\Upload\UploadCustomer.cs" />
     <Compile Include="Models\DTO\Upload\UploadRetailer.cs" />
     <Compile Include="Utils\Extension\DateTimeExtension.cs" />

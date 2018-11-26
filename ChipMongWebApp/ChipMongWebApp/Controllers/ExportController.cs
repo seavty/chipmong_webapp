@@ -39,15 +39,17 @@ namespace ChipMongWebApp.Controllers
             {
 
                 DataTable dt = new DataTable();
-                dt.Columns.AddRange(new DataColumn[6]
+                dt.Columns.AddRange(new DataColumn[8]
                 {
                     new DataColumn("SaleOrder Code", typeof(string)),
                     new DataColumn("Date", typeof(string)),
                     new DataColumn("Customer Name",typeof(string)),
                     new DataColumn("Source Supply Name",typeof(string)),
                     new DataColumn("Status",typeof(string)),
-                    new DataColumn("Total",typeof(string)),
-
+                    new DataColumn("Truck No",typeof(string)),
+                    new DataColumn("Pick up",typeof(string)),
+                    new DataColumn("Retailer",typeof(string))
+                    
                 });
 
                 DateTime? fromDate = null;
@@ -85,12 +87,14 @@ namespace ChipMongWebApp.Controllers
                         $"{item.cust_FirstName} {item.cust_LastName}", 
                         item.scsp_Name                               , 
                         item.slor_Status                             ,
-                        total
+                        item.slor_TruckNo                            ,
+                        item.slor_PickUp,
+                        item.retl_Name
                         );
                 }
-                
+
                 //Exporting to Excel
-                string folderPath = "C:\\SaleOrder-Export\\";
+                string folderPath = Server.MapPath("/uploads/exp/"); //"C:\\SaleOrder-Export\\";
                 if (!Directory.Exists(folderPath))
                     Directory.CreateDirectory(folderPath);
                 
@@ -108,6 +112,8 @@ namespace ChipMongWebApp.Controllers
                     Response.AddHeader("content-disposition", "attachment; filename=" + fileName);
                     Response.ContentType = "application/vnd.ms-excel";
                     Response.BinaryWrite(stream.ToArray());
+                    Response.Clear();
+                    Response.Write(fileName);
                     Response.End();
                 }
             }

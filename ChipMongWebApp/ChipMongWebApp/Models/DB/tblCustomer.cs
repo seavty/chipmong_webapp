@@ -38,5 +38,6 @@ namespace ChipMongWebApp.Models.DB
         public Nullable<int> cust_EditPOID { get; set; }
         public Nullable<int> cust_EditSOID { get; set; }
         public Nullable<int> cust_cPage { get; set; }
+        public Nullable<int> cust_UserID { get; set; }
     }
 }

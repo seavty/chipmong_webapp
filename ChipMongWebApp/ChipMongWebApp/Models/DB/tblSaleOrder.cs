@@ -32,5 +32,11 @@ namespace ChipMongWebApp.Models.DB
         public Nullable<System.DateTime> requiredDate { get; set; }
         public string pickUp { get; set; }
         public string slor_TruckNo { get; set; }
+        public Nullable<int> slor_UserID { get; set; }
+        public string slor_DocNo { get; set; }
+        public string slor_ShipmentNo { get; set; }
+        public Nullable<int> slor_LockBy { get; set; }
+        public Nullable<System.DateTime> slor_LockOn { get; set; }
+        public string slor_TruckDriverPhoneNo { get; set; }
     }
 }

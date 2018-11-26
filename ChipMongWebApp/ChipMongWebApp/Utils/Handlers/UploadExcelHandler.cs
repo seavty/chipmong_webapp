@@ -52,17 +52,24 @@ namespace ChipMongWebApp.Utils.Handlers
                         var cust = await db.tblCustomers.FirstOrDefaultAsync(x => x.deleted == null & x.code == custCode);
                         if (cust != null)
                             custID = cust.id;
-
-                        var record = new tblRetailer();
-                        record.retl_Code = row.Cell(4).Value.ToString().Trim();
-                        record.retl_District = row.Cell(7).Value.ToString().Trim();
-                        record.retl_Province = row.Cell(9).Value.ToString().Trim();
-                        record.retl_Phone = row.Cell(10).Value.ToString().Trim();
-                        record.retl_Phone2 = row.Cell(11).Value.ToString().Trim();
-                        record.retl_CustomerID = custID;
-                        db.tblRetailers.Add(record);
-                        await db.SaveChangesAsync();
-                        countUpdateRecord++;
+                        string code = row.Cell(4).Value.ToString().ToLower().Trim();
+                        var _record = await db.tblRetailers.FirstOrDefaultAsync(x => x.retl_Deleted == null 
+                            && x.retl_Code.ToLower().Trim() == code &&
+                            x.retl_CustomerID == cust.id);
+                        if (_record == null)
+                        {
+                            var record = new tblRetailer();
+                            record.retl_Name = row.Cell(5).Value.ToString().Trim();
+                            record.retl_Code = row.Cell(4).Value.ToString().Trim();
+                            record.retl_District = row.Cell(7).Value.ToString().Trim();
+                            record.retl_Province = row.Cell(9).Value.ToString().Trim();
+                            record.retl_Phone = row.Cell(10).Value.ToString().Trim();
+                            record.retl_Phone2 = row.Cell(11).Value.ToString().Trim();
+                            record.retl_CustomerID = custID;
+                            db.tblRetailers.Add(record);
+                            await db.SaveChangesAsync();
+                            countUpdateRecord++;
+                        }
                     }
                     transaction.Commit();
                     return countUpdateRecord;

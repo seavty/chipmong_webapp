@@ -25,6 +25,104 @@ namespace ChipMongWebApp.Utils.Helpers
                     return "";
             }
         }
+        //-> User
+        public static List<SelectListItem> user(int? id = null)
+        {
+            ChipMongEntities db = new ChipMongEntities();
+            IQueryable<tblUser> records = from x in db.tblUsers
+                                                    where x.deleted == null
+                                                    orderby x.userName ascending
+                                                    select x;
+            var items = records.ToList();
+            List<SelectListItem> listItems = new List<SelectListItem>();
+            
+            foreach (var item in items)
+            {
+
+                listItems.Add(new SelectListItem()
+                {
+                    Text = item.userName,
+                    Value = item.id.ToString()
+                });
+
+            }
+
+            if (id != null)
+            {
+                foreach (var item in listItems)
+                {
+                    if (item.Value == id.ToString())
+                    {
+                        item.Selected = true;
+                        break;
+                    }
+                }
+            }
+            return listItems;
+        }
+
+        public static List<SelectListItem> profile(string value = null)
+        {
+            List<SelectListItem> listItems = new List<SelectListItem>()
+            {
+                new SelectListItem
+                {
+                    Text = "Admin",
+                    Value = "1"
+                },
+                new SelectListItem
+                {
+                    Text = "Normal",
+                    Value = "2"
+                }
+            };
+
+            if (!string.IsNullOrEmpty(value))
+            {
+                foreach (var item in listItems)
+                {
+                    if (item.Value.ToLower() == value.ToLower())
+                    {
+                        item.Selected = true;
+                        break;
+                    }
+
+                }
+            }
+            return listItems;
+        }
+
+        //-> YesNo
+        public static List<SelectListItem> YesNo(string value = null)
+        {
+            List<SelectListItem> listItems = new List<SelectListItem>()
+            {
+                new SelectListItem
+                {
+                    Text = "Yes",
+                    Value = "Y"
+                },
+                new SelectListItem
+                {
+                    Text = "No",
+                    Value = "N"
+                }
+            };
+
+            if (!string.IsNullOrEmpty(value))
+            {
+                foreach (var item in listItems)
+                {
+                    if (item.Value.ToLower() == value.ToLower())
+                    {
+                        item.Selected = true;
+                        break;
+                    }
+
+                }
+            }
+            return listItems;
+        }
 
         //-> SaleOrderStatus
         public static List<SelectListItem> SaleOrderStatus(string value = null)

@@ -38,5 +38,8 @@ namespace ChipMongWebApp.Models.DTO.Customer
         [MaxLength(100)]
         [DisplayName("Address:")]
         public string address { get; set; }
+
+        [DisplayName("User:")]
+        public int? cust_UserID { get; set; }
     }
 }

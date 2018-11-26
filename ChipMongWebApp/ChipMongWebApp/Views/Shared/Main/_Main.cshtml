@@ -17,6 +17,8 @@
 <body class="c-background-color">
     @Html.Partial("~/Views/Shared/LoadingIndicator.cshtml")
 
+    <input type="hidden" name="my_url" id="my_url" value="@Request.Url.GetLeftPart(UriPartial.Authority)" />
+
     @Html.Partial("~/Views/Shared/Main/Navbar.cshtml")
     <div class="container-fluid">
         <br />

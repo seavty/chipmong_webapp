@@ -58,7 +58,7 @@
     const exportExcel = () => {
         ajaxHelper(controller + "/export", $("#record").serializeObject(), requestMethod.POST).then((data) => {
             //location.href = controller + "/view/" + data.id
-            alert("Export successfully");
+            window.open("../uploads/exp/" + data);
         });
     };
 

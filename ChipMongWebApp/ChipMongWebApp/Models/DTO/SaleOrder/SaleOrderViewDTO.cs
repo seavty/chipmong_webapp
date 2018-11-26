@@ -28,6 +28,13 @@ namespace ChipMongWebApp.Models.DTO.SaleOrder
 
         public List<SaleOrderItemViewDTO> items { get; set; }
 
+        public string sourceOfSupply { get; set; }
+        public string shipMode { get; set; }
+        public string product { get; set; }
+
+
+        
+
         //public List<ItemViewDTO> itemSelection { get; set; }
     }
 }

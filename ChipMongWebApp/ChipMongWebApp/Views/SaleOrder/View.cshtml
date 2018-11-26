@@ -3,6 +3,20 @@
     Layout = "~/Views/Shared/Main/_Main.cshtml";
 }
 
+@if (Model != null)
+{
+    if (Model.mode == ConstantHelper.MODE_VIEW)
+    {
+
+
+        if (Model.id == null)
+        {
+            @Html.Label("Record Not Found !")
+            return;
+        }
+    }
+}
+
 <div class="card" id="action">
     <div class="card-body text-dark shadow-sm merienda">
         @Html.Partial("~/Views/Shared/Template/ViewMode/Button.cshtml")

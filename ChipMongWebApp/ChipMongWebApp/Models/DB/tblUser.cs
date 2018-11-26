@@ -27,5 +27,6 @@ namespace ChipMongWebApp.Models.DB
         public string userName { get; set; }
         public string phoneNumber { get; set; }
         public string email { get; set; }
+        public Nullable<int> user_Profile { get; set; }
     }
 }

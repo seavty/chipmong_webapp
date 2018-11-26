@@ -22,5 +22,25 @@ namespace ChipMongWebApp.Models.DTO.SaleOrder
 
         [DisplayName("CustomerID:")]
         public int customerID { get; set; }
+
+        [DisplayName("Request Date From:")]
+        public string slor_RequiredDate_From { get; set; }
+
+        [DisplayName("Request Date To :")]
+        public string slor_RequiredDate_To { get; set; }
+
+
+        public string slor_SourceOfSupply { get; set; }
+
+        [DisplayName("Truck No:")]
+        public string slor_TruckNo { get; set; }
+
+        [DisplayName("Doc No:")]
+        public string slor_DocNo { get; set; }
+
+        [DisplayName("Shipment No:")]
+        public string slor_ShipmentNo { get; set; }
+
+
     }
 }
