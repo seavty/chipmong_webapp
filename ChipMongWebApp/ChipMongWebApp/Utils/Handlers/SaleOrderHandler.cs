@@ -256,7 +256,7 @@ namespace ChipMongWebApp.Utils.Handlers
             return list;
         }
 
-        public async Task<String> QEdit(int id, string p1, string p2, string p3)
+        public async Task<String> QEdit(int id, string p1, string p2, string p3, string p4, string p5, string p6, string p7, string p8)
         {
             using (var transaction = db.Database.BeginTransaction())
             {
@@ -267,10 +267,20 @@ namespace ChipMongWebApp.Utils.Handlers
                     if (record == null)
                         return "Sale Order not found !";
 
+
+
+                    //newDTO.requiredDate = newDTO.requiredDate.ToDBDate();
+                    
                     record.updatedDate = DateTime.Now;
-                    record.slor_DocNo = p1;
-                    record.slor_ShipmentNo = p2;
-                    record.status = p3;
+                    //record.slor_DocNo = p1;
+                    record.requiredDate = DateTime.ParseExact(p1, ConstantHelper.ddMMyyyy_DASH_SEPARATOR, CultureInfo.InvariantCulture);
+                    record.sourceOfSupplyID = int.Parse(p2);
+                    record.slor_TruckNo = p3;
+                    record.slor_TruckDriverPhoneNo = p4;
+                    record.slor_DocNo = p5;
+                    record.slor_ShipmentNo = p6;
+                    //record.slor_ShipmentNo = p2;
+                    record.status = p8;
                     record.slor_LockBy = null;
                     record.slor_LockOn = null;
                     var session = HttpContext.Current.Session;

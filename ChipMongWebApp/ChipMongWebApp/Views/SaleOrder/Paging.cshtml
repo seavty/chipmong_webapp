@@ -6,12 +6,23 @@
 
 <script>
     $(document).ready(function (e) {
+        
+
         $(".btEdit").click(function (e) {
             // locking SO
+            
 
             var cont = "@Url.Content($"~/{@ConstantHelper.SALEORDER_CONTROLLER}")";
             id = ($(this).attr("rel"));
-            ajaxHelper(cont + "/lockRec/" + id,
+           
+
+            $(this).closest("tr").find("input:eq(0)").datepicker({
+                uiLibrary: "bootstrap4",
+                iconsLibrary: "fontawesome",
+                format: "dd-mm-yyyy"
+            });
+
+            simpleAjax(cont + "/lockRec/" + id,
                 "" , requestMethod.POST).then((data) => {
                     if (data == "True") {
                         $(".btEdit").hide();
@@ -26,16 +37,27 @@
                         //$(".lbl_slor_DocNo,.lbl_slor_ShipmentNo,.lbl_slor_Status").hide();
 
                         $(this).closest("tr").find("input:eq(0)").val($(this).closest("tr").find("label:eq(0)").text());
-                        $(this).closest("tr").find("input:eq(1)").val($(this).closest("tr").find("label:eq(1)").text());
-                        $(this).closest("tr").find("select:eq(0)").val($(this).closest("tr").find("label:eq(2)").text());
+                        $(this).closest("tr").find("input:eq(1)").val($(this).closest("tr").find("label:eq(2)").text());
+
+
+                        //$(this).closest("tr").find("select:eq(0)").val($(this).closest("tr").find("label:eq(2)").text());
 
                         $(this).closest("tr").find("label:eq(0)").hide();
                         $(this).closest("tr").find("label:eq(1)").hide();
                         $(this).closest("tr").find("label:eq(2)").hide();
+                        $(this).closest("tr").find("label:eq(3)").hide();
+                        $(this).closest("tr").find("label:eq(4)").hide();
+                        $(this).closest("tr").find("label:eq(5)").hide();
+                        $(this).closest("tr").find("label:eq(6)").hide();
 
                         $(this).closest("tr").find("input:eq(0)").show();
                         $(this).closest("tr").find("input:eq(1)").show();
+                        $(this).closest("tr").find("input:eq(2)").show();
+                        $(this).closest("tr").find("input:eq(3)").show();
+                        $(this).closest("tr").find("input:eq(4)").show();
+
                         $(this).closest("tr").find("select:eq(0)").show();
+                        $(this).closest("tr").find("select:eq(1)").show();
                     }
                     else
                         alert(data);
@@ -46,24 +68,32 @@
 
             id = ($(this).attr("rel"));
             p1 = ($(this).closest("tr").find("input:eq(0)").val());
-            p2 = ($(this).closest("tr").find("input:eq(1)").val());
-            p3 = ($(this).closest("tr").find("select:eq(0)").val());
+            p2 = ($(this).closest("tr").find("select:eq(0)").val());
+            p3 = ($(this).closest("tr").find("input:eq(1)").val());
+            p4 = ($(this).closest("tr").find("input:eq(2)").val());
+            p5 = ($(this).closest("tr").find("input:eq(3)").val());
+            p6 = ($(this).closest("tr").find("input:eq(4)").val());
+            p7 = ($(this).closest("tr").find("input:eq(1)").val());
+            p8 = ($(this).closest("tr").find("select:eq(1)").val());
+            //p2 = ($(this).closest("tr").find("input:eq(1)").val());
+            //p3 = ($(this).closest("tr").find("select:eq(0)").val());
             var cont = "@Url.Content($"~/{@ConstantHelper.SALEORDER_CONTROLLER}")";
 
             ajaxHelper(cont + "/qedit",
-                "id=" + id + "&p1=" + p1 + "&p2=" + p2 + "&p3=" + p3, requestMethod.POST).then((data) =>
+                "id=" + id + "&p1=" + p1 + "&p2=" + p2 + "&p3=" + p3 + "&p4=" + p4 + "&p5=" + p5 + "&p6=" + p6 + "&p7=" + p7 + "&p8=" + p8, requestMethod.POST).then((data) =>
                 {
                     if (data == "True") {
                         $(this).closest("tr").find("label:eq(0)").text($(this).closest("tr").find("input:eq(0)").val());
                         $(this).closest("tr").find("label:eq(1)").text($(this).closest("tr").find("input:eq(1)").val());
                         $(this).closest("tr").find("label:eq(2)").text($(this).closest("tr").find("select:eq(0)").val());
+                        $(this).closest("tr").find("label:eq(3)").text($(this).closest("tr").find("input:eq(2)").val());
 
                         $(".btSave").hide();
                         $(".btCancel").hide();
                         $(".btEdit").show();
                         $(".btUnlock").show();
-                        $(".slor_DocNo,.slor_ShipmentNo,.slor_Status").hide();
-                        $(".lbl_slor_DocNo,.lbl_slor_ShipmentNo,.lbl_slor_Status").show();
+                        $(".slor_DocNo,.slor_ShipmentNo,.slor_Status,slor_TruckDriverPhoneNo").hide();
+                        $(".lbl_slor_DocNo,.lbl_slor_ShipmentNo,.lbl_slor_Status,slor_TruckDriverPhoneNo").show();
                     }
                     else
                         alert(data);
@@ -75,7 +105,7 @@
         $(".btCancel").click(function (e) {
             var cont = "@Url.Content($"~/{@ConstantHelper.SALEORDER_CONTROLLER}")";
             id = ($(this).attr("rel"));
-            ajaxHelper(cont + "/unlockRec/" + id,
+            simpleAjax(cont + "/unlockRec/" + id,
                 "" , requestMethod.POST).then((data) => {
                     if (data == "True") {
 
@@ -120,6 +150,7 @@
             <th scope="col"> <a href="#" id="sort_@nameof(vSaleOrderDTO.sourceOfSupply)" class="sort-data" onclick='javascript:sort("@nameof(vSaleOrderDTO.sourceOfSupply)", $(this))'> Supply Point </a>  </th>
             <th scope="col"> <a href="#" id="sort_@nameof(vSaleOrderDTO.product)" class="sort-data" onclick='javascript:sort("@nameof(vSaleOrderDTO.product)", $(this))'> Product </a>  </th>
             <th scope="col"> <a href="#" id="sort_@nameof(vSaleOrderDTO.slor_TruckNo)" class="sort-data" onclick='javascript:sort("@nameof(vSaleOrderDTO.slor_TruckNo)", $(this))'> Truck No </a>  </th>
+            <th scope="col"> <a href="#" id="sort_@nameof(vSaleOrderDTO.slor_TruckDriverPhoneNo)" class="sort-data" onclick='javascript:sort("@nameof(vSaleOrderDTO.slor_TruckDriverPhoneNo)", $(this))'> Truck Driver Phone No </a>  </th>
             <th scope="col"> <a href="#" id="sort_@nameof(vSaleOrderDTO.slor_DocNo)" class="sort-data" onclick='javascript:sort("@nameof(vSaleOrderDTO.slor_DocNo)", $(this))'> Doc No </a>  </th>
             <th scope="col"> <a href="#" id="sort_@nameof(vSaleOrderDTO.slor_ShipmentNo)" class="sort-data" onclick='javascript:sort("@nameof(vSaleOrderDTO.slor_ShipmentNo)", $(this))'> Shipment No </a>  </th>
             <th scope="col"> <a href="#" id="sort_@nameof(vSaleOrderDTO.slor_Status)" class="sort-data" onclick='javascript:sort("@nameof(vSaleOrderDTO.slor_Status)", $(this))'> Status </a>  </th>
@@ -133,68 +164,79 @@
         @foreach (var item in Model.items)
         {
 
-            <tr>
-                <th scope="row" class="text-center"> @(Model.metaData.startRow + i) </th>
-                <td class="align-middle"> <a href=" @Url.Content("~/saleorder/view/")@item.slor_SaleOrderID"> @item.slor_Code </a> </td>
+        <tr>
+            <th scope="row" class="text-center"> @(Model.metaData.startRow + i) </th>
+            <td class="align-middle"> <a href=" @Url.Content("~/saleorder/view/")@item.slor_SaleOrderID"> @item.slor_Code </a> </td>
 
-                @if (item.slor_RequiredDate != null)
+            @if (item.slor_RequiredDate != null)
+            {
+            <td>
+                @Html.TextBoxFor(m => m.items[i].slor_TruckDriverPhoneNo, new { @class = "form-control slor_TruckDriverPhoneNo date-picker", placeholder = "Truck Driver Phone No", @style = "display:none" })
+                <label class="lbl_slor_RequiredDate">@item.slor_RequiredDate.ToString().ToHumanDate()</label>
+            </td>
+            }
+            else
+            {
+                <td></td>
+            }
+
+            <td>
+                <a href=" @Url.Content("~/customer/view/")@item.cust_CustomerID">
+                    @item.cust_FirstName @item.cust_LastName
+                </a>
+            </td>
+            <td> @item.shipMode </td>
+            <td> @item.shipMode </td>
+            <td>
+                <label class="lbl_sourceOfSupply">@item.sourceOfSupply</label>
+                @Html.DropDownListFor(m => m.items[i].slor_SourceOfSupply, SelectionHelper.SourceSupplySelection(Model.items[i].slor_SourceOfSupply), null, new { @class = "form-control slor_SourceOfSupply", @style = "display:none" })
+            </td>
+            <td> @Html.Raw(item.product) </td>
+            <td>
+                @Html.TextBoxFor(m => m.items[i].slor_TruckNo, new { @class = "form-control slor_TruckNo", placeholder = "Truck No", @style = "display:none" })
+                <label class="lbl_slor_TruckNo">@item.slor_TruckNo</label>
+            </td>
+            <td>
+                @Html.TextBoxFor(m => m.items[i].slor_TruckDriverPhoneNo, new { @class = "form-control slor_TruckDriverPhoneNo", placeholder = "Truck Driver Phone No", @style = "display:none" })
+                <label class="lbl_slor_TruckDriverPhoneNo">@item.slor_TruckDriverPhoneNo</label>
+            </td>
+            <td>
+                @Html.TextBoxFor(m => m.items[i].slor_DocNo, new { @class = "form-control slor_DocNo", placeholder = "Doc No", @style = "display:none" })
+                <label class="lbl_slor_DocNo">@item.slor_DocNo</label>
+            </td>
+            <td>
+                @Html.TextBoxFor(m => m.items[i].slor_ShipmentNo, new { @class = "form-control slor_ShipmentNo", placeholder = "Shipment No", name = "txt", @style = "display:none" })
+                <label class="lbl_slor_ShipmentNo">@item.slor_ShipmentNo</label>
+            </td>
+            <td>
+                @Html.DropDownListFor(m => m.items[i].slor_Status, SelectionHelper.SaleOrderStatus(Model.items[i].slor_Status), "-- Select Status --", new { @class = "form-control slor_Status", @style = "display:none" })
+                <label class="lbl_slor_Status">@item.slor_Status</label>
+            </td>
+
+            <td>
+                <button rel="@item.slor_SaleOrderID" type="button" class="btn btn-sm btn-primary btEdit">
+                    <i class="fas fa-pencil-alt"></i>
+                </button>
+                @if (item.slor_LockBy != null)
                 {
-                    <td>
-                        @item.slor_RequiredDate.Value.ToString("dd/MM/yyyy")
-                    </td>
-                }
-                else
-                {
-                    <td></td>
+                    <button rel="@item.slor_SaleOrderID" type="button" class="btn btn-sm btn-secondary btUnlock">
+                        <i class="fas fa-unlock-alt"></i>
+                    </button>
                 }
 
-                <td>
-                    <a href=" @Url.Content("~/customer/view/")@item.cust_CustomerID">
-                        @item.cust_FirstName @item.cust_LastName
-                    </a>
-                </td>
-                <td> @item.shipMode </td>
-                <td> @item.shipMode </td>
-                <td> @item.sourceOfSupply </td>
-                <td> @Html.Raw(item.product) </td>
-                <td> @item.slor_TruckNo </td>
-                <td>
-                    @Html.TextBoxFor(m => m.items[i].slor_DocNo, new { @class = "form-control slor_DocNo", placeholder = "Doc No", @style = "display:none" })
-                    <label class="lbl_slor_DocNo">@item.slor_DocNo</label>
-                </td>
-                <td>
-                    @Html.TextBoxFor(m => m.items[i].slor_ShipmentNo, new { @class = "form-control slor_ShipmentNo", placeholder = "Shipment No", name = "txt", @style = "display:none" })
-                    <label class="lbl_slor_ShipmentNo">@item.slor_ShipmentNo</label>
-                </td>
-                <td>
-                    @Html.DropDownListFor(m => m.items[i].slor_Status, SelectionHelper.SaleOrderStatus(Model.items[i].slor_Status), "-- Select Status --", new { @class = "form-control slor_Status", @style = "display:none" })
-                    <label class="lbl_slor_Status">@item.slor_Status</label>
-                </td>
+                <button rel="@item.slor_SaleOrderID" type="button" style="display:none" class="btn btn-sm btn-success btSave">
+                    <i class="fas fa-save"></i>
+                </button>
+                <button rel="@item.slor_SaleOrderID" type="button" style="display:none" class="btn btn-sm btn-danger btCancel">
+                    <i class="fas fa-times"></i>
+                </button>
+            </td>
 
-                <td>
-                    <button rel="@item.slor_SaleOrderID" type="button" class="btn btn-sm btn-primary btEdit">
-                        <i class="fas fa-pencil-alt"></i>
-                    </button>
-                    @if (item.slor_LockBy != null)
-                    {
-                        <button rel="@item.slor_SaleOrderID" type="button" class="btn btn-sm btn-secondary btUnlock">
-                            <i class="fas fa-unlock-alt"></i>
-                        </button>
-                    }
+            <td>
+                <input type="checkbox" class="chk" value="@item.slor_SaleOrderID" />
+            </td>
 
-                    <button rel="@item.slor_SaleOrderID" type="button" style="display:none" class="btn btn-sm btn-success btSave">
-                        <i class="fas fa-save"></i>
-                    </button>
-                    <button rel="@item.slor_SaleOrderID" type="button" style="display:none" class="btn btn-sm btn-danger btCancel">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </td>
-
-                <td>
-                    <input type="checkbox" class="chk" value="@item.slor_SaleOrderID" />
-                </td>
-
-            </tr>
+        </tr>
             i++;
 
         }

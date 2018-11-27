@@ -72,5 +72,7 @@ namespace ChipMongWebApp.Models.DTO.SaleOrder
         public string product { get; set; }
         public string sourceOfSupply { get; set; }
         public string shipMode { get; set; }
+
+        public string slor_TruckDriverPhoneNo { get; set; }
     }
 }
