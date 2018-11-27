@@ -22,6 +22,8 @@
                 format: "dd-mm-yyyy"
             });
 
+            $(".lbl_slor_RequiredDate").closest("div").show();
+
             simpleAjax(cont + "/lockRec/" + id,
                 "" , requestMethod.POST).then((data) => {
                     if (data == "True") {
@@ -84,16 +86,79 @@
                 {
                     if (data == "True") {
                         $(this).closest("tr").find("label:eq(0)").text($(this).closest("tr").find("input:eq(0)").val());
-                        $(this).closest("tr").find("label:eq(1)").text($(this).closest("tr").find("input:eq(1)").val());
-                        $(this).closest("tr").find("label:eq(2)").text($(this).closest("tr").find("select:eq(0)").val());
-                        $(this).closest("tr").find("label:eq(3)").text($(this).closest("tr").find("input:eq(2)").val());
+                        //$(this).closest("tr").find("label:eq(1)").text($(this).closest("tr").find("input:eq(1)").val());
+                        //$(this).closest("tr").find("label:eq(2)").text($(this).closest("tr").find("select:eq(0)").val());
+                        //$(this).closest("tr").find("label:eq(3)").text($(this).closest("tr").find("input:eq(2)").val());
 
                         $(".btSave").hide();
                         $(".btCancel").hide();
                         $(".btEdit").show();
                         $(".btUnlock").show();
-                        $(".slor_DocNo,.slor_ShipmentNo,.slor_Status,slor_TruckDriverPhoneNo").hide();
-                        $(".lbl_slor_DocNo,.lbl_slor_ShipmentNo,.lbl_slor_Status,slor_TruckDriverPhoneNo").show();
+                        
+                        //$(".slor_DocNo,.slor_ShipmentNo,.slor_Status,slor_TruckDriverPhoneNo").hide();
+                        //$(".lbl_slor_DocNo,.lbl_slor_ShipmentNo,.lbl_slor_Status,slor_TruckDriverPhoneNo").show();
+
+
+
+                        
+                        
+                        $(".slor_RequiredDate").hide();
+                        $(".lbl_slor_RequiredDate").show();
+                        $(".lbl_slor_RequiredDate").prev("div").hide();
+
+                        const supplyPointID = $(this).closest("tr").find("select:eq(0)").val();
+                        let txt = "";
+                        if (supplyPointID == "1")
+                            txt = "TMP Plant";
+                        else if (supplyPointID == "2")
+                            txt = "Oknha Mong Port";
+                        else if (supplyPointID == "3")
+                            txt = "Poi Pet WH";
+                        else if (supplyPointID == "4")
+                            txt = "Railway WH - Phnom Penh";
+                        $(this).closest("tr").find("label:eq(1)").text(txt);
+                        $(".slor_SourceOfSupply").hide();
+                        $(".lbl_sourceOfSupply").show();
+
+
+                        let truckNo = $(this).closest("tr").find("input:eq(1)").val();
+                        $(this).closest("tr").find("label:eq(2)").text(truckNo);
+                        $(".slor_TruckNo").hide();
+                        $(".lbl_slor_TruckNo").show();
+
+
+                        let truckNoPhoneNo = $(this).closest("tr").find("input:eq(2)").val();
+                        $(this).closest("tr").find("label:eq(3)").text(truckNoPhoneNo);
+                        $(".slor_TruckDriverPhoneNo").hide();
+                        $(".lbl_slor_TruckDriverPhoneNo").show();
+
+
+                        let docNo = $(this).closest("tr").find("input:eq(3)").val();
+                        $(this).closest("tr").find("label:eq(4)").text(docNo);
+                        $(".slor_DocNo").hide();
+                        $(".lbl_slor_DocNo").show();
+
+
+                        let shipmentNo = $(this).closest("tr").find("input:eq(4)").val();
+                        $(this).closest("tr").find("label:eq(5)").text(shipmentNo);
+                        $(".slor_ShipmentNo").hide();
+                        $(".lbl_slor_ShipmentNo").show();
+
+
+
+
+                        
+                        let status = $(this).closest("tr").find("select:eq(1)").val();
+                        
+                        $(this).closest("tr").find("label:eq(6)").text(status);
+                        $(".slor_Status").hide();
+                        $(".lbl_slor_Status").show();
+
+
+                        
+
+
+
                     }
                     else
                         alert(data);
@@ -113,8 +178,33 @@
                         $(".btEdit").show();
                         $(".btCancel").hide();
                         $(".btUnlock").show();
-                        $(".slor_DocNo,.slor_ShipmentNo,.slor_Status").hide();
+                        $(".slor_DocNo,.slor_ShipmentNo,.slor_Status,slor_RequiredDate").hide();
+
+                        
+
                         $(".lbl_slor_DocNo,.lbl_slor_ShipmentNo,.lbl_slor_Status").show();
+
+
+                        //$(".slor_RequiredDate").closest("div").hide();
+                        //$(".slor_RequiredDate").hide();
+                        //$(".lbl_slor_RequiredDate").show();
+                        //$(".lbl_slor_RequiredDate").prev("div").remove();
+
+
+                        $(".slor_RequiredDate").hide();
+                        $(".lbl_slor_RequiredDate").show();
+                        $(".lbl_slor_RequiredDate").prev("div").hide();
+
+
+
+                        $(".slor_SourceOfSupply").hide();
+                        $(".lbl_sourceOfSupply").show();
+
+                        $(".slor_TruckNo").hide();
+                        $(".lbl_slor_TruckNo").show();
+
+                        $(".slor_TruckDriverPhoneNo").hide();
+                        $(".lbl_slor_TruckDriverPhoneNo").show();
                     }
                     else
                         alert(data);
@@ -171,7 +261,7 @@
             @if (item.slor_RequiredDate != null)
             {
             <td>
-                @Html.TextBoxFor(m => m.items[i].slor_TruckDriverPhoneNo, new { @class = "form-control slor_TruckDriverPhoneNo date-picker", placeholder = "Truck Driver Phone No", @style = "display:none" })
+                @Html.TextBoxFor(m => m.items[i].slor_TruckDriverPhoneNo, new { @class = "form-control slor_RequiredDate date-picker", placeholder = "Truck Driver Phone No", @style = "display:none" })
                 <label class="lbl_slor_RequiredDate">@item.slor_RequiredDate.ToString().ToHumanDate()</label>
             </td>
             }

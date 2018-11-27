@@ -85,6 +85,14 @@
             <div class="row">
                 <div class="col col-md-4">
                     <div class="form-group">
+                        @Html.LabelFor(m => m.slor_TruckDriverPhoneNo)
+                        @Html.TextBoxFor(m => m.slor_TruckDriverPhoneNo, new { @class = "form-control", placeholder = "Truck Driver Phone No", @maxlength = "100" })
+                    </div>
+                </div>
+                
+
+                <div class="col col-md-4">
+                    <div class="form-group">
                         @Html.LabelFor(m => m.slor_DocNo)
                         @Html.TextBoxFor(m => m.slor_DocNo, new { @class = "form-control", placeholder = "Doc No", @maxlength = "100" })
                     </div>
