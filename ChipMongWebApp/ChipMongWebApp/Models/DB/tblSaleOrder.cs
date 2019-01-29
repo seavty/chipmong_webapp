@@ -38,5 +38,28 @@ namespace ChipMongWebApp.Models.DB
         public Nullable<int> slor_LockBy { get; set; }
         public Nullable<System.DateTime> slor_LockOn { get; set; }
         public string slor_TruckDriverPhoneNo { get; set; }
+        public string slor_TransportZone { get; set; }
+        public string slor_SONo { get; set; }
+        public string slor_ShipConidtion { get; set; }
+        public Nullable<System.DateTime> slor_TimeUpdateStatus { get; set; }
+        public Nullable<int> slor_Status1By { get; set; }
+        public Nullable<System.DateTime> slor_Status1Date { get; set; }
+        public Nullable<System.DateTime> slor_Status1Send { get; set; }
+        public Nullable<int> slor_Status2By { get; set; }
+        public Nullable<System.DateTime> slor_Status2Date { get; set; }
+        public Nullable<System.DateTime> slor_Status2Send { get; set; }
+        public Nullable<int> slor_Status3By { get; set; }
+        public Nullable<System.DateTime> slor_Status3Date { get; set; }
+        public Nullable<System.DateTime> slor_Status3Send { get; set; }
+        public Nullable<int> slor_Status4By { get; set; }
+        public Nullable<System.DateTime> slor_Status4Date { get; set; }
+        public Nullable<System.DateTime> slor_Status4Send { get; set; }
+        public Nullable<int> slor_Status5By { get; set; }
+        public Nullable<System.DateTime> slor_Status5Date { get; set; }
+        public Nullable<System.DateTime> slor_Status5Send { get; set; }
+        public Nullable<int> slor_Status6By { get; set; }
+        public Nullable<System.DateTime> slor_Status6Date { get; set; }
+        public Nullable<System.DateTime> slor_Status6Send { get; set; }
+        public Nullable<System.DateTime> slor_SendDate { get; set; }
     }
 }

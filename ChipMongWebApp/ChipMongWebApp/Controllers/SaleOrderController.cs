@@ -88,14 +88,14 @@ namespace ChipMongWebApp.Controllers
         //-> Edit
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public async Task<String> qedit(int id,string p1,string p2,string p3, string p4, string p5, string p6, string p7, string p8)
+        public async Task<String> qedit(int id,string p1,string p2,string p3, string p4, string p5, string p6, string p7, string p8,string p9, string p10, string p11, string p12)
         {
             try
             {
                 if (!ModelState.IsValid)
                     throw new HttpException((int)HttpStatusCode.BadRequest, ConstantHelper.KEY_IN_REQUIRED_FIELD);
                 Response.StatusCode = 200;
-                return (await handler.QEdit(id, p1, p2, p3, p4, p5, p6, p7, p8));
+                return (await handler.QEdit(id, p1, p2, p3, p4, p5, p6, p7, p8,p9,p10,p11,p12));
 
             }
             catch (HttpException ex)

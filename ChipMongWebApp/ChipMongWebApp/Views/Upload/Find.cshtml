@@ -63,9 +63,10 @@
                 alert(data.replace("ok", "") + " record(s) have been uploaded.");
                 window.location.reload();
             }
-            else
+            else {
                 location.href = "@Url.Content($"~/{@ConstantHelper.AUTH_CONTROLLER}/login")";
 
+            }
                 //location.href = $("#baseURL").val() + "/auth/login";
             $('#loadingIndicator').modal("hide");
         });

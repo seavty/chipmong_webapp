@@ -107,12 +107,16 @@ namespace ChipMongWebApp.Utils.Handlers
                     {
                         //var soNumber = row.Cell(1).Value.ToString().Trim().Replace(" ", string.Empty);//Get ist cell. 1 represent column number
                         //var status = row.Cell(2).Value.ToString().Trim().Replace(" ", string.Empty); ;
-                        var record = new tblCustomer();
-                        record.code = row.Cell(1).Value.ToString().Trim();
-                        record.firstName = row.Cell(2).Value.ToString().Trim();
-                        db.tblCustomers.Add(record);
-                        await db.SaveChangesAsync();
-                        countUpdateRecord++;
+                        var ex = await db.tblCustomers.FirstOrDefaultAsync(x => x.code.ToLower() == row.Cell(1).Value.ToString().Trim().ToLower() && x.deleted == null);
+                        if (ex == null)
+                        {
+                            var record = new tblCustomer();
+                            record.code = row.Cell(1).Value.ToString().Trim();
+                            record.firstName = row.Cell(2).Value.ToString().Trim();
+                            db.tblCustomers.Add(record);
+                            await db.SaveChangesAsync();
+                            countUpdateRecord++;
+                        }
                     }
                     transaction.Commit();
                     return countUpdateRecord;

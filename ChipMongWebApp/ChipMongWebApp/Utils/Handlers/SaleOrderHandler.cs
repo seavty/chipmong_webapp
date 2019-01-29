@@ -256,7 +256,7 @@ namespace ChipMongWebApp.Utils.Handlers
             return list;
         }
 
-        public async Task<String> QEdit(int id, string p1, string p2, string p3, string p4, string p5, string p6, string p7, string p8)
+        public async Task<String> QEdit(int id, string p1, string p2, string p3, string p4, string p5, string p6, string p7, string p8,string p9, string p10, string p11, string p12)
         {
             using (var transaction = db.Database.BeginTransaction())
             {
@@ -274,17 +274,60 @@ namespace ChipMongWebApp.Utils.Handlers
                     record.updatedDate = DateTime.Now;
                     //record.slor_DocNo = p1;
                     record.requiredDate = DateTime.ParseExact(p1, ConstantHelper.ddMMyyyy_DASH_SEPARATOR, CultureInfo.InvariantCulture);
-                    record.sourceOfSupplyID = int.Parse(p2);
+                    if(string.IsNullOrEmpty(p2))
+                        record.sourceOfSupplyID = null;
+                    else
+                        record.sourceOfSupplyID =int.Parse(p2);
                     record.slor_TruckNo = p3;
                     record.slor_TruckDriverPhoneNo = p4;
                     record.slor_DocNo = p5;
                     record.slor_ShipmentNo = p6;
                     //record.slor_ShipmentNo = p2;
                     record.status = p8;
-                    record.slor_LockBy = null;
-                    record.slor_LockOn = null;
                     var session = HttpContext.Current.Session;
                     UserViewDTO user = (UserViewDTO)session["user"];
+                    if (user != null)
+                    {
+                        if (p8 == "Processed")
+                        {
+                            record.slor_Status1By = user.id;
+                            record.slor_Status1Date = DateTime.Now;
+                        }
+                        if (p8 == "Complete")
+                        {
+                            record.slor_Status2By = user.id;
+                            record.slor_Status2Date = DateTime.Now;
+                        }
+                        if (p8 == "Cancelled")
+                        {
+                            record.slor_Status3By = user.id;
+                            record.slor_Status3Date = DateTime.Now;
+                        }
+                        if (p8 == "Rejected")
+                        {
+                            record.slor_Status4By = user.id;
+                            record.slor_Status4Date = DateTime.Now;
+
+                        }
+                        if (p8 == "Insufficient balance")
+                        {
+                            record.slor_Status5By = user.id;
+                            record.slor_Status5Date = DateTime.Now;
+                        }
+                        if (p8 == "Pending")
+                        {
+                            record.slor_Status6By = user.id;
+                            record.slor_Status6Date = DateTime.Now;
+                        }
+                    }
+                    record.pickUp = (string.IsNullOrEmpty(p9) ? null : p9) ;
+
+                    record.slor_TransportZone = p10;
+                    record.slor_SONo = p11;
+                    record.slor_ShipConidtion = p12;
+                    record.slor_LockBy = null;
+                    record.slor_LockOn = null;
+                    
                     if (user != null)
                     {
                         record.updatedBy = user.id;
@@ -565,30 +608,89 @@ namespace ChipMongWebApp.Utils.Handlers
             }
             //foreach (var id in ids)
             {
-                var records = db.tblSaleOrders.Where(x => ids.Contains(x.id));
+                var records = db.vSaleOrders.Where(x => ids.Contains(x.slor_SaleOrderID));
                 foreach (var record in records)
                 {
-                    
-                    var cust = await db.tblCustomers.FirstOrDefaultAsync(x => x.id == record.customerID);
+                    var _rec = await db.tblSaleOrders.FirstOrDefaultAsync(x => x.id == record.slor_SaleOrderID);
+                    if (_rec != null)
+                    {
+                        _rec.slor_TimeUpdateStatus = DateTime.Now;
+                        if(record.slor_Status.ToLower() == "Processed".ToLower())
+                        {
+                            _rec.slor_Status1Send = DateTime.Now;
+                        }
+                        if (record.slor_Status.ToLower() == "Complete".ToLower())
+                        {
+                            _rec.slor_Status2Send = DateTime.Now;
+                        }
+                        if (record.slor_Status.ToLower() == "Cancelled".ToLower())
+                        {
+                            _rec.slor_Status3Send = DateTime.Now;
+                        }
+                        if (record.slor_Status.ToLower() == "Rejected".ToLower())
+                        {
+                            _rec.slor_Status4Send = DateTime.Now;
+                        }
+                        if (record.slor_Status.ToLower() == "Insufficient balance".ToLower())
+                        {
+                            _rec.slor_Status5Send = DateTime.Now;
+                        }
+                        if (record.slor_Status.ToLower() == "Pending".ToLower())
+                        {
+                            _rec.slor_Status6Send = DateTime.Now;
+                        }
+                    }
+                    var cust = await db.tblCustomers.FirstOrDefaultAsync(x => x.id == record.cust_CustomerID);
                     if (cust != null)
                     {
                         
                         if (datas.FirstOrDefault(x=>x.Key.ToLower() == cust.cust_LineID.ToLower()).Key == null)
                         {
                             //add
-                            datas.Add(cust.cust_LineID, "PO : " + record.code +
-                                 "\\nDoc No : " + record.slor_DocNo +
+                            datas.Add(cust.cust_LineID, 
+                                 "\\nShip to Name : " + record.retl_Name +
+                                "\\nSO No : " + record.slor_SONo +
+                                "\\nPO No : " + record.slor_Code + 
+                                "\\nDO No : " + record.slor_DocNo +
                                 "\\nShipment No : " + record.slor_ShipmentNo +
-                                "\\nStatus : " + record.status + "\\n");
+                                "\\nShipping Condition : " + (!string.IsNullOrEmpty(record.slor_PickUp) ? "Pickup" : "Delivery") +
+                                "\\nTruck No : " + record.slor_TruckNo +
+                                (string.IsNullOrEmpty(record.slor_ShipConidtion) ? "" :
+                                    (record.slor_ShipConidtion == "D1".ToLower().Trim() || record.slor_ShipConidtion == "D2".ToLower().Trim() ? 
+                                        (!string.IsNullOrEmpty(record.slor_TruckDriverPhoneNo) ? "\\nDriver Phone number : " + record.slor_TruckDriverPhoneNo : "")
+                                        : "")
+                                    ) +
+                                "\\nMaterial Description : " + record.productQty +
+                                //"\\nDelivery Quantity : " + record. +
+                                "\\nPlant : " + record.sourceOfSupply +
+                                "\\nBooking Date : " + record.slor_RequiredDate.Value.ToString("dd/MM/yyyy") +
+                                (string.IsNullOrEmpty(record.slor_Remarks) ? "" : "\\nRemark : " + record.slor_Remarks) +
+                                "\\nStatus : " + record.slor_Status + "\\n"
+                                );
                         }
                         else
                         {
                             //update
-                            datas[cust.cust_LineID] = datas[cust.cust_LineID] + "\\n" +
-                                "PO : " + record.code +
-                                 "\\nDoc No : " + record.slor_DocNo +
+                            datas[cust.cust_LineID] = datas[cust.cust_LineID] + 
+                                "\\n" +
+                                 "\\nShip to Name : " + record.retl_Name +
+                                "\\nSO No : " + record.slor_SONo +
+                                "\\nPO No : " + record.slor_Code +
+                                "\\nDO No : " + record.slor_DocNo +
                                 "\\nShipment No : " + record.slor_ShipmentNo +
-                                "\\nStatus : " + record.status + "\\n";
+                                "\\nShipping Condition : " + (!string.IsNullOrEmpty(record.slor_PickUp) ? "Pickup" : "Delivery") +
+                                "\\nTruck No : " + record.slor_TruckNo +
+                                (string.IsNullOrEmpty(record.slor_ShipConidtion) ? "" : 
+                                    (record.slor_ShipConidtion == "D1".ToLower().Trim() || record.slor_ShipConidtion == "D2".ToLower().Trim() ?
+                                        (!string.IsNullOrEmpty(record.slor_TruckDriverPhoneNo) ? "\\nDriver Phone number : " + record.slor_TruckDriverPhoneNo : "")
+                                        : "")
+                                    ) +
+                                "\\nMaterial Description : " + record.productQty +
+                                //"\\nDelivery Quantity : " + record. +
+                                "\\nPlant : " + record.sourceOfSupply +
+                                "\\nBooking Date : " + record.slor_RequiredDate.Value.ToString("dd/MM/yyyy") +
+                                (string.IsNullOrEmpty(record.slor_Remarks) ? "" : "\\nRemark : " + record.slor_Remarks) +
+                                "\\nStatus : " + record.slor_Status + "\\n";
                         }
                     }
                 }
@@ -622,10 +724,10 @@ namespace ChipMongWebApp.Utils.Handlers
                         "}")
                 );
 
-                HttpResponseMessage response = await client.SendAsync(requestMessage);
+                //HttpResponseMessage response = await client.SendAsync(requestMessage);
                 
             }
-
+            await db.SaveChangesAsync();
             return re;
         }
 

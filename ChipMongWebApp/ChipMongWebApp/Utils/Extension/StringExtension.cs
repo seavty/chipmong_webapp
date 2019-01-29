@@ -25,6 +25,24 @@ namespace ChipMongWebApp.Utils.Extension
             return dateTime.ToString(ConstantHelper.ddMMyyyy_DASH_SEPARATOR);
         }
 
+        public static string ToHumanTime(this string value)
+        {
+            /*
+            DateTime dateTime = DateTime.ParseExact(value, ConstantHelper.yyyyMMd_DASH_SEPARATOR, CultureInfo.InvariantCulture);
+            return dateTime.ToString(ConstantHelper.ddMMyyyy_FORWARD_SLASH_SEPARATOR);
+            */
+            var tmp = CultureInfo.CurrentCulture.DateTimeFormat.ToString();
+            var another = CultureInfo.CurrentCulture.DateTimeFormat.ShortTimePattern;
+            var systemDateTimeFormat = $"{CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern} {CultureInfo.CurrentCulture.DateTimeFormat.ShortTimePattern}";
+
+            DateTime dateTime = DateTime.Parse(value);
+            return dateTime.ToString("hh:mm tt");
+            /*
+            DateTime dateTime = DateTime.ParseExact(value, systemDateTimeFormat, CultureInfo.InvariantCulture);
+            return dateTime.ToString(ConstantHelper.ddMMyyyy_FORWARD_SLASH_SEPARATOR);
+            */
+        }
+
         public static string ToHumanDate(this string value)
         {
             /*

@@ -153,6 +153,16 @@ namespace ChipMongWebApp.Utils.Helpers
                 {
                     Text = "Rejected",
                     Value = "Rejected"
+                },
+                new SelectListItem
+                {
+                    Text = "Insufficient balance",
+                    Value = "Insufficient balance"
+                },
+                new SelectListItem
+                {
+                    Text = "Pending",
+                    Value = "Pending"
                 }
             };
 
@@ -242,6 +252,89 @@ namespace ChipMongWebApp.Utils.Helpers
                         item.Selected = true;
                         break;
                     }
+                }
+            }
+            return listItems;
+        }
+
+        // shipCondition
+        public static List<SelectListItem> shipCondition(string id)
+        {
+            List<SelectListItem> listItems = new List<SelectListItem>();
+
+            listItems.Add(new SelectListItem()
+            {
+                Text = "P1",
+                Value = "P1"
+            });
+
+            listItems.Add(new SelectListItem()
+            {
+                Text = "D1",
+                Value = "D1"
+            });
+
+            listItems.Add(new SelectListItem()
+            {
+                Text = "D2",
+                Value = "D2"
+            });
+
+            if (id != null)
+            {
+                foreach (var item in listItems)
+                {
+                    if (item.Value == id.ToString())
+                    {
+                        item.Selected = true;
+                        break;
+                    }
+                }
+            }
+            return listItems;
+        }
+        // Pickup Mode
+
+        public static List<SelectListItem> pickupMode(string id)
+        {
+            List<SelectListItem> listItems = new List<SelectListItem>();
+            listItems.Add(new SelectListItem()
+            {
+                Text = "Pickup",
+                Value = "Y"
+            });
+
+            listItems.Add(new SelectListItem()
+            {
+                Text = "Delivery",
+                Value = ""
+            });
+
+            /*
+            if (id != null)
+            {
+                foreach (var item in listItems)
+                {
+                    if (item.Value.ToLower() == id.ToLower())
+                    {
+                        item.Selected = true;
+                        break;
+                    }
+                }
+            }*/
+            if (id == null)
+            {
+                listItems[1].Selected = true;
+            }
+            else
+            {
+                if (id.ToLower() == "y")
+                {
+                    listItems[0].Selected = true;
+                }
+                else
+                {
+                    listItems[1].Selected = true;
                 }
             }
             return listItems;

@@ -60,5 +60,13 @@ namespace ChipMongWebApp.Models.DTO.SaleOrder
 
         [DisplayName("Truck Driver Phone No:")]
         public string slor_TruckDriverPhoneNo { get; set; }
+
+        [DisplayName("Transportation Zone (District):")]
+        public string slor_TransportZone { get; set; }
+        [DisplayName("SO No:")]
+        public string slor_SONo { get; set; }
+        [DisplayName("CS. Shipping Condition:")]
+        public string slor_ShipConidtion { get; set; }
+        
     }
 }

@@ -1,0 +1,131 @@
+﻿@using ChipMongWebApp.Utils.Helpers
+@model ChipMongWebApp.Models.DTO.SaleOrder.SaleOrderViewDTO
+@{
+    Layout = "~/Views/Shared/Main/_Main.cshtml";
+}
+
+@Html.Partial("~/Views/Customer/Tabs.cshtml")
+
+
+
+<br />
+<form name="record" id="record">
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="currentPage" id="currentPage" value="1" />
+</form>
+@Html.Partial("~/Views/Shared/Template/FindMode/TableData.cshtml")
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"> Source Supply </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form name="frmPopup" id="frmPopup">
+                    @Html.AntiForgeryToken()
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.sourceOfSupplyID)
+                                @Html.DropDownListFor(m => m.sourceOfSupplyID, SelectionHelper.SourceSupplySelection(0), null, new { @class = "form-control required" })
+                                @Html.Hidden("dealerSupplyID")
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal"> <i class="fas fa-times"></i> Close</button>
+                <button type="button" class="btn btn-success" id="btnAdd" onclick="add()"> <i class="fas fa-plus"></i> Add </button>
+                <button type="button" class="btn btn-success" id="btnSave" onclick="save()"> <i class="fas fa-save"></i> Save </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const id = @Url.RequestContext.RouteData.Values["id"];
+    const controller = "@Url.Content($"~/{ConstantHelper.CUSTOMER_CONTROLLER}")";
+    const retailerEndPoint = "@Url.Content($"~/{ConstantHelper.Retailer_CONTROLLER}")";
+
+    $(document).ready(() => {
+        $("#retailerTab").contents().unwrap();
+        getRetailer();
+    });
+
+    const getRetailer = () => {
+        ajaxHelper(controller + "/getretailer/" + id, null, requestMethod.POST).then(function (data) {
+            $("#tableData").html(data);
+        })
+    }
+
+    const customerTab = () => location.href = controller + "/view/" + id;
+    const saleorderTab = () => location.href = controller + "/saleordertab/" + id;
+
+    const handleAddSourceSupply = () => {
+        $("#btnSave").hide();
+        $("#btnAdd").show();
+        $("#sourceOfSupplyID").css("border-color", "#ced4da");
+        $("#sourceOfSupplyID").val("");
+        $("#exampleModal").modal("show");
+    }
+
+
+    const add = () => {
+        if (isValid()) {
+            ajaxHelper(controller + "/addsourcesupply/" + id + "/?sourceOfSupplyID=" + $("#sourceOfSupplyID").val(), $("#frmPopup").serializeObject(), requestMethod.POST).then(function (data) {
+                $("#exampleModal").modal("hide");
+                getDealerSourceSupply();
+            });
+        }
+        else {
+            $("#sourceOfSupplyID").css("border-color", "red");
+        }
+    }
+
+    const editDealerSourceSupply = (id, sourceSupplyID) => {
+        $("#sourceOfSupplyID").val(sourceSupplyID);
+        $("#btnSave").show();
+        $("#btnAdd").hide();
+        $("#sourceOfSupplyID").css("border-color", "#ced4da");
+
+        $("#dealerSupplyID").val(id);
+        $("#exampleModal").modal("show");
+    }
+
+    const deleteRetailer = (id) => {
+        if (confirm("Do you want to delee this record?")) {
+            simpleAjax(retailerEndPoint + "/delete/" + id, null, requestMethod.POST).then(function (data) {
+                if (data == "ok") {
+                    getRetailer();
+                }
+            });
+        }
+    }
+
+    const save = () => {
+        if (isValid()) {
+            ajaxHelper(dealerSourceSupplyEndPoint + "/edit/" + $("#dealerSupplyID").val() + "/?sourceOfSupplyID=" + $("#sourceOfSupplyID").val(), $("#frmPopup").serializeObject(), requestMethod.POST).then(function (data) {
+                getDealerSourceSupply();
+            });
+        }
+        else {
+            $("#sourceOfSupplyID").css("border-color", "red");
+        }
+    }
+
+</script>
+
+
+
+
+
+
+
+

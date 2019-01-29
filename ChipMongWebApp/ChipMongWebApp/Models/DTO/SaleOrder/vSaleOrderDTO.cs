@@ -74,5 +74,17 @@ namespace ChipMongWebApp.Models.DTO.SaleOrder
         public string shipMode { get; set; }
 
         public string slor_TruckDriverPhoneNo { get; set; }
+
+        public string retl_Name { get; set; }
+        public string retl_Province { get; set; }
+
+        
+        public string slor_TransportZone { get; set; }
+        
+        public string slor_SONo { get; set; }
+        
+        public string slor_ShipConidtion { get; set; }
+        public string qty { get; set; }
+        public Nullable<System.DateTime> slor_TimeUpdateStatus { get; set; }
     }
 }

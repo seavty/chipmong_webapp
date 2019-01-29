@@ -149,8 +149,10 @@
             }
             
             ajaxHelper(controller, "ids=" + ids, requestMethod.POST).then((data) => {
-                if (data == "True")
+                if (data == "True") {
                     alert("PO(s) sent !");
+                    paging($("#currentPage").val());
+                }
                 else
                     alert(data);
             })

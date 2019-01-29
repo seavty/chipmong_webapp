@@ -1,0 +1,43 @@
+﻿@model IEnumerable<ChipMongWebApp.Models.DB.tblRetailer>
+
+<table class="table table-bordered table-striped table-hover">
+    <thead>
+        <tr class="text-center">
+            <th scope="col" width="65px">#</th>
+            <th scope="col"> Name </th>
+            <th scope="col"> Code </th>
+            <th scope="col"> Province </th>
+            <th scope="col"> District </th>
+            <th scope="col"> Phone 1 </th>
+            <th scope="col"> Phone 2 </th>
+            <th scope="col" style="width:130px"> Action </th>
+        </tr>
+    </thead>
+    <tbody>
+
+
+        @{
+        int i = 1;
+        foreach (var m in Model)
+        {
+        <tr>
+            <th scope="row" class="text-center"> @i </th>
+            <td class="align-middle"> @m.retl_Name </td>
+            <td class="align-middle"> @m.retl_Code </td>
+            <td class="align-middle"> @m.retl_Province </td>
+            <td class="align-middle"> @m.retl_District </td>
+            <td class="align-middle"> @m.retl_Phone </td>
+            <td class="align-middle"> @m.retl_Phone2 </td>
+            <td>
+                <button type="button" class="btn btn-danger" onclick="deleteRetailer(@m.retl_RetailerID)"> <i class="fas fa-trash-alt"></i></button>
+            </td>
+        </tr>
+        i++;
+    }
+        }
+
+    </tbody>
+
+</table>
+
+

@@ -103,7 +103,30 @@
           <Property Name="slor_ShipmentNo" Type="nvarchar" MaxLength="50" />
           <Property Name="slor_LockBy" Type="int" />
           <Property Name="slor_LockOn" Type="datetime" />
-          <Property Name="slor_TruckDriverPhoneNo" Type="nvarchar" MaxLength="100" />
+          <Property Name="slor_TruckDriverPhoneNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="slor_TransportZone" Type="nvarchar" MaxLength="255" />
+          <Property Name="slor_SONo" Type="nvarchar" MaxLength="50" />
+          <Property Name="slor_ShipConidtion" Type="nvarchar" MaxLength="50" />
+          <Property Name="slor_TimeUpdateStatus" Type="datetime" />
+          <Property Name="slor_Status1By" Type="int" />
+          <Property Name="slor_Status1Date" Type="datetime" />
+          <Property Name="slor_Status1Send" Type="datetime" />
+          <Property Name="slor_Status2By" Type="int" />
+          <Property Name="slor_Status2Date" Type="datetime" />
+          <Property Name="slor_Status2Send" Type="datetime" />
+          <Property Name="slor_Status3By" Type="int" />
+          <Property Name="slor_Status3Date" Type="datetime" />
+          <Property Name="slor_Status3Send" Type="datetime" />
+          <Property Name="slor_Status4By" Type="int" />
+          <Property Name="slor_Status4Date" Type="datetime" />
+          <Property Name="slor_Status4Send" Type="datetime" />
+          <Property Name="slor_Status5By" Type="int" />
+          <Property Name="slor_Status5Date" Type="datetime" />
+          <Property Name="slor_Status5Send" Type="datetime" />
+          <Property Name="slor_Status6By" Type="int" />
+          <Property Name="slor_Status6Date" Type="datetime" />
+          <Property Name="slor_Status6Send" Type="datetime" />
+          <Property Name="slor_SendDate" Type="datetime" />
         </EntityType>
         <EntityType Name="tblSaleOrderItem">
           <Key>
@@ -178,7 +201,30 @@ warning 6002: The table/view 'CM.dbo.vExportSaleOrders' does not have a primary 
           <Property Name="slor_ShipmentNo" Type="nvarchar" MaxLength="50" />
           <Property Name="slor_LockBy" Type="int" />
           <Property Name="slor_LockOn" Type="datetime" />
-          <Property Name="slor_TruckDriverPhoneNo" Type="nvarchar" MaxLength="100" />
+          <Property Name="slor_TruckDriverPhoneNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="slor_TransportZone" Type="nvarchar" MaxLength="255" />
+          <Property Name="slor_SONo" Type="nvarchar" MaxLength="50" />
+          <Property Name="slor_ShipConidtion" Type="nvarchar" MaxLength="50" />
+          <Property Name="slor_TimeUpdateStatus" Type="datetime" />
+          <Property Name="slor_Status1By" Type="int" />
+          <Property Name="slor_Status1Date" Type="datetime" />
+          <Property Name="slor_Status1Send" Type="datetime" />
+          <Property Name="slor_Status2By" Type="int" />
+          <Property Name="slor_Status2Date" Type="datetime" />
+          <Property Name="slor_Status2Send" Type="datetime" />
+          <Property Name="slor_Status3By" Type="int" />
+          <Property Name="slor_Status3Date" Type="datetime" />
+          <Property Name="slor_Status3Send" Type="datetime" />
+          <Property Name="slor_Status4By" Type="int" />
+          <Property Name="slor_Status4Date" Type="datetime" />
+          <Property Name="slor_Status4Send" Type="datetime" />
+          <Property Name="slor_Status5By" Type="int" />
+          <Property Name="slor_Status5Date" Type="datetime" />
+          <Property Name="slor_Status5Send" Type="datetime" />
+          <Property Name="slor_Status6By" Type="int" />
+          <Property Name="slor_Status6Date" Type="datetime" />
+          <Property Name="slor_Status6Send" Type="datetime" />
+          <Property Name="slor_SendDate" Type="datetime" />
           <Property Name="retl_RetailerID" Type="int" />
           <Property Name="retl_Name" Type="nvarchar" MaxLength="50" />
           <Property Name="retl_Address" Type="nvarchar" MaxLength="50" />
@@ -217,6 +263,37 @@ warning 6002: The table/view 'CM.dbo.vExportSaleOrders' does not have a primary 
           <Property Name="cust_EditSOID" Type="int" />
           <Property Name="cust_cPage" Type="int" />
           <Property Name="cust_UserID" Type="int" />
+          <Property Name="sloi_SaleOrderItemID" Type="int" />
+          <Property Name="sloi_CreatedDate" Type="datetime" />
+          <Property Name="sloi_CreatedBy" Type="int" />
+          <Property Name="sloi_UpdatedDate" Type="datetime" />
+          <Property Name="sloi_UpdatedBy" Type="int" />
+          <Property Name="sloi_Code" Type="nvarchar" MaxLength="100" />
+          <Property Name="sloi_Deleted" Type="int" />
+          <Property Name="sloi_Quantity" Type="numeric" Precision="18" Scale="5" />
+          <Property Name="sloi_Price" Type="numeric" Precision="18" Scale="5" />
+          <Property Name="sloi_Total" Type="numeric" Precision="18" Scale="5" />
+          <Property Name="sloi_SaloeOrderID" Type="int" />
+          <Property Name="sloi_ItemID" Type="int" />
+          <Property Name="item_ItemID" Type="int" />
+          <Property Name="item_CreatedDate" Type="datetime" />
+          <Property Name="item_CreatedBy" Type="int" />
+          <Property Name="item_UpdatedDate" Type="datetime" />
+          <Property Name="item_UpdatedBy" Type="int" />
+          <Property Name="item_Code" Type="nvarchar" MaxLength="100" />
+          <Property Name="item_Deleted" Type="int" />
+          <Property Name="item_Cost" Type="numeric" Precision="18" Scale="5" />
+          <Property Name="item_Price" Type="numeric" Precision="18" Scale="5" />
+          <Property Name="item_Name" Type="nvarchar" MaxLength="100" />
+          <Property Name="item_Name2" Type="nvarchar" MaxLength="255" />
+          <Property Name="item_Index" Type="int" />
+          <Property Name="user1" Type="nvarchar" MaxLength="100" />
+          <Property Name="user2" Type="nvarchar" MaxLength="100" />
+          <Property Name="user3" Type="nvarchar" MaxLength="100" />
+          <Property Name="user4" Type="nvarchar" MaxLength="100" />
+          <Property Name="user5" Type="nvarchar" MaxLength="100" />
+          <Property Name="user6" Type="nvarchar" MaxLength="100" />
+          <Property Name="editBy" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'CM.dbo.vSaleOrder' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -229,6 +306,8 @@ warning 6002: The table/view 'CM.dbo.vSaleOrder' does not have a primary key def
           <Property Name="shipMode" Type="varchar" MaxLength="8" Nullable="false" />
           <Property Name="sourceOfSupply" Type="nvarchar" MaxLength="50" />
           <Property Name="product" Type="nvarchar(max)" />
+          <Property Name="qty" Type="nvarchar(max)" />
+          <Property Name="productQty" Type="nvarchar(max)" />
           <Property Name="slor_SaleOrderID" Type="int" Nullable="false" />
           <Property Name="slor_CreatedDate" Type="datetime" />
           <Property Name="slor_CreatedBy" Type="int" />
@@ -252,7 +331,30 @@ warning 6002: The table/view 'CM.dbo.vSaleOrder' does not have a primary key def
           <Property Name="slor_ShipmentNo" Type="nvarchar" MaxLength="50" />
           <Property Name="slor_LockBy" Type="int" />
           <Property Name="slor_LockOn" Type="datetime" />
-          <Property Name="slor_TruckDriverPhoneNo" Type="nvarchar" MaxLength="100" />
+          <Property Name="slor_TruckDriverPhoneNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="slor_TransportZone" Type="nvarchar" MaxLength="255" />
+          <Property Name="slor_SONo" Type="nvarchar" MaxLength="50" />
+          <Property Name="slor_ShipConidtion" Type="nvarchar" MaxLength="50" />
+          <Property Name="slor_TimeUpdateStatus" Type="datetime" />
+          <Property Name="slor_Status1By" Type="int" />
+          <Property Name="slor_Status1Date" Type="datetime" />
+          <Property Name="slor_Status1Send" Type="datetime" />
+          <Property Name="slor_Status2By" Type="int" />
+          <Property Name="slor_Status2Date" Type="datetime" />
+          <Property Name="slor_Status2Send" Type="datetime" />
+          <Property Name="slor_Status3By" Type="int" />
+          <Property Name="slor_Status3Date" Type="datetime" />
+          <Property Name="slor_Status3Send" Type="datetime" />
+          <Property Name="slor_Status4By" Type="int" />
+          <Property Name="slor_Status4Date" Type="datetime" />
+          <Property Name="slor_Status4Send" Type="datetime" />
+          <Property Name="slor_Status5By" Type="int" />
+          <Property Name="slor_Status5Date" Type="datetime" />
+          <Property Name="slor_Status5Send" Type="datetime" />
+          <Property Name="slor_Status6By" Type="int" />
+          <Property Name="slor_Status6Date" Type="datetime" />
+          <Property Name="slor_Status6Send" Type="datetime" />
+          <Property Name="slor_SendDate" Type="datetime" />
           <Property Name="cust_CustomerID" Type="int" Nullable="false" />
           <Property Name="cust_CreatedDate" Type="datetime" />
           <Property Name="cust_CreatedBy" Type="int" />
@@ -341,6 +443,29 @@ warning 6002: The table/view 'CM.dbo.vSaleOrder' does not have a primary key def
     [vExportSaleOrders].[slor_LockBy] AS [slor_LockBy], 
     [vExportSaleOrders].[slor_LockOn] AS [slor_LockOn], 
     [vExportSaleOrders].[slor_TruckDriverPhoneNo] AS [slor_TruckDriverPhoneNo], 
+    [vExportSaleOrders].[slor_TransportZone] AS [slor_TransportZone], 
+    [vExportSaleOrders].[slor_SONo] AS [slor_SONo], 
+    [vExportSaleOrders].[slor_ShipConidtion] AS [slor_ShipConidtion], 
+    [vExportSaleOrders].[slor_TimeUpdateStatus] AS [slor_TimeUpdateStatus], 
+    [vExportSaleOrders].[slor_Status1By] AS [slor_Status1By], 
+    [vExportSaleOrders].[slor_Status1Date] AS [slor_Status1Date], 
+    [vExportSaleOrders].[slor_Status1Send] AS [slor_Status1Send], 
+    [vExportSaleOrders].[slor_Status2By] AS [slor_Status2By], 
+    [vExportSaleOrders].[slor_Status2Date] AS [slor_Status2Date], 
+    [vExportSaleOrders].[slor_Status2Send] AS [slor_Status2Send], 
+    [vExportSaleOrders].[slor_Status3By] AS [slor_Status3By], 
+    [vExportSaleOrders].[slor_Status3Date] AS [slor_Status3Date], 
+    [vExportSaleOrders].[slor_Status3Send] AS [slor_Status3Send], 
+    [vExportSaleOrders].[slor_Status4By] AS [slor_Status4By], 
+    [vExportSaleOrders].[slor_Status4Date] AS [slor_Status4Date], 
+    [vExportSaleOrders].[slor_Status4Send] AS [slor_Status4Send], 
+    [vExportSaleOrders].[slor_Status5By] AS [slor_Status5By], 
+    [vExportSaleOrders].[slor_Status5Date] AS [slor_Status5Date], 
+    [vExportSaleOrders].[slor_Status5Send] AS [slor_Status5Send], 
+    [vExportSaleOrders].[slor_Status6By] AS [slor_Status6By], 
+    [vExportSaleOrders].[slor_Status6Date] AS [slor_Status6Date], 
+    [vExportSaleOrders].[slor_Status6Send] AS [slor_Status6Send], 
+    [vExportSaleOrders].[slor_SendDate] AS [slor_SendDate], 
     [vExportSaleOrders].[retl_RetailerID] AS [retl_RetailerID], 
     [vExportSaleOrders].[retl_Name] AS [retl_Name], 
     [vExportSaleOrders].[retl_Address] AS [retl_Address], 
@@ -378,7 +503,38 @@ warning 6002: The table/view 'CM.dbo.vSaleOrder' does not have a primary key def
     [vExportSaleOrders].[cust_EditPOID] AS [cust_EditPOID], 
     [vExportSaleOrders].[cust_EditSOID] AS [cust_EditSOID], 
     [vExportSaleOrders].[cust_cPage] AS [cust_cPage], 
-    [vExportSaleOrders].[cust_UserID] AS [cust_UserID]
+    [vExportSaleOrders].[cust_UserID] AS [cust_UserID], 
+    [vExportSaleOrders].[sloi_SaleOrderItemID] AS [sloi_SaleOrderItemID], 
+    [vExportSaleOrders].[sloi_CreatedDate] AS [sloi_CreatedDate], 
+    [vExportSaleOrders].[sloi_CreatedBy] AS [sloi_CreatedBy], 
+    [vExportSaleOrders].[sloi_UpdatedDate] AS [sloi_UpdatedDate], 
+    [vExportSaleOrders].[sloi_UpdatedBy] AS [sloi_UpdatedBy], 
+    [vExportSaleOrders].[sloi_Code] AS [sloi_Code], 
+    [vExportSaleOrders].[sloi_Deleted] AS [sloi_Deleted], 
+    [vExportSaleOrders].[sloi_Quantity] AS [sloi_Quantity], 
+    [vExportSaleOrders].[sloi_Price] AS [sloi_Price], 
+    [vExportSaleOrders].[sloi_Total] AS [sloi_Total], 
+    [vExportSaleOrders].[sloi_SaloeOrderID] AS [sloi_SaloeOrderID], 
+    [vExportSaleOrders].[sloi_ItemID] AS [sloi_ItemID], 
+    [vExportSaleOrders].[item_ItemID] AS [item_ItemID], 
+    [vExportSaleOrders].[item_CreatedDate] AS [item_CreatedDate], 
+    [vExportSaleOrders].[item_CreatedBy] AS [item_CreatedBy], 
+    [vExportSaleOrders].[item_UpdatedDate] AS [item_UpdatedDate], 
+    [vExportSaleOrders].[item_UpdatedBy] AS [item_UpdatedBy], 
+    [vExportSaleOrders].[item_Code] AS [item_Code], 
+    [vExportSaleOrders].[item_Deleted] AS [item_Deleted], 
+    [vExportSaleOrders].[item_Cost] AS [item_Cost], 
+    [vExportSaleOrders].[item_Price] AS [item_Price], 
+    [vExportSaleOrders].[item_Name] AS [item_Name], 
+    [vExportSaleOrders].[item_Name2] AS [item_Name2], 
+    [vExportSaleOrders].[item_Index] AS [item_Index], 
+    [vExportSaleOrders].[user1] AS [user1], 
+    [vExportSaleOrders].[user2] AS [user2], 
+    [vExportSaleOrders].[user3] AS [user3], 
+    [vExportSaleOrders].[user4] AS [user4], 
+    [vExportSaleOrders].[user5] AS [user5], 
+    [vExportSaleOrders].[user6] AS [user6], 
+    [vExportSaleOrders].[editBy] AS [editBy]
     FROM [dbo].[vExportSaleOrders] AS [vExportSaleOrders]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vSaleOrder" EntityType="Self.vSaleOrder" store:Type="Views" store:Schema="dbo">
@@ -386,6 +542,8 @@ warning 6002: The table/view 'CM.dbo.vSaleOrder' does not have a primary key def
     [vSaleOrder].[shipMode] AS [shipMode], 
     [vSaleOrder].[sourceOfSupply] AS [sourceOfSupply], 
     [vSaleOrder].[product] AS [product], 
+    [vSaleOrder].[qty] AS [qty], 
+    [vSaleOrder].[productQty] AS [productQty], 
     [vSaleOrder].[slor_SaleOrderID] AS [slor_SaleOrderID], 
     [vSaleOrder].[slor_CreatedDate] AS [slor_CreatedDate], 
     [vSaleOrder].[slor_CreatedBy] AS [slor_CreatedBy], 
@@ -410,6 +568,29 @@ warning 6002: The table/view 'CM.dbo.vSaleOrder' does not have a primary key def
     [vSaleOrder].[slor_LockBy] AS [slor_LockBy], 
     [vSaleOrder].[slor_LockOn] AS [slor_LockOn], 
     [vSaleOrder].[slor_TruckDriverPhoneNo] AS [slor_TruckDriverPhoneNo], 
+    [vSaleOrder].[slor_TransportZone] AS [slor_TransportZone], 
+    [vSaleOrder].[slor_SONo] AS [slor_SONo], 
+    [vSaleOrder].[slor_ShipConidtion] AS [slor_ShipConidtion], 
+    [vSaleOrder].[slor_TimeUpdateStatus] AS [slor_TimeUpdateStatus], 
+    [vSaleOrder].[slor_Status1By] AS [slor_Status1By], 
+    [vSaleOrder].[slor_Status1Date] AS [slor_Status1Date], 
+    [vSaleOrder].[slor_Status1Send] AS [slor_Status1Send], 
+    [vSaleOrder].[slor_Status2By] AS [slor_Status2By], 
+    [vSaleOrder].[slor_Status2Date] AS [slor_Status2Date], 
+    [vSaleOrder].[slor_Status2Send] AS [slor_Status2Send], 
+    [vSaleOrder].[slor_Status3By] AS [slor_Status3By], 
+    [vSaleOrder].[slor_Status3Date] AS [slor_Status3Date], 
+    [vSaleOrder].[slor_Status3Send] AS [slor_Status3Send], 
+    [vSaleOrder].[slor_Status4By] AS [slor_Status4By], 
+    [vSaleOrder].[slor_Status4Date] AS [slor_Status4Date], 
+    [vSaleOrder].[slor_Status4Send] AS [slor_Status4Send], 
+    [vSaleOrder].[slor_Status5By] AS [slor_Status5By], 
+    [vSaleOrder].[slor_Status5Date] AS [slor_Status5Date], 
+    [vSaleOrder].[slor_Status5Send] AS [slor_Status5Send], 
+    [vSaleOrder].[slor_Status6By] AS [slor_Status6By], 
+    [vSaleOrder].[slor_Status6Date] AS [slor_Status6Date], 
+    [vSaleOrder].[slor_Status6Send] AS [slor_Status6Send], 
+    [vSaleOrder].[slor_SendDate] AS [slor_SendDate], 
     [vSaleOrder].[cust_CustomerID] AS [cust_CustomerID], 
     [vSaleOrder].[cust_CreatedDate] AS [cust_CreatedDate], 
     [vSaleOrder].[cust_CreatedBy] AS [cust_CreatedBy], 
@@ -538,7 +719,30 @@ warning 6002: The table/view 'CM.dbo.vSaleOrder' does not have a primary key def
           <Property Name="slor_ShipmentNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="slor_LockBy" Type="Int32" />
           <Property Name="slor_LockOn" Type="DateTime" Precision="3" />
-          <Property Name="slor_TruckDriverPhoneNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="slor_TruckDriverPhoneNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="slor_TransportZone" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="slor_SONo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="slor_ShipConidtion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="slor_TimeUpdateStatus" Type="DateTime" Precision="3" />
+          <Property Name="slor_Status1By" Type="Int32" />
+          <Property Name="slor_Status1Date" Type="DateTime" Precision="3" />
+          <Property Name="slor_Status1Send" Type="DateTime" Precision="3" />
+          <Property Name="slor_Status2By" Type="Int32" />
+          <Property Name="slor_Status2Date" Type="DateTime" Precision="3" />
+          <Property Name="slor_Status2Send" Type="DateTime" Precision="3" />
+          <Property Name="slor_Status3By" Type="Int32" />
+          <Property Name="slor_Status3Date" Type="DateTime" Precision="3" />
+          <Property Name="slor_Status3Send" Type="DateTime" Precision="3" />
+          <Property Name="slor_Status4By" Type="Int32" />
+          <Property Name="slor_Status4Date" Type="DateTime" Precision="3" />
+          <Property Name="slor_Status4Send" Type="DateTime" Precision="3" />
+          <Property Name="slor_Status5By" Type="Int32" />
+          <Property Name="slor_Status5Date" Type="DateTime" Precision="3" />
+          <Property Name="slor_Status5Send" Type="DateTime" Precision="3" />
+          <Property Name="slor_Status6By" Type="Int32" />
+          <Property Name="slor_Status6Date" Type="DateTime" Precision="3" />
+          <Property Name="slor_Status6Send" Type="DateTime" Precision="3" />
+          <Property Name="slor_SendDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="tblSaleOrderItem">
           <Key>
@@ -690,7 +894,61 @@ warning 6002: The table/view 'CM.dbo.vSaleOrder' does not have a primary key def
           <Property Name="slor_ShipmentNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="slor_LockBy" Type="Int32" />
           <Property Name="slor_LockOn" Type="DateTime" Precision="3" />
-          <Property Name="slor_TruckDriverPhoneNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="slor_TruckDriverPhoneNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="slor_TransportZone" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="slor_SONo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="slor_ShipConidtion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="slor_TimeUpdateStatus" Type="DateTime" Precision="3" />
+          <Property Name="slor_Status1By" Type="Int32" />
+          <Property Name="slor_Status1Date" Type="DateTime" Precision="3" />
+          <Property Name="slor_Status1Send" Type="DateTime" Precision="3" />
+          <Property Name="slor_Status2By" Type="Int32" />
+          <Property Name="slor_Status2Date" Type="DateTime" Precision="3" />
+          <Property Name="slor_Status2Send" Type="DateTime" Precision="3" />
+          <Property Name="slor_Status3By" Type="Int32" />
+          <Property Name="slor_Status3Date" Type="DateTime" Precision="3" />
+          <Property Name="slor_Status3Send" Type="DateTime" Precision="3" />
+          <Property Name="slor_Status4By" Type="Int32" />
+          <Property Name="slor_Status4Date" Type="DateTime" Precision="3" />
+          <Property Name="slor_Status4Send" Type="DateTime" Precision="3" />
+          <Property Name="slor_Status5By" Type="Int32" />
+          <Property Name="slor_Status5Date" Type="DateTime" Precision="3" />
+          <Property Name="slor_Status5Send" Type="DateTime" Precision="3" />
+          <Property Name="slor_Status6By" Type="Int32" />
+          <Property Name="slor_Status6Date" Type="DateTime" Precision="3" />
+          <Property Name="slor_Status6Send" Type="DateTime" Precision="3" />
+          <Property Name="slor_SendDate" Type="DateTime" Precision="3" />
+          <Property Name="user1" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="user2" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="user3" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="user4" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="user5" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="user6" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="editBy" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="sloi_SaleOrderItemID" Type="Int32" />
+          <Property Name="sloi_CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="sloi_CreatedBy" Type="Int32" />
+          <Property Name="sloi_UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="sloi_UpdatedBy" Type="Int32" />
+          <Property Name="sloi_Code" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="sloi_Deleted" Type="Int32" />
+          <Property Name="sloi_Quantity" Type="Decimal" Precision="18" Scale="5" />
+          <Property Name="sloi_Price" Type="Decimal" Precision="18" Scale="5" />
+          <Property Name="sloi_Total" Type="Decimal" Precision="18" Scale="5" />
+          <Property Name="sloi_SaloeOrderID" Type="Int32" />
+          <Property Name="sloi_ItemID" Type="Int32" />
+          <Property Name="item_ItemID" Type="Int32" />
+          <Property Name="item_CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="item_CreatedBy" Type="Int32" />
+          <Property Name="item_UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="item_UpdatedBy" Type="Int32" />
+          <Property Name="item_Code" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="item_Deleted" Type="Int32" />
+          <Property Name="item_Cost" Type="Decimal" Precision="18" Scale="5" />
+          <Property Name="item_Price" Type="Decimal" Precision="18" Scale="5" />
+          <Property Name="item_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="item_Name2" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="item_Index" Type="Int32" />
         </EntityType>
         <EntityType Name="vSaleOrder">
           <Key>
@@ -776,7 +1034,32 @@ warning 6002: The table/view 'CM.dbo.vSaleOrder' does not have a primary key def
           <Property Name="scsp_SourceOfSupplyID" Type="Int32" />
           <Property Name="scsp_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="scsp_Deleted" Type="Int32" />
-          <Property Name="slor_TruckDriverPhoneNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="slor_TruckDriverPhoneNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="slor_TransportZone" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="slor_SONo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="slor_ShipConidtion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="qty" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="productQty" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="slor_TimeUpdateStatus" Type="DateTime" Precision="3" />
+          <Property Name="slor_Status1By" Type="Int32" />
+          <Property Name="slor_Status1Date" Type="DateTime" Precision="3" />
+          <Property Name="slor_Status1Send" Type="DateTime" Precision="3" />
+          <Property Name="slor_Status2By" Type="Int32" />
+          <Property Name="slor_Status2Date" Type="DateTime" Precision="3" />
+          <Property Name="slor_Status2Send" Type="DateTime" Precision="3" />
+          <Property Name="slor_Status3By" Type="Int32" />
+          <Property Name="slor_Status3Date" Type="DateTime" Precision="3" />
+          <Property Name="slor_Status3Send" Type="DateTime" Precision="3" />
+          <Property Name="slor_Status4By" Type="Int32" />
+          <Property Name="slor_Status4Date" Type="DateTime" Precision="3" />
+          <Property Name="slor_Status4Send" Type="DateTime" Precision="3" />
+          <Property Name="slor_Status5By" Type="Int32" />
+          <Property Name="slor_Status5Date" Type="DateTime" Precision="3" />
+          <Property Name="slor_Status5Send" Type="DateTime" Precision="3" />
+          <Property Name="slor_Status6By" Type="Int32" />
+          <Property Name="slor_Status6Date" Type="DateTime" Precision="3" />
+          <Property Name="slor_Status6Send" Type="DateTime" Precision="3" />
+          <Property Name="slor_SendDate" Type="DateTime" Precision="3" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -818,6 +1101,29 @@ warning 6002: The table/view 'CM.dbo.vSaleOrder' does not have a primary key def
           <EntitySetMapping Name="tblSaleOrders">
             <EntityTypeMapping TypeName="ChipMongModel.tblSaleOrder">
               <MappingFragment StoreEntitySet="tblSaleOrder">
+                <ScalarProperty Name="slor_SendDate" ColumnName="slor_SendDate" />
+                <ScalarProperty Name="slor_Status6Send" ColumnName="slor_Status6Send" />
+                <ScalarProperty Name="slor_Status6Date" ColumnName="slor_Status6Date" />
+                <ScalarProperty Name="slor_Status6By" ColumnName="slor_Status6By" />
+                <ScalarProperty Name="slor_Status5Send" ColumnName="slor_Status5Send" />
+                <ScalarProperty Name="slor_Status5Date" ColumnName="slor_Status5Date" />
+                <ScalarProperty Name="slor_Status5By" ColumnName="slor_Status5By" />
+                <ScalarProperty Name="slor_Status4Send" ColumnName="slor_Status4Send" />
+                <ScalarProperty Name="slor_Status4Date" ColumnName="slor_Status4Date" />
+                <ScalarProperty Name="slor_Status4By" ColumnName="slor_Status4By" />
+                <ScalarProperty Name="slor_Status3Send" ColumnName="slor_Status3Send" />
+                <ScalarProperty Name="slor_Status3Date" ColumnName="slor_Status3Date" />
+                <ScalarProperty Name="slor_Status3By" ColumnName="slor_Status3By" />
+                <ScalarProperty Name="slor_Status2Send" ColumnName="slor_Status2Send" />
+                <ScalarProperty Name="slor_Status2Date" ColumnName="slor_Status2Date" />
+                <ScalarProperty Name="slor_Status2By" ColumnName="slor_Status2By" />
+                <ScalarProperty Name="slor_Status1Send" ColumnName="slor_Status1Send" />
+                <ScalarProperty Name="slor_Status1Date" ColumnName="slor_Status1Date" />
+                <ScalarProperty Name="slor_Status1By" ColumnName="slor_Status1By" />
+                <ScalarProperty Name="slor_TimeUpdateStatus" ColumnName="slor_TimeUpdateStatus" />
+                <ScalarProperty Name="slor_ShipConidtion" ColumnName="slor_ShipConidtion" />
+                <ScalarProperty Name="slor_SONo" ColumnName="slor_SONo" />
+                <ScalarProperty Name="slor_TransportZone" ColumnName="slor_TransportZone" />
                 <ScalarProperty Name="slor_TruckDriverPhoneNo" ColumnName="slor_TruckDriverPhoneNo" />
                 <ScalarProperty Name="slor_LockOn" ColumnName="slor_LockOn" />
                 <ScalarProperty Name="slor_LockBy" ColumnName="slor_LockBy" />
@@ -939,6 +1245,60 @@ warning 6002: The table/view 'CM.dbo.vSaleOrder' does not have a primary key def
           <EntitySetMapping Name="vExportSaleOrders">
             <EntityTypeMapping TypeName="ChipMongModel.vExportSaleOrder">
               <MappingFragment StoreEntitySet="vExportSaleOrders">
+                <ScalarProperty Name="item_Index" ColumnName="item_Index" />
+                <ScalarProperty Name="item_Name2" ColumnName="item_Name2" />
+                <ScalarProperty Name="item_Name" ColumnName="item_Name" />
+                <ScalarProperty Name="item_Price" ColumnName="item_Price" />
+                <ScalarProperty Name="item_Cost" ColumnName="item_Cost" />
+                <ScalarProperty Name="item_Deleted" ColumnName="item_Deleted" />
+                <ScalarProperty Name="item_Code" ColumnName="item_Code" />
+                <ScalarProperty Name="item_UpdatedBy" ColumnName="item_UpdatedBy" />
+                <ScalarProperty Name="item_UpdatedDate" ColumnName="item_UpdatedDate" />
+                <ScalarProperty Name="item_CreatedBy" ColumnName="item_CreatedBy" />
+                <ScalarProperty Name="item_CreatedDate" ColumnName="item_CreatedDate" />
+                <ScalarProperty Name="item_ItemID" ColumnName="item_ItemID" />
+                <ScalarProperty Name="sloi_ItemID" ColumnName="sloi_ItemID" />
+                <ScalarProperty Name="sloi_SaloeOrderID" ColumnName="sloi_SaloeOrderID" />
+                <ScalarProperty Name="sloi_Total" ColumnName="sloi_Total" />
+                <ScalarProperty Name="sloi_Price" ColumnName="sloi_Price" />
+                <ScalarProperty Name="sloi_Quantity" ColumnName="sloi_Quantity" />
+                <ScalarProperty Name="sloi_Deleted" ColumnName="sloi_Deleted" />
+                <ScalarProperty Name="sloi_Code" ColumnName="sloi_Code" />
+                <ScalarProperty Name="sloi_UpdatedBy" ColumnName="sloi_UpdatedBy" />
+                <ScalarProperty Name="sloi_UpdatedDate" ColumnName="sloi_UpdatedDate" />
+                <ScalarProperty Name="sloi_CreatedBy" ColumnName="sloi_CreatedBy" />
+                <ScalarProperty Name="sloi_CreatedDate" ColumnName="sloi_CreatedDate" />
+                <ScalarProperty Name="sloi_SaleOrderItemID" ColumnName="sloi_SaleOrderItemID" />
+                <ScalarProperty Name="editBy" ColumnName="editBy" />
+                <ScalarProperty Name="user6" ColumnName="user6" />
+                <ScalarProperty Name="user5" ColumnName="user5" />
+                <ScalarProperty Name="user4" ColumnName="user4" />
+                <ScalarProperty Name="user3" ColumnName="user3" />
+                <ScalarProperty Name="user2" ColumnName="user2" />
+                <ScalarProperty Name="user1" ColumnName="user1" />
+                <ScalarProperty Name="slor_SendDate" ColumnName="slor_SendDate" />
+                <ScalarProperty Name="slor_Status6Send" ColumnName="slor_Status6Send" />
+                <ScalarProperty Name="slor_Status6Date" ColumnName="slor_Status6Date" />
+                <ScalarProperty Name="slor_Status6By" ColumnName="slor_Status6By" />
+                <ScalarProperty Name="slor_Status5Send" ColumnName="slor_Status5Send" />
+                <ScalarProperty Name="slor_Status5Date" ColumnName="slor_Status5Date" />
+                <ScalarProperty Name="slor_Status5By" ColumnName="slor_Status5By" />
+                <ScalarProperty Name="slor_Status4Send" ColumnName="slor_Status4Send" />
+                <ScalarProperty Name="slor_Status4Date" ColumnName="slor_Status4Date" />
+                <ScalarProperty Name="slor_Status4By" ColumnName="slor_Status4By" />
+                <ScalarProperty Name="slor_Status3Send" ColumnName="slor_Status3Send" />
+                <ScalarProperty Name="slor_Status3Date" ColumnName="slor_Status3Date" />
+                <ScalarProperty Name="slor_Status3By" ColumnName="slor_Status3By" />
+                <ScalarProperty Name="slor_Status2Send" ColumnName="slor_Status2Send" />
+                <ScalarProperty Name="slor_Status2Date" ColumnName="slor_Status2Date" />
+                <ScalarProperty Name="slor_Status2By" ColumnName="slor_Status2By" />
+                <ScalarProperty Name="slor_Status1Send" ColumnName="slor_Status1Send" />
+                <ScalarProperty Name="slor_Status1Date" ColumnName="slor_Status1Date" />
+                <ScalarProperty Name="slor_Status1By" ColumnName="slor_Status1By" />
+                <ScalarProperty Name="slor_TimeUpdateStatus" ColumnName="slor_TimeUpdateStatus" />
+                <ScalarProperty Name="slor_ShipConidtion" ColumnName="slor_ShipConidtion" />
+                <ScalarProperty Name="slor_SONo" ColumnName="slor_SONo" />
+                <ScalarProperty Name="slor_TransportZone" ColumnName="slor_TransportZone" />
                 <ScalarProperty Name="slor_TruckDriverPhoneNo" ColumnName="slor_TruckDriverPhoneNo" />
                 <ScalarProperty Name="slor_LockOn" ColumnName="slor_LockOn" />
                 <ScalarProperty Name="slor_LockBy" ColumnName="slor_LockBy" />
@@ -1007,6 +1367,31 @@ warning 6002: The table/view 'CM.dbo.vSaleOrder' does not have a primary key def
           <EntitySetMapping Name="vSaleOrders">
             <EntityTypeMapping TypeName="ChipMongModel.vSaleOrder">
               <MappingFragment StoreEntitySet="vSaleOrder">
+                <ScalarProperty Name="slor_SendDate" ColumnName="slor_SendDate" />
+                <ScalarProperty Name="slor_Status6Send" ColumnName="slor_Status6Send" />
+                <ScalarProperty Name="slor_Status6Date" ColumnName="slor_Status6Date" />
+                <ScalarProperty Name="slor_Status6By" ColumnName="slor_Status6By" />
+                <ScalarProperty Name="slor_Status5Send" ColumnName="slor_Status5Send" />
+                <ScalarProperty Name="slor_Status5Date" ColumnName="slor_Status5Date" />
+                <ScalarProperty Name="slor_Status5By" ColumnName="slor_Status5By" />
+                <ScalarProperty Name="slor_Status4Send" ColumnName="slor_Status4Send" />
+                <ScalarProperty Name="slor_Status4Date" ColumnName="slor_Status4Date" />
+                <ScalarProperty Name="slor_Status4By" ColumnName="slor_Status4By" />
+                <ScalarProperty Name="slor_Status3Send" ColumnName="slor_Status3Send" />
+                <ScalarProperty Name="slor_Status3Date" ColumnName="slor_Status3Date" />
+                <ScalarProperty Name="slor_Status3By" ColumnName="slor_Status3By" />
+                <ScalarProperty Name="slor_Status2Send" ColumnName="slor_Status2Send" />
+                <ScalarProperty Name="slor_Status2Date" ColumnName="slor_Status2Date" />
+                <ScalarProperty Name="slor_Status2By" ColumnName="slor_Status2By" />
+                <ScalarProperty Name="slor_Status1Send" ColumnName="slor_Status1Send" />
+                <ScalarProperty Name="slor_Status1Date" ColumnName="slor_Status1Date" />
+                <ScalarProperty Name="slor_Status1By" ColumnName="slor_Status1By" />
+                <ScalarProperty Name="slor_TimeUpdateStatus" ColumnName="slor_TimeUpdateStatus" />
+                <ScalarProperty Name="productQty" ColumnName="productQty" />
+                <ScalarProperty Name="qty" ColumnName="qty" />
+                <ScalarProperty Name="slor_ShipConidtion" ColumnName="slor_ShipConidtion" />
+                <ScalarProperty Name="slor_SONo" ColumnName="slor_SONo" />
+                <ScalarProperty Name="slor_TransportZone" ColumnName="slor_TransportZone" />
                 <ScalarProperty Name="slor_TruckDriverPhoneNo" ColumnName="slor_TruckDriverPhoneNo" />
                 <ScalarProperty Name="scsp_Deleted" ColumnName="scsp_Deleted" />
                 <ScalarProperty Name="scsp_Name" ColumnName="scsp_Name" />

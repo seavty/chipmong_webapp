@@ -76,5 +76,59 @@ namespace ChipMongWebApp.Models.DB
         public Nullable<int> slor_LockBy { get; set; }
         public Nullable<System.DateTime> slor_LockOn { get; set; }
         public string slor_TruckDriverPhoneNo { get; set; }
+        public string slor_TransportZone { get; set; }
+        public string slor_SONo { get; set; }
+        public string slor_ShipConidtion { get; set; }
+        public Nullable<System.DateTime> slor_TimeUpdateStatus { get; set; }
+        public Nullable<int> slor_Status1By { get; set; }
+        public Nullable<System.DateTime> slor_Status1Date { get; set; }
+        public Nullable<System.DateTime> slor_Status1Send { get; set; }
+        public Nullable<int> slor_Status2By { get; set; }
+        public Nullable<System.DateTime> slor_Status2Date { get; set; }
+        public Nullable<System.DateTime> slor_Status2Send { get; set; }
+        public Nullable<int> slor_Status3By { get; set; }
+        public Nullable<System.DateTime> slor_Status3Date { get; set; }
+        public Nullable<System.DateTime> slor_Status3Send { get; set; }
+        public Nullable<int> slor_Status4By { get; set; }
+        public Nullable<System.DateTime> slor_Status4Date { get; set; }
+        public Nullable<System.DateTime> slor_Status4Send { get; set; }
+        public Nullable<int> slor_Status5By { get; set; }
+        public Nullable<System.DateTime> slor_Status5Date { get; set; }
+        public Nullable<System.DateTime> slor_Status5Send { get; set; }
+        public Nullable<int> slor_Status6By { get; set; }
+        public Nullable<System.DateTime> slor_Status6Date { get; set; }
+        public Nullable<System.DateTime> slor_Status6Send { get; set; }
+        public Nullable<System.DateTime> slor_SendDate { get; set; }
+        public string user1 { get; set; }
+        public string user2 { get; set; }
+        public string user3 { get; set; }
+        public string user4 { get; set; }
+        public string user5 { get; set; }
+        public string user6 { get; set; }
+        public string editBy { get; set; }
+        public Nullable<int> sloi_SaleOrderItemID { get; set; }
+        public Nullable<System.DateTime> sloi_CreatedDate { get; set; }
+        public Nullable<int> sloi_CreatedBy { get; set; }
+        public Nullable<System.DateTime> sloi_UpdatedDate { get; set; }
+        public Nullable<int> sloi_UpdatedBy { get; set; }
+        public string sloi_Code { get; set; }
+        public Nullable<int> sloi_Deleted { get; set; }
+        public Nullable<decimal> sloi_Quantity { get; set; }
+        public Nullable<decimal> sloi_Price { get; set; }
+        public Nullable<decimal> sloi_Total { get; set; }
+        public Nullable<int> sloi_SaloeOrderID { get; set; }
+        public Nullable<int> sloi_ItemID { get; set; }
+        public Nullable<int> item_ItemID { get; set; }
+        public Nullable<System.DateTime> item_CreatedDate { get; set; }
+        public Nullable<int> item_CreatedBy { get; set; }
+        public Nullable<System.DateTime> item_UpdatedDate { get; set; }
+        public Nullable<int> item_UpdatedBy { get; set; }
+        public string item_Code { get; set; }
+        public Nullable<int> item_Deleted { get; set; }
+        public Nullable<decimal> item_Cost { get; set; }
+        public Nullable<decimal> item_Price { get; set; }
+        public string item_Name { get; set; }
+        public string item_Name2 { get; set; }
+        public Nullable<int> item_Index { get; set; }
     }
 }

@@ -31,7 +31,7 @@
                     <div class="col-4">
                         <div class="form-group">
                             @Html.LabelFor(m => m.code)
-                            @Html.TextBoxFor(m => m.code, new { @class = "form-control required"})
+                            @Html.TextBoxFor(m => m.code, new { @class = "form-control", @readonly = "readonly" })
                         </div>
                     </div>
 

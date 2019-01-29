@@ -43,6 +43,7 @@ namespace ChipMongWebApp.Utils.Helpers
         public static readonly string SALEORDER_CONTROLLER = "/saleorder";
         public static readonly string AUTH_CONTROLLER = "/auth";
         public static readonly string DEALER_SOURCE_SUPPLY_CONTROLLER = "/dealersourcesupply";
+        public static readonly string Retailer_CONTROLLER = "/retailer";
         public static readonly string EXPORT_CONTROLLER = "/export";
         
         public static readonly string UPLOAD_CONTROLLER = "/upload";

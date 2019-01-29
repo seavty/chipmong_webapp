@@ -191,6 +191,7 @@
     <Compile Include="Controllers\ExportController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
+    <Compile Include="Controllers\RetailerController.cs" />
     <Compile Include="Controllers\SaleOrderController.cs" />
     <Compile Include="Controllers\SourceSupplyController.cs" />
     <Compile Include="Controllers\UploadController.cs" />
@@ -205,6 +206,7 @@
       <DependentUpon>ChipMongModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DTO\Customer\CustomerFindResultDTO.cs" />
+    <Compile Include="Models\DTO\Retailer\RetailerDTO.cs" />
     <Compile Include="Models\DTO\SaleOrder\SaleOrderExportExcel.cs" />
     <Compile Include="Models\DTO\SaleOrder\SaleOrderFindResultDTO.cs" />
     <Compile Include="Models\DTO\SaleOrder\vSaleOrderDTO.cs" />
@@ -221,6 +223,7 @@
     <Compile Include="Utils\Handlers\CustomerHandler.cs" />
     <Compile Include="Utils\Handlers\DealerSourceSupplyHandler.cs" />
     <Compile Include="Utils\Handlers\ItemHandler.cs" />
+    <Compile Include="Utils\Handlers\RetailerHandler.cs" />
     <Compile Include="Utils\Handlers\SaleOrderHandler.cs" />
     <Compile Include="Utils\Handlers\SourceSupplyHandler.cs" />
     <Compile Include="Utils\Handlers\UploadExcelHandler.cs" />
@@ -482,6 +485,8 @@
     <Content Include="Views\Shared\Template\FindMode\TableData.cshtml" />
     <Content Include="Views\Upload\Find.cshtml" />
     <Content Include="Views\Export\Export.cshtml" />
+    <Content Include="Views\Customer\RetailerTab.cshtml" />
+    <Content Include="Views\Retailer\Table.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

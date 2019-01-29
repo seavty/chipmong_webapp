@@ -212,6 +212,26 @@ namespace ChipMongWebApp.Utils.Handlers
 
         }
 
+
+        //=> GetList SourceSupplyTabPaging
+        public List<tblRetailer> RetailerTabPaging(int customerID)
+        {
+
+            var records = from x in db.tblRetailers
+                          where x.retl_Deleted == null && x.retl_CustomerID == customerID
+                          orderby x.retl_Name ascending
+                          select x;
+                          
+            return records.ToList(); ;
+
+            //var myTest = await records.ToListAsync();
+            //return await records.ToListAsync();
+
+        }
+
+
+
+
         //-> New
         public async Task<bool> AddSourceSupply(int customerID, int sourceSupplyID)
         {

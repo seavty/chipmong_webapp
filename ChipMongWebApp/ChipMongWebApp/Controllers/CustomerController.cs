@@ -150,5 +150,15 @@ namespace ChipMongWebApp.Controllers
             }
         }
 
+
+        public ActionResult RetailerTab(int id) { return View(); }
+
+
+        //-> SourceSupplyTabPaging
+        public ActionResult GetRetailer(int id)
+        {
+            return PartialView("~/Views/Retailer/Table.cshtml", handler.RetailerTabPaging(id));
+        }
+
     }
 }
