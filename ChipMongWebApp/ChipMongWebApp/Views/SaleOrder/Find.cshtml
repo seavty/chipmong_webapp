@@ -80,7 +80,6 @@
                 </div>
             </div>
             <!-- end row 2 -->
-
             <!-- row 3 -->
             <div class="row">
                 <div class="col col-md-4">
@@ -89,7 +88,7 @@
                         @Html.TextBoxFor(m => m.slor_TruckDriverPhoneNo, new { @class = "form-control", placeholder = "Truck Driver Phone No", @maxlength = "100" })
                     </div>
                 </div>
-                
+
 
                 <div class="col col-md-4">
                     <div class="form-group">
@@ -106,6 +105,34 @@
                 </div>
             </div>
             <!-- end row 3 -->
+
+            <!-- row 4 -->
+            <div class="row">
+                <div class="col col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.slor_Code)
+                        @Html.TextBoxFor(m => m.slor_Code, new { @class = "form-control", placeholder = "PO No", @maxlength = "100" })
+                    </div>
+                </div>
+
+                <div class="col col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.slor_SONo)
+                        @Html.TextBoxFor(m => m.slor_SONo, new { @class = "form-control", placeholder = "SO No", @maxlength = "100" })
+                    </div>
+                </div>
+
+                <div class="col col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.shipMode)
+                        @Html.TextBoxFor(m => m.shipMode, new { @class = "form-control", placeholder = "Cust. Shipping Condition", @maxlength = "100" })
+                    </div>
+                </div>
+
+            </div>
+            <!-- end row 4 -->
+
+
 
 
 

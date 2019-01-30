@@ -483,12 +483,15 @@ namespace ChipMongWebApp.Utils.Handlers
             var query = db.vSaleOrders.Where(x => x.slor_Deleted == null
                 && (string.IsNullOrEmpty(findDTO.code) ? 1 == 1                    : x.cust_Code.Contains(findDTO.code))
                 && (string.IsNullOrEmpty(findDTO.status) ? 1 == 1                  : x.slor_Status == findDTO.status)
-                && (string.IsNullOrEmpty(findDTO.customer) ? 1 == 1                : x.cust_FirstName.Contains(findDTO.customer))
+                && (string.IsNullOrEmpty(findDTO.customer) ? 1 == 1                : x.cust_FirstName.Contains(findDTO.customer) ||  x.cust_LastName.Contains(findDTO.customer)) 
                 && (string.IsNullOrEmpty(findDTO.slor_SourceOfSupply) ? 1 == 1     : x.slor_SourceOfSupply.ToString() == findDTO.slor_SourceOfSupply)
                 && (string.IsNullOrEmpty(findDTO.slor_TruckNo) ? 1 == 1            : x.slor_TruckNo.Contains(findDTO.slor_TruckNo))
                 && (string.IsNullOrEmpty(findDTO.slor_DocNo) ? 1 == 1              : x.slor_DocNo.Contains(findDTO.slor_DocNo))
                 && (string.IsNullOrEmpty(findDTO.slor_ShipmentNo) ? 1 == 1         : x.slor_ShipmentNo.Contains(findDTO.slor_ShipmentNo))
                 && (string.IsNullOrEmpty(findDTO.slor_TruckDriverPhoneNo) ? 1 == 1 : x.slor_TruckDriverPhoneNo.Contains(findDTO.slor_TruckDriverPhoneNo))
+                && (string.IsNullOrEmpty(findDTO.slor_Code) ? 1 == 1 : x.slor_Code.Contains(findDTO.code))
+                && (string.IsNullOrEmpty(findDTO.slor_SONo) ? 1 == 1 : x.slor_SONo.Contains(findDTO.slor_SONo))
+                && (string.IsNullOrEmpty(findDTO.shipMode) ? 1 == 1 : x.shipMode.Contains(findDTO.shipMode))
                 && (findDTO.customerID == 0 ? 1 == 1                               : x.cust_CustomerID == findDTO.customerID)
             );
 
