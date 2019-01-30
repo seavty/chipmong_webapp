@@ -125,7 +125,12 @@
                 <div class="col col-md-4">
                     <div class="form-group">
                         @Html.LabelFor(m => m.shipMode)
-                        @Html.TextBoxFor(m => m.shipMode, new { @class = "form-control", placeholder = "Cust. Shipping Condition", @maxlength = "100" })
+                        <select id="shipMode" name="shipMode" class="form-control">
+                            <option value=""> --None--</option>
+                            <option value="P1">P1</option>
+                            <option value="D1">D1</option>
+                            <option value="D2">D2</option>
+                        </select>
                     </div>
                 </div>
 
