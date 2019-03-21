@@ -22,7 +22,7 @@ namespace ChipMongWebApp.Controllers
 
         public CustomerController()
         {
-            handler = new CustomerHandler(); 
+            handler = new CustomerHandler();
         }
 
         //--> New
@@ -43,7 +43,7 @@ namespace ChipMongWebApp.Controllers
             catch (HttpException ex)
             {
                 return Json(ConstantHelper.ERROR, JsonRequestBehavior.AllowGet);
-                
+
             }
         }
 
@@ -132,6 +132,20 @@ namespace ChipMongWebApp.Controllers
             return PartialView("~/Views/DealerSourceSupply/Table.cshtml", handler.SourceSupplyTabPaging(id));
         }
 
+
+        //-> SourceSupplyTabPaging
+        public ActionResult GetSubCustomer(int id)
+        {
+            return PartialView("~/Views/SubCustomer/Table.cshtml", handler.SubCustomerPaging(id));
+        }
+
+
+        //-> SourceSupplyTabPaging
+        public ActionResult SubCustomerTab(int id)
+        {
+            return View();
+        }
+
         //-> New
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -159,6 +173,7 @@ namespace ChipMongWebApp.Controllers
         {
             return PartialView("~/Views/Retailer/Table.cshtml", handler.RetailerTabPaging(id));
         }
+
 
     }
 }

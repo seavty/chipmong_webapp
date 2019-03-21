@@ -15,6 +15,7 @@
         <EntityTypeShape EntityType="ChipMongModel.tblRetailer" Width="1.5" PointX="9.375" PointY="0.75" />
         <EntityTypeShape EntityType="ChipMongModel.vExportSaleOrder" Width="1.5" PointX="8.375" PointY="7.875" />
         <EntityTypeShape EntityType="ChipMongModel.vSaleOrder" Width="1.5" PointX="6.25" PointY="0.625" />
+        <EntityTypeShape EntityType="ChipMongModel.tblSubCustomer" Width="1.5" PointX="0.75" PointY="10.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

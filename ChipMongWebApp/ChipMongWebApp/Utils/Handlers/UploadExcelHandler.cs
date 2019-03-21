@@ -31,6 +31,8 @@ namespace ChipMongWebApp.Utils.Handlers
             if (!uploadExcel.ExcelFile.FileName.EndsWith(".xlsx"))
                 throw new HttpException((int)HttpStatusCode.BadRequest, "Only .xlsx is allowed");
 
+
+            string code = string.Empty;
             using (var transaction = db.Database.BeginTransaction())
             {
                 try
@@ -52,7 +54,7 @@ namespace ChipMongWebApp.Utils.Handlers
                         var cust = await db.tblCustomers.FirstOrDefaultAsync(x => x.deleted == null & x.code == custCode);
                         if (cust != null)
                             custID = cust.id;
-                        string code = row.Cell(4).Value.ToString().ToLower().Trim();
+                        code = row.Cell(4).Value.ToString().ToLower().Trim();
                         var _record = await db.tblRetailers.FirstOrDefaultAsync(x => x.retl_Deleted == null 
                             && x.retl_Code.ToLower().Trim() == code &&
                             x.retl_CustomerID == cust.id);
@@ -77,7 +79,7 @@ namespace ChipMongWebApp.Utils.Handlers
                 catch (Exception ex)
                 {
                     transaction.Rollback();
-                    throw new Exception(ex.Message);
+                    throw new Exception($"Customer Number: {code} not found");
                 }
             }
         }

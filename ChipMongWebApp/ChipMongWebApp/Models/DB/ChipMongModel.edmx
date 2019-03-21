@@ -153,6 +153,20 @@
           <Property Name="scsp_Name" Type="nvarchar" MaxLength="50" />
           <Property Name="scsp_Deleted" Type="int" />
         </EntityType>
+        <EntityType Name="tblSubCustomer">
+          <Key>
+            <PropertyRef Name="sbcs_SubCustomerID" />
+          </Key>
+          <Property Name="sbcs_SubCustomerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sbcs_CreatedDate" Type="datetime" />
+          <Property Name="sbcs_CreatedBy" Type="int" />
+          <Property Name="sbcs_UpdatedDate" Type="datetime" />
+          <Property Name="sbcs_UpdatedBy" Type="int" />
+          <Property Name="sbcs_Phone" Type="nvarchar" MaxLength="50" />
+          <Property Name="sbcs_CustomerID" Type="int" />
+          <Property Name="sbcs_LineID" Type="nvarchar" MaxLength="50" />
+          <Property Name="sbcs_Deleted" Type="int" />
+        </EntityType>
         <EntityType Name="tblUser">
           <Key>
             <PropertyRef Name="user_UserID" />
@@ -416,6 +430,7 @@ warning 6002: The table/view 'CM.dbo.vSaleOrder' does not have a primary key def
           <EntitySet Name="tblSaleOrder" EntityType="Self.tblSaleOrder" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblSaleOrderItem" EntityType="Self.tblSaleOrderItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblSourceOfSupply" EntityType="Self.tblSourceOfSupply" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblSubCustomer" EntityType="Self.tblSubCustomer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblUser" EntityType="Self.tblUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="vExportSaleOrders" EntityType="Self.vExportSaleOrders" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -691,6 +706,7 @@ warning 6002: The table/view 'CM.dbo.vSaleOrder' does not have a primary key def
           <EntitySet Name="tblRetailers" EntityType="ChipMongModel.tblRetailer" />
           <EntitySet Name="vExportSaleOrders" EntityType="ChipMongModel.vExportSaleOrder" />
           <EntitySet Name="vSaleOrders" EntityType="ChipMongModel.vSaleOrder" />
+          <EntitySet Name="tblSubCustomers" EntityType="ChipMongModel.tblSubCustomer" />
         </EntityContainer>
         <EntityType Name="tblSaleOrder">
           <Key>
@@ -1060,6 +1076,20 @@ warning 6002: The table/view 'CM.dbo.vSaleOrder' does not have a primary key def
           <Property Name="slor_Status6Date" Type="DateTime" Precision="3" />
           <Property Name="slor_Status6Send" Type="DateTime" Precision="3" />
           <Property Name="slor_SendDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tblSubCustomer">
+          <Key>
+            <PropertyRef Name="sbcs_SubCustomerID" />
+          </Key>
+          <Property Name="sbcs_SubCustomerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sbcs_CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="sbcs_CreatedBy" Type="Int32" />
+          <Property Name="sbcs_UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="sbcs_UpdatedBy" Type="Int32" />
+          <Property Name="sbcs_Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="sbcs_CustomerID" Type="Int32" />
+          <Property Name="sbcs_LineID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="sbcs_Deleted" Type="Int32" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1471,6 +1501,21 @@ warning 6002: The table/view 'CM.dbo.vSaleOrder' does not have a primary key def
                 <ScalarProperty Name="shipMode" ColumnName="shipMode" />
                 <ScalarProperty Name="sourceOfSupply" ColumnName="sourceOfSupply" />
                 <ScalarProperty Name="product" ColumnName="product" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblSubCustomers">
+            <EntityTypeMapping TypeName="ChipMongModel.tblSubCustomer">
+              <MappingFragment StoreEntitySet="tblSubCustomer">
+                <ScalarProperty Name="sbcs_Deleted" ColumnName="sbcs_Deleted" />
+                <ScalarProperty Name="sbcs_LineID" ColumnName="sbcs_LineID" />
+                <ScalarProperty Name="sbcs_CustomerID" ColumnName="sbcs_CustomerID" />
+                <ScalarProperty Name="sbcs_Phone" ColumnName="sbcs_Phone" />
+                <ScalarProperty Name="sbcs_UpdatedBy" ColumnName="sbcs_UpdatedBy" />
+                <ScalarProperty Name="sbcs_UpdatedDate" ColumnName="sbcs_UpdatedDate" />
+                <ScalarProperty Name="sbcs_CreatedBy" ColumnName="sbcs_CreatedBy" />
+                <ScalarProperty Name="sbcs_CreatedDate" ColumnName="sbcs_CreatedDate" />
+                <ScalarProperty Name="sbcs_SubCustomerID" ColumnName="sbcs_SubCustomerID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

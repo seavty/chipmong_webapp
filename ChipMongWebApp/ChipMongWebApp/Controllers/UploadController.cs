@@ -44,10 +44,12 @@ namespace ChipMongWebApp.Controllers
                     throw new HttpException((int)HttpStatusCode.BadRequest, ConstantHelper.KEY_IN_REQUIRED_FIELD);
                 Response.StatusCode = 200;
                 return $"ok{await handler.UploadRetailer(uploadExcel)}";
+
             }
-            catch (HttpException)
+            catch (Exception ex)
             {
-                return "no";
+                
+                return ex.Message;
             }
         }
 

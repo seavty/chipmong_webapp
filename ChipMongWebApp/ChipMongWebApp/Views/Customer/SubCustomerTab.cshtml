@@ -6,11 +6,7 @@
 
 @Html.Partial("~/Views/Customer/Tabs.cshtml")
 
-<div class="card shadow-sm" id="dvAction">
-    <div class="card-body text-dark shadow-sm merienda">
-        <button type="button" class="btn btn-success" id="btnAddSourceSupply" onclick="handleAddSourceSupply()"> <i class="fas fa-plus"></i> Add Source Supply  </button>
-    </div>
-</div>
+
 
 <br />
 <form name="record" id="record">
@@ -56,15 +52,15 @@
 <script>
     const id = @Url.RequestContext.RouteData.Values["id"];
     const controller = "@Url.Content($"~/{ConstantHelper.CUSTOMER_CONTROLLER}")";
-    const dealerSourceSupplyEndPoint = "@Url.Content($"~/{ConstantHelper.DEALER_SOURCE_SUPPLY_CONTROLLER}")";
+    const subCustomerEndPoint = "@Url.Content($"~/{ConstantHelper.SUB_CUSTOMER_CONTROLLER}")";
 
     $(document).ready(() => {
-        $("#sourcesupplyTab").contents().unwrap();
-        getDealerSourceSupply();
+        $("#subCustomerTab").contents().unwrap();
+        getSubCustomer();
     });
 
-    const getDealerSourceSupply = () => {
-        ajaxHelper(controller + "/dealersourcesupply/" + id, null, requestMethod.POST).then(function (data) {
+    const getSubCustomer = () => {
+        ajaxHelper(controller + "/getsubcustomer/" + id, null, requestMethod.POST).then(function (data) {
             $("#tableData").html(data);
         })
     }
@@ -72,7 +68,6 @@
     const customerTab = () => location.href = controller + "/view/" + id;
     const saleorderTab = () => location.href = controller + "/saleordertab/" + id;
     const retailerTab = () => location.href = controller + "/retailertab/" + id;
-    const subCustomerTab = () => location.href = controller + "/subcustomertab/" + id;
     const handleAddSourceSupply = () => {
         $("#btnSave").hide();
         $("#btnAdd").show();
@@ -82,48 +77,19 @@
     }
 
 
-    const add = () => {
-        if (isValid()) {
-            ajaxHelper(controller + "/addsourcesupply/" + id + "/?sourceOfSupplyID=" + $("#sourceOfSupplyID").val(), $("#frmPopup").serializeObject(), requestMethod.POST).then(function (data) {
-                $("#exampleModal").modal("hide");
-                getDealerSourceSupply();
-            });
-        }
-        else {
-            $("#sourceOfSupplyID").css("border-color", "red");
-        }
-    }
+    
 
-    const editDealerSourceSupply = (id, sourceSupplyID) => {
-        $("#sourceOfSupplyID").val(sourceSupplyID);
-        $("#btnSave").show();
-        $("#btnAdd").hide();
-        $("#sourceOfSupplyID").css("border-color", "#ced4da");
-
-        $("#dealerSupplyID").val(id);
-        $("#exampleModal").modal("show");
-    }
-
-    const deleteDealerSourceSupply = (id) => {
+    const deleteRetailer = (id) => {
         if (confirm("Do you want to delee this record?")) {
-            simpleAjax(dealerSourceSupplyEndPoint + "/delete/" + id, null, requestMethod.POST).then(function (data) {
-                if (data == "ok")
-                    getDealerSourceSupply();
+            simpleAjax(subCustomerEndPoint + "/delete/" + id, null, requestMethod.POST).then(function (data) {
+                if (data == "ok") {
+                    location.reload();
+                }
             });
         }
     }
 
-    const save = () => {
-        if (isValid()) {
-            ajaxHelper(dealerSourceSupplyEndPoint + "/edit/" + $("#dealerSupplyID").val() + "/?sourceOfSupplyID=" + $("#sourceOfSupplyID").val(), $("#frmPopup").serializeObject(), requestMethod.POST).then(function (data) {
-                getDealerSourceSupply();
-            });
-        }
-        else {
-            $("#sourceOfSupplyID").css("border-color", "red");
-        }
-    }
-
+   
 </script>
 
 

@@ -230,6 +230,22 @@ namespace ChipMongWebApp.Utils.Handlers
         }
 
 
+        //=> GetList SourceSupplyTabPaging
+        public List<tblSubCustomer> SubCustomerPaging(int customerID)
+        {
+
+            var records = from x in db.tblSubCustomers
+                          where x.sbcs_Deleted == null && x.sbcs_CustomerID == customerID
+                          orderby x.sbcs_SubCustomerID ascending
+                          select x;
+
+            return records.ToList(); ;
+
+            //var myTest = await records.ToListAsync();
+            //return await records.ToListAsync();
+
+        }
+
 
 
         //-> New
